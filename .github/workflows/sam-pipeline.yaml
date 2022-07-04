@@ -8,47 +8,59 @@ jobs:
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
+      
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
           cache: "pip"
-      - name: Install dependencies
+      
+      - name: Install project dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      
       - name: Lint with flake8
         run: |
-          pip install flake8
+          pip install flake8 flake8-bandit
           # stop the build if there are Python syntax errors or undefined names
-          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+          flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --output-file flake8-errors.txt
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
-          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: Test with pytest
+          flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --output-file flake8-warnings.txt
+      
+      - name: Static type check with mypy
+        run: |
+          pip install mypy
+          mypy .
+      
+      - name: Testing with pytest
         run: |
           pip install pytest pytest-xdist pytest-cov
           pytest -n auto --cov --cov-report html:pytest_results
-      - name: Upload pytest test results
+      
+      - name: Upload results
         uses: actions/upload-artifact@v3
         with:
-          name: pytest_results
-          path: pytest_results/
+          path: |
+            pytest_results/
+            flake8-errors.txt
+            flake8-warnings.txt
+             
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
+
       - name: Setup AWS SAM
         uses: aws-actions/setup-sam@v1
+      
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-      
-      # sam build 
+       
       - name: SAM build
         run: sam build
       
-      # sam deploy
       - name: SAM deploy
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name advent-of-code-python --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr --capabilities CAPABILITY_IAM --region eu-west-2
