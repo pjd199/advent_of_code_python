@@ -21,9 +21,6 @@ class Solver(SolverInterface):
         if puzzle_input is None or len(puzzle_input) < 3:
             raise RuntimeError("Puzzle input is empty")
 
-        if len(puzzle_input[0].strip()) == 0:
-            raise RuntimeError("Parse input - puzzle starts with blank line")
-
         self.replacements = []
         pattern = compile(r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)")
         for i, line in enumerate(puzzle_input[:-2]):
