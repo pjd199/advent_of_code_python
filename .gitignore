@@ -1,0 +1,10 @@
+/.aws-sam
+/.coverage.Pete-Laptop.17708.009512
+/.coverage.Pete-Laptop.20096.587473
+/.coverage.Pete-Laptop.21716.628493
+/.coverage.Pete-Laptop.5644.351047
+/.mypy_cache
+/.pytest_cache
+/.vscode
+/coverage.txt
+/__pycache__
