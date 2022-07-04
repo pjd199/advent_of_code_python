@@ -3,7 +3,7 @@ on:
     branches:
       - main
 jobs:
-  build-deploy:
+  test-build-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Check out Respository
@@ -15,36 +15,46 @@ jobs:
           python-version: "3.9"
           cache: "pip"
       
-      - name: Install project dependencies
+      - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
+          pip install flake8 flake8-bandit
+          pip install pytest pytest-xdist pytest-cov
+          pip install mypy
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-      
+
       - name: Lint with flake8
         run: |
-          pip install flake8 flake8-bandit
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics --output-file flake8-errors.txt
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics --output-file flake8-warnings.txt
       
+      - name: Upload flake errors artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            flake8-errors.txt
+
+      - name: Upload flake warnings artifact
+        uses: actions/upload-artifact@v3
+        with:
+          path: |
+            flake8-warnings.txt
+
       - name: Static type check with mypy
         run: |
-          pip install mypy
-          mypy .
+          mypy --strict ./advent_of_code/
       
       - name: Testing with pytest
         run: |
-          pip install pytest pytest-xdist pytest-cov
           pytest -n auto --cov --cov-report html:pytest_results
       
-      - name: Upload results
+      - name: Upload pytest results artifact
         uses: actions/upload-artifact@v3
         with:
           path: |
             pytest_results/
-            flake8-errors.txt
-            flake8-warnings.txt
              
         # Use always() to always run this step to publish test results when there are test failures
         if: ${{ always() }}
