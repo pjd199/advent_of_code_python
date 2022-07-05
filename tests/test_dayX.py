@@ -86,15 +86,14 @@ def test_init_solver(year: str, day: str) -> None:
         mod.Solver([""])
 
     # first test with random input, which should cause a problem
-    with pytest.raises(RuntimeError):
-        mod.Solver("".join([choice(printable) for _ in range(randbelow(99) + 101)]))
-
-    # second with random input, which should cause a problem
-    with pytest.raises(RuntimeError):
-        mod.Solver(
+    random_input = []
+    for _ in range(randbelow(99) + 101):
+        random_input.append(
             "".join([choice(printable) for _ in range(randbelow(99) + 101)])
-            * (randbelow(99) + 101)
         )
+
+    with pytest.raises(RuntimeError):
+        mod.Solver(random_input)
 
 
 @pytest.mark.parametrize(

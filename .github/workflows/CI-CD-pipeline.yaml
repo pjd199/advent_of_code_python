@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   test:
-    name: Lint, Check and Test AoC package
+    name: Lint, Check and Test AoC
     runs-on: ubuntu-latest
     steps:
       - name: Check out Respository
@@ -52,7 +52,7 @@ jobs:
           file: coverage.xml
 
   deploy-to-aws-lambda:
-    name: Deploy AoC package to AWS Lambda
+    name: Deploy to AWS Lambda
     needs: test
     runs-on: ubuntu-latest
     steps:
