@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   test:
-    name: Lint, Check and Test AoC
+    name: Lint, Check & Test Code
     runs-on: ubuntu-latest
     steps:
       - name: Check out Respository
@@ -94,17 +94,17 @@ jobs:
       - name: Call lambda function
         run: |
           echo Calling /
-          curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
+          curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
           echo
           echo Calling /2015
-          curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
+          curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
           echo
           echo Calling /2015/1
-          curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
+          curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
           echo
           echo Calling /2015/2/part_one
-          curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/2/part_one
+          curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/2/part_one
           echo
           echo Calling /2015/3/part_two
-          curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/3/part_two
+          curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/3/part_two
           echo
