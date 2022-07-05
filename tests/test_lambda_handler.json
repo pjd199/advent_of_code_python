@@ -375,14 +375,14 @@
             "headers": {
                 "Content-Type": "application/json"
             },
-            "body": "{\"years\": [2015]}"
+            "body": "{\"years\": [{\"year\": 2015, \"days\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]}]}"
         },
         {
             "statusCode": 200,
             "headers": {
                 "Content-Type": "application/json"
             },
-            "body": "{\"days\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]}"
+            "body": "{\"year\": 2015, \"days\": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25]}"
         },
         {
             "statusCode": 200,
@@ -413,14 +413,14 @@
             "body": "{\"year\": 2015, \"day\": 1, \"part_two\": \"1795\"}"
         },
         {
-            "statusCode" : 404,
+            "statusCode": 404,
             "headers": {
                 "Content-Type": "application/json"
             },
             "body": "{\"message\": \"Unknown path: /2014/1\"}"
         },
         {
-            "statusCode" : 404,
+            "statusCode": 404,
             "headers": {
                 "Content-Type": "application/json"
             },

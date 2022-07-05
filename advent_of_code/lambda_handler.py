@@ -34,7 +34,12 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
         dates = [
             date for date, status in solvers_implementation_status().items() if status
         ]
-        body = {"years": list({x.year for x in dates})}
+        body = {
+            "years": [
+                {"year": year, "days": [x.day for x in dates if x.year == year]}
+                for year in {x.year for x in dates}
+            ]
+        }
         status = 200
 
     # /year - list of available days for the year
@@ -43,7 +48,7 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
         dates = [
             date for date, status in solvers_implementation_status().items() if status
         ]
-        body = {"days": list({x.day for x in dates if x.year == year})}
+        body = {"year": year, "days": [x.day for x in dates if x.year == year]}
         status = 200
 
     # /year/day - solve both parts of the day
