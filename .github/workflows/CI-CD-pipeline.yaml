@@ -9,13 +9,13 @@ concurrency:
 
 jobs:
   test:
-    name: Lint, Check & Test Code
+    name: Check & Test Code
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Respository
+      - name: Check out respository
         uses: actions/checkout@v3
       
-      - name: Setup up Python
+      - name: Setup up python
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
@@ -25,9 +25,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install flake8 flake8-bandit flake8-black flake8-isort flake8-bugbear flake8-deprecated
+          pip install flake8 flake8-black flake8-isort flake8-bugbear flake8-deprecated
           pip install pytest pytest-xdist pytest-cov
           pip install mypy
+          pip install bandit
 
       - name: Lint with flake8
         run: |
@@ -37,6 +38,10 @@ jobs:
       - name: Static type check with mypy
         run: |
           mypy --strict ./advent_of_code/
+
+      - name: Security check with bandit
+        run: |
+          bandit -r advent_of_code
       
       - name: Testing with pytest
         run: |
@@ -56,10 +61,10 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - name: Check out Respository
+      - name: Check out respository
         uses: actions/checkout@v3
       
-      - name: Setup up Python
+      - name: Setup up python
         uses: actions/setup-python@v4
         with:
           python-version: "3.9"
