@@ -1,6 +1,5 @@
 """Functions based on the implementation status of solvers."""
 from datetime import date
-from email.generator import Generator
 from importlib.util import find_spec
 from typing import Dict, Iterable
 
