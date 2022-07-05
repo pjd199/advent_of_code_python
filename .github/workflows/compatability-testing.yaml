@@ -1,7 +1,5 @@
-on:
-  push:
-    branches:
-      - manual_not_main
+on: workflow_dispatch
+
 jobs:
   compatability-testing:
     runs-on: ${{ matrix.os }}
