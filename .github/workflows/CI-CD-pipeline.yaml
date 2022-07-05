@@ -93,18 +93,24 @@ jobs:
     steps:
       - name: Call lambda function
         run: |
-          echo Calling /
+          echo Invoking function on AWS Lambda: https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
+          echo Invoking function with /
           curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
           echo
-          echo Calling /2015
+          echo
+          echo Invoking function with /2015
           curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
           echo
-          echo Calling /2015/1
+          echo
+          echo Invoking function with /2015/1
           curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
           echo
-          echo Calling /2015/2/part_one
+          echo
+          echo Invoking function with /2015/2/part_one
           curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/2/part_one
           echo
-          echo Calling /2015/3/part_two
+          echo
+          echo Invoking function with /2015/3/part_two
           curl --silent --include --show-error https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/3/part_two
+          echo
           echo
