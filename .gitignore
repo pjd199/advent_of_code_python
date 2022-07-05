@@ -8,7 +8,9 @@
 /.pytest_cache
 /.vscode
 /coverage.txt
-/advent_of_code/__pycache__/
-/advent_of_code/util/__pycache__/
-/advent_of_code/year_2015/__pycache__/
-/advent_of_code/year_2016/__pycache__/
+__pycache__/
+advent_of_code/__pycache__/
+advent_of_code/util/__pycache__/
+advent_of_code/year_2015/__pycache__/
+advent_of_code/year_2016/__pycache__/
+*.pyc

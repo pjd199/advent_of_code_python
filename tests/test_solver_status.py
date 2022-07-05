@@ -16,7 +16,7 @@ def test_first_puzzle_date() -> None:
     assert first_puzzle_date() == date(2015, 12, 1)
 
 
-def test_last_puzzle_date() -> None:
+def test_last_puzzle_date() -> None:  # pragma: no cover
     """Unit test."""
     if datetime.today().month < 12:
         assert last_puzzle_date() == date(datetime.today().year - 1, 12, 25)
@@ -24,7 +24,7 @@ def test_last_puzzle_date() -> None:
         assert last_puzzle_date() == datetime.today()
 
 
-def test_puzzle_date_generator() -> None:
+def test_puzzle_date_generator() -> None:  # pragma: no cover
     """Unit test."""
     dates = []
     for year in range(2015, datetime.today().year):
@@ -43,7 +43,7 @@ def test_is_solver_implemented() -> None:
     assert not is_solver_implemented(2014, 25)
 
 
-def test_solvers_implementation_status() -> None:
+def test_solvers_implementation_status() -> None:  # pragma: no cover
     """Unit test."""
     dates = []
     for year in range(2015, datetime.today().year):

@@ -14,7 +14,7 @@ def first_puzzle_date() -> date:
     return date(2015, 12, 1)
 
 
-def last_puzzle_date() -> date:
+def last_puzzle_date() -> date:  # pragma: no cover
     """Return the date of the last challenge on AoC website.
 
     Returns:
@@ -28,7 +28,7 @@ def last_puzzle_date() -> date:
         return date(today.year, 12, min(today.day, 25))
 
 
-def puzzle_date_generator() -> Iterable[date]:
+def puzzle_date_generator() -> Iterable[date]:  # pragma: no cover
     """Generate a list of all puzzles on the AoC website.
 
     Yields:
