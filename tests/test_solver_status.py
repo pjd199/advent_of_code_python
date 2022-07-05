@@ -11,12 +11,12 @@ from advent_of_code.utils.solver_status import (
 )
 
 
-def test_first_puzzle_date():
+def test_first_puzzle_date() -> None:
     """Unit test."""
     assert first_puzzle_date() == date(2015, 12, 1)
 
 
-def test_last_puzzle_date():
+def test_last_puzzle_date() -> None:
     """Unit test."""
     if datetime.today().month < 12:
         assert last_puzzle_date() == date(datetime.today().year - 1, 12, 25)
@@ -24,7 +24,7 @@ def test_last_puzzle_date():
         assert last_puzzle_date() == datetime.today()
 
 
-def test_puzzle_date_generator():
+def test_puzzle_date_generator() -> None:
     """Unit test."""
     dates = []
     for year in range(2015, datetime.today().year):
@@ -37,13 +37,13 @@ def test_puzzle_date_generator():
     assert list(puzzle_date_generator()) == dates
 
 
-def test_is_solver_implemented():
+def test_is_solver_implemented() -> None:
     """Unit test."""
     assert is_solver_implemented(2015, 1)
     assert not is_solver_implemented(2014, 25)
 
 
-def test_solvers_implementation_status():
+def test_solvers_implementation_status() -> None:
     """Unit test."""
     dates = []
     for year in range(2015, datetime.today().year):

@@ -1,6 +1,7 @@
 """Handler for AWS Lambda requests."""
 from importlib import import_module
 from json import dumps
+from typing import Dict
 
 from advent_of_code.utils.input_loader import load_file
 from advent_of_code.utils.solver_status import (
@@ -9,7 +10,7 @@ from advent_of_code.utils.solver_status import (
 )
 
 
-def lambda_handler(event, context):
+def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, object]:
     """Handle the event from the AWS Lambda.
 
     Args:
@@ -19,7 +20,7 @@ def lambda_handler(event, context):
     Returns:
         _type_: the response sent to the client
     """
-    path_param = [x for x in event["rawPath"].lower().split("/") if x != ""]
+    path_param = [x for x in str(event["rawPath"]).lower().split("/") if x != ""]
 
     # /                      - list of available years
     # /year                  - list of available days for the year
@@ -28,11 +29,12 @@ def lambda_handler(event, context):
     # /year/day/part_two     - solve part two of the day
 
     # process / - list of available years
+    body: Dict[str, object] = {}
     if len(path_param) == 0:
         dates = [
             date for date, status in solvers_implementation_status().items() if status
         ]
-        body = list({x.year for x in dates})
+        body = {"years": list({x.year for x in dates})}
         status = 200
 
     # /year - list of available days for the year
@@ -41,7 +43,7 @@ def lambda_handler(event, context):
         dates = [
             date for date, status in solvers_implementation_status().items() if status
         ]
-        body = list({x.day for x in dates if x.year == year})
+        body = {"days": list({x.day for x in dates if x.year == year})}
         status = 200
 
     # /year/day - solve both parts of the day
@@ -81,7 +83,7 @@ def lambda_handler(event, context):
         and path_param[1].isdecimal()
         and path_param[2] in ["part_one", "part_two"]
         and is_solver_implemented(int(path_param[0]), int(path_param[1]))
-        and (int(path_param[1] != 25) or path_param[2] == "part_one")
+        and (int(path_param[1]) != 25 or path_param[2] == "part_one")
     ):
         year = int(path_param[0])
         day = int(path_param[1])

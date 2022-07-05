@@ -1,7 +1,8 @@
 """Functions based on the implementation status of solvers."""
 from datetime import date
+from email.generator import Generator
 from importlib.util import find_spec
-from typing import Dict
+from typing import Dict, Iterable
 
 
 def first_puzzle_date() -> date:
@@ -27,11 +28,11 @@ def last_puzzle_date() -> date:
         return date(today.year, 12, min(today.day, 25))
 
 
-def puzzle_date_generator():
+def puzzle_date_generator() -> Iterable[date]:
     """Generate a list of all puzzles on the AoC website.
 
     Yields:
-        _type_: _description_
+        Iterable: _description_
     """
     today = date.today()
 
@@ -46,7 +47,7 @@ def puzzle_date_generator():
             yield date(today.year, 12, day)
 
 
-def is_solver_implemented(year: int, day: int):
+def is_solver_implemented(year: int, day: int) -> bool:
     """Returns True if solver is implemented, otherwise False.
 
     Args:
@@ -54,7 +55,7 @@ def is_solver_implemented(year: int, day: int):
         day (int): The day
 
     Returns:
-        _type_: Returns True if solver is implemented, otherwise False.
+        bool: Returns True if solver is implemented, otherwise False.
     """
     try:
         find_spec(f"advent_of_code.year_{year}.day{day}")

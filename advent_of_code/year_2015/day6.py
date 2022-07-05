@@ -100,4 +100,4 @@ class Solver(SolverInterface):
                     brightness[ins.y1 : (ins.y2 + 1), ins.x1 : (ins.x2 + 1)], 2
                 )
 
-        return brightness.sum()
+        return int(brightness.sum())
