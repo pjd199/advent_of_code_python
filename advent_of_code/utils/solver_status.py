@@ -13,37 +13,44 @@ def first_puzzle_date() -> date:
     return date(2015, 12, 1)
 
 
-def last_puzzle_date() -> date:  # pragma: no cover
+def last_puzzle_date() -> date:
     """Return the date of the last challenge on AoC website.
+
+    Raises:
+        RuntimeError: if the clock is wrong
 
     Returns:
         date: the latest challenge date
     """
     today = date.today()
 
-    if today.month <= 12:
+    if today < first_puzzle_date():
+        raise RuntimeError(f"Today's date cannot be before {first_puzzle_date()}")
+
+    if today.month < 12 and today.year > 2015:
         return date(today.year - 1, 12, 25)
     else:
         return date(today.year, 12, min(today.day, 25))
 
 
-def puzzle_date_generator() -> Iterable[date]:  # pragma: no cover
+def puzzle_date_generator() -> Iterable[date]:
     """Generate a list of all puzzles on the AoC website.
+
+    Raises:
+        RuntimeError: if the clock is wrong
 
     Yields:
         Iterable: _description_
     """
     today = date.today()
 
-    # generate for previous years
-    for year in range(first_puzzle_date().year, today.year):
-        for day in range(1, 26):
-            yield date(year, 12, day)
+    if today < first_puzzle_date():
+        raise RuntimeError(f"Today's date cannot be before {first_puzzle_date()}")
 
-    # generate current year, if in the advent season (1st - 25th Dec)
-    if today.month == 12:
-        for day in range(1, today.day + 1):
-            yield date(today.year, 12, day)
+    for year in range(first_puzzle_date().year, today.year + 1):
+        for day in range(1, 25 + 1):
+            if date(year, 12, day) <= today:
+                yield date(year, 12, day)
 
 
 def is_solver_implemented(year: int, day: int) -> bool:
@@ -63,7 +70,7 @@ def is_solver_implemented(year: int, day: int) -> bool:
         return False
 
 
-def solvers_implementation_status() -> Dict[date, bool]:
+def implementation_status() -> Dict[date, bool]:
     """Create a dictionary mapping AoC dates to implementation status.
 
     Returns:

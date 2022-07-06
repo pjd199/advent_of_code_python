@@ -5,8 +5,8 @@ from typing import Dict
 
 from advent_of_code.utils.input_loader import load_file
 from advent_of_code.utils.solver_status import (
+    implementation_status,
     is_solver_implemented,
-    solvers_implementation_status,
 )
 
 
@@ -14,8 +14,8 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
     """Handle the event from the AWS Lambda.
 
     Args:
-        event (_type_): the event dictionary
-        context (_type_): the context object
+        event (Dict[str, object]): the event dictionary
+        context (object): the context object
 
     Returns:
         _type_: the response sent to the client
@@ -31,9 +31,7 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
     # process / - list of available years
     body: Dict[str, object] = {}
     if len(path_param) == 0:
-        dates = [
-            date for date, status in solvers_implementation_status().items() if status
-        ]
+        dates = [date for date, status in implementation_status().items() if status]
         body = {
             "years": [
                 {"year": year, "days": [x.day for x in dates if x.year == year]}
@@ -45,9 +43,7 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
     # /year - list of available days for the year
     elif len(path_param) == 1 and path_param[0].isdecimal():
         year = int(path_param[0])
-        dates = [
-            date for date, status in solvers_implementation_status().items() if status
-        ]
+        dates = [date for date, status in implementation_status().items() if status]
         body = {"year": year, "days": [x.day for x in dates if x.year == year]}
         status = 200
 

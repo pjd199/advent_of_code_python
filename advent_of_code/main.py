@@ -9,13 +9,13 @@ from time import perf_counter_ns
 def _main() -> None:
     """Solve the specified day and print the results."""
     from advent_of_code.utils.input_loader import load_file
-    from advent_of_code.utils.solver_status import solvers_implementation_status
+    from advent_of_code.utils.solver_status import implementation_status
 
     print("*************************")
     print("* Advent of Code Solver *")
     print("*************************")
 
-    solvers = solvers_implementation_status()
+    solvers = implementation_status()
 
     if len(argv) == 3 and argv[1].isnumeric() and argv[2].isnumeric():
         year = int(argv[1])
