@@ -92,7 +92,7 @@ jobs:
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name advent-of-code-python --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr --capabilities CAPABILITY_IAM --region eu-west-2
 
   test-aws:
-    name: Test AWS Lambda
+    name: Acceptance Testing
     needs: deploy-to-aws-lambda
     runs-on: ubuntu-latest
     steps:

@@ -1,16 +1,16 @@
 """Handler for AWS Lambda requests."""
 from importlib import import_module
 from json import dumps
-from typing import Dict
+from typing import Any, Dict
 
-from advent_of_code.utils.input_loader import load_file
+from advent_of_code.utils.input_loader import load_file, load_multi_line_string
 from advent_of_code.utils.solver_status import (
     implementation_status,
     is_solver_implemented,
 )
 
 
-def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, object]:
+def lambda_handler(event: Dict[str, Any], context: object) -> Dict[str, object]:
     """Handle the event from the AWS Lambda.
 
     Args:
@@ -56,7 +56,10 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
     ):
         year = int(path_param[0])
         day = int(path_param[1])
-        puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
+        if event["requestContext"]["http"]["method"] == "POST" and "body" in event:
+            puzzle_input = load_multi_line_string(event["body"])
+        else:
+            puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
         mod = import_module(f"advent_of_code.year_{year}.day{day}")
         solver = mod.Solver(puzzle_input)
         results = solver.solve_all()
@@ -88,7 +91,10 @@ def lambda_handler(event: Dict[str, object], context: object) -> Dict[str, objec
     ):
         year = int(path_param[0])
         day = int(path_param[1])
-        puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
+        if event["requestContext"]["http"]["method"] == "POST" and "body" in event:
+            puzzle_input = load_multi_line_string(event["body"])
+        else:
+            puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
         mod = import_module(f"advent_of_code.year_{year}.day{day}")
         solver = mod.Solver(puzzle_input)
 
