@@ -1,3 +1,5 @@
 numpy
 pytest
 freezegun
+requests
+types-requests
