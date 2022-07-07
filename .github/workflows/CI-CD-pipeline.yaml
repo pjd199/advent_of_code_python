@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        group: [1, 2, 3, 4, 5, 6, 7, 8]
+        group: [1, 2, 3, 4, 5, 6]
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -78,7 +78,7 @@ jobs:
           pip install pytest pytest-split pytest-cov pytest-xdist pytest-custom_exit_code
       
       - name: Run pytest
-        run: pytest --cov --splits 8 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code
+        run: pytest --cov --splits 6 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code
       
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v2
