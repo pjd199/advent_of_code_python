@@ -8,8 +8,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  test:
-    name: Check & Test Code
+  check:
+    name: Static checks
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
@@ -24,10 +24,9 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install wheel setuptools
           pip install -r requirements.txt
           pip install flake8 flake8-black flake8-isort flake8-bugbear flake8-deprecated
-          pip install pytest pytest-xdist pytest-cov
+          # pip install pytest pytest-xdist pytest-cov
           pip install mypy
           pip install bandit
 
@@ -44,18 +43,75 @@ jobs:
         run: |
           bandit -r advent_of_code
       
-      - name: Testing with pytest
-        run: |
-          pytest -n auto --cov --cov-report=xml:coverage.xml
+      # - name: Testing with pytest
+      #   run: |
+      #     pytest -n auto --cov --cov-report=xml:coverage.xml
 
-      - name: Upload coverage to Codecov
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-        if: ${{ env.CODECOV_TOKEN }}
-        uses: codecov/codecov-action@v1
+      # - name: Upload coverage to Codecov
+      #   env:
+      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+      #   if: ${{ env.CODECOV_TOKEN }}
+      #   uses: codecov/codecov-action@v1
+      #   with:
+      #     token: ${{ secrets.CODECOV_TOKEN }}
+      #     file: coverage.xml
+
+  test:
+    needs: check
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        group: [1, 2, 3, 4, 5]
+    steps:
+      - name: Check out respository
+        uses: actions/checkout@v3
+      
+      - name: Setup up python
+        uses: actions/setup-python@v4
         with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: coverage.xml
+          python-version: "3.9"
+          cache: "pip"
+      
+      - name: Install dependancies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-splits pytest-cov
+      - name: Run pytest
+        run: pytest --cov --splits 5 --group ${{ matrix.group }}
+      - name: Upload coverage
+        uses: actions/upload-artifact@v2
+        with:
+          name: coverage${{ matrix.group }}
+          path: .coverage
+
+  coverage:
+    name: Coverage Check
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out respository
+        uses: actions/checkout@v3
+      
+      - name: Setup up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+     
+      - name: Install dependancies
+        run: |
+          python -m pip install --upgrade pip
+          pip install coverage
+      - name: Download all artifacts
+        # Downloads coverage1, coverage2, etc.
+        uses: actions/download-artifact@v2
+      - name: Run coverage
+        run: |
+          coverage combine coverage*/.coverage*
+          coverage report --fail-under=100
+          coverage xml
+      - uses: codecov/codecov-action@v1
 
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
@@ -93,8 +149,8 @@ jobs:
       - name: SAM deploy
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --stack-name advent-of-code-python --s3-bucket aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr --capabilities CAPABILITY_IAM --region eu-west-2
 
-  test-aws:
-    name: Acceptance Testing
+  system-test:
+    name: System Testing
     needs: deploy-to-aws-lambda
     runs-on: ubuntu-latest
     steps:
