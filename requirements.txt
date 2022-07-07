@@ -2,6 +2,5 @@ numpy
 pytest
 freezegun
 requests
-types-requests
 flask-aws-lambda
-pytest_flask
+types-requests

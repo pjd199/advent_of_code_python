@@ -1,10 +1,10 @@
 """Handler for AWS Lambda requests."""
 from importlib import import_module
 from json import dumps
-from typing import Any, Tuple
+from typing import Any
 
 from flask import abort, request
-from flask_aws_lambda import FlaskAwsLambda
+from flask_aws_lambda import FlaskAwsLambda  # type: ignore
 from requests import get
 from werkzeug.exceptions import HTTPException
 
@@ -13,6 +13,8 @@ from advent_of_code.utils.solver_status import (
     implementation_status,
     is_solver_implemented,
 )
+
+Json = dict[str, Any]
 
 # constants for URL parameter positions
 YEAR = 0
@@ -24,11 +26,11 @@ app = FlaskAwsLambda(__name__)
 
 
 @app.route("/", methods=["GET"])
-def handle_root_path() -> Tuple[dict, int]:
+def handle_root_path() -> tuple[Json, int]:
     """Handles the root path - / .
 
     Returns:
-        Tuple[dict, int]: a JSON response and a HTTP status number
+        tuple[Json, int]: a JSON response and a HTTP status number
     """
     dates = [date for date, status in implementation_status().items() if status]
     body = {
@@ -41,14 +43,14 @@ def handle_root_path() -> Tuple[dict, int]:
 
 
 @app.route("/<int:year>", methods=["GET"])
-def handle_year_path(year: int) -> Tuple[dict, int]:
+def handle_year_path(year: int) -> tuple[Json, int]:
     """Handles the year path - eg /2015 .
 
     Args:
         year (int): the year from the path
 
     Returns:
-        Tuple[dict, int]: a JSON response
+        tuple[Json, int]: a JSON response
     """
     dates = [date for date, status in implementation_status().items() if status]
     body = {"year": year, "days": [x.day for x in dates if x.year == year]}
@@ -56,7 +58,7 @@ def handle_year_path(year: int) -> Tuple[dict, int]:
 
 
 @app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
-def handle_solve_path(year: int, day: int) -> Tuple[dict, int]:
+def handle_solve_path(year: int, day: int) -> tuple[Json, int]:
     """Handles the solve all parts path - eg /2015/1 .
 
     Args:
@@ -64,7 +66,7 @@ def handle_solve_path(year: int, day: int) -> Tuple[dict, int]:
         day (int): the  day from the path
 
     Returns:
-        Tuple[dict, int]: a JSON response
+        tuple[Json, int]: a JSON response
     """
     if not is_solver_implemented(year, day):
         abort(404)
@@ -92,7 +94,7 @@ def handle_solve_path(year: int, day: int) -> Tuple[dict, int]:
 
 
 @app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
-def handle_solve_path_with_part(year: int, day: int, part: str) -> Tuple[dict, int]:
+def handle_solve_path_with_part(year: int, day: int, part: str) -> tuple[Json, int]:
     """Handles the solve all parts path - eg /2015/1 .
 
     Args:
@@ -101,7 +103,7 @@ def handle_solve_path_with_part(year: int, day: int, part: str) -> Tuple[dict, i
         part (str): the part from the path
 
     Returns:
-        Tuple[dict, int]: a JSON response
+        tuple[Json, int]: a JSON response
     """
     if not is_solver_implemented(year, day) or part not in ["part_one", "part_two"]:
         abort(404)
@@ -120,7 +122,7 @@ def handle_solve_path_with_part(year: int, day: int, part: str) -> Tuple[dict, i
     solver = mod.Solver(puzzle_input)
 
     # construct the body
-    body: dict[str, Any] = {"year": year, "day": day}
+    body: Json = {"year": year, "day": day}
 
     if part == "part_one":
         body = {"year": year, "day": day, "part_one": str(solver.solve_part_one())}
@@ -131,7 +133,7 @@ def handle_solve_path_with_part(year: int, day: int, part: str) -> Tuple[dict, i
 
 
 @app.errorhandler(404)
-def page_not_found(e) -> Tuple[dict, int]:
+def page_not_found(e) -> tuple[Json, int]:
     """Handles the page not found error.
 
     Args:
@@ -144,7 +146,7 @@ def page_not_found(e) -> Tuple[dict, int]:
 
 
 @app.errorhandler(HTTPException)
-def handle_exception(e) -> Tuple[dict, int]:
+def handle_exception(e) -> tuple[Json, int]:
     """Return JSON instead of HTML for HTTP errors.
 
     Args:
