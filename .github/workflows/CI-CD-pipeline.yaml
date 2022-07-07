@@ -76,9 +76,11 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
           pip install pytest pytest-split pytest-cov
+      
       - name: Run pytest
         run: pytest --cov --splits 5 --group ${{ matrix.group }}
-      - name: Upload coverage
+      
+      - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v2
         with:
           name: coverage${{ matrix.group }}
@@ -113,7 +115,9 @@ jobs:
           coverage report --fail-under=100
           coverage xml:coverage.xml
       
-      - uses: codecov/codecov-action@v1
+      - name: Upload to Codecov
+        if: always()
+        uses: codecov/codecov-action@v1
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             file: coverage.xml
