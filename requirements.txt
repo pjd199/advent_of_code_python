@@ -3,5 +3,5 @@ pytest
 freezegun
 requests
 types-requests
-flask-asw-lambda
+flask-aws-lambda
 pytest_flask
