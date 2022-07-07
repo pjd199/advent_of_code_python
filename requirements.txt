@@ -4,3 +4,4 @@ freezegun
 requests
 flask-aws-lambda
 types-requests
+types-Flask
