@@ -78,7 +78,7 @@ jobs:
           pip install pytest pytest-split pytest-cov pytest-xdist
       
       - name: Run pytest
-        run: pytest --cov --splits 5 --group ${{ matrix.group }} -n auto
+        run: pytest --cov --splits 8 --group ${{ matrix.group }} -n auto
       
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v2
