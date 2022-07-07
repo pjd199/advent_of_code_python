@@ -10,7 +10,7 @@ import pytest
 from advent_of_code.utils.input_loader import load_file
 from advent_of_code.utils.solver_interface import SolverInterface
 
-with open("./tests/test_cases.json") as file:
+with open("./tests/test_dayX.json") as file:
     test_cases = load(file)
 
 
