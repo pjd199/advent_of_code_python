@@ -10,13 +10,18 @@ import pytest
 from advent_of_code.utils.input_loader import load_file
 from advent_of_code.utils.solver_interface import SolverInterface
 
-with open("./tests/test_dayX.json") as file:
+with open("./tests/unit/test_dayX.json") as file:
     test_cases = load(file)
 
 
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_module_spec(year: str, day: str) -> None:
     """Test the module exists and has a class of the right type.
@@ -37,6 +42,11 @@ def test_module_spec(year: str, day: str) -> None:
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_load_test_file(year: str, day: str) -> None:
     """Tests that all the required input files are available.
@@ -58,6 +68,11 @@ def test_load_test_file(year: str, day: str) -> None:
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_init_solver(year: str, day: str) -> None:
     """Test the solution accepts the puzzle input without raising an error.
@@ -98,6 +113,11 @@ def test_init_solver(year: str, day: str) -> None:
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_solve_part_one(year: str, day: str) -> None:
     """Test the solution has the correct answer for part one.
@@ -125,6 +145,11 @@ def test_solve_part_one(year: str, day: str) -> None:
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_solve_part_two(year: str, day: str) -> None:
     """Test the solution have the correct answers.
@@ -159,6 +184,11 @@ def test_solve_part_two(year: str, day: str) -> None:
 @pytest.mark.parametrize(
     ("year", "day"),
     [(year, day) for year, days in test_cases.items() for day in days],
+    ids=[
+        f"{int(year):04}-{int(day):02}"
+        for year, days in test_cases.items()
+        for day in days
+    ],
 )
 def test_solve_all(year: str, day: str) -> None:
     """Test the solution have the correct answers.
