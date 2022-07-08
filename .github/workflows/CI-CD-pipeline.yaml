@@ -99,7 +99,7 @@ jobs:
       - name: Run coverage
         run: |
           coverage combine coverage*/.coverage*
-          coverage xml:coverage.xml
+          coverage xml
           coverage report --fail-under=100
           
       - name: Upload to Codecov
