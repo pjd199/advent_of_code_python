@@ -53,7 +53,11 @@ def handle_year_path(year: int) -> tuple[Json, int]:
         tuple[Json, int]: a JSON response
     """
     dates = [date for date, status in implementation_status().items() if status]
-    body = {"year": year, "days": [x.day for x in dates if x.year == year]}
+    days = [x.day for x in dates if x.year == year]
+    if not days:
+        abort(404)
+
+    body = {"year": year, "days": days}
     return body, 200
 
 
