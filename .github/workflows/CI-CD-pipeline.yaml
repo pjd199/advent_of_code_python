@@ -104,16 +104,15 @@ jobs:
         run: |
           coverage xml
 
-      - name: Check for 100% coverage
-        run: |
-          coverage report --fail-under=100
-          
       - name: Send coverage report to Codecov
-        if: always()
         uses: codecov/codecov-action@v1
         with:
             token: ${{ secrets.CODECOV_TOKEN }}
             file: coverage.xml
+            
+      - name: Check for 100% coverage
+        run: |
+          coverage report --fail-under=100
 
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
