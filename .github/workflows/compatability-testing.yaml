@@ -37,7 +37,7 @@ jobs:
 
       - name: Static type check with mypy
         run: |
-          mypy --strict ./advent_of_code/
+          mypy .
       
       - name: Testing with pytest
         run: |
