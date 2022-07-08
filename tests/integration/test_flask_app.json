@@ -165,6 +165,34 @@
         },
         {
             "request": {
+                "path": "/2015/1/part_one?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/tests/input/2015/1.txt",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": {
+                    "year": 2015,
+                    "day": 1,
+                    "part_one": "74"
+                }
+            }
+        },
+        {
+            "request": {
+                "path": "/2015/1/part_two?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/tests/input/2015/1.txt",
+                "method": "GET"
+            },
+            "response": {
+                "status": 200,
+                "body": {
+                    "year": 2015,
+                    "day": 1,
+                    "part_two": "1795"
+                }
+            }
+        },
+        {
+            "request": {
                 "path": "/2014/14",
                 "method": "GET"
             },
