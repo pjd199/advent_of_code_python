@@ -61,7 +61,7 @@ def handle_year_path(year: int) -> tuple[Json, int]:
     return body, 200
 
 
-def load_input() -> list[str]:
+def load_input(year: int, day: int) -> list[str]:
     # load the puzzle input from POST, query parameters, or default to test
     query_input = request.args.get("input")
     if request.method == "POST":
@@ -90,7 +90,7 @@ def handle_solve_path(year: int, day: int) -> tuple[Json, int]:
 
     # find the solver
     mod = import_module(f"advent_of_code.year_{year}.day{day}")
-    solver = mod.Solver(load_input())
+    solver = mod.Solver(load_input(year, day))
     results = solver.solve_all()
 
     # construct the body
@@ -118,7 +118,7 @@ def handle_solve_path_with_part(year: int, day: int, part: str) -> tuple[Json, i
 
     # find the solver
     mod = import_module(f"advent_of_code.year_{year}.day{day}")
-    solver = mod.Solver(load_input())
+    solver = mod.Solver(load_input(year, day))
 
     # construct the body
     body: Json = {"year": year, "day": day}
