@@ -5,5 +5,4 @@ requests
 Flask
 https://github.com/pjd199/flask-aws-lambda/archive/refs/heads/master.zip
 types-requests
-types-Flask
 types-Werkzeug
