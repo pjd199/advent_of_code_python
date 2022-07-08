@@ -61,6 +61,17 @@ def handle_year_path(year: int) -> tuple[Json, int]:
     return body, 200
 
 
+def load_input() -> list[str]:
+    # load the puzzle input from POST, query parameters, or default to test
+    query_input = request.args.get("input")
+    if request.method == "POST":
+         return load_multi_line_string(request.get_data(as_text=True))
+    elif query_input is not None:
+        return load_multi_line_string(get(query_input).text)
+    else:
+        return load_file(f"./tests/input/{year}/{day}.txt")
+
+
 @app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
 def handle_solve_path(year: int, day: int) -> tuple[Json, int]:
     """Handles the solve all parts path - eg /2015/1 .
@@ -77,18 +88,9 @@ def handle_solve_path(year: int, day: int) -> tuple[Json, int]:
     ):
         abort(404)
 
-    # load the puzzle input from POST, query parameters, or default to test
-    query_input = request.args.get("input")
-    if request.method == "POST":
-        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
-    elif query_input is not None:
-        puzzle_input = load_multi_line_string(get(query_input).text)
-    else:
-        puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
-
     # find the solver
     mod = import_module(f"advent_of_code.year_{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver = mod.Solver(load_input())
     results = solver.solve_all()
 
     # construct the body
@@ -114,18 +116,9 @@ def handle_solve_path_with_part(year: int, day: int, part: str) -> tuple[Json, i
     if not is_solver_implemented(year, day) or part not in ["part_one", "part_two"]:
         abort(404)
 
-    # load the puzzle input from POST, query parameters, or default to test
-    query_input = request.args.get("input")
-    if request.method == "POST":
-        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
-    elif query_input is not None:
-        puzzle_input = load_multi_line_string(get(query_input).text)
-    else:
-        puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
-
     # find the solver
     mod = import_module(f"advent_of_code.year_{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver = mod.Solver(load_input())
 
     # construct the body
     body: Json = {"year": year, "day": day}
