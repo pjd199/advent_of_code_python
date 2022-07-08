@@ -106,9 +106,9 @@ jobs:
 
       - name: Send coverage report to Codecov
         uses: codecov/codecov-action@v1
-        with:
-            token: ${{ secrets.CODECOV_TOKEN }}
-            file: coverage.xml
+        #with:
+        #    token: ${{ secrets.CODECOV_TOKEN }}
+        #    file: coverage.xml
             
       - name: Check for 100% coverage
         run: |
