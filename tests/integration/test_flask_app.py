@@ -39,19 +39,6 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-@pytest.fixture()
-def test_case(data: Json) -> Json:
-    """Simple pass through of paramatised test cases.
-
-    Args:
-        data (Json): the test case
-
-    Returns:
-        Json: the test case
-    """
-    return data
-
-
 def test_routes(test_case: Json, test_client) -> None:
     """Integration test for GET method.
 
