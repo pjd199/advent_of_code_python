@@ -47,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        group: [1, 2, 3, 4, 5, 6]
+        group: [1, 2, 3, 4, 5, 6, 7, 8]
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -62,7 +62,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install pytest pytest-split pytest-cov pytest-xdist pytest-custom_exit_code
+          pip install pytest pytest-split pytest-cov pytest-xdist pytest-custom_exit_code --splitting-algorithm=least_duration
       
       - name: Run pytest
         run: pytest --cov --splits 6 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code
