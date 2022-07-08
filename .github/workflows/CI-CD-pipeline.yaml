@@ -42,19 +42,6 @@ jobs:
       - name: Security check with bandit
         run: |
           bandit -r advent_of_code
-      
-      # - name: Testing with pytest
-      #   run: |
-      #     pytest -n auto --cov --cov-report=xml:coverage.xml
-
-      # - name: Upload coverage to Codecov
-      #   env:
-      #     CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-      #   if: ${{ env.CODECOV_TOKEN }}
-      #   uses: codecov/codecov-action@v1
-      #   with:
-      #     token: ${{ secrets.CODECOV_TOKEN }}
-      #     file: coverage.xml
 
   test:
     runs-on: ubuntu-latest
