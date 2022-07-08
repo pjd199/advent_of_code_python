@@ -1,6 +1,7 @@
 """Unit tests for the lambda_handler function."""
 from json import load
 from typing import Any
+
 import pytest
 
 from advent_of_code.app import app
@@ -23,6 +24,11 @@ def test_client():
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc):
+    """Generate the parametised tests.
+
+    Args:
+        metafunc (pytest.Metafunc): the meta function
+    """
     with open("./tests/integration/test_flask_app.json") as file:
         if "test_case" in metafunc.fixturenames:
             cases = load(file)["tests"]
@@ -33,8 +39,16 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-@pytest.fixture
-def test_case(data):
+@pytest.fixture()
+def test_case(data: Json) -> Json:
+    """Simple pass through of paramatised test cases.
+
+    Args:
+        data (Json): the test case
+
+    Returns:
+        Json: the test case
+    """
     return data
 
 
