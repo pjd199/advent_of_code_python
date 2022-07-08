@@ -96,13 +96,19 @@ jobs:
         # Downloads coverage1, coverage2, etc.
         uses: actions/download-artifact@v2
       
-      - name: Run coverage
+      - name: Combine coverage files
         run: |
           coverage combine coverage*/.coverage*
+
+      - name: Generate XML report
+        run: |
           coverage xml
+
+      - name: Check for 100% coverage
+        run: |
           coverage report --fail-under=100
           
-      - name: Upload to Codecov
+      - name: Send coverage report to Codecov
         if: always()
         uses: codecov/codecov-action@v1
         with:

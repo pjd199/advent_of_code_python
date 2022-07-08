@@ -72,7 +72,9 @@ def handle_solve_path(year: int, day: int) -> tuple[Json, int]:
     Returns:
         tuple[Json, int]: a JSON response
     """
-    if not is_solver_implemented(year, day):
+    if not is_solver_implemented(year, day) or (
+        request.method == "POST" and request.args.get("input")
+    ):
         abort(404)
 
     # load the puzzle input from POST, query parameters, or default to test
