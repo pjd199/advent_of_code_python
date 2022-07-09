@@ -56,10 +56,10 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     return {"year": year, "days": days}, 200
 
 
-@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])  # type: ignore
-@app.route(
-    "/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"]
-)  # type: ignore
+@app.route("/<int:year>/<int:day>", methods=["GET"])  # type: ignore
+@app.route("/<int:year>/<int:day>", methods=["POST"])  # type: ignore
+@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET"])  # type: ignore
+@app.route("/<int:year>/<int:day>/<string:part>", methods=["POST"])  # type: ignore
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
 ) -> Tuple[Dict[str, Any], int]:
