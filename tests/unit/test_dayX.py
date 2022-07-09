@@ -56,7 +56,7 @@ def test_load_test_file(year: str, day: str) -> None:
         day (str): the day to test
     """
     # check the input file exists and is not empty
-    filename = f"./puzzle_input/year{year}/{day}.txt"
+    filename = f"./puzzle_input/year{year}/day{day}.txt"
     puzzle_input = load_file(filename)
     assert puzzle_input is not None, f"Unable to load {filename}"
     assert len(puzzle_input) > 0, f"{filename} has no content"
@@ -82,7 +82,7 @@ def test_init_solver(year: str, day: str) -> None:
         day (str): the day to test
     """
     # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/{day}.txt")
+    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # instantiate the class, which should not raise any expections
     mod = import_module(f"advent_of_code.year{year}.day{day}")
@@ -127,7 +127,7 @@ def test_solve_part_one(year: str, day: str) -> None:
         day (str): the day to test
     """
     # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/{day}.txt")
+    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
@@ -159,7 +159,7 @@ def test_solve_part_two(year: str, day: str) -> None:
         day (str): the day to test
     """
     # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/{day}.txt")
+    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # dynamically instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
@@ -198,7 +198,7 @@ def test_solve_all(year: str, day: str) -> None:
         day (str): the day to test
     """
     # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/{day}.txt")
+    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # dynamically instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")

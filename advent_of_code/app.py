@@ -90,7 +90,7 @@ def handle_solve_path_with_part(
     elif query_input is not None:
         puzzle_input = load_multi_line_string(get(query_input).text)
     else:
-        puzzle_input = load_file(f"./puzzle_input/year{year}/{day}.txt")
+        puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # find the solver
     mod = import_module(f"advent_of_code.year{year}.day{day}")
