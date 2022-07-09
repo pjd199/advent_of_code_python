@@ -2,6 +2,7 @@
 
 from collections import namedtuple
 from re import compile
+from sys import maxsize
 from typing import List
 
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -78,13 +79,14 @@ class Solver(SolverInterface):
         heading = 0
         breadcrumbs = set()
 
-        for instruction in self.input:
-            if instruction.turn == "L":
+        i = 0
+        while i < len(self.input):
+            if self.input[i].turn == "L":
                 heading = heading - 90 if heading > 0 else 270
             else:
                 heading = heading + 90 if heading < 270 else 0
 
-            for _ in range(instruction.distance):
+            for _ in range(self.input[i].distance):
                 if heading == 0:
                     y += 1
                 elif heading == 90:
@@ -95,8 +97,11 @@ class Solver(SolverInterface):
                     x -= 1
 
                 if (x, y) in breadcrumbs:
-                    return abs(x) + abs(y)
+                    i = maxsize
+                    break
                 else:
                     breadcrumbs.add((x, y))
+
+            i += 1
 
         return abs(x) + abs(y)
