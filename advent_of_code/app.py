@@ -22,7 +22,7 @@ PART = 2
 app = FlaskAwsLambda(__name__)
 
 
-@app.route("/", methods=["GET"])
+@app.route("/", methods=["GET"])  # type: ignore
 def handle_root_path() -> Tuple[Dict[str, Any], int]:
     """Handles the root path - / .
 
@@ -38,7 +38,7 @@ def handle_root_path() -> Tuple[Dict[str, Any], int]:
     }, 200
 
 
-@app.route("/<int:year>", methods=["GET"])
+@app.route("/<int:year>", methods=["GET"])  # type: ignore
 def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     """Handles the year path - eg /2015 .
 
@@ -56,8 +56,10 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     return {"year": year, "days": days}, 200
 
 
-@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
+@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])  # type: ignore
+@app.route(
+    "/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"]
+)  # type: ignore
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
 ) -> Tuple[Dict[str, Any], int]:
@@ -110,7 +112,7 @@ def handle_solve_path_with_part(
     return body, 200
 
 
-@app.errorhandler(HTTPException)
+@app.errorhandler(HTTPException)  # type: ignore
 def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
     """Return JSON instead of HTML for HTTP errors.
 
