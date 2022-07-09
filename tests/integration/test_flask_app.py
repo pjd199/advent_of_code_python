@@ -3,6 +3,7 @@ from json import load
 from typing import Any, Dict
 
 import pytest
+from freezegun import freeze_time
 
 from advent_of_code.app import app
 
@@ -44,16 +45,27 @@ def test_routes(test_case: Dict["str", Any], test_client) -> None:
         test_case (Json): the test case data
         test_client: the Flask test client
     """
-    if test_case["request"]["method"] == "GET":
-        response = test_client.get(test_case["request"]["path"])
-    elif "body" in test_case["request"] and "content_type" in test_case["request"]:
-        response = test_client.post(
-            test_case["request"]["path"],
-            data=test_case["request"]["body"],
-            content_type=test_case["request"]["content_type"],
-        )
+
+    def send_request():
+        if test_case["request"]["method"] == "GET":
+            return test_client.get(test_case["request"]["path"])
+        elif "body" in test_case["request"] and "content_type" in test_case["request"]:
+            return test_client.post(
+                test_case["request"]["path"],
+                data=test_case["request"]["body"],
+                content_type=test_case["request"]["content_type"],
+            )
+        else:
+            return test_client.post(test_case["request"]["path"])
+
+    # set the time, if needed
+    if "date" in test_case["request"]:
+        with freeze_time(test_case["request"]["date"]):
+            response = send_request()
     else:
-        response = test_client.post(test_case["request"]["path"])
+        response = send_request()
+
+    # check the response code and body
     assert response.status_code == test_case["response"]["status"]
     if "body" in test_case["response"]:
         assert response.get_json() == test_case["response"]["body"]
