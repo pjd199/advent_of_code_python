@@ -64,7 +64,7 @@ def is_solver_implemented(year: int, day: int) -> bool:
         bool: Returns True if solver is implemented, otherwise False.
     """
     try:
-        find_spec(f"advent_of_code.year_{year}.day{day}")
+        find_spec(f"advent_of_code.year{year}.day{day}")
         return True
     except ModuleNotFoundError:
         return False

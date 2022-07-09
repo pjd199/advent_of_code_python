@@ -31,11 +31,11 @@ def test_module_spec(year: str, day: str) -> None:
         day (str): the day to test
     """
     # check the module exists
-    module_name = f"advent_of_code.year_{year}.day{day}"
+    module_name = f"advent_of_code.year{year}.day{day}"
     assert find_spec(module_name) is not None, f"{module_name} does not exist"
 
     # load the module and check the class is correct subclass
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     assert issubclass(mod.Solver, SolverInterface)
 
 
@@ -85,7 +85,7 @@ def test_init_solver(year: str, day: str) -> None:
     puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
 
     # instantiate the class, which should not raise any expections
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     mod.Solver(puzzle_input)
 
     # test with None input, which should cause a problem
@@ -130,7 +130,7 @@ def test_solve_part_one(year: str, day: str) -> None:
     puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
 
     # instantiate the class
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     solver = mod.Solver(puzzle_input)
 
     # check the result
@@ -162,7 +162,7 @@ def test_solve_part_two(year: str, day: str) -> None:
     puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
 
     # dynamically instantiate the class
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     solver = mod.Solver(puzzle_input)
 
     # check the result - note day 25 doesn't have a part_two
@@ -201,7 +201,7 @@ def test_solve_all(year: str, day: str) -> None:
     puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
 
     # dynamically instantiate the class
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     solver = mod.Solver(puzzle_input)
 
     # check the results

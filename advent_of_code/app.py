@@ -93,7 +93,7 @@ def handle_solve_path_with_part(
         puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
 
     # find the solver
-    mod = import_module(f"advent_of_code.year_{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     solver = mod.Solver(puzzle_input)
 
     # solve puzzle
