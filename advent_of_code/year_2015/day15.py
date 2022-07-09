@@ -1,6 +1,7 @@
 """Solution for day 15 of Advent of Code 2015."""
+import operator
+from functools import reduce
 from itertools import combinations_with_replacement, groupby
-from math import prod
 from re import compile
 from typing import List, Tuple
 
@@ -84,7 +85,7 @@ class Solver(SolverInterface):
                 for x in range(len(property_scores)):
                     property_scores[x] += recipe[item] * self.ingredients[item][x]
             property_scores = [max(x, 0) for x in property_scores]
-            score = prod(property_scores[:-1])
+            score = reduce(operator.mul, property_scores[:-1], 1)
             top_score = max(score, top_score)
             if property_scores[-1] == 500:
                 top_calorie_counting_score = max(score, top_calorie_counting_score)

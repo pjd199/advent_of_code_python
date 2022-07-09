@@ -1,6 +1,7 @@
 """Solution for day 24 of Advent of Code 2015."""
+import operator
+from functools import reduce
 from itertools import combinations
-from math import prod
 from re import compile
 from typing import List, Tuple
 
@@ -66,7 +67,7 @@ class Solver(SolverInterface):
         for _ in range(groups):
             group, remainder = self._split(remainder, target)
             result.append(group)
-        return prod(result[0])
+        return reduce(operator.mul, result[0], 1)
 
     def _split(self, items: List[int], target: int) -> Tuple[List[int], List[int]]:
         """Split the item list into two groups, the first of which has the sum of target.
@@ -84,7 +85,7 @@ class Solver(SolverInterface):
         for x in range(1, len(items) + 1):
             group = sorted(
                 [list(x) for x in combinations(items, x) if sum(list(x)) == target],
-                key=prod,
+                key=lambda x: reduce(operator.mul, x, 1),
             )
             if group:
                 result = group[0]

@@ -92,20 +92,20 @@ def handle_solve_path_with_part(
     mod = import_module(f"advent_of_code.year_{year}.day{day}")
     solver = mod.Solver(puzzle_input)
 
-    # construct the body
-    body = {}
-    if part == "part_one":
-        body["part_one"] = str(solver.solve_part_one())
+    # solve puzzle
+    if part == "part_one" or day == 25:
+        part_one, part_two = solver.solve_part_one(), None
     elif part == "part_two":
-        body["part_two"] = str(solver.solve_part_two())
+        part_one, part_two = None, str(solver.solve_part_two())
     else:
-        results = solver.solve_all()
-        body["part_one"] = str(results[0])
-        if len(results) == 2:
-            body["part_two"] = str(results[1])
+        part_one, part_two = solver.solve_all()
 
-    body["year"] = year
-    body["day"] = day
+    # construct the body
+    body: Dict[str, Any] = {"year": year, "day": day}
+    if part_one:
+        body["part_one"] = str(part_one)
+    if part_two:
+        body["part_two"] = str(part_two)
 
     return body, 200
 

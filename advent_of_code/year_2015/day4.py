@@ -63,7 +63,10 @@ class Solver(SolverInterface):
         i = 0
         while True:
             if (
-                md5((secret + str(i)).encode(), usedforsecurity=False)
+                # python 3.9 introduced usedforsecurity=False for MD5 function,
+                # which raises a security issue for bandit - # nosec is used
+                # to ignore this, as there are no security issues here
+                md5((secret + str(i)).encode())  # nosec
                 .hexdigest()
                 .startswith(prefix)
             ):
