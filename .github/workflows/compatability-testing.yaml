@@ -1,7 +1,8 @@
 on: workflow_dispatch
 
 jobs:
-  compatability-testing:
+  test:
+    name: Compatability Testing
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 16
