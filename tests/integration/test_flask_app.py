@@ -1,12 +1,10 @@
 """Unit tests for the lambda_handler function."""
 from json import load
-from typing import Any
+from typing import Any, Dict
 
 import pytest
 
 from advent_of_code.app import app
-
-Json = dict["str", Any]
 
 
 @pytest.fixture(scope="module")
@@ -39,7 +37,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-def test_routes(test_case: Json, test_client) -> None:
+def test_routes(test_case: Dict["str", Any], test_client) -> None:
     """Integration test for GET method.
 
     Args:

@@ -1,7 +1,7 @@
 """Solution for day 11 of Advent of Code 2015."""
 from collections import deque
 from re import findall, fullmatch, search
-from typing import List
+from typing import Deque, List
 
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -72,7 +72,7 @@ class Solver(SolverInterface):
         found = False
         while not found:
             # increament the password
-            next_password: deque[str] = deque()
+            next_password: Deque[str] = deque()
             add_one = True
             for i, c in enumerate(reversed(password)):
                 if add_one:

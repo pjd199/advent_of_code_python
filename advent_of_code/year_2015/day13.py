@@ -59,15 +59,14 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
+        # add "Me" to the table
+        names_with_me = self.names | {"Me"}
+        values_with_me = dict(self.values)
+        values_with_me.update({("Me", x): 0 for x in self.names})
+        values_with_me.update({(x, "Me"): 0 for x in self.names})
+
         # solve the puzzle
-        return self._find_optimal(
-            self.names | {"Me"},
-            (
-                self.values
-                | {("Me", x): 0 for x in self.names}
-                | {(x, "Me"): 0 for x in self.names}
-            ),
-        )
+        return self._find_optimal(names_with_me, values_with_me)
 
     def _find_optimal(self, names: Set[str], values: Dict[Tuple[str, str], int]) -> int:
         """Find the optimal searing arrangement for these guests.
