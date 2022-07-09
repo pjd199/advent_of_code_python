@@ -8,6 +8,7 @@ from advent_of_code.utils.solver_interface import SolverInterface
 
 Instruction = namedtuple("Instruction", ["turn", "distance"])
 
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
