@@ -1,6 +1,6 @@
 """Functions based on the implementation status of solvers."""
 from datetime import date
-from importlib.util import find_spec
+from importlib import import_module
 from typing import Dict, Iterable
 
 
@@ -64,7 +64,7 @@ def is_solver_implemented(year: int, day: int) -> bool:
         bool: Returns True if solver is implemented, otherwise False.
     """
     try:
-        find_spec(f"advent_of_code.year{year}.day{day}")
+        import_module(f"advent_of_code.year{year}.day{day}")
         return True
     except ModuleNotFoundError:
         return False
