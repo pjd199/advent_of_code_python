@@ -171,7 +171,7 @@
         },
         {
             "request": {
-                "path": "/2015/1/part_one?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/tests/puzzle_input/year2015/day1.txt",
+                "path": "/2015/1/part_one?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/puzzle_input/year2015/day1.txt",
                 "method": "GET"
             },
             "response": {
@@ -185,7 +185,7 @@
         },
         {
             "request": {
-                "path": "/2015/1/part_two?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/tests/input/year2015/day1.txt",
+                "path": "/2015/1/part_two?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/puzzle_input/year2015/day1.txt",
                 "method": "GET"
             },
             "response": {
