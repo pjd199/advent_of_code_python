@@ -55,6 +55,7 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
 
     return {"year": year, "days": days}, 200
 
+
 # For compatability with mypy in python 3.7 and black's line length,
 # the GET and POST needs to be seperated to create shorter lines
 @app.route("/<int:year>/<int:day>", methods=["GET"])  # type: ignore
