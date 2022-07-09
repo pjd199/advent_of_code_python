@@ -33,6 +33,7 @@ class Solver(SolverInterface):
         # split up the input
         tokens = puzzle_input[0].split(", ")
 
+        # parse the input
         self.input = []
         pattern = compile(r"(?P<turn>[L|R])(?P<dist>[0-9]+)")
         for i, x in enumerate(tokens):
