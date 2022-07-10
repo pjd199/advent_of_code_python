@@ -1,3 +1,5 @@
+name: Compatability Testing
+
 on: workflow_dispatch
 
 jobs:
