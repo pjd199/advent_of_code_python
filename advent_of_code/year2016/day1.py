@@ -37,7 +37,7 @@ class Solver(SolverInterface):
         self.input = []
         pattern = compile(r"(?P<turn>[L|R])(?P<dist>[0-9]+)")
         for i, x in enumerate(tokens):
-            match = pattern.fullmatch(x):
+            match = pattern.fullmatch(x)
             if match:
                 self.input.append(Instruction(match["turn"], int(match["dist"])))
             else:
