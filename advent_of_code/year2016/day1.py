@@ -37,8 +37,9 @@ class Solver(SolverInterface):
         self.input = []
         pattern = compile(r"(?P<turn>[L|R])(?P<dist>[0-9]+)")
         for i, x in enumerate(tokens):
-            if m := pattern.fullmatch(x):
-                self.input.append(Instruction(m["turn"], int(m["dist"])))
+            match = pattern.fullmatch(x):
+            if match:
+                self.input.append(Instruction(match["turn"], int(match["dist"])))
             else:
                 raise RuntimeError(f"Unable to parse line {i}: {x}")
 
