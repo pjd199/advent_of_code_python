@@ -1,4 +1,4 @@
-"""Handler for AWS Lambda requests."""
+"""Flask Application for Advent of Code Solver RESTful API."""
 from importlib import import_module
 from typing import Any, Dict, Optional, Tuple
 
