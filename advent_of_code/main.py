@@ -1,4 +1,4 @@
-"""This is the main function for the Advent of Code software."""
+"""Command line interface for Advent of Code Solver."""
 from datetime import date
 from importlib import import_module
 from pathlib import Path
@@ -40,7 +40,7 @@ def _main() -> None:
     print(f"Solving AoC year {year}, day {day}")
 
     # load the input file
-    puzzle_input = load_file(f"./tests/input/{year}/{day}.txt")
+    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
     # dynamically instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
