@@ -1,15 +1,18 @@
 """Unit tests for the lambda_handler function."""
+from collections import Iterable
 from json import load
 from typing import Any, Dict
 
 import pytest
+from flask.testing import FlaskClient
 from freezegun import freeze_time
+from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
 
 
 @pytest.fixture(scope="module")
-def test_client():
+def test_client() -> Iterable[FlaskClient]:
     """Load the Flask test client.
 
     Yields:
@@ -22,7 +25,7 @@ def test_client():
     ctx.pop()
 
 
-def pytest_generate_tests(metafunc: pytest.Metafunc):
+def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     """Generate the parametised tests.
 
     Args:
@@ -38,7 +41,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc):
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-def test_routes(test_case: Dict["str", Any], test_client) -> None:
+def test_routes(test_case: Dict["str", Any], test_client: FlaskClient) -> None:
     """Integration test for GET method.
 
     Args:
@@ -46,7 +49,7 @@ def test_routes(test_case: Dict["str", Any], test_client) -> None:
         test_client: the Flask test client
     """
 
-    def send_request():
+    def send_request() -> TestResponse:
         if test_case["request"]["method"] == "GET":
             return test_client.get(test_case["request"]["path"])
         elif "body" in test_case["request"] and "content_type" in test_case["request"]:
