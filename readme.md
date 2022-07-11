@@ -15,12 +15,10 @@
 * [AWS Lambda](https://aws.amazon.com/lambda/)
 * [Github Actions](https://github.com/features/actions)
 
-## Getting Started
-
-## RESTful API
+# RESTful API
 The RESTful API for this project is available at https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/. The API supports the following endpoints and successful responses are returned in JSON with a status code of 200.
 
-### /
+## /
 A list of puzzle solutions, listed by year and day
 ```
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
@@ -28,7 +26,7 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
 {"years":[{"days":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],"year":2015},{"days":[1],"year":2016}]}
 ```
 
-### /{year}
+## /{year}
 A list of puzzles which have been solved for the requested year.
 ```
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
@@ -36,11 +34,11 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
 {"days":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],"year":2015}
 ```
 
-### /{year}/{day}
+## /{year}/{day}
 Solve the puzzle for the requested year and day. There are three options for providing the puzzle input.
-* The URL of a puzzle input file can be passed in using the input query parameter when requested using the GET method.
-* The puzzle input file can be uploaded using the POST method.
-* If not puzzle input is provided, the solver uses the author's puzzle input.
+1. The URL of a puzzle input file can be passed in using the input query parameter when requested using the GET method.
+2. The puzzle input file can be uploaded using the POST method.
+3. If not puzzle input is provided, the solver uses the author's puzzle input.
 
 ```
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/puzzle_input/year2015/day1.txt
@@ -56,7 +54,7 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
 {"day":1,"part_one":"74","part_two":"1795","year":2015}
 ```
 
-### /{year}/{day}/part_one
+## /{year}/{day}/part_one
 As above, but only solves part one of the puzzle.
 ```
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1/part_one
@@ -65,7 +63,7 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
 {"day":1,"part_one":"74","year":2015}
 ```
 
-### /{year}{day}/part_two
+## /{year}{day}/part_two
 As above, but only solves part two of the puzzle.
 ```
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1/part_two
@@ -73,17 +71,25 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
 ```JSON
 {"day":1,"part_two":"1795","year":2015}
 ```
-## Installation and Deployment
+# Installation and Deployment
 
-### Prerequisites
+## Prerequisites
+* [Python 3.8-3.11](https://www.python.org/)
+* [AWS SAM CLI and AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
-### Installation
+## Installation
 
-### Deployment to AWS Lambda
+1. Clone the repo
+```
+git clone https://github.com/pjd199/advent_of_code_python
+```
+2. 
 
-## Usage
+## Deployment to AWS Lambda
 
-### Command Line Interface
+# Usage
+
+## Command Line Interface
 
 ## Roadmap
 
