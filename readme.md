@@ -1,11 +1,11 @@
-# Advent of Code Serverless API
+# Advent of Code Solver RESTful API
 
 [![python versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/) ![platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/CI-CD-Pipeline/main?label=CI%2FCD%20Pipeline)](https://github.com/pjd199/advent_of_code_python/actions/workflows/CI-CD-pipeline.yaml) [![codecov](https://codecov.io/gh/pjd199/advent_of_code_python/branch/main/graph/badge.svg?token=CZGMDWH4SH)](https://codecov.io/gh/pjd199/advent_of_code_python) ![Website](https://img.shields.io/website?down_message=offline&label=AWS%20Lambda&up_message=ok&url=https%3A%2F%2Fjnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws%2F)
 
 ## About
-[Advent of Code](https://adventofcode.com/) is an annual coding challenge by [Eric Wastl](http://was.tl/). Some take up the challenge for the glory of the hall of fame. Others, like me, use the daily puzzles as a way of learning a new language. And so, this project is the story of my journey into [Python](https://www.python.org/) - the language, the ecosystem and the whole Pythnoic world. Blended with years of experience as a Software Engineer, the aim is to compose solutions that are elegant, robust and fully tested. Oh, and deployed as a RESTful API using [Flask](https://palletsprojects.com/p/flask/), [AWS Lambda](https://aws.amazon.com/lambda/), and * [Github Actions](https://github.com/features/actions) for a CI/CD pipleline with automated test, build and deplay functionality. Free to try it out below, just don't spoil your fun by using the API until you've solved the puzzle by yourself!!!
+[Advent of Code](https://adventofcode.com/) is an annual coding challenge by [Eric Wastl](http://was.tl/). Some take up the challenge for the glory of the hall of fame. Others, like me, use the daily puzzles as a way of learning a new language. And so, this project is the story of my journey into [Python](https://www.python.org/) - the language, the ecosystem and the whole Pythnoic world. Blended with years of experience as a Software Engineer, the aim is to compose solutions that are elegant, robust and fully tested. Oh, and deployed as a RESTful API using [Flask](https://palletsprojects.com/p/flask/), [AWS Lambda](https://aws.amazon.com/lambda/), and [Github Actions](https://github.com/features/actions) for a CI/CD pipleline with automated test, build and deplay functionality. Free to try it out below, just don't spoil your fun by using the API until you've solved the puzzle by yourself!!!
 
 ## Built with
 
