@@ -1,7 +1,6 @@
 """Unit tests for the lambda_handler function."""
-from collections import Iterable
 from json import load
-from typing import Any, Dict
+from typing import Any, Dict, Iterable
 
 import pytest
 from flask.testing import FlaskClient
