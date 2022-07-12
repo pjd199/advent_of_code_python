@@ -9,7 +9,20 @@
 
 ## About
 
-[Advent of Code](https://adventofcode.com/) is an annual coding challenge by [Eric Wastl](http://was.tl/). Some take up the challenge for the glory of the hall of fame. Others, like me, use the daily puzzles as a way of learning a new language. And so, this project is the story of my journey into [Python](https://www.python.org/) - the language, the ecosystem and the whole Pythnoic world. Blended with years of experience as a Software Engineer, the aim is to compose solutions that are elegant, robust and fully tested. Oh, and deployed as a RESTful API using [Flask](https://palletsprojects.com/p/flask/), [AWS Lambda](https://aws.amazon.com/lambda/), and [Github Actions](https://github.com/features/actions) for a CI/CD pipleline with automated test, build and deplay functionality. Free to try it out below, just don't spoil your fun by using the API until you've solved the puzzle by yourself!!!
+[Advent of Code](https://adventofcode.com/) is an annual coding challenge by
+[Eric Wastl](http://was.tl/). Some take up the challenge for the glory of the
+hall of fame. Others, like me, use the daily puzzles as a way of learning a
+new language. And so, this project is the story of my journey into
+[Python](https://www.python.org/) - the language, the ecosystem and the whole
+Pythnoic world. Blended with years of experience as a Software Engineer,
+the aim is to compose solutions that are elegant, robust and fully tested.
+Oh, and deployed as a RESTful API using
+[Flask](https://palletsprojects.com/p/flask/),
+[AWS Lambda](https://aws.amazon.com/lambda/),
+with [Github Actions](https://github.com/features/actions) providing for a 
+CI/CD pipleline with automated test, build and deploy functionality. 
+Free to try it out below, just don't spoil your fun by using the API until 
+you've solved the puzzle by yourself!!!
 
 ## Built with
 
@@ -42,13 +55,15 @@ git clone https://github.com/pjd199/advent_of_code_python
 sam build
 ```
 
-2. Deploy to AWS, using the --guided option on the first call to set stack names and locations, which will be saved in samconfig.toml
+2. Deploy to AWS, using the --guided option on the first call to set 
+   stack names and locations, which will be saved in samconfig.toml
 
 ```
 sam deploy --guided
 ```
 
-*If you encounter problems during deployment, the [AWS SAM Hello World](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) tutorial has a good troubleshooting section.*
+*If you encounter problems during deployment, the 
+[AWS SAM Hello World](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) tutorial has a good troubleshooting section.*
 
 ### Clean up
 
@@ -62,13 +77,21 @@ sam delete
 
 ### Using the RESTful API
 
-An deployment of the RESTful API for this project is available at https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/. If installed and deployed seperately, use the URL provided at the end of the SAM build process.
+An deployment of the RESTful API for this project is available at 
+[https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws). 
+If installed and deployed by another user, use the URL provided at the end of the 
+SAM build process.
 
-The API supports the following endpoints and responses are in JSON. The following standard status codes are returned in the response header.
+#### Endpoints
+
+The endpoints for this API are listed below. The body of the response is in 
+JSON format, with the HTTP header containing one of the following standard 
+status codes:
 
 * 200 - success
 * 404 - no solver for requested date or path does not exist
-* 500 - server error, including errors in puzzle input file 
+* 500 - server error, including errors in puzzle input file The
+ 
 
 #### /
 
@@ -96,11 +119,14 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
 
 #### /{year}/{day}
 
-Solve the puzzle for the requested year and day. There are three options for providing the puzzle input.
+Solve the puzzle for the requested year and day. There are three options
+for providing the puzzle input.
 
-1. The URL of a puzzle input file can be passed in using the input query parameter when requesting with the HTTP GET method.
+1. The URL of a puzzle input file can be passed in using the input query
+   parameter when requesting with the HTTP GET method.
 2. The puzzle input file can be uploaded using the HTTP POST method.
-3. If no puzzle input is provided, the author's puzzle input is used by default.
+3. If no puzzle input is provided, the author's puzzle input is used by
+   default.
 
 ``` sh
 curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/puzzle_input/year2015/day1.txt
@@ -145,7 +171,8 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
 
 ### Command Line Interface
 
-Run the Advent of Code Solver form the command line, entering the year and date when prompted.
+Run the Advent of Code Solver form the command line, entering the year and date
+when prompted.
 
 ``` sh
 python .\advent_of_code\main.py
@@ -164,7 +191,8 @@ Part 2: 1795
 Time: 1ms
 ```
 
-Alternatively, the year and the date may be provided as arguments on the command line:
+Alternatively, the year and the date may be provided as arguments on the
+command line:
 
 ``` sh
 python .\advent_of_code\main.py 2015 1
@@ -173,16 +201,20 @@ python .\advent_of_code\main.py 2015 1
 ## Roadmap
 
 * [ ] Add puzzle metadata, including title and description
+* [ ] Test against multiple sets of puzzle input files
 * [ ] Solve puzzles for 2016
 * [ ] Solve puzzles for 2017
 * [ ] Solve puzzles for 2018
 * [ ] Solve puzzles for 2019
 * [ ] Solve puzzles for 2020
 * [ ] Solve puzzles for 2021
+* [ ] Wait for the release of the next Adevent of Code adventure on
+  1st December 2022.
 
 ## Licence
 
-Distributed under the MIT License. See [licence.md](./license.md) for more information.
+Distributed under the MIT License. See [licence.md](./license.md)
+for more information.
 
 ## Author
 
@@ -192,4 +224,6 @@ Pete Dibdin
 
 * The updated Flask AWS Lambda interface is forked from [CodeSchwert](https://github.com/CodeSchwert/flask-aws-lambda)
 * There are many helpful Python tutorials on [Real Python](https://realpython.com/)
-* The [AWS SAM Hello World](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html) tutorial is a great introduction to working with AWS Lambda
+* The
+  [AWS SAM Hello World](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-hello-world.html)
+  tutorial is a great introduction to working with AWS Lambda
