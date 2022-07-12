@@ -152,7 +152,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-     
+
       - name: Setup AWS SAM
         uses: aws-actions/setup-sam@v1
       
@@ -164,7 +164,7 @@ jobs:
           aws-region: eu-west-2
        
       - name: SAM build
-        run: sam build
+        run: sam build --use-container
       
       - name: SAM deploy
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
