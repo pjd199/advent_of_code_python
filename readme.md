@@ -3,7 +3,8 @@
 [![python versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
 ![platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 
-[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/CI-CD-Pipeline/main?label=CI%2FCD%20Pipeline)](https://github.com/pjd199/advent_of_code_python/actions/workflows/CI-CD-pipeline.yaml)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/CI-CD-Pipeline/main?label=CI%2FCD%20pipeline)](https://github.com/pjd199/advent_of_code_python/actions/workflows/CI-CD-pipeline.yaml)
+[![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/Compatability%20Check/main?label=Compatability)](https://github.com/pjd199/advent_of_code_python/actions/workflows/compatability-check.yaml)
 [![codecov](https://codecov.io/gh/pjd199/advent_of_code_python/branch/main/graph/badge.svg?token=CZGMDWH4SH)](https://codecov.io/gh/pjd199/advent_of_code_python)
 [![Website](https://img.shields.io/website?down_message=offline&label=AWS%20Lambda&up_message=ok&url=https%3A%2F%2Fjnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws%2F)](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws)
 
