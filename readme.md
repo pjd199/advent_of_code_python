@@ -96,7 +96,7 @@ sam delete
 An deployment of the RESTful API for this project is available at 
 [https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws). 
 If installed and deployed by another user, use the URL provided at the end of the 
-SAM build process.
+SAM deploy process.
 
 #### Endpoints
 
