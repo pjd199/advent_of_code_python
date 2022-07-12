@@ -1,6 +1,13 @@
 name: Compatability Check
 
-on: workflow_dispatch
+on:
+  push:
+    branches:
+      - main
+
+concurrency: 
+  group: compatability${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
