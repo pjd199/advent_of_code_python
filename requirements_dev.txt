@@ -1,0 +1,6 @@
+# Prodcution
+-r requirements.txt
+
+# Testing
+freezegun==1.2.1
+pytest==7.1.2

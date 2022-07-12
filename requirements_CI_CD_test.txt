@@ -1,0 +1,10 @@
+# Prodcution and Development Requirements
+-r requirements.txt
+-r requirements_dev.txt
+
+# Testing
+coverage==6.4.1
+pytest-cov==3.0.0
+pytest-custom_exit_code
+pytest-split==0.8.0
+pytest-xdist==2.5.0

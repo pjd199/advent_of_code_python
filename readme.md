@@ -7,6 +7,8 @@
 [![codecov](https://codecov.io/gh/pjd199/advent_of_code_python/branch/main/graph/badge.svg?token=CZGMDWH4SH)](https://codecov.io/gh/pjd199/advent_of_code_python)
 [![Website](https://img.shields.io/website?down_message=offline&label=AWS%20Lambda&up_message=ok&url=https%3A%2F%2Fjnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws%2F)](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws)
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 ## About
 
 [Advent of Code](https://adventofcode.com/) is an annual coding challenge by
@@ -43,8 +45,21 @@ you've solved the puzzle by yourself!!!
 
 1. Clone the repo
 
-```
+``` sh
 git clone https://github.com/pjd199/advent_of_code_python
+```
+
+2. Install dependancies
+In a prodcution environment:
+
+```sh
+pip install -r requirements.txt
+```
+
+In a test and development environment:
+
+```sh
+pip install -r requirements_dev.txt
 ```
 
 ### Deployment
@@ -196,6 +211,15 @@ command line:
 
 ``` sh
 python .\advent_of_code\main.py 2015 1
+```
+
+### Testing
+
+This project has unit tests, integration tests and system tests (which can only
+be run after the deployment phase).
+
+``` sh
+pytest
 ```
 
 ## Roadmap
