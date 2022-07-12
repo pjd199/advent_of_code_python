@@ -3,13 +3,13 @@
 [![python versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
 ![os platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 ![cloud platform](https://img.shields.io/badge/cloud-AWS%20Lambda-blue)
-[![GitHub](https://img.shields.io/github/license/pjd199/advent_of_code_python?color=blue)](./license.md)
 
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/CI-CD-Pipeline/main?label=CI%2FCD%20pipeline)](https://github.com/pjd199/advent_of_code_python/actions/workflows/CI-CD-pipeline.yaml)
 [![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/pjd199/advent_of_code_python/Compatability%20Check/main?label=Compatability)](https://github.com/pjd199/advent_of_code_python/actions/workflows/compatability-check.yaml)
 [![codecov](https://codecov.io/gh/pjd199/advent_of_code_python/branch/main/graph/badge.svg?token=CZGMDWH4SH)](https://codecov.io/gh/pjd199/advent_of_code_python)
 [![Website](https://img.shields.io/website?down_message=offline&label=RESTful%20API&up_message=ok&url=https%3A%2F%2Fjnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws%2F)](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws)
 
+[![GitHub](https://img.shields.io/github/license/pjd199/advent_of_code_python?color=black)](./license.md)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## About
@@ -43,7 +43,9 @@ you've solved the puzzle by yourself!!!
 
 * [Python 3.8-3.11](https://www.python.org/)
 * [AWS SAM CLI and AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+* [AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html) - locally or as secrets for Github Action
 
+* 
 ### Installation
 
 1. Clone the repo
@@ -68,10 +70,10 @@ pip install -r requirements_dev.txt
 
 ### Deployment
 
-*Deployment requires [AWS Lambda](https://aws.amazon.com/lambda and 
+*Deployment requires [AWS Lambda](https://aws.amazon.com/lambda) and 
 [Amazon Simple Storage Service (Amazon S3)](https://aws.amazon.com/s3), 
 both of which included in the [AWS Free Tier](https://aws.amazon.com/free). 
-Usage outside the Free Tier will be charged.*
+Usage outside the free tier may be charged.*
 
 1. Build the app with SAM
 
@@ -126,7 +128,7 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
 ```
 
 ``` JSON
-{"years":[{"days":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],"year":2015},{"days":[1],"year":2016}]}
+{"years":[{"days":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25],"year":2015},{"days":[1,2,3,4,5],"year":2016}]}
 ```
 
 #### /{year}
