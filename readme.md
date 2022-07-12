@@ -9,6 +9,7 @@
 [![codecov](https://codecov.io/gh/pjd199/advent_of_code_python/branch/main/graph/badge.svg?token=CZGMDWH4SH)](https://codecov.io/gh/pjd199/advent_of_code_python)
 [![Website](https://img.shields.io/website?down_message=offline&label=RESTful%20API&up_message=ok&url=https%3A%2F%2Fjnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws%2F)](https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws)
 
+[![GitHub](https://img.shields.io/github/license/pjd199/advent_of_code_python?color=brightgreen)](./license.md)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
 ## About
