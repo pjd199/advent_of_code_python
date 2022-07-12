@@ -202,6 +202,7 @@ python .\advent_of_code\main.py 2015 1
 
 * [ ] Add puzzle metadata, including title and description
 * [ ] Test against multiple sets of puzzle input files
+* [X] Solve puzzles for 2015
 * [ ] Solve puzzles for 2016
 * [ ] Solve puzzles for 2017
 * [ ] Solve puzzles for 2018
