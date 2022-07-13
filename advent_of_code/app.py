@@ -1,11 +1,19 @@
 """Flask Application for Advent of Code Solver RESTful API."""
 from importlib import import_module
+from os import environ
+from pathlib import Path
+from sys import path
+from threading import Thread
+from time import perf_counter_ns, sleep
 from typing import Any, Dict, Optional, Tuple
 
 from flask import abort, request
 from flask_aws_lambda import FlaskAwsLambda  # type: ignore
 from requests import get
 from werkzeug.exceptions import HTTPException
+
+if __name__ == "__main__":
+    path.append(str(Path(__file__).parent.parent))
 
 from advent_of_code.utils.input_loader import load_file, load_multi_line_string
 from advent_of_code.utils.solver_status import (
@@ -129,3 +137,60 @@ def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
         "name": e.name,
         "description": e.description,
     }, e.code if e.code is not None else 500
+
+
+def main() -> None:
+    """Called when run from the command line."""
+    # start the development server on the localhost
+    host = "127.0.0.1"
+    port = 5000
+    environ["FLASK_ENV"] = "development"
+    print(f"Starting development server on {host} at {port}")
+    flask_thread = Thread(
+        target=lambda: app.run(host=host, port=port, use_reloader=False)
+    )
+    flask_thread.daemon = True
+    flask_thread.start()
+
+    # allow the server time to start
+    sleep(1)
+
+    # print basic instructions
+    print("---")
+    print("Available routes:")
+    print(" - /")
+    print(" - /{year}")
+    print(" - /{year}/{day}")
+    print(" - /{year}/{day}?input={url_for_puzzle_input_file}")
+    print(" - /{year}/{day}/part_one")
+    print(" - /{year}/{day}/part_two")
+    print("eg - /2015/25")
+    print("---")
+
+    # loop until Ctrl-C exits the loop
+    while True:
+        url = input("Enter route path: ")
+
+        try:
+            # time the call to the development server
+            start_time = perf_counter_ns()
+            response = get(f"http://{host}:{port}{url}")
+            end_time = perf_counter_ns()
+            elapsed_time = end_time - start_time
+            # print the time, then the response body in JSON
+            if elapsed_time <= 1000000:
+                print("Time: <1ms")
+            elif elapsed_time >= 1000000000:
+                print(f"Time: {elapsed_time / 1000000000:.2f}s")
+            else:
+                print(f"Time: {(elapsed_time) // 1000000}ms")
+            print(response.json())
+        except Exception as e:
+            print(e)
+
+        print()
+
+
+if __name__ == "__main__":
+    # run if file executed from the command line
+    main()
