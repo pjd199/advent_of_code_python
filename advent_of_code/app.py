@@ -191,6 +191,6 @@ def main() -> None:  # pragma: no cover
         print()
 
 
-if __name__ == "__main__":  # pragma: no cover
+if __name__ == "__main__":
     # run if file executed from the command line
-    main()
+    main()  # pragma: no cover
