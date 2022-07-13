@@ -13,7 +13,7 @@ from requests import get
 from werkzeug.exceptions import HTTPException
 
 if __name__ == "__main__":
-    path.append(str(Path(__file__).parent.parent))
+    path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
 from advent_of_code.utils.input_loader import load_file, load_multi_line_string
 from advent_of_code.utils.solver_status import (
