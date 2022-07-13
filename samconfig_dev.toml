@@ -1,0 +1,10 @@
+version = 0.1
+[default]
+[default.deploy]
+[default.deploy.parameters]
+stack_name = "advent-of-code-python-dev"
+s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr"
+s3_prefix = "advent-of-code-python-dev"
+region = "eu-west-2"
+capabilities = "CAPABILITY_IAM"
+image_repositories = []

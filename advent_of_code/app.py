@@ -1,11 +1,19 @@
 """Flask Application for Advent of Code Solver RESTful API."""
 from importlib import import_module
+from os import environ
+from pathlib import Path
+from sys import path
+from threading import Thread
+from time import perf_counter_ns, sleep
 from typing import Any, Dict, Optional, Tuple
 
 from flask import abort, request
 from flask_aws_lambda import FlaskAwsLambda  # type: ignore
 from requests import get
 from werkzeug.exceptions import HTTPException
+
+if __name__ == "__main__":
+    path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
 from advent_of_code.utils.input_loader import load_file, load_multi_line_string
 from advent_of_code.utils.solver_status import (
@@ -38,6 +46,7 @@ def handle_root_path() -> Tuple[Dict[str, Any], int]:
     }, 200
 
 
+@app.route("/<int:year>/", methods=["GET"])  # type: ignore
 @app.route("/<int:year>", methods=["GET"])  # type: ignore
 def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     """Handles the year path - eg /2015 .
@@ -56,12 +65,14 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     return {"year": year, "days": days}, 200
 
 
-# For compatability with mypy in python 3.7 and black's line length,
-# the GET and POST needs to be seperated to create shorter lines
-@app.route("/<int:year>/<int:day>", methods=["GET"])  # type: ignore
-@app.route("/<int:year>/<int:day>", methods=["POST"])  # type: ignore
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET"])  # type: ignore
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["POST"])  # type: ignore
+@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])  # type: ignore
+@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])  # type: ignore
+@app.route(
+    "/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"]
+)  # type: ignore
+@app.route(
+    "/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"]
+)  # type: ignore
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
 ) -> Tuple[Dict[str, Any], int]:
@@ -129,3 +140,63 @@ def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
         "name": e.name,
         "description": e.description,
     }, e.code if e.code is not None else 500
+
+
+def main() -> None:  # pragma: no cover
+    """Called when run from the command line."""
+    # start the development server on the localhost
+    host = "127.0.0.1"
+    port = 5000
+    environ["FLASK_ENV"] = "development"
+    print(f"Starting development server on {host} at {port}")
+    flask_thread = Thread(
+        target=lambda: app.run(host=host, port=port, use_reloader=False)
+    )
+    flask_thread.daemon = True
+    flask_thread.start()
+
+    # allow the server time to start
+    sleep(1)
+
+    # print basic instructions
+    print("---")
+    print("Type 'exit' to shutdown server and exit")
+    print("---")
+    print("Available routes:")
+    print(" - /")
+    print(" - /{year}")
+    print(" - /{year}/{day}")
+    print(" - /{year}/{day}?input={url_for_puzzle_input_file}")
+    print(" - /{year}/{day}/part_one")
+    print(" - /{year}/{day}/part_two")
+    print("eg - /2015/25")
+    print("---")
+
+    # loop until Ctrl-C exits the loop
+    while True:
+        print()
+        url = input("Enter route path: ")
+        if url in ["exit", "quit", "exit()"]:
+            break
+
+        try:
+            # time the call to the development server
+            start_time = perf_counter_ns()
+            response = get(f"http://{host}:{port}{url}")
+            end_time = perf_counter_ns()
+            elapsed_time = end_time - start_time
+            # print the time, then the response body in JSON
+            if elapsed_time <= 1000000:
+                print("Time: <1ms")
+            elif elapsed_time >= 1000000000:
+                print(f"Time: {elapsed_time / 1000000000:.2f}s")
+            else:
+                print(f"Time: {(elapsed_time) // 1000000}ms")
+            print(response.json())
+        except Exception as e:
+            print(e)
+
+
+if __name__ == "__main__":
+    # run if file executed from the command line
+    main()  # pragma: no cover

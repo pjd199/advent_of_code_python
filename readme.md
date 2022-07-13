@@ -197,31 +197,34 @@ curl https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
 
 ### Command Line Interface
 
-Run the Advent of Code Solver form the command line, entering the year and date
-when prompted.
+This command will start an instance of the Advent of Code RESTful API server 
+on the localhost. Requests may be made through the app or via external 
+applications, such as a web browser.
 
 ``` sh
-python .\advent_of_code\main.py
+python .\advent_of_code\app.py
 ```
 
 ``` sh
-*************************
-* Advent of Code Solver *
-*************************
-Year: 2015
-Day: 1
-
-Solving AoC year 2015, day 1
-Part 1: 74
-Part 2: 1795
-Time: 1ms
-```
-
-Alternatively, the year and the date may be provided as arguments on the
-command line:
-
-``` sh
-python .\advent_of_code\main.py 2015 1
+Starting development server on 127.0.0.1 at 5000
+ * Serving Flask app 'app' (lazy loading)
+ * Environment: development
+ * Debug mode: on
+ * Running on http://127.0.0.1:5000/ (Press CTRL+C to quit)
+---
+Available routes:
+ - /
+ - /{year}
+ - /{year}/{day}
+ - /{year}/{day}?input={url_for_puzzle_input_file}
+ - /{year}/{day}/part_one
+ - /{year}/{day}/part_two
+eg - /2015/25
+---
+Enter route path: /2015/3
+127.0.0.1 - - [13/Jul/2022 09:52:56] "GET /2015/3 HTTP/1.1" 200 -
+Time: 45ms
+{'day': 3, 'part_one': '2592', 'part_two': '2360', 'year': 2015}
 ```
 
 ### Testing
@@ -235,13 +238,15 @@ pytest
 
 ## Roadmap
 
+* [ ] Automate system testing with pytest
+* [ ] Automate app.main() testing
 * [ ] Add puzzle metadata, including title and description
 * [ ] Test against multiple sets of puzzle input files
 * [X] Solve puzzles for 2015
 * [ ] Solve puzzles for 2016
 * [ ] Solve puzzles for 2017
 * [ ] Solve puzzles for 2018
-* [ ] Solve puzzles for 2019
+* [ ] Solve puzzles forI 2019
 * [ ] Solve puzzles for 2020
 * [ ] Solve puzzles for 2021
 * [ ] Wait for the release of the next Adevent of Code adventure on
