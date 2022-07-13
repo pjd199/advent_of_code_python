@@ -175,10 +175,10 @@ jobs:
           pip install -r requirements.txt
 
       - name: SAM Build with Docker
-        run: sam build --use-container --config-file ${{ env.CONFIG_FILE }}
+        run: sam build --use-container --config-file ${{ env.SAM_CONFIG_FILE }}
     
       - name: SAM Deploy to AWS Lambda
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.CONFIG_FILE }}
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
 
   system-test:
     name: System Testing
