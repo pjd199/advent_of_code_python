@@ -139,7 +139,7 @@ def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
     }, e.code if e.code is not None else 500
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     """Called when run from the command line."""
     # start the development server on the localhost
     host = "127.0.0.1"
