@@ -46,6 +46,7 @@ def handle_root_path() -> Tuple[Dict[str, Any], int]:
     }, 200
 
 
+@app.route("/<int:year>/", methods=["GET"])  # type: ignore
 @app.route("/<int:year>", methods=["GET"])  # type: ignore
 def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     """Handles the year path - eg /2015 .
@@ -64,12 +65,14 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     return {"year": year, "days": days}, 200
 
 
-# For compatability with mypy in python 3.7 and black's line length,
-# the GET and POST needs to be seperated to create shorter lines
-@app.route("/<int:year>/<int:day>", methods=["GET"])  # type: ignore
-@app.route("/<int:year>/<int:day>", methods=["POST"])  # type: ignore
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET"])  # type: ignore
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["POST"])  # type: ignore
+@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])  # type: ignore
+@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])  # type: ignore
+@app.route(
+    "/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"]
+)  # type: ignore
+@app.route(
+    "/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"]
+)  # type: ignore
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
 ) -> Tuple[Dict[str, Any], int]:
@@ -157,6 +160,8 @@ def main() -> None:  # pragma: no cover
 
     # print basic instructions
     print("---")
+    print("Type 'exit' to shutdown server and exit")
+    print("---")
     print("Available routes:")
     print(" - /")
     print(" - /{year}")
@@ -169,7 +174,10 @@ def main() -> None:  # pragma: no cover
 
     # loop until Ctrl-C exits the loop
     while True:
+        print()
         url = input("Enter route path: ")
+        if url in ["exit", "quit", "exit()"]:
+            break
 
         try:
             # time the call to the development server
@@ -187,8 +195,6 @@ def main() -> None:  # pragma: no cover
             print(response.json())
         except Exception as e:
             print(e)
-
-        print()
 
 
 if __name__ == "__main__":
