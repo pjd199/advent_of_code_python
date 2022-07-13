@@ -238,13 +238,15 @@ pytest
 
 ## Roadmap
 
+* [ ] Automate system testing with pytest
+* [ ] Automate app.main() testing
 * [ ] Add puzzle metadata, including title and description
 * [ ] Test against multiple sets of puzzle input files
 * [X] Solve puzzles for 2015
 * [ ] Solve puzzles for 2016
 * [ ] Solve puzzles for 2017
 * [ ] Solve puzzles for 2018
-* [ ] Solve puzzles for 2019
+* [ ] Solve puzzles forI 2019
 * [ ] Solve puzzles for 2020
 * [ ] Solve puzzles for 2021
 * [ ] Wait for the release of the next Adevent of Code adventure on
