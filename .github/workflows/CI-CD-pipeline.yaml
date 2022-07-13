@@ -186,12 +186,12 @@ jobs:
       - name: Set variables for Production
         if: github.ref == 'refs/heads/main'
         run: 
-          echo "LAMBDA_URL=https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws/" >> $GITHUB_ENV
+          echo "LAMBDA_URL=https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws" >> $GITHUB_ENV
 
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev'
         run: 
-          echo "LAMBDA_URL=https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws" >> $GITHUB_ENV
+          echo "LAMBDA_URL=https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws/" >> $GITHUB_ENV
 
       - name: Run endpoint tests
         run: |
