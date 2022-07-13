@@ -4,7 +4,7 @@
             "request": {
                 "path": "/",
                 "method": "GET",
-                "date": "2016-12-3"
+                "date": "2016-12-2"
             },
             "response": {
                 "status": 200,
@@ -43,7 +43,8 @@
                         {
                             "year": 2016,
                             "days": [
-                                1
+                                1,
+                                2
                             ]
                         }
                     ]
