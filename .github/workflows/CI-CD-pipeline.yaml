@@ -191,24 +191,23 @@ jobs:
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev'
         run: 
-          echo "LAMBDA_URL=https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws/" >> $GITHUB_ENV
+          echo "LAMBDA_URL=https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws" >> $GITHUB_ENV
 
       - name: Run endpoint tests
         run: |
-          echo Invoking function on AWS Lambda: ${{ env.LAMBDA_URL }}
+          echo Invoking function on AWS Lambda: ${{env.LAMBDA_URL}}
           echo Invoking function with /
-          curl --silent --include --show-error --fail ${{ env.LAMBDA_URL }}
+          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/
           echo
           echo Invoking function with /2015
-          curl --silent --include --show-error --fail ${{ env.LAMBDA_URL }}
+          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015
           echo
           echo Invoking function with /2015/1
-          curl --silent --include --show-error --fail ${{ env.LAMBDA_URL }}
+          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/1
           echo
           echo Invoking function with /2015/2/part_one
-          curl --silent --include --show-error --fail ${{ env.LAMBDA_URL }}
+          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/2/part_one
           echo
           echo Invoking function with /2015/3/part_two
-          curl --silent --include --show-error --fail ${{ env.LAMBDA_URL }}
-          echo
+          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/3/part_two
           echo
