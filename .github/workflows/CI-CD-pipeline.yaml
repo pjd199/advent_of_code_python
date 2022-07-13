@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - dev
 
 concurrency: 
   group: CICD${{ github.ref }}
@@ -135,10 +136,17 @@ jobs:
         run: coverage report --fail-under=100
 
   deploy-to-aws-lambda:
-    name: Deploy to AWS Lambda
+    name: Deploy to AWS Lambda 
     needs: [check, unit-test, integration-test, coverage]
     runs-on: ubuntu-latest
     steps:
+      - uses: cobraz/branch-environment-action@master
+        with:
+            name: CONFIG_FILE
+        env:
+          DEV_CONFIG_FILE: samconfig_dev.toml
+          MAIN_CONFIG_FILE: samconfig.toml
+
       - name: Check out respository
         uses: actions/checkout@v3
       
@@ -163,33 +171,39 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: SAM build
-        run: sam build --use-container
-      
-      - name: SAM deploy
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+      - name: SAM Build with Docker
+        run: sam build --use-container --config-file ${{CONFIG_FILE}}
+    
+      - name: SAM Deploy to AWS Lambda
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{CONFIG_FILE}}
 
   system-test:
     name: System Testing
     needs: deploy-to-aws-lambda
     runs-on: ubuntu-latest
     steps:
+      - uses: cobraz/branch-environment-action@master
+        with:
+            name: URL
+        env:
+          DEV_URL: https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws/
+          MAIN_URL: https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
       - name: Run endpoint tests
         run: |
-          echo Invoking function on AWS Lambda: https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
+          echo Invoking function on AWS Lambda: ${{URL}}
           echo Invoking function with /
-          curl --silent --include --show-error --fail https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws
+          curl --silent --include --show-error --fail ${{URL}}
           echo
           echo Invoking function with /2015
-          curl --silent --include --show-error --fail https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015
+          curl --silent --include --show-error --fail ${{URL}}
           echo
           echo Invoking function with /2015/1
-          curl --silent --include --show-error --fail https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/1
+          curl --silent --include --show-error --fail ${{URL}}
           echo
           echo Invoking function with /2015/2/part_one
-          curl --silent --include --show-error --fail https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/2/part_one
+          curl --silent --include --show-error --fail ${{URL}}
           echo
           echo Invoking function with /2015/3/part_two
-          curl --silent --include --show-error --fail https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws/2015/3/part_two
+          curl --silent --include --show-error --fail ${{URL}}
           echo
           echo
