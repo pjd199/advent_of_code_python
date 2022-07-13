@@ -140,6 +140,9 @@ jobs:
     needs: [check, unit-test, integration-test, coverage]
     runs-on: ubuntu-latest
     steps:
+      -  name: Check out respository
+         uses: actions/checkout@v3
+
       - name: Set variables for Production
         if: github.ref == 'refs/heads/main'
         run: 
@@ -149,7 +152,7 @@ jobs:
         if: github.ref == 'refs/heads/dev'
         run: 
           echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
