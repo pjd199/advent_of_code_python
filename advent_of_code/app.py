@@ -1,4 +1,5 @@
 """Flask Application for Advent of Code Solver RESTful API."""
+from base64 import b64decode
 from importlib import import_module
 from os import environ
 from pathlib import Path
@@ -92,7 +93,7 @@ def handle_solve_path_with_part(
         if isinstance(data, bytes):
             return data.decode()
         else:
-            return data
+            return b64decode(data).decode()
 
     if (
         not is_solver_implemented(year, day)
