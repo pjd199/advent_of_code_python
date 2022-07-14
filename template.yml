@@ -1,9 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: >
-  advent-of-code-python
-
-  template for the Advent of Code Python API
+Description: Template for the Advent of Code RESTful API
 
 Resources:
   AdventOfCodeFunction:
@@ -16,3 +13,11 @@ Resources:
       MemorySize: 2048
       FunctionUrlConfig:
         AuthType: NONE
+
+Outputs:
+  HelloWorldFunction:
+    Description: "Advent of Code Function ARN"
+    Value: !GetAtt AdventOfCodeFunction.Arn
+  AdventOfCodeFunctionURL:
+    Description: "Advent of Code Function URL HTTP endpoint"
+    Value: !GetAtt AdventOfCodeFunctionUrl.FunctionUrl
