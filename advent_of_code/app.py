@@ -86,6 +86,14 @@ def handle_solve_path_with_part(
     Returns:
         tuple[Json, int]: a JSON response
     """
+
+    def get_data_as_text() -> str:  # pragma: no cover
+        data = request.get_data()
+        if isinstance(data, bytes):
+            return data.decode()
+        else:
+            return data
+
     if (
         not is_solver_implemented(year, day)
         or part not in [None, "part_one", "part_two"]
@@ -97,8 +105,7 @@ def handle_solve_path_with_part(
     # load the input data
     query_input = request.args.get("input")
     if request.method == "POST":
-        data = request.get_data().decode()
-        puzzle_input = load_multi_line_string(data)
+        puzzle_input = load_multi_line_string(get_data_as_text())
     elif query_input is not None:
         puzzle_input = load_multi_line_string(get(query_input).text)
     else:
