@@ -97,7 +97,10 @@ def handle_solve_path_with_part(
     # load the input data
     query_input = request.args.get("input")
     if request.method == "POST":
-        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
+        data = request.get_data()
+        if isinstance(data, bytes):
+            data = data.decode()
+        puzzle_input = load_multi_line_string(data)
     elif query_input is not None:
         puzzle_input = load_multi_line_string(get(query_input).text)
     else:
