@@ -65,7 +65,7 @@ jobs:
           pip install -r requirements_CI_CD_test.txt
       
       - name: Run pytest
-        run: pytest ./tests/unit --cov --splits 8 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
+        run: pytest ./tests/unit --cov --splits 4 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
       
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v2
