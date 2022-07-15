@@ -2,6 +2,9 @@ name: Generate Test Durations
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - dev
     
 concurrency: 
   group: duration${{github.ref}}
