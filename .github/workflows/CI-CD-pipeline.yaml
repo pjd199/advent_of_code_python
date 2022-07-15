@@ -127,13 +127,13 @@ jobs:
         run: coverage combine coverage*/.coverage*
 
       - name: Generate XML report
-        run: coverage xml
+        run: coverage xml --omit="*/test*"
 
       - name: Send coverage report to Codecov
         uses: codecov/codecov-action@v1
             
       - name: Check for 100% coverage
-        run: coverage report --fail-under=100
+        run: coverage report --fail-under=100 --omit="*/test*"
 
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda 
@@ -183,31 +183,24 @@ jobs:
     needs: deploy-to-aws-lambda
     runs-on: ubuntu-latest
     steps:
-      - name: Set variables for Production
-        if: github.ref == 'refs/heads/main'
-        run: 
-          echo "LAMBDA_URL=https://jnrxshzkvnbexzeedxptq54ugq0mqlpe.lambda-url.eu-west-2.on.aws" >> $GITHUB_ENV
-
-      - name: Set variables for Development
-        if: github.ref == 'refs/heads/dev'
-        run: 
-          echo "LAMBDA_URL=https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws" >> $GITHUB_ENV
-
-      - name: Run endpoint tests
+      - name: Check out respository
+        uses: actions/checkout@v3
+      
+      - name: Setup up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+      
+      - name: Install dependancies
         run: |
-          echo Invoking function on AWS Lambda: ${{env.LAMBDA_URL}}
-          echo Invoking function with /
-          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/
-          echo
-          echo Invoking function with /2015
-          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015
-          echo
-          echo Invoking function with /2015/1
-          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/1
-          echo
-          echo Invoking function with /2015/2/part_one
-          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/2/part_one
-          echo
-          echo Invoking function with /2015/3/part_two
-          curl --silent --include --show-error --fail ${{env.LAMBDA_URL}}/2015/3/part_two
-          echo
+          python -m pip install --upgrade pip
+          pip install -r requirements_CI_CD_test.txt
+      
+      - name: Run pytest on main lambda function
+        if: github.ref == 'refs/heads/main'
+        run: pytest .\tests\system\test_system.py::test_main -n auto
+
+      - name: Run pytest on development lambda function
+        if: github.ref == 'refs/heads/dev'
+        run: pytest .\tests\system\test_system.py::test_dev -n auto 
