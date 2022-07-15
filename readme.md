@@ -238,7 +238,7 @@ pytest
 
 ## Roadmap
 
-* [ ] Automate system testing with pytest
+* [X] Automate system testing with pytest
 * [ ] Automate app.main() testing
 * [ ] Add puzzle metadata, including title and description
 * [ ] Test against multiple sets of puzzle input files
