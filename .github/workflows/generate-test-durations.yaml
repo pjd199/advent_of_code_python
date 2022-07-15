@@ -9,7 +9,7 @@ concurrency:
 
 jobs:
   generate:
-    name: Generate
+    name: Generate Durations
     runs-on: ubuntu-latest
 
     steps:
