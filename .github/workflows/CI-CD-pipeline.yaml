@@ -78,6 +78,9 @@ jobs:
     needs: unit-test 
     runs-on: ubuntu-latest
     steps:
+      - name: Check out respository
+        uses: actions/checkout@v3
+      
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
