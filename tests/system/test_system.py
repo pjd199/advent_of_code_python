@@ -1,11 +1,10 @@
 """System Tests."""
 from json import load as load_json
-from os import scandir
 from typing import Any, Dict
 
 import pytest
 from boto3 import client
-from requests import Response, get, post
+from requests import get, post
 from toml import load as load_toml
 
 
@@ -50,21 +49,6 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
                 for data in cases
             ]
             metafunc.parametrize("test_case", cases, ids=ids)
-        if "url" in metafunc.fixturenames:
-            # find sam_config files
-            sam_config_files = []
-            with scandir() as scandir_iterator:
-                for entry in scandir_iterator:
-                    if (
-                        entry.name.startswith("samconfig")
-                        and entry.name.endswith(".toml")
-                        and entry.is_file()
-                    ):
-                        sam_config_files.append(entry.name)
-            urls = [discover_url_from_config(x) for x in sam_config_files]
-            ids = [x.strip("samconfig_").strip(".toml") for x in sam_config_files]
-            ids = [x if x else "main" for x in ids]
-            metafunc.parametrize("url", urls, ids=ids)
 
 
 def test_main(test_case: Dict["str", Any]) -> None:
@@ -92,24 +76,20 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
         url (str): the Funciton URL of the deployed AWS Lambda function
         test_case_data (data: Dict["str", Any]): the test case data
     """
-
-    def send_request() -> Response:
-        if test_case_data["request"]["method"] == "GET":
-            return get(url + test_case_data["request"]["path"])
-        elif (
-            "body" in test_case_data["request"]
-            and "content_type" in test_case_data["request"]
-        ):
-            return post(
-                url + test_case_data["request"]["path"],
-                data=test_case_data["request"]["body"].encode(),
-                headers={"Content-Type": test_case_data["request"]["content_type"]},
-            )
-        else:
-            return post(url + test_case_data["request"]["path"])
-
     # make the request
-    response = send_request()
+    if test_case_data["request"]["method"] == "GET":
+        response = get(url + test_case_data["request"]["path"])
+    elif (
+        "body" in test_case_data["request"]
+        and "content_type" in test_case_data["request"]
+    ):
+        response = post(
+            url + test_case_data["request"]["path"],
+            data=test_case_data["request"]["body"].encode(),
+            headers={"Content-Type": test_case_data["request"]["content_type"]},
+        )
+    else:
+        response = post(url + test_case_data["request"]["path"])
 
     # check the response code and body
     assert response.status_code == test_case_data["response"]["status"]
