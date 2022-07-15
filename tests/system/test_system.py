@@ -1,11 +1,15 @@
 """System Tests."""
 from json import load as load_json
+from os import environ
+from threading import Thread
 from typing import Any, Dict
 
 import pytest
 from boto3 import client
 from requests import get, post
 from toml import load as load_toml
+
+from advent_of_code.app import app
 
 
 def discover_url_from_config(sam_config_file: str) -> str:
@@ -51,6 +55,29 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
+@pytest.fixture(scope="module")
+def development_server() -> str:
+    """Starts the development server on the localhost.
+
+    Returns:
+        str: the http url of the server
+    """
+    # start the development server on the localhost
+    host = "127.0.0.1"
+    port = 5000
+    environ["FLASK_ENV"] = "development"
+    flask_thread = Thread(
+        target=lambda: app.run(host=host, port=port, use_reloader=False)
+    )
+    flask_thread.daemon = True
+    flask_thread.start()
+
+    return f"http://{host}:{port}"
+
+
+# need to do test for / - as can't fix date!!!
+
+
 def test_main(test_case: Dict["str", Any]) -> None:
     """Test using the main branch Lambda Function URL.
 
@@ -67,6 +94,16 @@ def test_dev(test_case: Dict["str", Any]) -> None:
         test_case (Dict["str", Any]): the test case
     """
     call_lambda_function(discover_url_from_config("samconfig_dev.toml"), test_case)
+
+
+def test_local(development_server: str, test_case: Dict["str", Any]) -> None:
+    """Test using the main branch Lambda Function URL.
+
+    Args:
+        development_server (str): the fixture providing the server url
+        test_case (Dict["str", Any]): the test case
+    """
+    call_lambda_function(development_server, test_case)
 
 
 def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
