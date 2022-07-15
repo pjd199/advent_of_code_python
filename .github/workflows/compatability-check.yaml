@@ -1,10 +1,9 @@
 name: Compatability Check
 
 on:
-  push:
-    branches:
-      - main
-      - dev
+  workflow_dispatch:
+  schedule:
+    - cron:  "34 2 * * *"
 
 concurrency: 
   group: compatability${{ github.ref }}
