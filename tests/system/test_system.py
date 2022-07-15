@@ -10,6 +10,7 @@ from requests import get, post
 from toml import load as load_toml
 
 from advent_of_code.app import app
+from advent_of_code.utils.solver_status import implementation_status
 
 
 def discover_url_from_config(sam_config_file: str) -> str:
@@ -45,7 +46,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     Args:
         metafunc (pytest.Metafunc): the meta function
     """
-    with open("./tests/integration/test_flask_app.json") as file:
+    with open("./tests/system/system_test.json") as file:
         if "test_case" in metafunc.fixturenames:
             cases = load_json(file)["tests"]
             ids = [
@@ -128,7 +129,19 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
     else:
         response = post(url + test_case_data["request"]["path"])
 
-    # check the response code and body
+    # check the response code
     assert response.status_code == test_case_data["response"]["status"]
-    if "body" in test_case_data["response"]:
+
+    # check the body, with "/" being the special case
+    if test_case_data["request"]["path"] == "/":
+        dates = [date for date, status in implementation_status().items() if status]
+        body = {
+            "years": [
+                {"year": year, "days": [x.day for x in dates if x.year == year]}
+                for year in sorted({x.year for x in dates})
+            ]
+        }
+        assert response.json() == body
+
+    elif "body" in test_case_data["response"]:
         assert response.json() == test_case_data["response"]["body"]
