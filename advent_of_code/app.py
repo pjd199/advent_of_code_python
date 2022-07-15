@@ -7,8 +7,8 @@ from threading import Thread
 from time import perf_counter_ns, sleep
 from typing import Any, Dict, Optional, Tuple
 
-from flask import abort, request
-from flask_aws_lambda import FlaskAwsLambda  # type: ignore
+from apig_wsgi import make_lambda_handler
+from flask import Flask, abort, request
 from requests import get
 from werkzeug.exceptions import HTTPException
 
@@ -27,10 +27,11 @@ DAY = 1
 PART = 2
 
 # initialise the flask app
-app = FlaskAwsLambda(__name__)
+app = Flask(__name__)
+lambda_handler = make_lambda_handler(app)
 
 
-@app.route("/", methods=["GET"])  # type: ignore
+@app.route("/", methods=["GET"])
 def handle_root_path() -> Tuple[Dict[str, Any], int]:
     """Handles the root path - / .
 
@@ -46,8 +47,8 @@ def handle_root_path() -> Tuple[Dict[str, Any], int]:
     }, 200
 
 
-@app.route("/<int:year>/", methods=["GET"])  # type: ignore
-@app.route("/<int:year>", methods=["GET"])  # type: ignore
+@app.route("/<int:year>/", methods=["GET"])
+@app.route("/<int:year>", methods=["GET"])
 def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     """Handles the year path - eg /2015 .
 
@@ -65,18 +66,14 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     return {"year": year, "days": days}, 200
 
 
-@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])  # type: ignore
-@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])  # type: ignore
-@app.route(
-    "/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"]
-)  # type: ignore
-@app.route(
-    "/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"]
-)  # type: ignore
+@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])
+@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
+@app.route("/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"])
+@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
 ) -> Tuple[Dict[str, Any], int]:
-    """Handles the solve all parts path - eg /2015/1 .
+    """Handles the solve all parts path - eg /2015/1.
 
     Args:
         year (int): the year from the path
@@ -125,7 +122,7 @@ def handle_solve_path_with_part(
     return body, 200
 
 
-@app.errorhandler(HTTPException)  # type: ignore
+@app.errorhandler(HTTPException)
 def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
     """Return JSON instead of HTML for HTTP errors.
 
