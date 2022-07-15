@@ -1,5 +1,4 @@
 """Flask Application for Advent of Code Solver RESTful API."""
-from base64 import b64decode
 from importlib import import_module
 from os import environ
 from pathlib import Path
@@ -87,14 +86,6 @@ def handle_solve_path_with_part(
     Returns:
         tuple[Json, int]: a JSON response
     """
-
-    def get_data_as_text() -> str:  # pragma: no cover
-        data = request.get_data()
-        if isinstance(data, bytes):
-            return data.decode()
-        else:
-            return b64decode(data).decode()
-
     if (
         not is_solver_implemented(year, day)
         or part not in [None, "part_one", "part_two"]
@@ -106,7 +97,7 @@ def handle_solve_path_with_part(
     # load the input data
     query_input = request.args.get("input")
     if request.method == "POST":
-        puzzle_input = load_multi_line_string(get_data_as_text())
+        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
     elif query_input is not None:
         puzzle_input = load_multi_line_string(get(query_input).text)
     else:
