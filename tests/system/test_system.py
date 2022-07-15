@@ -13,33 +13,6 @@ from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
 
 
-def discover_url_from_config(sam_config_file: str) -> str:
-    """Open the SAM config file, and use the stack name to find the Fucntion URL.
-
-    Args:
-        sam_config_file (str): the file name
-
-    Returns:
-        str: the discover url
-    """
-    sam_config = load_toml("./" + sam_config_file)
-    stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
-    region_name = sam_config["default"]["deploy"]["parameters"]["region"]
-
-    cf_client = client("cloudformation", region_name=region_name)
-    stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
-
-    url = ""
-    if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
-        for stack in stack_descriptions["Stacks"]:
-            if stack["StackName"] == stack_name:
-                for output in stack["Outputs"]:
-                    if output["OutputKey"] == "AdventOfCodeFunctionURL":
-                        url = output["OutputValue"].strip("/")
-                        break
-    return url
-
-
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     """Generate the parametised tests.
 
@@ -74,6 +47,33 @@ def development_server() -> str:
     flask_thread.start()
 
     return f"http://{host}:{port}"
+
+
+def discover_url_from_config(sam_config_file: str) -> str:
+    """Open the SAM config file, and use the stack name to find the Fucntion URL.
+
+    Args:
+        sam_config_file (str): the file name
+
+    Returns:
+        str: the discover url
+    """
+    sam_config = load_toml("./" + sam_config_file)
+    stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
+    region_name = sam_config["default"]["deploy"]["parameters"]["region"]
+
+    cf_client = client("cloudformation", region_name=region_name)
+    stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
+
+    url = ""
+    if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
+        for stack in stack_descriptions["Stacks"]:
+            if stack["StackName"] == stack_name:
+                for output in stack["Outputs"]:
+                    if output["OutputKey"] == "AdventOfCodeFunctionURL":
+                        url = output["OutputValue"].strip("/")
+                        break
+    return url
 
 
 # need to do test for / - as can't fix date!!!
