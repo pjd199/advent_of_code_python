@@ -7,7 +7,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: advent_of_code.app.app
+      Handler: advent_of_code.app.lambda_handler
       Runtime: python3.9
       Timeout: 60
       MemorySize: 2048

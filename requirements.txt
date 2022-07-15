@@ -1,5 +1,5 @@
 # Production dependancies
 Flask==2.1.2
-https://github.com/pjd199/flask-aws-lambda/archive/refs/heads/master.zip
+apig-wsgi==2.14.0
 numpy==1.23.1
 requests==2.28.1
