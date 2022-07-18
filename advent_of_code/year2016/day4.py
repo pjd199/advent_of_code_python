@@ -3,7 +3,7 @@ from collections import defaultdict
 from dataclasses import dataclass
 from re import compile
 from string import ascii_lowercase
-from typing import List, Optional
+from typing import DefaultDict, List, Optional
 
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -51,7 +51,7 @@ class Solver(SolverInterface):
             else:
                 raise RuntimeError(f"Unable to parse {line} on line {i}")
 
-        self.real_rooms = []
+        self.real_rooms: List[Solver._Room] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -89,12 +89,12 @@ class Solver(SolverInterface):
 
         return result
 
-    def _find_real_rooms(self):
+    def _find_real_rooms(self) -> None:
         """Find the real rooms."""
         self.real_rooms = []
         for room in self.input:
             # count the frequency of letters
-            counter = defaultdict(int)
+            counter: DefaultDict[str, int] = defaultdict(int)
             for c in room.encrypted_name:
                 if c != "-":
                     counter[str(c)] += 1

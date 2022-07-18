@@ -73,7 +73,7 @@ class Solver(SolverInterface):
                     lights[ins.y1 : (ins.y2 + 1), ins.x1 : (ins.x2 + 1)]
                 )
 
-        return np.count_nonzero(lights)
+        return int(np.count_nonzero(lights))
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.

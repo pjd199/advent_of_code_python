@@ -1,7 +1,7 @@
 """Solves the puzzle for Day 3 of Advent of Code 2016."""
 from itertools import chain
 from re import compile
-from typing import Iterable, List
+from typing import List
 
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -50,19 +50,23 @@ class Solver(SolverInterface):
             int: the answer
         """
         return self._count_possbile_triangles(
-            chain.from_iterable(
-                [
+            list(
+                chain.from_iterable(
                     [
-                        [x[0][0], x[1][0], x[2][0]],
-                        [x[0][1], x[1][1], x[2][1]],
-                        [x[0][2], x[1][2], x[2][2]],
+                        [
+                            [x[0][0], x[1][0], x[2][0]],
+                            [x[0][1], x[1][1], x[2][1]],
+                            [x[0][2], x[1][2], x[2][2]],
+                        ]
+                        for x in zip(
+                            self.input[::3], self.input[1::3], self.input[2::3]
+                        )
                     ]
-                    for x in zip(self.input[::3], self.input[1::3], self.input[2::3])
-                ]
+                )
             )
         )
 
-    def _count_possbile_triangles(self, itr: Iterable[List[List[int]]]) -> int:
+    def _count_possbile_triangles(self, itr: List[List[int]]) -> int:
         """Count the number of possible trianges.
 
             For possible triangles, the sum of two sides is greater than
