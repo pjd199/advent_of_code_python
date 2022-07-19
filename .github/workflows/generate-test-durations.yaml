@@ -1,0 +1,45 @@
+name: Generate Test Durations
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron:  "23 1 * * *"
+    
+concurrency: 
+  group: duration${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Generate Durations
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Respository
+        uses: actions/checkout@v3
+      
+      - name: Setup up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements_CI_CD_test.txt
+
+      - name: Run pytest
+        run: pytest -k "not test_local" --clean-durations --store-durations -n auto
+
+      - name: Commit .test_duration file to respository      
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated .test_duration file
