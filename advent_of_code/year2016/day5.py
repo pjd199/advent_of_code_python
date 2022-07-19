@@ -33,6 +33,8 @@ class Solver(SolverInterface):
         else:
             raise RuntimeError(f"Unable to parse {puzzle_input[0]} on line 1")
 
+        # setup the empty cache to help shortcut solving part two if called
+        # after part one
         self.cache: Dict[int, str] = {}
 
     def solve_part_one(self) -> str:
