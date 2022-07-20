@@ -2,8 +2,12 @@ name: Compatability Check
 
 on:
   workflow_dispatch:
+
   schedule:
     - cron:  "34 2 * * *"
+    
+  pull_request:
+    types: [opened, reopened]
 
 concurrency: 
   group: compatability${{ github.ref }}

@@ -2,8 +2,12 @@ name: Generate Test Durations
 
 on:
   workflow_dispatch:
+  
   schedule:
     - cron:  "23 1 * * *"
+
+  pull_request:
+    types: [opened, reopened]
     
 concurrency: 
   group: duration${{github.ref}}
