@@ -28,7 +28,7 @@ class Solver(SolverInterface):
 
         # parse the input
         pattern = compile(r"(?P<id>[a-z]+)")
-        if m := pattern.match(puzzle_input[0]):
+        if m := pattern.fullmatch(puzzle_input[0]):
             self.input = m["id"]
         else:
             raise RuntimeError(f"Unable to parse {puzzle_input[0]} on line 1")
