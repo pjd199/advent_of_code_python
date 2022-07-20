@@ -76,9 +76,6 @@ def discover_url_from_config(sam_config_file: str) -> str:
     return url
 
 
-# need to do test for / - as can't fix date!!!
-
-
 def test_main(test_case: Dict["str", Any]) -> None:
     """Test using the main branch Lambda Function URL.
 
