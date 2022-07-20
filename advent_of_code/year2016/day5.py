@@ -21,7 +21,7 @@ class Solver(SolverInterface):
         # validate and parse the input
         if (
             puzzle_input is None
-            or len(puzzle_input) == 0
+            or len(puzzle_input) != 1
             or len(puzzle_input[0].strip()) == 0
         ):
             raise RuntimeError("Puzzle input is empty")
