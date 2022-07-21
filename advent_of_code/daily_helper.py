@@ -6,7 +6,7 @@ from re import match
 from typing import Any, Dict, List, Optional, Union
 
 from bs4 import BeautifulSoup
-from markdownify import ATX, markdownify
+from markdownify import ATX, markdownify  # type: ignore
 from requests import get
 
 AOC_ROOT = "https://adventofcode.com"
