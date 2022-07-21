@@ -21,6 +21,8 @@ jobs:
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
+        with:
+          ref: dev
       
       - name: Setup up Python
         uses: actions/setup-python@v4
@@ -41,9 +43,10 @@ jobs:
           pip install -r requirements_CI_CD_test.txt
 
       - name: Run pytest
-        run: pytest /tests/unit /tests/integration --clean-durations --store-durations -n auto
+        run: pytest -k "not test_local and not test_main" --clean-durations --store-durations -n auto
 
       - name: Commit .test_duration file to respository      
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Updated .test_duration file
+          branch: dev
