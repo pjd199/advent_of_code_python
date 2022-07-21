@@ -100,7 +100,11 @@ def test_init_solver(year: str, day: str) -> None:
     with pytest.raises(RuntimeError):
         mod.Solver([""])
 
-    # first test with random input, which should cause a problem
+    # test with a single line of random input, which should cause a problem
+    with pytest.raises(RuntimeError):
+        mod.Solver(["".join([choice(printable) for _ in range(randbelow(99) + 101)])])
+
+    # test with multiple lines of random input, which should cause a problem
     with pytest.raises(RuntimeError):
         mod.Solver(
             [

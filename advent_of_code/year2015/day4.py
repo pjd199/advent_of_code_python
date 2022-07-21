@@ -1,5 +1,6 @@
 """Solution for day 4 of Advent of Code 2015."""
 from hashlib import md5
+from string import ascii_lowercase
 from typing import List
 
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -25,7 +26,9 @@ class Solver(SolverInterface):
         ):
             raise RuntimeError("Puzzle input is empty")
 
-        if len(puzzle_input) == 1:
+        if len(puzzle_input) == 1 and all(
+            x in ascii_lowercase for x in puzzle_input[0]
+        ):
             self.secret = puzzle_input[0]
         else:
             raise RuntimeError(f"Unable to parse input: {puzzle_input[0]}")
