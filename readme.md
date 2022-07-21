@@ -264,7 +264,7 @@ This project has unit tests, integration tests and system tests (which can only
 be run after the deployment phase).
 
 ``` sh
-pip install -r requirements_dev.ttx
+pip install -r requirements_dev.txt
 pytest /tests/unit
 pytest /tests/integration
 pytest /tests/system
