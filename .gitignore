@@ -10,3 +10,4 @@
 /coverage.txt
 **/__pycache__/
 **.pyc
+/.aoc_website_cache/

@@ -227,13 +227,47 @@ Time: 45ms
 {'day': 3, 'part_one': '2592', 'part_two': '2360', 'year': 2015}
 ```
 
+### Daily Helper utility
+
+This project includes a helper script for downloading the puzzle and 
+input puzzle file from the Advent of Code website. It also creates a
+template Solver file for the puzzle, and updates the unit test. 
+
+To reduce requests to the Advent of Code website, a cache is created
+in the root of the project folder. 
+
+```
+$ python ./advent_of_code/daily_helper.py 2015 1
+```
+
+For all the optional parameters, run
+```
+$ python ./advent_of_code/daily_helper.py --help
+```
+
+#### Session Cookie
+A session cookie is required to download answers and part two. To locate
+and store the session cookie:
+1. Open a web browser (Chrome, Edge or Mozilla)
+2. Log into the Advent of Code website
+3. Right click on the page, and select inspect
+4. On the application tab, select cookies
+5. Copy the value of the session cookie
+6. Store the session cookie using the following command
+```
+python ./scripts/daily_helper.py --save_session <<<PASTE VALUE HERE>>
+```
+
 ### Testing
 
 This project has unit tests, integration tests and system tests (which can only
 be run after the deployment phase).
 
 ``` sh
-pytest
+pip install -r requirements_dev.ttx
+pytest /tests/unit
+pytest /tests/integration
+pytest /tests/system
 ```
 
 ## Roadmap
