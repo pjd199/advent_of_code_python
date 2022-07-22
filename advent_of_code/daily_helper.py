@@ -104,7 +104,10 @@ class DailyHelper:
         self._save_unit_test_data()
 
         # create and save a new python solver file
-        self._save(self.template_python_path, self.template)
+        self._save(
+            self.template_python_path,
+            self.template.format(year=self.year, day=self.day),
+        )
 
     def _log(self, data: Any) -> None:
         if self.verbose:
