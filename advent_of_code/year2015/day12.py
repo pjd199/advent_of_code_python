@@ -1,5 +1,6 @@
 """Solution for day 12 of Advent of Code 2015."""
 from json import loads
+from json.decoder import JSONDecodeError
 from typing import Any, List
 
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -26,7 +27,10 @@ class Solver(SolverInterface):
             raise RuntimeError("Puzzle input is empty")
 
         if len(puzzle_input) == 1:
-            self.content = loads(puzzle_input[0])
+            try:
+                self.content = loads(puzzle_input[0])
+            except JSONDecodeError:
+                raise RuntimeError(f"Error parsing JSON, " f"found: {puzzle_input[0]}")
         else:
             raise RuntimeError(f"Error parsing JSON, " f"found: {puzzle_input[0]}")
 

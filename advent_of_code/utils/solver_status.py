@@ -1,5 +1,5 @@
 """Functions based on the implementation status of solvers."""
-from datetime import date
+from datetime import date, datetime, timezone
 from importlib import import_module
 from typing import Dict, Iterable
 
@@ -22,7 +22,7 @@ def last_puzzle_date() -> date:
     Returns:
         date: the latest challenge date
     """
-    today = date.today()
+    today = datetime.now(timezone.utc).date()
 
     if today < first_puzzle_date():
         raise RuntimeError(f"Today's date cannot be before {first_puzzle_date()}")
@@ -42,7 +42,7 @@ def puzzle_date_generator() -> Iterable[date]:
     Yields:
         Iterable: _description_
     """
-    today = date.today()
+    today = datetime.now(timezone.utc).date()
 
     if today < first_puzzle_date():
         raise RuntimeError(f"Today's date cannot be before {first_puzzle_date()}")
