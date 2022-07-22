@@ -3,3 +3,4 @@ Flask==2.1.2
 apig-wsgi==2.14.0
 numpy==1.23.1
 requests==2.28.1
+advent-of-code-ocr==1.0.0

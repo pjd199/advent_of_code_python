@@ -59,6 +59,7 @@ class DailyHelper:
                 self.part_one_path,
                 self.part_two_path,
                 self.response_path,
+                self.puzzle_input_path,
             ]
             for path in paths_to_remove:
                 self._log(f"Removing {path}")
@@ -107,15 +108,25 @@ class DailyHelper:
         self._save(
             self.template_python_path,
             self.template.format(year=self.year, day=self.day),
+            ok_if_exists=True,
         )
 
     def _log(self, data: Any) -> None:
         if self.verbose:
             print(str(data))
 
-    def _save(self, path: Path, data: Union[str, Dict[str, Any]]) -> None:
-        if path.is_file():
-            self._log(f"{path} already exists - use --flush to overwrite")
+    def _save(
+        self,
+        path: Path,
+        data: Union[str, Dict[str, Any]],
+        force: bool = False,
+        ok_if_exists: bool = False,
+    ) -> None:
+        if not force and path.is_file():
+            if ok_if_exists:
+                self._log(f"{path} already exists")
+            else:
+                self._log(f"{path} already exists - use --flush to overwrite")
         else:
             with open(path, "w") as file:
                 if isinstance(data, str):
@@ -126,8 +137,6 @@ class DailyHelper:
 
     def _save_unit_test_data(self) -> None:
         answers = self.answers
-        while len(answers) < (2 if self.day != 25 else 1):
-            answers.append("unsolved")
 
         # update the unit test data if required
         with open(self.unit_test_data_path) as file:
@@ -137,22 +146,24 @@ class DailyHelper:
             unit_test_data[str(self.year)] = {}
             changes = True
 
-        if str(self.day) in unit_test_data[str(self.year)]:
+        if not self.flush and str(self.day) in unit_test_data[str(self.year)]:
             if unit_test_data[str(self.year)][str(self.day)] != self.answers:
                 self._log(f"!!! conflict in {self.unit_test_data_path} !!!")
                 self._log(f"Found {unit_test_data[str(self.year)][str(self.day)]}")
                 self._log(f"Expected {answers}")
+            else:
+                self._log(f"Answers already stored in {self.unit_test_data_path}")
         else:
             if len(answers) == 2:
-                unit_test_data[f"{self.year}"][f"{self.day}"] = answers
+                unit_test_data[str(self.year)][str(self.day)] = answers
             elif len(answers) == 1:
-                unit_test_data[f"{self.year}"][f"{self.day}"] = [answers[0], ""]
+                unit_test_data[str(self.year)][str(self.day)] = [answers[0], ""]
             else:
-                unit_test_data[f"{self.year}"][f"{self.day}"] = ["", ""]
+                unit_test_data[str(self.year)][str(self.day)] = ["", ""]
             changes = True
 
         if changes:
-            self._save(self.unit_test_data_path, unit_test_data)
+            self._save(self.unit_test_data_path, unit_test_data, force=True)
 
     def _save_response(self) -> None:
         response = {
