@@ -49,6 +49,18 @@ class Solver(SolverInterface):
         return self._decompressed_length(self.input, 2)
 
     def _decompressed_length(self, data: str, version: int) -> int:
+        """Calculate the decompressed length, depending on the version.
+
+            Version 1 - no recursion
+            Version 2 - recursion
+
+        Args:
+            data (str): the input string
+            version (int): the version code
+
+        Returns:
+            int: the length of the decompressed string.
+        """
         length = 0
         i = 0
         pattern = compile(r"\((?P<len>\d+)x(?P<repeat>\d+)\)")
