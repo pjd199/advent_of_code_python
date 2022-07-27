@@ -128,7 +128,6 @@ class Solver(SolverInterface):
         )
         setup_pattern = compile(r"value (?P<value>\d+) goes to (?P<id>bot \d+)")
         for i, line in enumerate(puzzle_input):
-            print(line)
             if m := give_pattern.fullmatch(line):
                 cast(Solver._Robot, find(m["id"])).instruction(
                     find(m["low_id"]),
