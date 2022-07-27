@@ -233,7 +233,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.input.append(m[0])
             else:
-                raise RuntimeError(f"Unable to parse {{line}} on line {{i}}")
+                raise RuntimeError(f"Unable to parse {{line}} on line {{i+1}}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
