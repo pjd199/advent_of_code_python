@@ -51,7 +51,7 @@ class Generator(Item):
         Returns:
             str: The string representation of this object.
         """
-        return f"{self.material} generator"
+        return f"{self.material} generator"  # pragma: no cover
 
 
 class Microchip(Item):
@@ -76,7 +76,7 @@ class Microchip(Item):
         Returns:
             str: The string representation of this object.
         """
-        return f"{self.material}-compatible microchip"
+        return f"{self.material}-compatible microchip"  # pragma: no cover
 
 
 class State(ABC):
