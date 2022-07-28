@@ -98,7 +98,7 @@ class State(ABC):
         """Iterator for all the safe moves from here.
 
         Yields:
-            _type_: the next safe state
+            Iterable[State]: the next safe state
         """
         for items_in_elevator in [2, 1]:
             for items in combinations(self.floors[self.elevator], items_in_elevator):
