@@ -122,6 +122,23 @@ class DailyHelper:
             ok_if_exists=True,
         )
 
+        # update part two if possible
+        with open(self.template_python_path) as file:
+            lines = [x.strip("\n") for x in file.readlines()]
+
+        for i in range(len(lines)):
+            if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
+                print("Updating pydoc for part two")
+                lines = (
+                    lines[:i]
+                    + self._markdown_pydoc(desc[1]).splitlines()
+                    + lines[i + 1 :]
+                    + [""]
+                )
+                self._save(self.template_python_path, "\n".join(lines), force=True)
+                break
+            i += 1
+
         # run the testing
         self._testing()
 
