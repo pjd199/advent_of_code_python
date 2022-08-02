@@ -37,7 +37,6 @@ def runner(solver_class: Type[SolverInterface]) -> None:
         with Pool(processes=1) as pool:
             start = perf_counter_ns()
             result = pool.apply_async(part.run)
-            result.wait(0.1)
             while not result.ready():
                 stdout.write(
                     f"\rSolving {part.name} ({_format_time(perf_counter_ns() - start)})"
