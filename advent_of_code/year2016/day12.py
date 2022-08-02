@@ -165,7 +165,7 @@ class Solver(SolverInterface):
         reg = {k: 0 for k in "abcd"}
 
         # update registers with key word arguments
-        reg |= kwargs
+        reg.update(kwargs)
 
         # add all int literals as special registers
         for instruction in self.program:
