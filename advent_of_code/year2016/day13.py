@@ -153,26 +153,22 @@ class Solver(SolverInterface):
             return
         self.has_run = True
 
-        target = (31, 39)
-
-        queue = deque([(1, 1, 0)])
+        queue = deque([(int(1), int(1), int(0))])
         visited = {(1, 1)}
-
-        moves = [(0, -1), (1, 0), (0, 1), (-1, 0)]
 
         self.within_50_steps = 0
         self.steps_to_target = 0
         while queue:
             x, y, steps = queue.popleft()
 
-            if (x, y) == target:
+            if (x, y) == (31, 39):
                 self.steps_to_target = steps
                 break
 
             if steps <= 50:
                 self.within_50_steps += 1
 
-            for move in moves:
+            for move in [(0, -1), (1, 0), (0, 1), (-1, 0)]:
                 x1, y1 = x + move[0], y + move[1]
                 if x1 >= 0 and y1 >= 0 and (x1, y1) not in visited:
                     visited.add((x1, y1))
