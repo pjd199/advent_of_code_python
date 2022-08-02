@@ -74,10 +74,10 @@ from re import compile
 from sys import path
 from typing import List
 
-if __name__ == "__main__":
-    path.append(str(Path(__file__).parent.parent.parent))  # pragma: no cover
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.input_loader import load_puzzle_input_file
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -101,6 +101,10 @@ class Instruction:
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
+
+    YEAR = 2016
+    DAY = 12
+    TITLE = "Leonardo's Monorail"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -190,7 +194,5 @@ class Solver(SolverInterface):
         return reg["a"]
 
 
-if __name__ == "__main__":
-    solver = Solver(load_puzzle_input_file(2016, 12))
-    print(f"part one: {solver.solve_part_one()}")
-    print(f"part two: {solver.solve_part_two()}")
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)
