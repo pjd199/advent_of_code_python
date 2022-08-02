@@ -1,5 +1,18 @@
 """Load puzzle input form a file and strip the whitespace."""
-from typing import List
+from typing import List, Union
+
+
+def load_puzzle_input_file(year: Union[int, str], day: Union[int, str]) -> List[str]:
+    """Load the file, remove whitespace and return a list of strings.
+
+    Args:
+        year (int): the year to load
+        day (int): the day to load
+
+    Returns:
+        List[str]: the lines of the file
+    """
+    return load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
 
 def load_file(filename: str) -> List[str]:

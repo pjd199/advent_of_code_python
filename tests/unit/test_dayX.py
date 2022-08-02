@@ -7,7 +7,7 @@ from string import printable
 
 import pytest
 
-from advent_of_code.utils.input_loader import load_file
+from advent_of_code.utils.input_loader import load_file, load_puzzle_input_file
 from advent_of_code.utils.solver_interface import SolverInterface
 
 with open("./tests/unit/test_dayX.json") as file:
@@ -81,12 +81,9 @@ def test_init_solver(year: str, day: str) -> None:
         year (str): The year to test
         day (str): the day to test
     """
-    # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
-
     # instantiate the class, which should not raise any expections
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    mod.Solver(puzzle_input)
+    mod.Solver(load_puzzle_input_file(year, day))
 
     # test with None input, which should cause a problem
     with pytest.raises(RuntimeError):
@@ -130,12 +127,9 @@ def test_solve_part_one(year: str, day: str) -> None:
         year (str): The year to test
         day (str): the day to test
     """
-    # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
-
     # instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver = mod.Solver(load_puzzle_input_file(year, day))
 
     # check the result
     answer = str(solver.solve_part_one())
@@ -162,12 +156,9 @@ def test_solve_part_two(year: str, day: str) -> None:
         year (str): The year to test
         day (str): the day to test
     """
-    # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
-
     # dynamically instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver = mod.Solver(load_puzzle_input_file(year, day))
 
     # check the result - note day 25 doesn't have a part_two
     if day != "25":
@@ -201,12 +192,9 @@ def test_solve_all(year: str, day: str) -> None:
         year (str): The year to test
         day (str): the day to test
     """
-    # load the input file
-    puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
-
     # dynamically instantiate the class
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver = mod.Solver(load_puzzle_input_file(year, day))
 
     # check the results
     answers = solver.solve_all()

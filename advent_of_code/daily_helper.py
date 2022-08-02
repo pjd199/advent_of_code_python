@@ -5,6 +5,7 @@ from pathlib import Path
 from re import match
 from typing import Any, Dict, List, Optional, Union
 
+import pytest
 from bs4 import BeautifulSoup
 from markdownify import ATX, markdownify  # type: ignore
 from requests import get
@@ -22,7 +23,8 @@ class DailyHelper:
         day: int,
         session: Optional[str] = None,
         flush: bool = False,
-        verbose: bool = True,
+        verbose: bool = False,
+        test: bool = False,
     ):
         """Initialise the helper for a specific day.
 
@@ -32,12 +34,14 @@ class DailyHelper:
             session (Optional[str]): the session cookie for the Advent of Code website
             flush (bool): if True, ignores cached files. Default False
             verbose (bool): if True, enables logging. Default False
+            test (bool): if True, enables testing. Default False
         """
         self.year = year
         self.day = day
         self.session = session
         self.flush = flush
         self.verbose = verbose
+        self.test = test
 
         self.title = ""
         self.answers: List[str] = []
@@ -49,21 +53,11 @@ class DailyHelper:
         self.unit_test_data_path = Path("tests/unit/test_dayX.json")
         self.puzzle_input_path = Path(f"puzzle_input/year{year}/day{day}.txt")
         self.template_python_path = Path(f"advent_of_code/year{year}/day{day}.py")
+        self.template_text_path = Path("advent_of_code/daily_helper_template.txt")
 
     def run(self) -> None:
         """The download, parsing and file creation sequence."""
-        if self.flush:
-            self._log("Flushing cache...")
-            paths_to_remove = [
-                self.html_path,
-                self.part_one_path,
-                self.part_two_path,
-                self.response_path,
-                self.puzzle_input_path,
-            ]
-            for path in paths_to_remove:
-                self._log(f"Removing {path}")
-                path.unlink(missing_ok=True)
+        self._flush()
 
         # download the webpage from Advent of Code website
         self._download(
@@ -105,15 +99,66 @@ class DailyHelper:
         self._save_unit_test_data()
 
         # create and save a new python solver file
+        desc = soup.find_all("article", attrs={"class": "day-desc"})
+        for d in desc:
+            d.h2.extract()
+
+        with open(self.template_text_path) as file:
+            template = "".join(file.readlines())
+
         self._save(
             self.template_python_path,
-            self.template.format(year=self.year, day=self.day),
+            template.format(
+                year=self.year,
+                day=self.day,
+                title=self.title.replace('"', "'"),
+                part_one=self._markdown_pydoc(str(desc[0])),
+                part_two=(
+                    "<<<INSERT PART TWO HERE>>>"
+                    if len(desc) == 1
+                    else self._markdown_pydoc(desc[1])
+                ),
+            ),
             ok_if_exists=True,
         )
+
+        # update part two if possible
+        with open(self.template_python_path) as file:
+            lines = [x.strip("\n") for x in file.readlines()]
+
+        for i in range(len(lines)):
+            if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
+                print("Updating pydoc for part two")
+                lines = (
+                    lines[:i]
+                    + self._markdown_pydoc(desc[1]).splitlines()
+                    + lines[i + 1 :]
+                    + [""]
+                )
+                self._save(self.template_python_path, "\n".join(lines), force=True)
+                break
+            i += 1
+
+        # run the testing
+        self._testing()
 
     def _log(self, data: Any) -> None:
         if self.verbose:
             print(str(data))
+
+    def _flush(self) -> None:
+        if self.flush:
+            self._log("Flushing cache...")
+            paths_to_remove = [
+                self.html_path,
+                self.part_one_path,
+                self.part_two_path,
+                self.response_path,
+                self.puzzle_input_path,
+            ]
+            for path in paths_to_remove:
+                self._log(f"Removing {path}")
+                path.unlink(missing_ok=True)
 
     def _save(
         self,
@@ -132,7 +177,7 @@ class DailyHelper:
                 if isinstance(data, str):
                     file.write(data)
                 else:
-                    dump(data, file, indent=4, sort_keys=True)
+                    dump(data, file, indent=4)
                 self._log(f"Saved {path}")
 
     def _save_unit_test_data(self) -> None:
@@ -163,13 +208,22 @@ class DailyHelper:
             changes = True
 
         if changes:
-            self._save(self.unit_test_data_path, unit_test_data, force=True)
+            # sort unit_test_data by numeric strings
+            # ie ["1","2","10"] not ["1", "10", "2"]
+            def sorted_dict(d: Dict[str, Any]) -> Dict[str, Any]:
+                return dict(sorted(d.items(), key=lambda x: int(x[0])))
+
+            sorted_data = sorted_dict(
+                {k: sorted_dict(v) for k, v in unit_test_data.items()}
+            )
+
+            self._save(self.unit_test_data_path, sorted_data, force=True)
 
     def _save_response(self) -> None:
         response = {
-            "day": self.day,
             "title": self.title,
             "year": self.year,
+            "day": self.day,
         }
         if len(self.answers) > 0:
             response["part_one"] = self.answers[0]
@@ -199,58 +253,32 @@ class DailyHelper:
                     f"server status code {response.status_code}"
                 )
 
-    template = '''"""Solves the puzzle for Day {day} of Advent of Code {year}."""
-from re import compile
-from typing import List
+    def _markdown_pydoc(self, text: str) -> str:
+        return (
+            str(markdownify(str(text), heading_style=ATX, wrap=True, wrap_width=72))
+            .replace("\t", "    ")
+            .replace("\n\n\n\n", "\n\n")
+            .replace("\n\n\n", "\n\n")
+            .replace('"', "'")
+            .strip()
+        )
 
-from advent_of_code.utils.solver_interface import SolverInterface
-
-
-class Solver(SolverInterface):
-    """Solves the puzzle."""
-
-    def __init__(self, puzzle_input: List[str]) -> None:
-        """Initialise the puzzle and parse the input.
-
-        Args:
-            puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
-        """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        pattern = compile(r"")
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.input.append(m[0])
+    def _testing(self) -> None:
+        # test the solver if requested
+        if self.test:
+            options = [
+                "./tests/unit",
+                "-k",
+                f"{self.year}-{self.day:02}",
+                f"--cov=advent_of_code.year{self.year}.day{self.day}",
+                "--no-cov-on-fail",
+                "--cov-fail-under=100",
+            ]
+            if self.verbose:
+                options += ["-v", "--cov-report", "term-missing"]
             else:
-                raise RuntimeError(f"Unable to parse {{line}} on line {{i}}")
-
-    def solve_part_one(self) -> int:
-        """Solve part one of the puzzle.
-
-        Returns:
-            int: the answer
-        """
-        return -1
-
-    def solve_part_two(self) -> int:
-        """Solve part two of the puzzle.
-
-        Returns:
-            int: the answer
-        """
-        return -1
-'''
+                options += ["-q", "--cov-report="]
+            pytest.main(options)
 
 
 def main() -> None:
@@ -286,6 +314,7 @@ def main() -> None:
         action="store_true",
     )
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
+    parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
     args = parser.parse_args()
 
     # handle the session cookie loading and saving
@@ -302,7 +331,9 @@ def main() -> None:
     else:
         session = None
 
-    helper = DailyHelper(args.year, args.day, session, args.flush, args.verbose)
+    helper = DailyHelper(
+        args.year, args.day, session, args.flush, args.verbose, args.test
+    )
     helper.run()
 
 

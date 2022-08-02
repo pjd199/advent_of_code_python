@@ -6,6 +6,10 @@ from typing import List, Union
 class SolverInterface(ABC):
     """Solver interface."""
 
+    YEAR: int
+    DAY: int
+    TITLE: str
+
     @abstractmethod
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the object, parse and validate the input.
