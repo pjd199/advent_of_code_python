@@ -67,7 +67,8 @@ What is the *fewest number of steps required* for you to reach `31,39`?
 
 ## Part Two
 
-<<<INSERT PART TWO HERE>>>
+*How many locations* (distinct `x,y` coordinates, including your
+starting location) can you reach in at most `50` steps?
 """
 from collections import deque
 from pathlib import Path
