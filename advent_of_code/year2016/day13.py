@@ -149,7 +149,7 @@ class Solver(SolverInterface):
         return self.within_50_steps
 
     def _run(self) -> None:
-        """Run the simulation."""
+        """Run the simulation, using a breadth first search algorithm."""
         if self.has_run:
             return
         self.has_run = True
