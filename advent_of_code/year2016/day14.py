@@ -110,7 +110,7 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
-def stretch_digest(x: str) -> str:
+def stretch_digest(x: str) -> str:  # pragma: no cover
     """Calculate the stretch digest of the input.
 
     Args:
