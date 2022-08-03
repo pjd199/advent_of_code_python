@@ -1,10 +1,9 @@
 """Simple runner function for printing solver results with timings."""
 from dataclasses import dataclass
-from multiprocessing import Pool
-from sys import stdout
 from time import perf_counter_ns
 from typing import Callable, Type, Union
 
+from advent_of_code.utils.display_timer import NANO_IN_SEC, DisplayTimer
 from advent_of_code.utils.input_loader import load_puzzle_input_file
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -13,10 +12,6 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class _Part:
     run: Callable[[], Union[int, str]]
     name: str
-
-
-def _format_time(t: int) -> str:
-    return f"{t / 1000000000:.2f}s"
 
 
 def runner(solver_class: Type[SolverInterface]) -> None:
@@ -32,19 +27,19 @@ def runner(solver_class: Type[SolverInterface]) -> None:
         parts += [_Part(solver.solve_part_two, "part two")]
 
     for part in parts:
-        stdout.write(f"\rSolving {part.name}...")
-        stdout.flush()
-        with Pool(processes=1) as pool:
-            start = perf_counter_ns()
-            result = pool.apply_async(part.run)
-            while not result.ready():
-                stdout.write(
-                    f"\rSolving {part.name} ({_format_time(perf_counter_ns() - start)})"
-                )
-                stdout.flush()
-                result.wait(0.1)
+        # start the display timer
+        display_timer = DisplayTimer(f"Solving {part.name}: ")
+        display_timer.start()
 
-            print(
-                f"\rSolved {part.name}: {result.get()} "
-                f"in {_format_time(perf_counter_ns() - start)}"
-            )
+        # time the solver
+        start = perf_counter_ns()
+        result = part.run()
+        stop = perf_counter_ns()
+
+        # stop the display timer
+        display_timer.cancel()
+
+        # print the results
+        print(
+            f"\rSolved {part.name}: {result} " f"in {(stop - start) / NANO_IN_SEC:.2f}s"
+        )
