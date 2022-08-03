@@ -4,13 +4,8 @@ from re import match
 
 import pytest
 
-from advent_of_code.utils.runner import _format_time, runner
+from advent_of_code.utils.runner import runner
 from advent_of_code.year2015.day1 import Solver
-
-
-def test_format_time() -> None:
-    """Unit test for _format_time()."""
-    assert _format_time(1230000000) == "1.23s"
 
 
 def test_runner(capfd: pytest.CaptureFixture[str]) -> None:
