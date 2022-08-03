@@ -174,10 +174,7 @@ class Solver(SolverInterface):
         """
         with Pool() as pool:
             return self._find(
-                pool.imap(
-                    stretch_digest,
-                    (f"{self.input}{j}" for j in count()),
-                )
+                pool.imap(stretch_digest, (f"{self.input}{j}" for j in count()), 500)
             )
 
     def _find(self, iterator: Iterator[str]) -> int:
