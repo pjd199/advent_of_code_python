@@ -6,7 +6,7 @@ from time import perf_counter_ns
 NANO_IN_SEC = 1000000000
 
 
-class DisplayTimer(Thread):
+class DisplayTimer(Thread):  # pragma: no cover
     """Thread to display the working time to the user."""
 
     def __init__(self, message: str):
