@@ -32,13 +32,13 @@ def test_display_timer(
     pattern = compile(r"(\r.*\(\d+.\d\ds\))*")
     assert pattern.fullmatch(captured)
 
-    # check each line in the capture for ascending time in 0.1 sec
-    # increaments, with a tolerance of 0.2s
+    # check each line in the capture for ascending time in
+    # increaments, with a tolerance of 1s
     line_pattern = compile(rf"\r{message}\((?P<time>\d+.\d\d)s\)")
     total_time = 0.0
     for m in line_pattern.finditer(captured):
         assert m is not None
         time = float(m["time"])
         assert (time == 0.0) or (time > total_time)
-        assert time < (total_time + interval + 0.2)
+        assert time < (total_time + interval + 1.0)
         total_time = time
