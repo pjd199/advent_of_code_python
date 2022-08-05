@@ -57,7 +57,7 @@ jobs:
       - name: Testing with pytest
         if: ${{ always() }}
         run: |
-          pytest ./tests/unit ./tests/integration -n auto --cov --cov-report term-missing:skip-covered
+          pytest ./tests/unit ./tests/integration -n auto --cov --cov-report term-missing:skip-covered --cov-fail-under=100
 
       - name: Security check with bandit
         if: ${{ always() }}
