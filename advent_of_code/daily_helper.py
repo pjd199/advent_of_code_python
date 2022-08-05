@@ -11,7 +11,7 @@ from markdownify import ATX, markdownify  # type: ignore
 from requests import get
 
 AOC_ROOT = "https://adventofcode.com"
-CACHE_PATH = ".aoc_website_cache"
+CACHE_PATH = "./.aoc_website_cache"
 
 
 class DailyHelper:
@@ -50,10 +50,10 @@ class DailyHelper:
         self.part_one_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_one.md")
         self.part_two_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_two.md")
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
-        self.unit_test_data_path = Path("tests/unit/test_dayX.json")
-        self.puzzle_input_path = Path(f"puzzle_input/year{year}/day{day}.txt")
-        self.template_python_path = Path(f"advent_of_code/year{year}/day{day}.py")
-        self.template_text_path = Path("advent_of_code/daily_helper_template.txt")
+        self.unit_test_data_path = Path("./tests/unit/test_dayX.json")
+        self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
+        self.template_python_path = Path(f"./advent_of_code/year{year}/day{day}.py")
+        self.template_text_path = Path("./advent_of_code/daily_helper_template.txt")
 
     def run(self) -> None:
         """The download, parsing and file creation sequence."""
@@ -61,8 +61,7 @@ class DailyHelper:
 
         # download the webpage from Advent of Code website
         self._download(
-            f"{AOC_ROOT}/{self.year}/day/{self.day}",
-            self.html_path,
+            f"{AOC_ROOT}/{self.year}/day/{self.day}", self.html_path, ok_if_exists=True
         )
 
         # parse the html file
@@ -79,7 +78,9 @@ class DailyHelper:
 
         # save the puzzle input file
         self._download(
-            f"{AOC_ROOT}/{self.year}/day/{self.day}/input", self.puzzle_input_path
+            f"{AOC_ROOT}/{self.year}/day/{self.day}/input",
+            self.puzzle_input_path,
+            ok_if_exists=True,
         )
 
         # find the puzzle title
@@ -91,7 +92,7 @@ class DailyHelper:
         # find and save the answers, if solved
         para = soup.find_all("p")
         for x in para:
-            if str(x.contents[0]).startswith("Your puzzle answer was"):
+            if x.text.startswith("Your puzzle answer was"):
                 self.answers.append(x.code.string)
         self._save_response()
 
@@ -129,7 +130,7 @@ class DailyHelper:
 
             for i in range(len(lines)):
                 if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
-                    print("Updating pydoc for part two")
+                    print("Updating module docstring with part two")
                     lines = (
                         lines[:i]
                         + self._markdown_pydoc(desc[1]).splitlines()
@@ -149,7 +150,6 @@ class DailyHelper:
 
     def _flush(self) -> None:
         if self.flush:
-            self._log("Flushing cache...")
             paths_to_remove = [
                 self.html_path,
                 self.part_one_path,
@@ -158,7 +158,7 @@ class DailyHelper:
                 self.puzzle_input_path,
             ]
             for path in paths_to_remove:
-                self._log(f"Removing {path}")
+                self._log(f"Flushing cache for {path}")
                 path.unlink(missing_ok=True)
 
     def _save(
@@ -169,10 +169,8 @@ class DailyHelper:
         ok_if_exists: bool = False,
     ) -> None:
         if not force and path.is_file():
-            if ok_if_exists:
-                self._log(f"{path} already exists")
-            else:
-                self._log(f"{path} already exists - use --flush to overwrite")
+            if not ok_if_exists:
+                self._log(f"File {path} already exists")
         else:
             with open(path, "w") as file:
                 if isinstance(data, str):
@@ -235,9 +233,9 @@ class DailyHelper:
         # save the answers
         self._save(Path(self.response_path), response)
 
-    def _download(self, url: str, path: Path) -> None:
-        if path.is_file():
-            self._log(f"{path} already exists - use --flush to overwrite")
+    def _download(self, url: str, path: Path, ok_if_exists: bool) -> None:
+        if path.is_file() and ok_if_exists:
+            self._log(f"URL {url} already downloaded to {path}")
         else:
             self._log(f"Downloading {url}")
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -247,7 +245,6 @@ class DailyHelper:
                 response = get(url)
             if response.status_code == 200:
                 self._save(path, response.text)
-                self._log(f"Saved {path}")
             else:
                 raise RuntimeError(
                     f"Unable to download file: "
