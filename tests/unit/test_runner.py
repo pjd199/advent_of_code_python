@@ -4,13 +4,8 @@ from re import match
 
 import pytest
 
-from advent_of_code.utils.runner import _format_time, runner
+from advent_of_code.utils.runner import runner
 from advent_of_code.year2015.day1 import Solver
-
-
-def test_format_time() -> None:
-    """Unit test for _format_time()."""
-    assert _format_time(1230000000) == "1.23s"
 
 
 def test_runner(capfd: pytest.CaptureFixture[str]) -> None:
@@ -27,9 +22,11 @@ def test_runner(capfd: pytest.CaptureFixture[str]) -> None:
     captured = capfd.readouterr()
     lines = [x for x in captured.out.splitlines() if x]
     assert lines[0] == "Solving 'Not Quite Lisp' [2015-01]"
+    assert lines[1] == "Solving part one: (0.00s)"
     assert match(
-        rf"Solved part one: {test_cases['2015']['1'][0]} in \d+.\d\ds", lines[1]
+        rf"Solved part one: {test_cases['2015']['1'][0]} in \d+.\d\ds", lines[2]
     )
+    assert lines[3] == "Solving part two: (0.00s)"
     assert match(
-        rf"Solved part two: {test_cases['2015']['1'][1]} in \d+.\d\ds", lines[2]
+        rf"Solved part two: {test_cases['2015']['1'][1]} in \d+.\d\ds", lines[4]
     )

@@ -7,7 +7,7 @@ on:
     - cron:  "34 2 * * *"
     
   pull_request:
-    types: [opened, reopened]
+    types: [opened, edited, reopened]
 
 concurrency: 
   group: compatability${{ github.ref }}
@@ -57,7 +57,7 @@ jobs:
       - name: Testing with pytest
         if: ${{ always() }}
         run: |
-          pytest ./tests/unit ./tests/integration -n auto --cov --cov-report term-missing:skip-covered
+          pytest ./tests/unit ./tests/integration -n auto
 
       - name: Security check with bandit
         if: ${{ always() }}

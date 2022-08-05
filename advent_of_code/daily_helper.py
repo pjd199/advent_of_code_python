@@ -85,7 +85,7 @@ class DailyHelper:
         # find the puzzle title
         h2 = soup.find_all("h2")
         for x in h2:
-            if m := match(r"--- Day (?:[\d]+): (?P<title>[\w|\s]+) ---", x.string):
+            if m := match(r"--- Day (?:\d+): (?P<title>.+) ---", x.string):
                 self.title = m["title"]
 
         # find and save the answers, if solved
@@ -123,21 +123,22 @@ class DailyHelper:
         )
 
         # update part two if possible
-        with open(self.template_python_path) as file:
-            lines = [x.strip("\n") for x in file.readlines()]
+        if len(desc) == 2:
+            with open(self.template_python_path) as file:
+                lines = [x.strip("\n") for x in file.readlines()]
 
-        for i in range(len(lines)):
-            if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
-                print("Updating pydoc for part two")
-                lines = (
-                    lines[:i]
-                    + self._markdown_pydoc(desc[1]).splitlines()
-                    + lines[i + 1 :]
-                    + [""]
-                )
-                self._save(self.template_python_path, "\n".join(lines), force=True)
-                break
-            i += 1
+            for i in range(len(lines)):
+                if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
+                    print("Updating pydoc for part two")
+                    lines = (
+                        lines[:i]
+                        + self._markdown_pydoc(desc[1]).splitlines()
+                        + lines[i + 1 :]
+                        + [""]
+                    )
+                    self._save(self.template_python_path, "\n".join(lines), force=True)
+                    break
+                i += 1
 
         # run the testing
         self._testing()
