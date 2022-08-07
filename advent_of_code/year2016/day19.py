@@ -152,7 +152,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         exponent = 1
-        while (2 ** (exponent + 1)) <= self.number_of_elves:
+        while (2 ** int(exponent + 1)) <= self.number_of_elves:
             exponent += 1
         return 2 * (self.number_of_elves - int(2**exponent)) + 1
 
@@ -167,7 +167,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         exponent = 1
-        while (3 ** (exponent + 1)) <= self.number_of_elves:
+        while (3 ** int(exponent + 1)) <= self.number_of_elves:
             exponent += 1
 
         if self.number_of_elves < 3:
