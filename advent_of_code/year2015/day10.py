@@ -1,12 +1,22 @@
 """Solution for day 10 of Advent of Code 2015."""
 from itertools import groupby
+from pathlib import Path
+from sys import path
 from typing import List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solver for the puzzle."""
+
+    YEAR = 2015
+    DAY = 10
+    TITLE = "Elves Look, Elves Say"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -54,3 +64,7 @@ class Solver(SolverInterface):
         for _ in range(50):
             seq = "".join(str(len(list(g))) + k for k, g in groupby(seq))
         return len(seq)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

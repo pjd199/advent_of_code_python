@@ -1,13 +1,23 @@
 """Solution for day 12 of Advent of Code 2015."""
 from json import loads
 from json.decoder import JSONDecodeError
+from pathlib import Path
+from sys import path
 from typing import Any, List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solver for the puzzle."""
+
+    YEAR = 2015
+    DAY = 12
+    TITLE = "JSAbacusFramework.io"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -74,3 +84,7 @@ class Solver(SolverInterface):
             return sum([self._content_sum(x, ignore_red) for x in obj.values()])
         else:
             return 0
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

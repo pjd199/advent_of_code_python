@@ -1,13 +1,23 @@
 """Solves the puzzle for Day 5 of Advent of Code 2016."""
 from hashlib import md5
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import Dict, Iterable, List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
+
+    YEAR = 2016
+    DAY = 5
+    TITLE = "How About a Nice Game of Chess?"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -91,3 +101,7 @@ class Solver(SolverInterface):
                 self.cache[i] = digest
                 yield digest
             i += 1
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

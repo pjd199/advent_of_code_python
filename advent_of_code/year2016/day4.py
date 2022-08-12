@@ -1,10 +1,16 @@
 """Solves the puzzle for Day 4 of Advent of Code 2016."""
 from collections import defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 from re import compile
 from string import ascii_lowercase
+from sys import path
 from typing import DefaultDict, List, Optional
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -17,6 +23,10 @@ class Solver(SolverInterface):
         decrypted_name: Optional[str]
         sector_id: int
         checksum: str
+
+    YEAR = 2016
+    DAY = 4
+    TITLE = "Security Through Obscurity"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -103,3 +113,7 @@ class Solver(SolverInterface):
             checksum = "".join([x[0] for x in ordered[:5]])
             if room.checksum == checksum:
                 self.real_rooms.append(room)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

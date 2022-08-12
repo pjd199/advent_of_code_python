@@ -1,10 +1,16 @@
 """Solution for day 6 of Advent of Code 2015."""
 from collections import namedtuple
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import List
 
 import numpy as np
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 Instruction = namedtuple("Instruction", "op x1 y1 x2 y2")
@@ -12,6 +18,10 @@ Instruction = namedtuple("Instruction", "op x1 y1 x2 y2")
 
 class Solver(SolverInterface):
     """Solver for the puzzle."""
+
+    YEAR = 2015
+    DAY = 6
+    TITLE = "Probably a Fire Hazard"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -101,3 +111,7 @@ class Solver(SolverInterface):
                 )
 
         return int(brightness.sum())
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)
