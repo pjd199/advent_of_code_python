@@ -49,49 +49,50 @@ def development_server() -> str:
     return f"http://{host}:{port}"
 
 
-def discover_url_from_config(sam_config_file: str) -> str:
+@pytest.fixture(scope="module")
+def lambda_urls() -> Dict[str, str]:
     """Open the SAM config file, and use the stack name to find the Fucntion URL.
 
-    Args:
-        sam_config_file (str): the file name
-
     Returns:
-        str: the discover url
+        Dict[str, str]: the discovered urls, one for each file
     """
-    sam_config = load_toml("./" + sam_config_file)
-    stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
-    region_name = sam_config["default"]["deploy"]["parameters"]["region"]
+    urls = {}
+    for file in ["./samconfig.toml", "./samconfig_dev.toml"]:
+        sam_config = load_toml(file)
+        stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
+        region_name = sam_config["default"]["deploy"]["parameters"]["region"]
 
-    cf_client = client("cloudformation", region_name=region_name)
-    stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
+        cf_client = client("cloudformation", region_name=region_name)
+        stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
 
-    url = ""
-    if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
-        for stack in stack_descriptions["Stacks"]:
-            if stack["StackName"] == stack_name:
-                for output in stack["Outputs"]:
-                    if output["OutputKey"] == "AdventOfCodeFunctionURL":
-                        url = output["OutputValue"].strip("/")
-                        break
-    return url
+        if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
+            for stack in stack_descriptions["Stacks"]:
+                if stack["StackName"] == stack_name:
+                    for output in stack["Outputs"]:
+                        if output["OutputKey"] == "AdventOfCodeFunctionURL":
+                            urls[file] = output["OutputValue"].strip("/")
+                            break
+    return urls
 
 
-def test_main(test_case: Dict["str", Any]) -> None:
+def test_main(lambda_urls: Dict[str, str], test_case: Dict["str", Any]) -> None:
     """Test using the main branch Lambda Function URL.
 
     Args:
+        lambda_urls (Dict[str, str]): the urls for testing
         test_case (Dict["str", Any]): the test case
     """
-    call_lambda_function(discover_url_from_config("samconfig.toml"), test_case)
+    call_lambda_function(lambda_urls["./samconfig.toml"], test_case)
 
 
-def test_dev(test_case: Dict["str", Any]) -> None:
+def test_dev(lambda_urls: Dict[str, str], test_case: Dict["str", Any]) -> None:
     """Test using the development branch Lambda Function URL.
 
     Args:
+        lambda_urls (Dict[str, str]): the urls for testing
         test_case (Dict["str", Any]): the test case
     """
-    call_lambda_function(discover_url_from_config("samconfig_dev.toml"), test_case)
+    call_lambda_function(lambda_urls["./samconfig_dev.toml"], test_case)
 
 
 def test_local(development_server: str, test_case: Dict["str", Any]) -> None:

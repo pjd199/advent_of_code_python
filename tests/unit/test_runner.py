@@ -14,19 +14,30 @@ def test_runner(capfd: pytest.CaptureFixture[str]) -> None:
     Args:
         capfd (pytest.CaptureFixture[str]): fixture to capture stdout
     """
-    with open("./tests/unit/test_dayX.json") as file:
-        test_cases = load(file)
+    # load the details for day under test
+    with open("./tests/expected.json") as file:
+        expected = load(file)["2015"]["1"]
 
     # execute runner and check for the expected output
     runner(Solver)
     captured = capfd.readouterr()
     lines = [x for x in captured.out.splitlines() if x]
-    assert lines[0] == "Solving 'Not Quite Lisp' [2015-01]"
-    assert lines[1] == "Solving part one: (0.00s)"
-    assert match(
-        rf"Solved part one: {test_cases['2015']['1'][0]} in \d+.\d\ds", lines[2]
-    )
-    assert lines[3] == "Solving part two: (0.00s)"
-    assert match(
-        rf"Solved part two: {test_cases['2015']['1'][1]} in \d+.\d\ds", lines[4]
-    )
+
+    # assert the correct title
+    m = match(r"Solving '(?P<title>.*)' \[(?P<year>\d\d\d\d)-(?P<day>\d\d)\]", lines[0])
+    assert m
+    assert m["title"] == expected["title"]
+    assert int(m["year"]) == expected["year"]
+    assert int(m["day"]) == expected["day"]
+
+    # assert the correct part one
+    assert match(r"Solving part one: \(0.00s\)", lines[1])
+    m = match(r"Solved part one: (?P<part_one>.*) in \d+.\d\ds", lines[2])
+    assert m
+    assert m["part_one"] == expected["part_one"]
+
+    # assert the correct part two
+    assert match(r"Solving part two: \(0.00s\)", lines[3])
+    m = match(r"Solved part two: (?P<part_two>.*) in \d+.\d\ds", lines[4])
+    assert m
+    assert m["part_two"] == expected["part_two"]

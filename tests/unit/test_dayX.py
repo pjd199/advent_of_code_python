@@ -1,62 +1,71 @@
 """Runs the unit tests for each day, using input from test_cases.json."""
+from datetime import date
 from importlib import import_module
 from importlib.util import find_spec
-from json import load
+from re import compile
 from secrets import choice, randbelow
 from string import printable
+from subprocess import run
 
 import pytest
 
 from advent_of_code.utils.input_loader import load_file, load_puzzle_input_file
 from advent_of_code.utils.solver_interface import SolverInterface
+from advent_of_code.utils.solver_status import implementation_status
+from tests.conftest import Expected, Part
 
-with open("./tests/unit/test_dayX.json") as file:
-    test_cases = load(file)
+
+def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
+    """Generate the parametised tests.
+
+    Args:
+        metafunc (pytest.Metafunc): the meta function
+    """
+    implemented = [
+        puzzle for puzzle, status in implementation_status().items() if status
+    ]
+    if "puzzle" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "puzzle",
+            implemented,
+            ids=[f"{d.year:04}-{d.day:02}" for d in implemented],
+        )
+
+    if "part" in metafunc.fixturenames:
+        metafunc.parametrize(
+            "part", [Part.ONE, Part.TWO, Part.ALL], ids=["part_one", "part_two", "all"]
+        )
 
 
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_module_spec(year: str, day: str) -> None:
+def test_module_spec(puzzle: date, expected: Expected) -> None:
     """Test the module exists and has a class of the right type.
 
     Args:
-        year (str): The year to test
-        day (str): the day to test
+        puzzle (date): date object with year and day for the puzzle
+        expected (Expected): the expected results
     """
     # check the module exists
-    module_name = f"advent_of_code.year{year}.day{day}"
+    module_name = f"advent_of_code.year{puzzle.year}.day{puzzle.day}"
     assert find_spec(module_name) is not None, f"{module_name} does not exist"
 
     # load the module and check the class is correct subclass
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
+    mod = import_module(f"advent_of_code.year{puzzle.year}.day{puzzle.day}")
     assert issubclass(mod.Solver, SolverInterface)
 
+    # check the metadata
+    assert mod.Solver.TITLE == expected[puzzle.year][puzzle.day]["title"]
+    assert mod.Solver.YEAR == expected[puzzle.year][puzzle.day]["year"]
+    assert mod.Solver.DAY == expected[puzzle.year][puzzle.day]["day"]
 
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_load_test_file(year: str, day: str) -> None:
+
+def test_load_test_file(puzzle: date) -> None:
     """Tests that all the required input files are available.
 
     Args:
-        year (str): The year to test
-        day (str): the day to test
+        puzzle (date): date object with year and day for the puzzle
     """
     # check the input file exists and is not empty
-    filename = f"./puzzle_input/year{year}/day{day}.txt"
+    filename = f"./puzzle_input/year{puzzle.year}/day{puzzle.day}.txt"
     puzzle_input = load_file(filename)
     assert puzzle_input is not None, f"Unable to load {filename}"
     assert len(puzzle_input) > 0, f"{filename} has no content"
@@ -65,25 +74,15 @@ def test_load_test_file(year: str, day: str) -> None:
     )
 
 
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_init_solver(year: str, day: str) -> None:
+def test_init_solver(puzzle: date) -> None:
     """Test the solution accepts the puzzle input without raising an error.
 
     Args:
-        year (str): The year to test
-        day (str): the day to test
+        puzzle (date): date object with year and day for the puzzle
     """
     # instantiate the class, which should not raise any expections
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
-    mod.Solver(load_puzzle_input_file(year, day))
+    mod = import_module(f"advent_of_code.year{puzzle.year}.day{puzzle.day}")
+    mod.Solver(load_puzzle_input_file(puzzle.year, puzzle.day))
 
     # test with None input, which should cause a problem
     with pytest.raises(RuntimeError):
@@ -111,97 +110,85 @@ def test_init_solver(year: str, day: str) -> None:
         )
 
 
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_solve_part_one(year: str, day: str) -> None:
-    """Test the solution has the correct answer for part one.
-
-    Args:
-        year (str): The year to test
-        day (str): the day to test
-    """
-    # instantiate the class
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(load_puzzle_input_file(year, day))
-
-    # check the result
-    answer = str(solver.solve_part_one())
-    expected = test_cases[year][day][0]
-    assert expected == answer, (
-        f"Incorrect part one answer for {year} {day}: "
-        f"expected {expected}, found {answer}"
-    )
-
-
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_solve_part_two(year: str, day: str) -> None:
+def test_solve(puzzle: date, expected: Expected, part: Part) -> None:
     """Test the solution have the correct answers.
 
     Args:
-        year (str): The year to test
-        day (str): the day to test
+        puzzle (date): date object with year and day for the puzzle
+        expected (Expected) : the test cases
+        part (Part): the part to run
     """
     # dynamically instantiate the class
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(load_puzzle_input_file(year, day))
+    mod = import_module(f"advent_of_code.year{puzzle.year}.day{puzzle.day}")
+    solver = mod.Solver(load_puzzle_input_file(puzzle.year, puzzle.day))
 
-    # check the result - note day 25 doesn't have a part_two
-    if day != "25":
-        answer = str(solver.solve_part_two())
-        expected = test_cases[year][day][1]
-        assert expected == answer, (
-            f"Incorrect part two answer for {year} {day}: "
-            f"expected {expected}, found {answer}"
-        )
+    if not (puzzle.day == 25 and part == Part.TWO):
+        part_mapper = {
+            Part.ALL: solver.solve_all,
+            Part.ONE: lambda: [solver.solve_part_one(), None],
+            Part.TWO: lambda: [None, solver.solve_part_two()],
+        }
+        answers = part_mapper[part]()
+        if part in [Part.ONE, Part.ALL]:
+            assert str(answers[0]) == expected[puzzle.year][puzzle.day]["part_one"]
+        if part in [Part.TWO, Part.ALL]:
+            assert str(answers[1]) == expected[puzzle.year][puzzle.day]["part_two"]
     else:
         with pytest.raises(NotImplementedError) as exception_info:
-            answer = solver.solve_part_two()
+            answers = solver.solve_part_two()
         assert "NotImplementedError" in str(exception_info), (
-            "Found an answer for {year} {day}: " "expected to raise NotImplementedError"
+            f"Found an answer for {puzzle.year} {puzzle.day}: "
+            "expected to raise NotImplementedError"
         )
 
 
-@pytest.mark.parametrize(
-    ("year", "day"),
-    [(year, day) for year, days in test_cases.items() for day in days],
-    ids=[
-        f"{int(year):04}-{int(day):02}"
-        for year, days in test_cases.items()
-        for day in days
-    ],
-)
-def test_solve_all(year: str, day: str) -> None:
+def test_cli(puzzle: date, expected: Expected) -> None:
     """Test the solution have the correct answers.
 
     Args:
-        year (str): The year to test
-        day (str): the day to test
+        puzzle (date): date object with year and day for the puzzle
+        expected (Expected): the expected results
     """
-    # dynamically instantiate the class
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(load_puzzle_input_file(year, day))
+    # simulate command line execution, expecting no errors
+    result = run(
+        ["python", f"./advent_of_code/year{puzzle.year}/day{puzzle.day}.py"],
+        capture_output=True,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert len(result.stderr) == 0
+    lines = [x for x in result.stdout.splitlines() if x]
 
-    # check the results
-    answers = solver.solve_all()
-    assert len(answers) == len(test_cases[year][day])
-    for i, answer in enumerate(answers):
-        expected = test_cases[year][day][i]
-        assert expected == str(answer), (
-            f"Incorrect answer in solve_all {year} {day} {i}: "
-            f"expected {expected}, found {answer}"
-        )
+    # define regex patterns
+    title_pattern = compile(
+        r"Solving '(?P<title>.*)' \[(?P<year>\d{4})-(?P<day>\d{1,2})\]"
+    )
+    timer_pattern = compile(r"Solving part (?P<part>one|two): \((?P<time>\d+.\d\d)s\)")
+    result_pattern = compile(
+        r"Solved part (?P<part>one|two): (?P<result>.+) in \d+.\d\ds"
+    )
+
+    # match the title line
+    m = title_pattern.fullmatch(lines[0])
+    assert m is not None
+    assert m["title"] == expected[puzzle.year][puzzle.day]["title"]
+    assert int(m["year"]) == expected[puzzle.year][puzzle.day]["year"]
+    assert int(m["day"]) == expected[puzzle.year][puzzle.day]["day"]
+
+    # loop through all the times, checking lines as expected
+    total_time = 0.0
+    part = "one"
+    for line in lines[1:]:
+        if m := timer_pattern.fullmatch(line):
+            assert m["part"] == part
+            time = float(m["time"])
+            assert (time == 0.0) or (time > total_time)
+            total_time = time
+        else:
+            m = result_pattern.fullmatch(line)
+            assert m is not None
+            assert m["part"] == part
+            assert m["result"] == expected[puzzle.year][puzzle.day][f"part_{part}"]
+            part = "two"
+
+    assert part == "two" if (puzzle.day < 25) else "one"
