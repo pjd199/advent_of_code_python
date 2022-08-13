@@ -131,7 +131,7 @@ def test_solve(puzzle: date, expected: Expected, part: Part) -> None:
         answers = part_mapper[part]()
         if part in [Part.ONE, Part.ALL]:
             assert str(answers[0]) == expected[puzzle.year][puzzle.day]["part_one"]
-        if part in [Part.TWO, Part.ALL]:
+        if part in [Part.TWO, Part.ALL] and puzzle.day != 25:
             assert str(answers[1]) == expected[puzzle.year][puzzle.day]["part_two"]
     else:
         with pytest.raises(NotImplementedError) as exception_info:
