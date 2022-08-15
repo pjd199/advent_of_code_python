@@ -5,6 +5,7 @@ Scrambled Letters and Hash
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/21
 """
+from enum import Enum, auto
 from pathlib import Path
 from re import compile
 from sys import path
@@ -15,6 +16,13 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
+
+
+class Direction(Enum):
+    """Which way? Left or Right."""
+
+    LEFT = auto()
+    RIGHT = auto()
 
 
 class Solver(SolverInterface):
@@ -112,6 +120,21 @@ class Solver(SolverInterface):
 
         return "".join(self.password)
 
+    def _rotate(self, data: List[str], steps: int, direciton: Direction) -> List[str]:
+        """Rotate a list, left or right.
+
+        Args:
+            data (List[str]): the input list
+            steps (int): number of steps to rotate
+            direciton (Direction): the directin, left or right
+
+        Returns:
+            List[str]: _description_
+        """
+        if direciton == Direction.RIGHT:
+            steps = -steps
+        return [data[(i + steps) % len(data)] for i in range(len(data))]
+
     def _swap_posistions(self, first_index: int, second_index: int) -> None:
         """Swap positions of two indexes.
 
@@ -141,10 +164,7 @@ class Solver(SolverInterface):
         Args:
             steps (int): the number of steps to rotate
         """
-        self.password = [
-            self.password[(i + steps) % len(self.password)]
-            for i in range(len(self.password))
-        ]
+        self.password = self._rotate(self.password, steps, Direction.LEFT)
 
     def _rotate_right(self, steps: int) -> None:
         """Rotate to the right.
@@ -152,10 +172,7 @@ class Solver(SolverInterface):
         Args:
             steps (int): the number of steps to rotate
         """
-        self.password = [
-            self.password[(i - steps) % len(self.password)]
-            for i in range(len(self.password))
-        ]
+        self.password = self._rotate(self.password, steps, Direction.RIGHT)
 
     def _rotate_based_on(self, letter: str) -> None:
         """Rotate based on the location of the letter.
@@ -165,10 +182,7 @@ class Solver(SolverInterface):
         """
         steps = self.password.index(letter)
         steps += 2 if steps >= 4 else 1
-        self.password = [
-            self.password[(i - steps) % len(self.password)]
-            for i in range(len(self.password))
-        ]
+        self.password = self._rotate(self.password, steps, Direction.RIGHT)
 
     def _reverse_rotate_based_on(self, letter: str) -> None:
         """Find the reverse of rotate based on.
@@ -177,15 +191,10 @@ class Solver(SolverInterface):
             letter (str): the letter to use as rotation index
         """
         for i in range(len(self.password)):
-            prev = [
-                self.password[(j + i) % len(self.password)]
-                for j in range(len(self.password))
-            ]
+            prev = self.password = self._rotate(self.password, i, Direction.LEFT)
             steps = prev.index(letter)
             steps += 2 if steps >= 4 else 1
-            if self.password == [
-                prev[(j - steps) % len(prev)] for j in range(len(prev))
-            ]:
+            if self.password == self._rotate(self.password, steps, Direction.RIGHT):
                 self.password = prev
                 break
 
@@ -214,7 +223,7 @@ class Solver(SolverInterface):
             move_from (int): the index to remove from
             move_to (int): the index to insert to
         """
-        self.password.insert(move_from, self.password.pop(move_to))
+        self._move(move_from=move_to, move_to=move_from)
 
 
 if __name__ == "__main__":  # pragma: no cover
