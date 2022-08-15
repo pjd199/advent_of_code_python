@@ -316,6 +316,13 @@
             "day": 20,
             "part_one": "31053880",
             "part_two": "117"
+        },
+        "21": {
+            "title": "Scrambled Letters and Hash",
+            "year": 2016,
+            "day": 21,
+            "part_one": "hcdefbag",
+            "part_two": "fbhaegdc"
         }
     }
 }
