@@ -1,12 +1,22 @@
 """Solves the puzzle for Day 2 of Advent of Code 2016."""
 
+from pathlib import Path
+from sys import path
 from typing import Dict, List, Tuple
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
+
+    YEAR = 2016
+    DAY = 2
+    TITLE = "Bathroom Security"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -109,3 +119,7 @@ class Solver(SolverInterface):
             code.append(grid[(x, y)])
 
         return "".join(code)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

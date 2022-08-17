@@ -43,7 +43,7 @@ jobs:
           pip install -r requirements_CI_CD_test.txt
 
       - name: Run pytest
-        run: pytest -k "not test_local and not test_main" --clean-durations --store-durations -n auto
+        run: pytest -k "not test_local and not test_main" --cov --clean-durations --store-durations -n auto
 
       - name: Commit .test_duration file to respository      
         uses: stefanzweifel/git-auto-commit-action@v4

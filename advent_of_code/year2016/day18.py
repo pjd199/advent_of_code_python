@@ -1,11 +1,10 @@
-"""Solves the puzzle for Day 15 of Advent of Code 2016.
+"""Solves the puzzle for Day 18 of Advent of Code 2016.
 
-Timing is Everything
+Like a Rogue
 
 For puzzle specification and desciption, visit
-https://adventofcode.com/2016/day/15
+https://adventofcode.com/2016/day/18
 """
-from dataclasses import dataclass
 from pathlib import Path
 from re import compile
 from sys import path
@@ -18,20 +17,12 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
-@dataclass
-class Disc:
-    """Stores disc data."""
-
-    positions: int
-    start: int
-
-
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
     YEAR = 2016
-    DAY = 15
-    TITLE = "Timing is Everything"
+    DAY = 18
+    TITLE = "Like a Rogue"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -51,14 +42,10 @@ class Solver(SolverInterface):
             raise RuntimeError("Puzzle input is empty")
 
         # parse the input
-        self.discs = []
-        pattern = compile(
-            r"Disc #(?P<number>\d+) has (?P<positions>\d+) positions; "
-            r"at time=0, it is at position (?P<start>\d+)."
-        )
+        pattern = compile(r"[\.\^]+")
         for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.discs.append(Disc(int(m["positions"]), int(m["start"])))
+            if (m := pattern.fullmatch(line)) and (i == 0):
+                self.input = m[0]
             else:
                 raise RuntimeError(f"Unable to parse {line} on line {i+1}")
 
@@ -68,7 +55,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return self._run(self.discs)
+        return self._run(40)
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -76,19 +63,27 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return self._run(self.discs + [Disc(11, 0)])
+        return self._run(400000)
 
-    def _run(self, discs: List[Disc]) -> int:
-        time = 0
-        while any(
-            (
-                ((disc.start + time + t + 1) % disc.positions) != 0
-                for t, disc in enumerate(discs)
-            )
-        ):
-            time += 1
+    def _run(self, rows: int) -> int:
+        """Run the simulation.
 
-        return time
+        Mapping the "^" to True, the 4 rules reduce reduce to left != right
+
+        Args:
+            rows (int): the number of rows
+
+        Returns:
+            int: the total number of safe / "." / False
+        """
+        traps = 0
+        row = [x == "^" for x in self.input]
+        for _ in range(rows):
+            traps += row.count(True)
+            row = [
+                left != right for left, right in zip([False] + row, row[1:] + [False])
+            ]
+        return (len(row) * rows) - traps
 
 
 if __name__ == "__main__":  # pragma: no cover

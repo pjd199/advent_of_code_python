@@ -1,13 +1,23 @@
 """Solves the puzzle for Day 6 of Advent of Code 2016."""
 from collections import defaultdict
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import DefaultDict, List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
+
+    YEAR = 2016
+    DAY = 6
+    TITLE = "Signals and Noise"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -78,3 +88,7 @@ class Solver(SolverInterface):
                 message[i] = frequencies[0][0]
 
         return "".join(message)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

@@ -1,9 +1,15 @@
 """Solves the puzzle for Day 10 of Advent of Code 2016."""
 from abc import ABC
 from math import prod
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import Callable, Dict, List, Tuple, cast
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -90,6 +96,10 @@ class Solver(SolverInterface):
                 self.low_goes_to.add_chip(low)
                 self.high_goes_to.add_chip(high)
 
+    YEAR = 2016
+    DAY = 10
+    TITLE = "Balance Bots"
+
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
 
@@ -171,3 +181,7 @@ class Solver(SolverInterface):
         if self.not_yet_run:
             for robot, value in self.setup:
                 self.factory_floor[robot].add_chip(value)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

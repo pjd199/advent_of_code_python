@@ -1,16 +1,9 @@
 """Solves the puzzle for Day {day} of Advent of Code {year}.
 
-# {title}
+{title}
 
+For puzzle specification and desciption, visit
 https://adventofcode.com/{year}/day/{day}
-
-## Part One
-
-{part_one}
-
-## Part Two
-
-{part_two}
 """
 from pathlib import Path
 from re import compile

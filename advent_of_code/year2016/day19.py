@@ -1,11 +1,10 @@
-"""Solves the puzzle for Day 15 of Advent of Code 2016.
+"""Solves the puzzle for Day 19 of Advent of Code 2016.
 
-Timing is Everything
+An Elephant Named Joseph
 
 For puzzle specification and desciption, visit
-https://adventofcode.com/2016/day/15
+https://adventofcode.com/2016/day/19
 """
-from dataclasses import dataclass
 from pathlib import Path
 from re import compile
 from sys import path
@@ -18,20 +17,12 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
-@dataclass
-class Disc:
-    """Stores disc data."""
-
-    positions: int
-    start: int
-
-
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
     YEAR = 2016
-    DAY = 15
-    TITLE = "Timing is Everything"
+    DAY = 19
+    TITLE = "An Elephant Named Joseph"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -51,44 +42,48 @@ class Solver(SolverInterface):
             raise RuntimeError("Puzzle input is empty")
 
         # parse the input
-        self.discs = []
-        pattern = compile(
-            r"Disc #(?P<number>\d+) has (?P<positions>\d+) positions; "
-            r"at time=0, it is at position (?P<start>\d+)."
-        )
+        pattern = compile(r"\d+")
         for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.discs.append(Disc(int(m["positions"]), int(m["start"])))
+            if (m := pattern.fullmatch(line)) and (i == 0):
+                self.number_of_elves = int(m[0])
             else:
                 raise RuntimeError(f"Unable to parse {line} on line {i+1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
+            running mathmatical solution for "Josephus problem"
+            https://en.wikipedia.org/wiki/Josephus_problem
+
         Returns:
             int: the answer
         """
-        return self._run(self.discs)
+        exponent = 1
+        while (2 ** int(exponent + 1)) <= self.number_of_elves:
+            exponent += 1
+        return 2 * (self.number_of_elves - int(2**exponent)) + 1
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> int:  # pragma: no cover
         """Solve part two of the puzzle.
 
+            Following the mathmatical solution to part one,
+            this formula was developed by observing the pattern
+            for first 100 numbers
+
         Returns:
             int: the answer
         """
-        return self._run(self.discs + [Disc(11, 0)])
+        exponent = 1
+        while (3 ** int(exponent + 1)) <= self.number_of_elves:
+            exponent += 1
 
-    def _run(self, discs: List[Disc]) -> int:
-        time = 0
-        while any(
-            (
-                ((disc.start + time + t + 1) % disc.positions) != 0
-                for t, disc in enumerate(discs)
-            )
-        ):
-            time += 1
-
-        return time
+        if self.number_of_elves < 3:
+            return 1
+        else:
+            if self.number_of_elves > (2 * int(3**exponent)):
+                return (2 * self.number_of_elves) - int(3 ** (exponent + 1))
+            else:
+                return self.number_of_elves - int(3**exponent)
 
 
 if __name__ == "__main__":  # pragma: no cover

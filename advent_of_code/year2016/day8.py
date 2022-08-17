@@ -1,11 +1,17 @@
 """Solves the puzzle for Day 8 of Advent of Code 2016."""
 from collections import defaultdict
 from dataclasses import dataclass
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import DefaultDict, List, Tuple
 
 from advent_of_code_ocr import convert_array_6  # type: ignore
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -30,6 +36,10 @@ class Solver(SolverInterface):
     class _RotateColumn(_Instruction):
         col: int
         down_shift: int
+
+    YEAR = 2016
+    DAY = 8
+    TITLE = "Two-Factor Authentication"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -140,3 +150,7 @@ class Solver(SolverInterface):
                     }
                 )
         return self.grid
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

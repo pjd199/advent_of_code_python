@@ -1,13 +1,23 @@
 """Solution for day 11 of Advent of Code 2015."""
 from collections import deque
+from pathlib import Path
 from re import findall, fullmatch, search
+from sys import path
 from typing import Deque, List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solver for the puzzle."""
+
+    YEAR = 2015
+    DAY = 11
+    TITLE = "Corporate Policy"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -102,3 +112,7 @@ class Solver(SolverInterface):
                     found = True
 
         return password
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

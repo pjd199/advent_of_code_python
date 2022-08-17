@@ -1,7 +1,13 @@
 """Solver for day 3 of Advent of Code 2015."""
 from collections import namedtuple
+from pathlib import Path
+from sys import path
 from typing import List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 Point = namedtuple("Point", "x y")
@@ -9,6 +15,10 @@ Point = namedtuple("Point", "x y")
 
 class Solver(SolverInterface):
     """Solver for day 3 of Advent of Code 2015."""
+
+    YEAR = 2015
+    DAY = 3
+    TITLE = "Perfectly Spherical Houses in a Vacuum"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -74,3 +84,7 @@ class Solver(SolverInterface):
             )
             houses.add(avatar[i % 2])
         return len(houses)
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

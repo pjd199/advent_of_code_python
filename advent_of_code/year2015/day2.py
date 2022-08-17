@@ -1,12 +1,22 @@
 """Solution for day 2 of Advent of Code 2015."""
+from pathlib import Path
 from re import compile
+from sys import path
 from typing import List
 
+if __name__ == "__main__":  # pragma: no cover
+    path.append(str(Path(__file__).parent.parent.parent))
+
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
 class Solver(SolverInterface):
     """Solver for the puzzle."""
+
+    YEAR = 2015
+    DAY = 2
+    TITLE = "I Was Told There Would Be No Math"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -58,3 +68,7 @@ class Solver(SolverInterface):
         # calculate the ammount of ribbon, as the sum of the perimiter
         # of the smallest face, plus the volume
         return sum([2 * (a + b) + (a * b * c) for a, b, c in self.input])
+
+
+if __name__ == "__main__":  # pragma: no cover
+    runner(Solver)

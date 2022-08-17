@@ -1,0 +1,328 @@
+{
+    "2015": {
+        "1": {
+            "title": "Not Quite Lisp",
+            "year": 2015,
+            "day": 1,
+            "part_one": "74",
+            "part_two": "1795"
+        },
+        "2": {
+            "title": "I Was Told There Would Be No Math",
+            "year": 2015,
+            "day": 2,
+            "part_one": "1598415",
+            "part_two": "3812909"
+        },
+        "3": {
+            "title": "Perfectly Spherical Houses in a Vacuum",
+            "year": 2015,
+            "day": 3,
+            "part_one": "2592",
+            "part_two": "2360"
+        },
+        "4": {
+            "title": "The Ideal Stocking Stuffer",
+            "year": 2015,
+            "day": 4,
+            "part_one": "346386",
+            "part_two": "9958218"
+        },
+        "5": {
+            "title": "Doesn't He Have Intern-Elves For This?",
+            "year": 2015,
+            "day": 5,
+            "part_one": "238",
+            "part_two": "69"
+        },
+        "6": {
+            "title": "Probably a Fire Hazard",
+            "year": 2015,
+            "day": 6,
+            "part_one": "400410",
+            "part_two": "15343601"
+        },
+        "7": {
+            "title": "Some Assembly Required",
+            "year": 2015,
+            "day": 7,
+            "part_one": "16076",
+            "part_two": "2797"
+        },
+        "8": {
+            "title": "Matchsticks",
+            "year": 2015,
+            "day": 8,
+            "part_one": "1371",
+            "part_two": "2117"
+        },
+        "9": {
+            "title": "All in a Single Night",
+            "year": 2015,
+            "day": 9,
+            "part_one": "117",
+            "part_two": "909"
+        },
+        "10": {
+            "title": "Elves Look, Elves Say",
+            "year": 2015,
+            "day": 10,
+            "part_one": "329356",
+            "part_two": "4666278"
+        },
+        "11": {
+            "title": "Corporate Policy",
+            "year": 2015,
+            "day": 11,
+            "part_one": "hepxxyzz",
+            "part_two": "heqaabcc"
+        },
+        "12": {
+            "title": "JSAbacusFramework.io",
+            "year": 2015,
+            "day": 12,
+            "part_one": "156366",
+            "part_two": "96852"
+        },
+        "13": {
+            "title": "Knights of the Dinner Table",
+            "year": 2015,
+            "day": 13,
+            "part_one": "709",
+            "part_two": "668"
+        },
+        "14": {
+            "title": "Reindeer Olympics",
+            "year": 2015,
+            "day": 14,
+            "part_one": "2696",
+            "part_two": "1084"
+        },
+        "15": {
+            "title": "Science for Hungry People",
+            "year": 2015,
+            "day": 15,
+            "part_one": "18965440",
+            "part_two": "15862900"
+        },
+        "16": {
+            "title": "Aunt Sue",
+            "year": 2015,
+            "day": 16,
+            "part_one": "373",
+            "part_two": "260"
+        },
+        "17": {
+            "title": "No Such Thing as Too Much",
+            "year": 2015,
+            "day": 17,
+            "part_one": "654",
+            "part_two": "57"
+        },
+        "18": {
+            "title": "Like a GIF For Your Yard",
+            "year": 2015,
+            "day": 18,
+            "part_one": "1061",
+            "part_two": "1006"
+        },
+        "19": {
+            "title": "Medicine for Rudolph",
+            "year": 2015,
+            "day": 19,
+            "part_one": "535",
+            "part_two": "212"
+        },
+        "20": {
+            "title": "Infinite Elves and Infinite Houses",
+            "year": 2015,
+            "day": 20,
+            "part_one": "786240",
+            "part_two": "831600"
+        },
+        "21": {
+            "title": "RPG Simulator 20XX",
+            "year": 2015,
+            "day": 21,
+            "part_one": "121",
+            "part_two": "201"
+        },
+        "22": {
+            "title": "Wizard Simulator 20XX",
+            "year": 2015,
+            "day": 22,
+            "part_one": "1824",
+            "part_two": "1937"
+        },
+        "23": {
+            "title": "Opening the Turing Lock",
+            "year": 2015,
+            "day": 23,
+            "part_one": "184",
+            "part_two": "231"
+        },
+        "24": {
+            "title": "It Hangs in the Balance",
+            "year": 2015,
+            "day": 24,
+            "part_one": "10723906903",
+            "part_two": "74850409"
+        },
+        "25": {
+            "title": "Let It Snow",
+            "year": 2015,
+            "day": 25,
+            "part_one": "9132360",
+            "part_two": ""
+        }
+    },
+    "2016": {
+        "1": {
+            "title": "No Time for a Taxicab",
+            "year": 2016,
+            "day": 1,
+            "part_one": "209",
+            "part_two": "136"
+        },
+        "2": {
+            "title": "Bathroom Security",
+            "year": 2016,
+            "day": 2,
+            "part_one": "56983",
+            "part_two": "8B8B1"
+        },
+        "3": {
+            "title": "Squares With Three Sides",
+            "year": 2016,
+            "day": 3,
+            "part_one": "993",
+            "part_two": "1849"
+        },
+        "4": {
+            "title": "Security Through Obscurity",
+            "year": 2016,
+            "day": 4,
+            "part_one": "137896",
+            "part_two": "501"
+        },
+        "5": {
+            "title": "How About a Nice Game of Chess?",
+            "year": 2016,
+            "day": 5,
+            "part_one": "f97c354d",
+            "part_two": "863dde27"
+        },
+        "6": {
+            "title": "Signals and Noise",
+            "year": 2016,
+            "day": 6,
+            "part_one": "mlncjgdg",
+            "part_two": "bipjaytb"
+        },
+        "7": {
+            "title": "Internet Protocol Version 7",
+            "year": 2016,
+            "day": 7,
+            "part_one": "110",
+            "part_two": "242"
+        },
+        "8": {
+            "title": "Two-Factor Authentication",
+            "year": 2016,
+            "day": 8,
+            "part_one": "121",
+            "part_two": "RURUCEOEIL"
+        },
+        "9": {
+            "title": "Explosives in Cyberspace",
+            "year": 2016,
+            "day": 9,
+            "part_one": "152851",
+            "part_two": "11797310782"
+        },
+        "10": {
+            "title": "Balance Bots",
+            "year": 2016,
+            "day": 10,
+            "part_one": "27",
+            "part_two": "13727"
+        },
+        "11": {
+            "title": "Radioisotope Thermoelectric Generators",
+            "year": 2016,
+            "day": 11,
+            "part_one": "37",
+            "part_two": "61"
+        },
+        "12": {
+            "title": "Leonardo's Monorail",
+            "year": 2016,
+            "day": 12,
+            "part_one": "318077",
+            "part_two": "9227731"
+        },
+        "13": {
+            "title": "A Maze of Twisty Little Cubicles",
+            "year": 2016,
+            "day": 13,
+            "part_one": "92",
+            "part_two": "124"
+        },
+        "14": {
+            "title": "One-Time Pad",
+            "year": 2016,
+            "day": 14,
+            "part_one": "23890",
+            "part_two": "22696"
+        },
+        "15": {
+            "title": "Timing is Everything",
+            "year": 2016,
+            "day": 15,
+            "part_one": "203660",
+            "part_two": "2408135"
+        },
+        "16": {
+            "title": "Dragon Checksum",
+            "year": 2016,
+            "day": 16,
+            "part_one": "11111000111110000",
+            "part_two": "10111100110110100"
+        },
+        "17": {
+            "title": "Two Steps Forward",
+            "year": 2016,
+            "day": 17,
+            "part_one": "DRRDRLDURD",
+            "part_two": "618"
+        },
+        "18": {
+            "title": "Like a Rogue",
+            "year": 2016,
+            "day": 18,
+            "part_one": "1974",
+            "part_two": "19991126"
+        },
+        "19": {
+            "title": "An Elephant Named Joseph",
+            "year": 2016,
+            "day": 19,
+            "part_one": "1816277",
+            "part_two": "1410967"
+        },
+        "20": {
+            "title": "Firewall Rules",
+            "year": 2016,
+            "day": 20,
+            "part_one": "31053880",
+            "part_two": "117"
+        },
+        "21": {
+            "title": "Scrambled Letters and Hash",
+            "year": 2016,
+            "day": 21,
+            "part_one": "hcdefbag",
+            "part_two": "fbhaegdc"
+        }
+    }
+}

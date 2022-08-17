@@ -1,8 +1,10 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
 from argparse import ArgumentParser
+from datetime import date
 from json import dump, load
 from pathlib import Path
 from re import match
+from sys import path
 from typing import Any, Dict, List, Optional, Union
 
 import pytest
@@ -10,8 +12,25 @@ from bs4 import BeautifulSoup
 from markdownify import ATX, markdownify  # type: ignore
 from requests import get
 
+if __name__ == "__main__":
+    path.append(str(Path(__file__).parent.parent))  # pragma: no cover
+
+from advent_of_code.utils.solver_status import puzzle_date_generator
+
 AOC_ROOT = "https://adventofcode.com"
-CACHE_PATH = ".aoc_website_cache"
+CACHE_PATH = "./.aoc_website_cache"
+
+
+def sorted_with_numeric_key(d: Dict[str, Any]) -> Dict[str, Any]:
+    """Sort the dictionary using numeric string key.
+
+    Args:
+        d (Dict[str, Any]): the input dictionary
+
+    Returns:
+        Dict[str, Any]: a new, sorted dictionary
+    """
+    return dict(sorted(d.items(), key=lambda x: int(x[0])))
 
 
 class DailyHelper:
@@ -50,19 +69,22 @@ class DailyHelper:
         self.part_one_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_one.md")
         self.part_two_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_two.md")
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
-        self.unit_test_data_path = Path("tests/unit/test_dayX.json")
-        self.puzzle_input_path = Path(f"puzzle_input/year{year}/day{day}.txt")
-        self.template_python_path = Path(f"advent_of_code/year{year}/day{day}.py")
-        self.template_text_path = Path("advent_of_code/daily_helper_template.txt")
+        self.expected_path = Path("./tests/expected.json")
+        self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
+        self.template_python_path = Path(f"./advent_of_code/year{year}/day{day}.py")
+        self.template_text_path = Path("./advent_of_code/daily_helper_template.txt")
 
-    def run(self) -> None:
-        """The download, parsing and file creation sequence."""
+    def run(self) -> int:
+        """The download, parsing and file creation sequence.
+
+        Returns:
+            int: the return code, 0 unless an error
+        """
         self._flush()
 
         # download the webpage from Advent of Code website
         self._download(
-            f"{AOC_ROOT}/{self.year}/day/{self.day}",
-            self.html_path,
+            f"{AOC_ROOT}/{self.year}/day/{self.day}", self.html_path, ok_if_exists=True
         )
 
         # parse the html file
@@ -79,24 +101,26 @@ class DailyHelper:
 
         # save the puzzle input file
         self._download(
-            f"{AOC_ROOT}/{self.year}/day/{self.day}/input", self.puzzle_input_path
+            f"{AOC_ROOT}/{self.year}/day/{self.day}/input",
+            self.puzzle_input_path,
+            ok_if_exists=True,
         )
 
         # find the puzzle title
         h2 = soup.find_all("h2")
         for x in h2:
             if m := match(r"--- Day (?:\d+): (?P<title>.+) ---", x.string):
-                self.title = m["title"]
+                self.title = m["title"].replace('"', "'")
 
         # find and save the answers, if solved
         para = soup.find_all("p")
         for x in para:
-            if str(x.contents[0]).startswith("Your puzzle answer was"):
+            if x.text.startswith("Your puzzle answer was"):
                 self.answers.append(x.code.string)
         self._save_response()
 
-        # save the answers in the unit test data
-        self._save_unit_test_data()
+        # save the expected responses
+        self._save_expected()
 
         # create and save a new python solver file
         desc = soup.find_all("article", attrs={"class": "day-desc"})
@@ -111,37 +135,14 @@ class DailyHelper:
             template.format(
                 year=self.year,
                 day=self.day,
-                title=self.title.replace('"', "'"),
-                part_one=self._markdown_pydoc(str(desc[0])),
-                part_two=(
-                    "<<<INSERT PART TWO HERE>>>"
-                    if len(desc) == 1
-                    else self._markdown_pydoc(desc[1])
-                ),
+                title=self.title,
             ),
             ok_if_exists=True,
         )
-
-        # update part two if possible
-        if len(desc) == 2:
-            with open(self.template_python_path) as file:
-                lines = [x.strip("\n") for x in file.readlines()]
-
-            for i in range(len(lines)):
-                if lines[i].startswith("<<<INSERT PART TWO HERE>>>"):
-                    print("Updating pydoc for part two")
-                    lines = (
-                        lines[:i]
-                        + self._markdown_pydoc(desc[1]).splitlines()
-                        + lines[i + 1 :]
-                        + [""]
-                    )
-                    self._save(self.template_python_path, "\n".join(lines), force=True)
-                    break
-                i += 1
-
         # run the testing
         self._testing()
+
+        return 0
 
     def _log(self, data: Any) -> None:
         if self.verbose:
@@ -149,7 +150,6 @@ class DailyHelper:
 
     def _flush(self) -> None:
         if self.flush:
-            self._log("Flushing cache...")
             paths_to_remove = [
                 self.html_path,
                 self.part_one_path,
@@ -157,9 +157,9 @@ class DailyHelper:
                 self.response_path,
                 self.puzzle_input_path,
             ]
-            for path in paths_to_remove:
-                self._log(f"Removing {path}")
-                path.unlink(missing_ok=True)
+            for x in paths_to_remove:
+                self._log(f"Flushing cache for {x}")
+                x.unlink(missing_ok=True)
 
     def _save(
         self,
@@ -169,10 +169,8 @@ class DailyHelper:
         ok_if_exists: bool = False,
     ) -> None:
         if not force and path.is_file():
-            if ok_if_exists:
-                self._log(f"{path} already exists")
-            else:
-                self._log(f"{path} already exists - use --flush to overwrite")
+            if not ok_if_exists:
+                self._log(f"File {path} already exists")
         else:
             with open(path, "w") as file:
                 if isinstance(data, str):
@@ -181,44 +179,42 @@ class DailyHelper:
                     dump(data, file, indent=4)
                 self._log(f"Saved {path}")
 
-    def _save_unit_test_data(self) -> None:
-        answers = self.answers
+    def _save_expected(self) -> None:
+        data = {
+            "title": self.title,
+            "year": self.year,
+            "day": self.day,
+            "part_one": "",
+            "part_two": "",
+        }
+        if len(self.answers) >= 1:
+            data["part_one"] = self.answers[0]
 
-        # update the unit test data if required
-        with open(self.unit_test_data_path) as file:
-            unit_test_data = load(file)
-        changes = False
-        if str(self.year) not in unit_test_data:
-            unit_test_data[str(self.year)] = {}
-            changes = True
+            if len(self.answers) >= 2:
+                data["part_two"] = self.answers[1]
 
-        if not self.flush and str(self.day) in unit_test_data[str(self.year)]:
-            if unit_test_data[str(self.year)][str(self.day)] != self.answers:
-                self._log(f"!!! conflict in {self.unit_test_data_path} !!!")
-                self._log(f"Found {unit_test_data[str(self.year)][str(self.day)]}")
-                self._log(f"Expected {answers}")
-            else:
-                self._log(f"Answers already stored in {self.unit_test_data_path}")
-        else:
-            if len(answers) == 2:
-                unit_test_data[str(self.year)][str(self.day)] = answers
-            elif len(answers) == 1:
-                unit_test_data[str(self.year)][str(self.day)] = [answers[0], ""]
-            else:
-                unit_test_data[str(self.year)][str(self.day)] = ["", ""]
-            changes = True
+        # open expected existing file
+        with open(self.expected_path) as file:
+            expected = load(file)
 
-        if changes:
-            # sort unit_test_data by numeric strings
-            # ie ["1","2","10"] not ["1", "10", "2"]
-            def sorted_dict(d: Dict[str, Any]) -> Dict[str, Any]:
-                return dict(sorted(d.items(), key=lambda x: int(x[0])))
+        if str(self.year) not in expected:
+            expected[str(self.year)] = {}
 
-            sorted_data = sorted_dict(
-                {k: sorted_dict(v) for k, v in unit_test_data.items()}
+        if (
+            str(self.day) not in expected[str(self.year)]
+            or expected[str(self.year)][str(self.day)] != data
+        ):
+            expected[str(self.year)][str(self.day)] = data
+
+            self._save(
+                self.expected_path,
+                sorted_with_numeric_key(
+                    {k: sorted_with_numeric_key(v) for k, v in expected.items()}
+                ),
+                force=True,
             )
-
-            self._save(self.unit_test_data_path, sorted_data, force=True)
+        else:
+            self._log(f"Data already stored in {self.expected_path}")
 
     def _save_response(self) -> None:
         response = {
@@ -235,9 +231,9 @@ class DailyHelper:
         # save the answers
         self._save(Path(self.response_path), response)
 
-    def _download(self, url: str, path: Path) -> None:
-        if path.is_file():
-            self._log(f"{path} already exists - use --flush to overwrite")
+    def _download(self, url: str, path: Path, ok_if_exists: bool) -> None:
+        if path.is_file() and ok_if_exists:
+            self._log(f"URL {url} already downloaded to {path}")
         else:
             self._log(f"Downloading {url}")
             path.parent.mkdir(parents=True, exist_ok=True)
@@ -247,7 +243,6 @@ class DailyHelper:
                 response = get(url)
             if response.status_code == 200:
                 self._save(path, response.text)
-                self._log(f"Saved {path}")
             else:
                 raise RuntimeError(
                     f"Unable to download file: "
@@ -282,8 +277,12 @@ class DailyHelper:
             pytest.main(options)
 
 
-def main() -> None:
-    """Main function, called from the command line."""
+def main() -> int:
+    """Main function, called from the command line.
+
+    Returns:
+        int: the return code, ussually 0.
+    """
     parser = ArgumentParser(
         description="Helper for downloading puzzles and input from"
         "the Advent of Code website."
@@ -332,10 +331,14 @@ def main() -> None:
     else:
         session = None
 
-    helper = DailyHelper(
-        args.year, args.day, session, args.flush, args.verbose, args.test
-    )
-    helper.run()
+    if date(args.year, 12, args.day) in puzzle_date_generator():
+        return DailyHelper(
+            args.year, args.day, session, args.flush, args.verbose, args.test
+        ).run()
+
+    else:
+        print(f"Invalid date: year={args.year}, day={args.day}")
+        return 1
 
 
 if __name__ == "__main__":
