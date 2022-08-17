@@ -113,10 +113,13 @@ class Solver(SolverInterface):
             "rotate based on": self._reverse_rotate_based_on,
             "move": self._reverse_move,
         }
+        log = []
+        log.append(self.password.copy())
         for operation in reversed(self.operations):
             functions[str(operation["action"])](
                 **{k: v for k, v in operation.items() if k != "action"}
             )
+            log.append(self.password.copy())
 
         return "".join(self.password)
 
@@ -191,10 +194,10 @@ class Solver(SolverInterface):
             letter (str): the letter to use as rotation index
         """
         for i in range(len(self.password)):
-            prev = self.password = self._rotate(self.password, i, Direction.LEFT)
+            prev = self._rotate(self.password, i, Direction.LEFT)
             steps = prev.index(letter)
             steps += 2 if steps >= 4 else 1
-            if self.password == self._rotate(self.password, steps, Direction.RIGHT):
+            if self.password == self._rotate(prev, steps, Direction.RIGHT):
                 self.password = prev
                 break
 
@@ -223,7 +226,7 @@ class Solver(SolverInterface):
             move_from (int): the index to remove from
             move_to (int): the index to insert to
         """
-        self._move(move_from=move_to, move_to=move_from)
+        self.password.insert(move_from, self.password.pop(move_to))
 
 
 if __name__ == "__main__":  # pragma: no cover
