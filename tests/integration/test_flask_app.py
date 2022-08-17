@@ -57,7 +57,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         metafunc.parametrize("part", ["all", "part_one", "part_two"])
 
 
-def test_routes(test_case: Dict["str", Any], client: FlaskClient) -> None:
+def test_other_routes(test_case: Dict["str", Any], client: FlaskClient) -> None:
     """Integration test for GET method.
 
     Args:
@@ -117,6 +117,7 @@ def test_all_solver_routes(
         assert puzzle.day in expected[puzzle.year]
         body = response.get_json()
         if body is not None:
+            assert body["title"] == expected[puzzle.year][puzzle.day]["title"]
             assert body["year"] == puzzle.year
             assert body["day"] == puzzle.day
             if part in ["all", "part_one"]:

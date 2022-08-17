@@ -87,69 +87,13 @@
         },
         {
             "request": {
-                "path": "/2015/1",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": {
-                    "year": 2015,
-                    "day": 1,
-                    "part_one": "74",
-                    "part_two": "1795"
-                }
-            }
-        },
-        {
-            "request": {
-                "path": "/2015/25",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": {
-                    "year": 2015,
-                    "day": 25,
-                    "part_one": "9132360"
-                }
-            }
-        },
-        {
-            "request": {
-                "path": "/2015/1/part_one",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": {
-                    "year": 2015,
-                    "day": 1,
-                    "part_one": "74"
-                }
-            }
-        },
-        {
-            "request": {
-                "path": "/2015/1/part_two",
-                "method": "GET"
-            },
-            "response": {
-                "status": 200,
-                "body": {
-                    "year": 2015,
-                    "day": 1,
-                    "part_two": "1795"
-                }
-            }
-        },
-        {
-            "request": {
                 "path": "/2015/1?input=https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/puzzle_input/year2015/day1.txt",
                 "method": "GET"
             },
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "Not Quite Lisp",
                     "year": 2015,
                     "day": 1,
                     "part_one": "74",
@@ -165,6 +109,7 @@
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "Not Quite Lisp",
                     "year": 2015,
                     "day": 1,
                     "part_one": "74"
@@ -179,6 +124,7 @@
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "Not Quite Lisp",
                     "year": 2015,
                     "day": 1,
                     "part_two": "1795"
@@ -227,6 +173,7 @@
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "I Was Told There Would Be No Math",
                     "year": 2015,
                     "day": 2,
                     "part_one": "1598415",
@@ -244,6 +191,7 @@
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "I Was Told There Would Be No Math",
                     "year": 2015,
                     "day": 2,
                     "part_one": "1598415"
@@ -260,6 +208,7 @@
             "response": {
                 "status": 200,
                 "body": {
+                    "title": "I Was Told There Would Be No Math",
                     "year": 2015,
                     "day": 2,
                     "part_two": "3812909"

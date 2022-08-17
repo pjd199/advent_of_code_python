@@ -113,7 +113,7 @@ def handle_solve_path_with_part(
         part_one, part_two = solver.solve_all()
 
     # construct the body
-    body: Dict[str, Any] = {"year": year, "day": day}
+    body: Dict[str, Any] = {"title": solver.TITLE, "year": year, "day": day}
     if part_one:
         body["part_one"] = str(part_one)
     if part_two:
