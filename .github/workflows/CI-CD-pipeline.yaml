@@ -187,7 +187,7 @@ jobs:
         run: pytest ./tests/system -k _main -n auto
 
       - name: Run pytest on development lambda function
-        if: github.ref == 'refs/heads/dev'
+        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
         run: pytest ./tests/system -k _dev -n auto
 
   dump:
