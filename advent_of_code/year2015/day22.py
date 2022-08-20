@@ -1,4 +1,10 @@
-"""Solution for day 22 of Advent of Code 2015."""
+"""Solves the puzzle for Day 22 of Advent of Code 2015.
+
+Wizard Simulator 20XX
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/22
+"""
 from enum import Enum, auto
 from pathlib import Path
 from re import compile

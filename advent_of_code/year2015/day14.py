@@ -1,4 +1,10 @@
-"""Solution for day 14 of Advent of Code 2015."""
+"""Solves the puzzle for Day 14 of Advent of Code 2015.
+
+Reindeer Olympics
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/14
+"""
 from collections import namedtuple
 from itertools import cycle
 from pathlib import Path

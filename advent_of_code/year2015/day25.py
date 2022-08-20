@@ -1,4 +1,10 @@
-"""Solution for day 25 of Advent of Code 2015."""
+"""Solves the puzzle for Day 25 of Advent of Code 2015.
+
+Let It Snow
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/25
+"""
 from pathlib import Path
 from re import match
 from sys import path

@@ -52,7 +52,7 @@ class Solver(SolverInterface):
                     if char.isnumeric():
                         self.destinations[char] = (x, y)
                 else:
-                    raise RuntimeError(f"Unable to parse {line} on line {y+1}")
+                    raise RuntimeError(f"Unable to parse {line} on line {y + 1}")
 
         self.run_once = False
 

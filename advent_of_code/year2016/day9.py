@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 9 of Advent of Code 2016."""
+"""Solves the puzzle for Day 9 of Advent of Code 2016.
+
+Explosives in Cyberspace
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from pathlib import Path
 from re import compile
 from sys import path

@@ -1,4 +1,10 @@
-"""Solution for day 10 of Advent of Code 2015."""
+"""Solves the puzzle for Day 10 of Advent of Code 2015.
+
+Elves Look, Elves Say
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/10
+"""
 from itertools import groupby
 from pathlib import Path
 from sys import path

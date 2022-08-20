@@ -1,4 +1,10 @@
-"""Solution for day 7 of Advent of Code 2015."""
+"""Solves the puzzle for Day 7 of Advent of Code 2015.
+
+Some Assembly Required
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/7
+"""
 from copy import deepcopy
 from pathlib import Path
 from re import compile
@@ -50,7 +56,7 @@ class Solver(SolverInterface):
             if match:
                 self.wiring_diagram[match["output_wire"]] = match.groupdict()
             else:
-                raise RuntimeError(f"Parse error at line {i+1}: {line}")
+                raise RuntimeError(f"Parse error at line {i + 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

@@ -1,4 +1,10 @@
-"""Solution for day 5 of Advent of Code 2015."""
+"""Solves the puzzle for Day 5 of Advent of Code 2015.
+
+Doesn't He Have Intern-Elves For This?
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/5
+"""
 from pathlib import Path
 from re import compile
 from sys import path
@@ -42,7 +48,7 @@ class Solver(SolverInterface):
             if match:
                 self.input.append(match["str"])
             else:
-                raise RuntimeError(f"Parse error at line {i+1}: {line}")
+                raise RuntimeError(f"Parse error at line {i + 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

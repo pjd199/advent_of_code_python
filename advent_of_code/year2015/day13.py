@@ -1,4 +1,10 @@
-"""Solution for day 13 of Advent of Code 2015."""
+"""Solves the puzzle for Day 13 of Advent of Code 2015.
+
+Knights of the Dinner Table
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/13
+"""
 from itertools import chain, permutations
 from pathlib import Path
 from re import compile

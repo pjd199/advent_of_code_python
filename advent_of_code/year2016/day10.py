@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 10 of Advent of Code 2016."""
+"""Solves the puzzle for Day 10 of Advent of Code 2016.
+
+Balance Bots
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from abc import ABC
 from math import prod
 from pathlib import Path
@@ -15,6 +21,10 @@ from advent_of_code.utils.solver_interface import SolverInterface
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
+
+    YEAR = 2016
+    DAY = 10
+    TITLE = "Balance Bots"
 
     class _ChipPassingProtocol(ABC):
         """Parent of _OutputBin and _Robot classes."""
@@ -95,10 +105,6 @@ class Solver(SolverInterface):
                 self.chips.clear()
                 self.low_goes_to.add_chip(low)
                 self.high_goes_to.add_chip(high)
-
-    YEAR = 2016
-    DAY = 10
-    TITLE = "Balance Bots"
 
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.

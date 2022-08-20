@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 6 of Advent of Code 2016."""
+"""Solves the puzzle for Day 6 of Advent of Code 2016.
+
+Signals and Noise
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from collections import defaultdict
 from pathlib import Path
 from re import compile
@@ -43,7 +49,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.input.append(m["message"])
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.

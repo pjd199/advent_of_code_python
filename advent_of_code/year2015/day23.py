@@ -1,4 +1,10 @@
-"""Solution for day 23 of Advent of Code 2015."""
+"""Solves the puzzle for Day 23 of Advent of Code 2015.
+
+Opening the Turing Lock
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/23
+"""
 from pathlib import Path
 from re import compile
 from sys import path

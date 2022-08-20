@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 8 of Advent of Code 2016."""
+"""Solves the puzzle for Day 8 of Advent of Code 2016.
+
+Two-Factor Authentication
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -76,7 +82,7 @@ class Solver(SolverInterface):
                         Solver._RotateColumn(int(m["col"]), int(m["down"]))
                     )
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
         self.grid: DefaultDict[Tuple[int, int], bool] = defaultdict(bool)
         self.number_of_columns = 50
@@ -117,6 +123,11 @@ class Solver(SolverInterface):
         return "".join(letters)
 
     def _run(self) -> DefaultDict[Tuple[int, int], bool]:
+        """Run the simulation.
+
+        Returns:
+            DefaultDict[Tuple[int, int], bool]: the results
+        """
         if len(self.grid) > 0:
             return self.grid
 

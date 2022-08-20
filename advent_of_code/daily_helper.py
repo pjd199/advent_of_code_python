@@ -75,7 +75,7 @@ class DailyHelper:
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
         self.expected_path = Path("./tests/expected.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
-        self.template_python_path = Path(f"./advent_of_code/year{year}/day{day}.py")
+        self.solver_module_path = Path(f"./advent_of_code/year{year}/day{day}.py")
         self.template_text_path = Path("./advent_of_code/template.txt")
 
     def run(self) -> int:
@@ -137,7 +137,7 @@ class DailyHelper:
             template = "".join(file.readlines())
 
         self._save(
-            self.template_python_path,
+            self.solver_module_path,
             template.format(
                 year=self.year,
                 day=self.day,
@@ -145,16 +145,23 @@ class DailyHelper:
             ),
             ok_if_exists=True,
         )
+
         # run the testing
         self._testing()
 
         return 0
 
     def _log(self, data: Any) -> None:
+        """Print line if in verbose mode.
+
+        Args:
+            data (Any): the line to print
+        """
         if self.verbose:
             print(str(data))
 
     def _flush(self) -> None:
+        """Flush cached files."""
         if self.flush:
             paths_to_remove = [
                 self.html_path,
@@ -174,6 +181,14 @@ class DailyHelper:
         force: bool = False,
         ok_if_exists: bool = False,
     ) -> None:
+        """Save data to a file.
+
+        Args:
+            path (Path): the save path
+            data (Union[str, Dict[str, Any]]): the data to save
+            force (bool): If True, overwrites existing file. Defaults to False.
+            ok_if_exists (bool): If False, warn if already exists. Defaults to False.
+        """
         if not force and path.is_file():
             if not ok_if_exists:
                 self._log(f"File {path} already exists")
@@ -186,6 +201,7 @@ class DailyHelper:
                 self._log(f"Saved {path}")
 
     def _save_expected(self) -> None:
+        """Save expected.json."""
         data = {
             "title": self.title,
             "year": self.year,
@@ -221,6 +237,7 @@ class DailyHelper:
             self._log(f"Data already stored in {self.expected_path}")
 
     def _save_response(self) -> None:
+        """Save JSON response."""
         response = {
             "title": self.title,
             "year": self.year,
@@ -236,6 +253,16 @@ class DailyHelper:
         self._save(Path(self.response_path), response)
 
     def _download(self, url: str, path: Path, ok_if_exists: bool) -> None:
+        """Download file from URL.
+
+        Args:
+            url (str): the URL to download.
+            path (Path): the location of the downloaded file.
+            ok_if_exists (bool): if True, logs message is file exists
+
+        Raises:
+            RuntimeError: Raised if unable to download
+        """
         if path.is_file() and ok_if_exists:
             self._log(f"URL {url} already downloaded to {path}")
         else:
@@ -253,18 +280,8 @@ class DailyHelper:
                     f"server status code {response.status_code}"
                 )
 
-    def _markdown_pydoc(self, text: str) -> str:
-        return (
-            str(markdownify(str(text), heading_style=ATX, wrap=True, wrap_width=72))
-            .replace("\t", "    ")
-            .replace("\n\n\n\n", "\n\n")
-            .replace("\n\n\n", "\n\n")
-            .replace('"', "'")
-            .strip()
-        )
-
     def _testing(self) -> None:
-        # test the solver if requested
+        """Test the Solver."""
         if self.test:
             options = [
                 "./tests/unit",

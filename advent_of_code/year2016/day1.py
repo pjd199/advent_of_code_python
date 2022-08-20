@@ -1,5 +1,10 @@
-"""Solves the puzzle for Day 1 of Advent of Code 2016."""
+"""Solves the puzzle for Day 1 of Advent of Code 2016.
 
+No Time for a Taxicab
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from collections import namedtuple
 from pathlib import Path
 from re import compile
@@ -45,12 +50,12 @@ class Solver(SolverInterface):
         # parse the input
         self.input = []
         pattern = compile(r"(?P<turn>[L|R])(?P<dist>[0-9]+)")
-        for i, x in enumerate(tokens):
-            match = pattern.fullmatch(x)
+        for i, line in enumerate(tokens):
+            match = pattern.fullmatch(line)
             if match:
                 self.input.append(Instruction(match["turn"], int(match["dist"])))
             else:
-                raise RuntimeError(f"Unable to parse line {i}: {x}")
+                raise RuntimeError(f"Unable to parse line { i+ 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

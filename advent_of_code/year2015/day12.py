@@ -1,4 +1,10 @@
-"""Solution for day 12 of Advent of Code 2015."""
+"""Solves the puzzle for Day 12 of Advent of Code 2015.
+
+JSAbacusFramework.io
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/12
+"""
 from json import loads
 from json.decoder import JSONDecodeError
 from pathlib import Path

@@ -71,7 +71,7 @@ def load(puzzle_input: List[str]) -> List[Instruction]:
                 Instruction(action_map[m["action"]], m["first"], m["second"])
             )
         else:
-            raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+            raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
     return program
 
 

@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 4 of Advent of Code 2016."""
+"""Solves the puzzle for Day 4 of Advent of Code 2016.
+
+Security Through Obscurity
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
@@ -59,7 +65,7 @@ class Solver(SolverInterface):
                     )
                 )
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
         self.real_rooms: List[Solver._Room] = []
 

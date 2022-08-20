@@ -1,4 +1,10 @@
-"""Solution for day 24 of Advent of Code 2015."""
+"""Solves the puzzle for Day 24 of Advent of Code 2015.
+
+It Hangs in the Balance
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/24
+"""
 from itertools import combinations
 from math import prod
 from pathlib import Path

@@ -1,4 +1,10 @@
-"""Solution for day 9 of Advent of Code 2015."""
+"""Solves the puzzle for Day 9 of Advent of Code 2015.
+
+All in a Single Night
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/9
+"""
 from itertools import permutations
 from pathlib import Path
 from re import compile
@@ -50,7 +56,7 @@ class Solver(SolverInterface):
                 self.routes[(a, b)] = int(dist)
                 self.routes[(b, a)] = int(dist)
             else:
-                raise RuntimeError(f"Parse error at line {i+1}: {line}")
+                raise RuntimeError(f"Parse error at line {i + 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

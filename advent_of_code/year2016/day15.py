@@ -60,7 +60,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.discs.append(Disc(int(m["positions"]), int(m["start"])))
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -79,6 +79,14 @@ class Solver(SolverInterface):
         return self._run(self.discs + [Disc(11, 0)])
 
     def _run(self, discs: List[Disc]) -> int:
+        """Run the simulation.
+
+        Args:
+            discs (List[Disc]): the input discs
+
+        Returns:
+            int: the result
+        """
         time = 0
         while any(
             (

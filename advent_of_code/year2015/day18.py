@@ -1,4 +1,10 @@
-"""Solution for day 18 of Advent of Code 2015."""
+"""Solves the puzzle for Day 18 of Advent of Code 2015.
+
+Like a GIF For Your Yard
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/18
+"""
 from copy import deepcopy
 from pathlib import Path
 from sys import path

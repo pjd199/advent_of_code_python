@@ -47,7 +47,7 @@ class Solver(SolverInterface):
             if (m := pattern.fullmatch(line)) and (i == 0):
                 self.number_of_elves = int(m[0])
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

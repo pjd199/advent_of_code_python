@@ -71,7 +71,7 @@ class Solver(SolverInterface):
                     }
                 )
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.

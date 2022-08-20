@@ -1,4 +1,10 @@
-"""Solution for day 4 of Advent of Code 2015."""
+"""Solves the puzzle for Day 4 of Advent of Code 2015.
+
+The Ideal Stocking Stuffer
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/4
+"""
 from hashlib import md5
 from pathlib import Path
 from string import ascii_lowercase

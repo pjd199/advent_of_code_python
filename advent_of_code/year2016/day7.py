@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 7 of Advent of Code 2016."""
+"""Solves the puzzle for Day 7 of Advent of Code 2016.
+
+Internet Protocol Version 7
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from pathlib import Path
 from re import compile
 from sys import path
@@ -37,12 +43,12 @@ class Solver(SolverInterface):
 
         # parse the input
         self.input = []
-        pattern = compile(r"[a-z]+(\[[a-z]+\][a-z]+)+")
+        pattern = compile(r"\w+(\[\w+\]\w+)+")
         for i, line in enumerate(puzzle_input):
             if m := pattern.fullmatch(line):
                 self.input.append(m[0])
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -50,8 +56,8 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        supernet_pattern = compile(r"([a-z]+)(?:\[|$)")
-        hypernet_pattern = compile(r"\[([a-z]+)\]")
+        supernet_pattern = compile(r"(\w+)(?:\[|$)")
+        hypernet_pattern = compile(r"\[(\w+)\]")
         return len(
             [
                 line
@@ -75,8 +81,8 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        supernet_pattern = compile(r"([a-z]+)(?:\[|$)")
-        hypernet_pattern = compile(r"\[([a-z]+)\]")
+        supernet_pattern = compile(r"(\w+)(?:\[|$)")
+        hypernet_pattern = compile(r"\[(\w+)\]")
         return len(
             [
                 line

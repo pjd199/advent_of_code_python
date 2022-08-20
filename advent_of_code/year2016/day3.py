@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 3 of Advent of Code 2016."""
+"""Solves the puzzle for Day 3 of Advent of Code 2016.
+
+Squares With Three Sides
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from itertools import chain
 from pathlib import Path
 from re import compile
@@ -43,7 +49,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.input.append([int(m["a"]), int(m["b"]), int(m["c"])])
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
