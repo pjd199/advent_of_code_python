@@ -6,6 +6,7 @@ from pathlib import Path
 from re import match
 from sys import path
 from typing import Any, Dict, List, Optional, Union
+from webbrowser import open as webbrowser_open
 
 import pytest
 from bs4 import BeautifulSoup
@@ -44,6 +45,7 @@ class DailyHelper:
         flush: bool = False,
         verbose: bool = False,
         test: bool = False,
+        open_webpage: bool = False,
     ):
         """Initialise the helper for a specific day.
 
@@ -54,6 +56,7 @@ class DailyHelper:
             flush (bool): if True, ignores cached files. Default False
             verbose (bool): if True, enables logging. Default False
             test (bool): if True, enables testing. Default False
+            open_webpage(bool): if True, open the url in a browser. Default False
         """
         self.year = year
         self.day = day
@@ -61,6 +64,7 @@ class DailyHelper:
         self.flush = flush
         self.verbose = verbose
         self.test = test
+        self.open_webpage = open_webpage
 
         self.title = ""
         self.answers: List[str] = []
@@ -83,9 +87,11 @@ class DailyHelper:
         self._flush()
 
         # download the webpage from Advent of Code website
-        self._download(
-            f"{AOC_ROOT}/{self.year}/day/{self.day}", self.html_path, ok_if_exists=True
-        )
+        url = f"{AOC_ROOT}/{self.year}/day/{self.day}"
+        self._download(url, self.html_path, ok_if_exists=True)
+
+        if self.open_webpage:
+            webbrowser_open(url)
 
         # parse the html file
         with open(self.html_path) as file:
@@ -313,6 +319,12 @@ def main() -> int:
         help="flush the cache for this year and day",
         action="store_true",
     )
+    parser.add_argument(
+        "--open",
+        "-o",
+        help="open puzzle on the Advent of Code website",
+        action="store_true",
+    )
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
     args = parser.parse_args()
@@ -333,7 +345,7 @@ def main() -> int:
 
     if date(args.year, 12, args.day) in puzzle_date_generator():
         return DailyHelper(
-            args.year, args.day, session, args.flush, args.verbose, args.test
+            args.year, args.day, session, args.flush, args.verbose, args.test, args.open
         ).run()
 
     else:
