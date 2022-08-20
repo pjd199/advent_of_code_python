@@ -330,6 +330,13 @@
             "day": 22,
             "part_one": "976",
             "part_two": "209"
+        },
+        "23": {
+            "title": "Safe Cracking",
+            "year": 2016,
+            "day": 23,
+            "part_one": "12000",
+            "part_two": "479008560"
         }
     }
 }
