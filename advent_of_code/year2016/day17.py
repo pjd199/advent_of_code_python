@@ -10,7 +10,7 @@ from hashlib import md5
 from pathlib import Path
 from re import compile
 from sys import path
-from typing import Deque, List, Tuple
+from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -76,20 +76,23 @@ class Solver(SolverInterface):
         if self.run:
             return
 
-        queue: Deque[Tuple[int, int, str]] = deque([(0, 0, "")])
+        queue = deque([(int(0), int(0), str(""))])
 
-        moves = {
-            "U": (0, -1),
-            "D": (0, +1),
-            "L": (-1, 0),
-            "R": (+1, 0),
+        moves: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+            "U": lambda x, y: (x, y - 1),
+            "D": lambda x, y: (x, y + 1),
+            "L": lambda x, y: (x - 1, y),
+            "R": lambda x, y: (x + 1, y),
         }
 
+        # search for the longest and shortest paths using a
+        # breadth first search
         shortest = " " * 10000
         longest = ""
         while queue:
             x, y, path = queue.popleft()
 
+            # check if path has arrived at the destination
             if (x, y) == (3, 3):
                 if len(path) < len(shortest):
                     shortest = path
@@ -97,9 +100,10 @@ class Solver(SolverInterface):
                     longest = path
                 continue
 
+            # for all valid moves
             for i, (direction, move) in enumerate(moves.items()):
                 new_path = f"{path}{direction}"
-                new_x, new_y = x + move[0], y + move[1]
+                new_x, new_y = move(x, y)
                 if (
                     0 <= new_x < 4
                     and 0 <= new_y < 4
