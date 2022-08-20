@@ -8,7 +8,7 @@ from collections import deque
 from pathlib import Path
 from re import compile
 from sys import path
-from typing import List
+from typing import Callable, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -88,8 +88,15 @@ class Solver(SolverInterface):
             return
         self.has_run = True
 
+        moves: List[Callable[[int, int], Tuple[int, int]]] = [
+            lambda x, y: (x, y - 1),
+            lambda x, y: (x + 1, y),
+            lambda x, y: (x, y + 1),
+            lambda x, y: (x - 1, y),
+        ]
+
         queue = deque([(int(1), int(1), int(0))])
-        visited = {(1, 1)}
+        visited = {(int(1), int(1))}
 
         self.within_50_steps = 0
         self.steps_to_target = 0
@@ -103,8 +110,8 @@ class Solver(SolverInterface):
             if steps <= 50:
                 self.within_50_steps += 1
 
-            for move in [(0, -1), (1, 0), (0, 1), (-1, 0)]:
-                x1, y1 = x + move[0], y + move[1]
+            for move in moves:
+                x1, y1 = move(x, y)
                 if x1 >= 0 and y1 >= 0 and (x1, y1) not in visited:
                     visited.add((x1, y1))
                     if self._open_space(x1, y1):
