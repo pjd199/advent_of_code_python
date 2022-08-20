@@ -76,7 +76,7 @@ class DailyHelper:
         self.expected_path = Path("./tests/expected.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
         self.template_python_path = Path(f"./advent_of_code/year{year}/day{day}.py")
-        self.template_text_path = Path("./advent_of_code/daily_helper_template.txt")
+        self.template_text_path = Path("./advent_of_code/template.txt")
 
     def run(self) -> int:
         """The download, parsing and file creation sequence.
@@ -190,8 +190,6 @@ class DailyHelper:
             "title": self.title,
             "year": self.year,
             "day": self.day,
-            "part_one": "",
-            "part_two": "",
         }
         if len(self.answers) >= 1:
             data["part_one"] = self.answers[0]
