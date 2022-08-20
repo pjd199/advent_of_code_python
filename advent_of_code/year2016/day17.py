@@ -87,17 +87,17 @@ class Solver(SolverInterface):
 
         # search for the longest and shortest paths using a
         # breadth first search
-        shortest = " " * 10000
-        longest = ""
+        self.shortest = " " * 10000
+        self.longest = ""
         while queue:
             x, y, path = queue.popleft()
 
             # check if path has arrived at the destination
             if (x, y) == (3, 3):
-                if len(path) < len(shortest):
-                    shortest = path
-                if len(path) > len(longest):
-                    longest = path
+                if len(path) < len(self.shortest):
+                    self.shortest = path
+                if len(path) > len(self.longest):
+                    self.longest = path
                 continue
 
             # for all valid moves
@@ -112,8 +112,6 @@ class Solver(SolverInterface):
                 ):
                     queue.append((new_x, new_y, new_path))
 
-        self.shortest = shortest
-        self.longest = longest
         self.run = True
 
 
