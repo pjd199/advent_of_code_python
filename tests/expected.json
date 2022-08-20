@@ -172,8 +172,7 @@
             "title": "Let It Snow",
             "year": 2015,
             "day": 25,
-            "part_one": "9132360",
-            "part_two": ""
+            "part_one": "9132360"
         }
     },
     "2016": {
@@ -323,6 +322,33 @@
             "day": 21,
             "part_one": "hcdefbag",
             "part_two": "fbhaegdc"
+        },
+        "22": {
+            "title": "Grid Computing",
+            "year": 2016,
+            "day": 22,
+            "part_one": "976",
+            "part_two": "209"
+        },
+        "23": {
+            "title": "Safe Cracking",
+            "year": 2016,
+            "day": 23,
+            "part_one": "12000",
+            "part_two": "479008560"
+        },
+        "24": {
+            "title": "Air Duct Spelunking",
+            "year": 2016,
+            "day": 24,
+            "part_one": "428",
+            "part_two": "680"
+        },
+        "25": {
+            "title": "Clock Signal",
+            "year": 2016,
+            "day": 25,
+            "part_one": "189"
         }
     }
 }
