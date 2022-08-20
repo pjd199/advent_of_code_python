@@ -69,7 +69,7 @@ class Solver(SolverInterface):
             elif m := pattern.fullmatch(line):
                 self.input.append(Node(**{k: int(v) for k, v in m.groupdict().items()}))
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

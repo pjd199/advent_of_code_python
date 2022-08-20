@@ -1,4 +1,10 @@
-"""Solution for day 20 of Advent of Code 2015."""
+"""Solves the puzzle for Day 20 of Advent of Code 2015.
+
+Infinite Elves and Infinite Houses
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/20
+"""
 from pathlib import Path
 from re import fullmatch
 from sys import path

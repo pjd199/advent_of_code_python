@@ -1,4 +1,10 @@
-"""Solution for day 15 of Advent of Code 2015."""
+"""Solves the puzzle for Day 15 of Advent of Code 2015.
+
+Science for Hungry People
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/15
+"""
 from itertools import combinations_with_replacement, groupby
 from math import prod
 from pathlib import Path

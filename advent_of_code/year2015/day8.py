@@ -1,4 +1,10 @@
-"""Solution for day 1 of Advent of Code 2015."""
+"""Solves the puzzle for Day 8 of Advent of Code 2015.
+
+Matchsticks
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/8
+"""
 from pathlib import Path
 from re import compile
 from sys import path
@@ -42,7 +48,7 @@ class Solver(SolverInterface):
             if match:
                 self.puzzle_input.append(line)
             else:
-                raise RuntimeError(f"Parse error on line {i+1}: {line}")
+                raise RuntimeError(f"Parse error on line {i + 1}: {line}")
 
         self.input = puzzle_input
 

@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 1 of Advent of Code 2015."""
+"""Solves the puzzle for Day 1 of Advent of Code 2015.
+
+Not Quite Lisp
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/1
+"""
 from pathlib import Path
 from sys import path
 from typing import List

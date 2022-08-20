@@ -1,4 +1,10 @@
-"""Solution for day 6 of Advent of Code 2015."""
+"""Solves the puzzle for Day 6 of Advent of Code 2015.
+
+Probably a Fire Hazard
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/6
+"""
 from collections import namedtuple
 from pathlib import Path
 from re import compile
@@ -59,7 +65,7 @@ class Solver(SolverInterface):
                     )
                 )
             else:
-                raise RuntimeError(f"Parse error at line {i+1}: {line}")
+                raise RuntimeError(f"Parse error at line {i + 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

@@ -1,4 +1,10 @@
-"""Solution for day 16 of Advent of Code 2015."""
+"""Solves the puzzle for Day 16 of Advent of Code 2015.
+
+Aunt Sue
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/16
+"""
 from pathlib import Path
 from re import compile
 from sys import path

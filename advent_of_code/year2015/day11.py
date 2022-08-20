@@ -1,4 +1,10 @@
-"""Solution for day 11 of Advent of Code 2015."""
+"""Solves the puzzle for Day 11 of Advent of Code 2015.
+
+Corporate Policy
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/11
+"""
 from collections import deque
 from pathlib import Path
 from re import findall, fullmatch, search

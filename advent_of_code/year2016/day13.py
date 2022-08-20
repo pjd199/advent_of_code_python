@@ -47,7 +47,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.number = int(m[0])
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
         self.has_run = False
 

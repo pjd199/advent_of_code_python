@@ -1,4 +1,10 @@
-"""Solver for day 3 of Advent of Code 2015."""
+"""Solves the puzzle for Day 3 of Advent of Code 2015.
+
+Perfectly Spherical Houses in a Vacuum
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2015/day/3
+"""
 from collections import namedtuple
 from pathlib import Path
 from sys import path

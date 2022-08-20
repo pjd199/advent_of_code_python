@@ -1,5 +1,10 @@
-"""Solves the puzzle for Day 2 of Advent of Code 2016."""
+"""Solves the puzzle for Day 2 of Advent of Code 2016.
 
+Bathroom Security
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/10
+"""
 from pathlib import Path
 from sys import path
 from typing import Dict, List, Tuple
@@ -37,14 +42,11 @@ class Solver(SolverInterface):
 
         # parse the input
         self.input = []
-        for line in puzzle_input:
+        for i, line in enumerate(puzzle_input):
             if all([c in ["U", "D", "L", "R"] for c in line]):
                 self.input.append(line)
             else:
-                raise RuntimeError(
-                    f"Puzzle input should only contain 'U', 'D', 'L' or 'R', "
-                    f"found {puzzle_input[0]}"
-                )
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.

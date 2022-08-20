@@ -1,4 +1,10 @@
-"""Solves the puzzle for Day 11 of Advent of Code 2016."""
+"""Solves the puzzle for Day 11 of Advent of Code 2016.
+
+Radioisotope Thermoelectric Generators
+
+For puzzle specification and desciption, visit
+https://adventofcode.com/2016/day/11
+"""
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
 from itertools import combinations
@@ -187,7 +193,7 @@ class Solver(SolverInterface):
                 for material, what in item_pattern.findall(line):
                     floor.append(item_initializers[what](material))
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
         self.start_state = State(0, floors, 0)
 

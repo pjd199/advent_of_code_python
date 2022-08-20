@@ -48,7 +48,7 @@ class Solver(SolverInterface):
             if m := pattern.fullmatch(line):
                 self.input.append((int(m["lower"]), int(m["upper"])))
             else:
-                raise RuntimeError(f"Unable to parse {line} on line {i+1}")
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
 
         self.blacklist: List[Tuple[int, int]] = []
 
