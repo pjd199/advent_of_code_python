@@ -1,6 +1,7 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
 from argparse import ArgumentParser
 from datetime import date
+from importlib import import_module
 from json import dump, load
 from pathlib import Path
 from re import match
@@ -16,6 +17,7 @@ from requests import get
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_status import puzzle_date_generator
 
 AOC_ROOT = "https://adventofcode.com"
@@ -46,6 +48,7 @@ class DailyHelper:
         verbose: bool = False,
         test: bool = False,
         open_webpage: bool = False,
+        run_puzzle_cli: bool = False,
     ):
         """Initialise the helper for a specific day.
 
@@ -56,7 +59,8 @@ class DailyHelper:
             flush (bool): if True, ignores cached files. Default False
             verbose (bool): if True, enables logging. Default False
             test (bool): if True, enables testing. Default False
-            open_webpage(bool): if True, open the url in a browser. Default False
+            open_webpage (bool): if True, open the url in a browser. Default False
+            run_puzzle_cli (bool): if True, run the puzzle CLI. Default False
         """
         self.year = year
         self.day = day
@@ -65,6 +69,7 @@ class DailyHelper:
         self.verbose = verbose
         self.test = test
         self.open_webpage = open_webpage
+        self.run_puzzle_cli = run_puzzle_cli
 
         self.title = ""
         self.answers: List[str] = []
@@ -145,6 +150,12 @@ class DailyHelper:
             ),
             ok_if_exists=True,
         )
+
+        # run the puzzle solver
+        if self.run_puzzle_cli:
+            runner(
+                import_module(f"advent_of_code.year{self.year}.day{self.day}").Solver
+            )
 
         # run the testing
         self._testing()
@@ -295,6 +306,7 @@ class DailyHelper:
                 options += ["-v", "--cov-report", "term-missing"]
             else:
                 options += ["-q", "--cov-report="]
+
             pytest.main(options)
 
 
@@ -341,6 +353,7 @@ def main() -> int:
         action="store_true",
     )
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
+    parser.add_argument("--run", "-r", help="run the puzzle file", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
     args = parser.parse_args()
 
@@ -360,7 +373,14 @@ def main() -> int:
 
     if date(args.year, 12, args.day) in puzzle_date_generator():
         return DailyHelper(
-            args.year, args.day, session, args.flush, args.verbose, args.test, args.open
+            args.year,
+            args.day,
+            session,
+            args.flush,
+            args.verbose,
+            args.test,
+            args.open,
+            args.run,
         ).run()
 
     else:
