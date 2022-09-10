@@ -3,21 +3,19 @@
 No Time for a Taxicab
 
 For puzzle specification and desciption, visit
-https://adventofcode.com/2016/day/10
+https://adventofcode.com/2016/day/1
 """
-from collections import namedtuple
+from dataclasses import dataclass
 from pathlib import Path
-from re import compile
 from sys import maxsize, path
 from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_tokens
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
-
-Instruction = namedtuple("Instruction", ["turn", "distance"])
 
 
 class Solver(SolverInterface):
@@ -27,35 +25,26 @@ class Solver(SolverInterface):
     DAY = 1
     TITLE = "No Time for a Taxicab"
 
+    @dataclass
+    class _Instruction:
+        """Data class for the instructions."""
+
+        turn: str
+        distance: int
+
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # split up the input
-        tokens = puzzle_input[0].split(", ")
-
-        # parse the input
-        self.input = []
-        pattern = compile(r"(?P<turn>[L|R])(?P<dist>[0-9]+)")
-        for i, line in enumerate(tokens):
-            match = pattern.fullmatch(line)
-            if match:
-                self.input.append(Instruction(match["turn"], int(match["dist"])))
-            else:
-                raise RuntimeError(f"Unable to parse line { i+ 1}: {line}")
+        self.input = parse_tokens(
+            puzzle_input,
+            r"(?P<turn>[L|R])(?P<distance>[0-9]+)",
+            dataclass_processor(Solver._Instruction),
+            ", ",
+            max_length=1,
+        )[0]
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

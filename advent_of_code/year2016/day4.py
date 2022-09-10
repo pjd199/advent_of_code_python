@@ -8,14 +8,14 @@ https://adventofcode.com/2016/day/10
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from re import compile
 from string import ascii_lowercase
 from sys import path
-from typing import DefaultDict, List, Optional
+from typing import DefaultDict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -26,7 +26,6 @@ class Solver(SolverInterface):
     @dataclass
     class _Room:
         encrypted_name: str
-        decrypted_name: Optional[str]
         sector_id: int
         checksum: str
 
@@ -39,34 +38,16 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        pattern = compile(r"(?P<name>[a-z\-]+)(?P<id>[0-9]+)\[(?P<checksum>[a-z]{5})\]")
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.match(line):
-                self.input.append(
-                    Solver._Room(
-                        encrypted_name=m["name"],
-                        sector_id=int(m["id"]),
-                        checksum=m["checksum"],
-                        decrypted_name=None,
-                    )
-                )
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
-
+        self.input = parse_lines(
+            puzzle_input,
+            (
+                r"(?P<encrypted_name>[a-z\-]+)"
+                r"(?P<sector_id>[0-9]+)"
+                r"\[(?P<checksum>[a-z]{5})\]",
+                dataclass_processor(Solver._Room),
+            ),
+        )
         self.real_rooms: List[Solver._Room] = []
 
     def solve_part_one(self) -> int:

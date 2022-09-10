@@ -13,6 +13,7 @@ from typing import Dict, List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_grid, str_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -30,24 +31,8 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
 
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        self.input = {}
-        for y, line in enumerate(puzzle_input):
-            for x, light in enumerate(line):
-                if light == "#" or light == ".":
-                    self.input[(x, y)] = light
-                else:
-                    raise RuntimeError(f"Parse error on line {y + 1}: {line}")
+        self.input = parse_grid(puzzle_input, r"[#\.]", str_processor)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

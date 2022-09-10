@@ -8,13 +8,13 @@ https://adventofcode.com/2015/day/15
 from itertools import combinations_with_replacement, groupby
 from math import prod
 from pathlib import Path
-from re import compile
 from sys import path
-from typing import List, Tuple
+from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -33,29 +33,22 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if puzzle_input is None or len(puzzle_input) == 0:
-            raise RuntimeError("Puzzle input is empty")
-
-        pattern = compile(
-            r"(?P<name>[A-Za-z]+): "
-            r"capacity (?P<capacity>-?[0-9]+), "
-            r"durability (?P<durability>-?[0-9]+), "
-            r"flavor (?P<flavor>-?[0-9]+), "
-            r"texture (?P<texture>-?[0-9]+), "
-            r"calories (?P<calories>-?[0-9]+)"
+        self.ingredients = dict(
+            parse_lines(
+                puzzle_input,
+                (
+                    r"(?P<name>[A-Za-z]+): "
+                    r"capacity (?P<capacity>-?[0-9]+), "
+                    r"durability (?P<durability>-?[0-9]+), "
+                    r"flavor (?P<flavor>-?[0-9]+), "
+                    r"texture (?P<texture>-?[0-9]+), "
+                    r"calories (?P<calories>-?[0-9]+)",
+                    lambda m: (m[0], tuple(int(x) for x in m.groups()[1:])),
+                ),
+            )
         )
-        self.ingredients = {}
-        for i, line in enumerate(puzzle_input):
-            match = pattern.fullmatch(line)
-            if match:
-                self.ingredients[match["name"]] = [int(match[p]) for p in PROPERTIES]
-            else:
-                raise RuntimeError(f"Parse error on line {i + 1}: {line}")
+        self.has_run = False
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -63,8 +56,10 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        top_score, _ = self._bake()
-        return top_score
+        if not self.has_run:
+            self._bake()
+
+        return self.top_score
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -72,27 +67,15 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        # solve the puzzle
-        _, top_calorie_counting_score = self._bake()
-        return top_calorie_counting_score
+        if not self.has_run:
+            self._bake()
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts of the puzzle.
+        return self.top_calorie_counting_score
 
-        Returns:
-            List[int]: the answer
-        """
-        top_score, top_calorie_counting_score = self._bake()
-        return [top_score, top_calorie_counting_score]
-
-    def _bake(self) -> Tuple[int, int]:
-        """Run the simulation.
-
-        Returns:
-            Tuple[int, int]: the return values for part one and part two
-        """
-        top_score = 0
-        top_calorie_counting_score = 0
+    def _bake(self) -> None:
+        """Run the simulation."""
+        self.top_score = 0
+        self.top_calorie_counting_score = 0
         for combo in combinations_with_replacement(self.ingredients.keys(), 100):
             property_scores = [0] * len(PROPERTIES)
             recipe = {k: len(list(g)) for k, g in groupby(combo)}
@@ -101,11 +84,13 @@ class Solver(SolverInterface):
                     property_scores[x] += recipe[item] * self.ingredients[item][x]
             property_scores = [max(x, 0) for x in property_scores]
             score = prod(property_scores[:-1])
-            top_score = max(score, top_score)
+            self.top_score = max(score, self.top_score)
             if property_scores[-1] == 500:
-                top_calorie_counting_score = max(score, top_calorie_counting_score)
+                self.top_calorie_counting_score = max(
+                    score, self.top_calorie_counting_score
+                )
 
-        return top_score, top_calorie_counting_score
+        self.has_run = True
 
 
 if __name__ == "__main__":  # pragma: no cover

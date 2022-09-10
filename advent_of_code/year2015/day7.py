@@ -5,17 +5,48 @@ Some Assembly Required
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/7
 """
-from copy import deepcopy
+from dataclasses import dataclass
+from enum import Enum
 from pathlib import Path
-from re import compile
 from sys import path
-from typing import Dict, List
+from typing import Callable, Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
+
+
+class _Operator(Enum):
+    AND = "AND"
+    OR = "OR"
+    LSHIFT = "LSHIFT"
+    RSHIFT = "RSHIFT"
+    NOT = "NOT"
+
+
+@dataclass
+class _Expression:
+    output: str
+
+
+@dataclass
+class _Signal(_Expression):
+    signal: int
+
+
+@dataclass
+class _Connection(_Expression):
+    input_wire: str
+
+
+@dataclass
+class _Operation(_Expression):
+    operator: _Operator
+    right: str
+    left: str = ""
 
 
 class Solver(SolverInterface):
@@ -30,33 +61,29 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        self.wiring_diagram = {}
-        pattern = compile(
-            r"((?P<signal>[0-9]+)"
-            r"|(?P<input_wire>[a-z]+)"
-            r"|(?P<left_operand>[a-z]*|[0-9]*)\s?"
-            r"(?P<operator>AND|OR|LSHIFT|RSHIFT|NOT) "
-            r"(?P<right_operand>[a-z]*|[0-9]*))"
-            r" -> (?P<output_wire>[a-z]+)"
+        parsed = parse_lines(
+            puzzle_input,
+            (
+                r"(?P<signal>[0-9]+) -> (?P<output>[a-z]+)",
+                dataclass_processor(_Signal),
+            ),
+            (
+                r"(?P<input_wire>[a-z]+) -> (?P<output>[a-z]+)",
+                dataclass_processor(_Connection),
+            ),
+            (
+                r"((?P<left>[a-z]+|[0-9]+) )?"
+                r"(?P<operator>AND|OR|LSHIFT|RSHIFT|NOT) "
+                r"(?P<right>[a-z]+|[0-9]+) -> "
+                r"(?P<output>[a-z]+)",
+                dataclass_processor(_Operation),
+            ),
         )
-        for i, line in enumerate(puzzle_input):
-            match = pattern.fullmatch(line)
-            if match:
-                self.wiring_diagram[match["output_wire"]] = match.groupdict()
-            else:
-                raise RuntimeError(f"Parse error at line {i + 1}: {line}")
+
+        self.wiring_diagram: Dict[str, _Expression] = {x.output: x for x in parsed}
+        self.part_one = -1
+        self.part_two = -1
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -64,7 +91,9 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return self._resolve("a", self.wiring_diagram, {})
+        if self.part_one == -1:
+            self.part_one = self._resolve("a", {})
+        return self.part_one
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -72,27 +101,18 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        md = deepcopy(self.wiring_diagram)
-        md["b"]["signal"] = str(self._resolve("a", self.wiring_diagram, {}))
-        return self._resolve("a", md, {})
+        if self.part_one == -1:
+            self.part_one = self._resolve("a", {})
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts.
+        if self.part_two == -1:
+            self.wiring_diagram["b"] = _Signal("b", self._resolve("a", {}))
+            self.part_two = self._resolve("a", {})
 
-        Returns:
-            List[int]: the results of part one and part two
-        """
-        part_one = self._resolve("a", self.wiring_diagram, {})
-        md = deepcopy(self.wiring_diagram)
-        md["b"]["signal"] = str(part_one)
-        part_two = self._resolve("a", md, {})
-
-        return [part_one, part_two]
+        return self.part_two
 
     def _resolve(
         self,
         wire: str,
-        wiring_diagram: Dict[str, Dict[str, str]],
         cache: Dict[str, int],
     ) -> int:
         """Recursively resolves the signal on the request wire.
@@ -103,7 +123,6 @@ class Solver(SolverInterface):
 
         Args:
             wire (str): the wire to resolve
-            wiring_diagram (Dict[str, Dict[str,str]]): the wire inputs
             cache (Dict[str, int]): a cache of resolved results
 
         Returns:
@@ -115,39 +134,32 @@ class Solver(SolverInterface):
 
         # if this is not yet been cached, resolved the expression
         if wire not in cache:
-            expression = wiring_diagram[wire]
-            if expression["signal"] is not None:
-                # signal source
-                cache[wire] = int(expression["signal"])
-            elif expression["input_wire"] is not None:
-                # passthrough the wire value
-                cache[wire] = self._resolve(
-                    expression["input_wire"], wiring_diagram, cache
-                )
-            elif expression["operator"] == "AND":
-                # AND the operands
-                cache[wire] = self._resolve(
-                    expression["left_operand"], wiring_diagram, cache
-                ) & self._resolve(expression["right_operand"], wiring_diagram, cache)
-            elif expression["operator"] == "OR":
-                # OR the operands
-                cache[wire] = self._resolve(
-                    expression["left_operand"], wiring_diagram, cache
-                ) | self._resolve(expression["right_operand"], wiring_diagram, cache)
-            elif expression["operator"] == "LSHIFT":
-                # LSHIFT the operand
-                cache[wire] = self._resolve(
-                    expression["left_operand"], wiring_diagram, cache
-                ) << int(expression["right_operand"])
-            elif expression["operator"] == "RSHIFT":
-                # RSHIFT the operand
-                cache[wire] = self._resolve(
-                    expression["left_operand"], wiring_diagram, cache
-                ) >> int(expression["right_operand"])
-            elif expression["operator"] == "NOT":
-                # NOT the operand
-                cache[wire] = ~self._resolve(
-                    expression["right_operand"], wiring_diagram, cache
+            expression = self.wiring_diagram[wire]
+
+            if isinstance(expression, _Signal):
+                cache[wire] = int(expression.signal)
+
+            elif isinstance(expression, _Connection):
+                cache[wire] = self._resolve(expression.input_wire, cache)
+
+            elif isinstance(expression, _Operation):
+                operations: Dict[_Operator, Callable[[str, str], int]] = {
+                    _Operator.AND: lambda a, b: (
+                        self._resolve(a, cache) & self._resolve(b, cache)
+                    ),
+                    _Operator.OR: lambda a, b: (
+                        self._resolve(a, cache) | self._resolve(b, cache)
+                    ),
+                    _Operator.LSHIFT: lambda a, b: (
+                        self._resolve(a, cache) << self._resolve(b, cache)
+                    ),
+                    _Operator.RSHIFT: lambda a, b: (
+                        self._resolve(a, cache) >> self._resolve(b, cache)
+                    ),
+                    _Operator.NOT: lambda _, b: ~self._resolve(b, cache),
+                }
+                cache[wire] = operations[expression.operator](
+                    expression.left, expression.right
                 )
 
         # return the resolved value

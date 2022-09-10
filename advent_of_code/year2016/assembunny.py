@@ -1,22 +1,23 @@
 """assembunny definitions and functions required for days 12, 23 & 25."""
 from copy import deepcopy
 from dataclasses import dataclass
-from enum import Enum, auto
-from re import compile
+from enum import Enum
 from typing import Iterator, List, Tuple
+
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 
 
 class Action(Enum):
     """Enum representing the actions."""
 
-    COPY = auto()
-    INCREMENT = auto()
-    DECREMENT = auto()
-    JUMP = auto()
-    TOGGLE = auto()
-    MULTIPLY = auto()
-    NOP = auto()
-    OUT = auto()
+    COPY = "cpy"
+    INCREMENT = "inc"
+    DECREMENT = "dec"
+    JUMP = "jnz"
+    TOGGLE = "tgl"
+    MULTIPLY = "mul"
+    NOP = "nop"
+    OUT = "out"
 
 
 @dataclass
@@ -25,7 +26,7 @@ class Instruction:
 
     action: Action
     first: str
-    second: str
+    second: str = ""
 
     def astuple(self) -> Tuple[Action, str, str]:
         """Convert the Instruction into a Tuple.
@@ -42,37 +43,18 @@ def load(puzzle_input: List[str]) -> List[Instruction]:
     Args:
         puzzle_input (List[str]): the input
 
-    Raises:
-        RuntimeError: Raised on a parse error
-
     Returns:
         List[Instruction]: the loaded program
     """
-    action_map = {
-        "cpy": Action.COPY,
-        "inc": Action.INCREMENT,
-        "dec": Action.DECREMENT,
-        "jnz": Action.JUMP,
-        "tgl": Action.TOGGLE,
-        "mul": Action.MULTIPLY,
-        "nop": Action.NOP,
-        "out": Action.OUT,
-    }
-    pattern = compile(
-        rf"(?P<action>({'|'.join(action_map.keys())})) "
-        rf"(?P<first>(-?\d+|[abcd]))\s?"
-        rf"(?P<second>(-?\d+|[abcd]))?"
+    return parse_lines(
+        puzzle_input,
+        (
+            rf"(?P<action>({'|'.join({x.value for x in Action})})) "
+            rf"(?P<first>(-?\d+|[abcd]))\s?"
+            rf"(?P<second>(-?\d+|[abcd]))?",
+            dataclass_processor(Instruction),
+        ),
     )
-
-    program = []
-    for i, line in enumerate(puzzle_input):
-        if m := pattern.fullmatch(line):
-            program.append(
-                Instruction(action_map[m["action"]], m["first"], m["second"])
-            )
-        else:
-            raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
-    return program
 
 
 def run(
@@ -94,7 +76,7 @@ def run(
     Returns:
         int: value of register after execution
     """
-    return list(run_iter(program, a, b, c, d))[-1]
+    return list(run_iter(program, a, b, c, d))[0]
 
 
 def run_iter(

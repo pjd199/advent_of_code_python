@@ -6,13 +6,13 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/16
 """
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -42,35 +42,24 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if puzzle_input is None or len(puzzle_input) == 0:
-            raise RuntimeError("Puzzle input is empty")
-
-        self.list_of_sues = []
-        pattern = compile(
-            r"Sue (?P<num>[0-9]+): "
-            r"(?P<a>[a-z]+): (?P<a_val>[0-9]+), "
-            r"(?P<b>[a-z]+): (?P<b_val>[0-9]+), "
-            r"(?P<c>[a-z]+): (?P<c_val>[0-9]+)"
-        )
-        for i, line in enumerate(puzzle_input):
-            match = pattern.fullmatch(line)
-            if match:
-                self.list_of_sues.append(
-                    dict(
-                        {
-                            match["a"]: match["a_val"],
-                            match["b"]: match["b_val"],
-                            match["c"]: match["c_val"],
-                        }
-                    )
-                )
-            else:
-                raise RuntimeError(f"Parse error on line {i + 1}: {line}")
+        self.list_of_sues = [
+            {
+                a: int(a_val),
+                b: int(b_val),
+                c: int(c_val),
+            }
+            for a, a_val, b, b_val, c, c_val in parse_lines(
+                puzzle_input,
+                (
+                    r"Sue [0-9]+: "
+                    r"(?P<a>[a-z]+): (?P<a_val>[0-9]+), "
+                    r"(?P<b>[a-z]+): (?P<b_val>[0-9]+), "
+                    r"(?P<c>[a-z]+): (?P<c_val>[0-9]+)",
+                    str_tuple_processor,
+                ),
+            )
+        ]
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -81,7 +70,7 @@ class Solver(SolverInterface):
         # solve part one
         result = -1
         for i, sue in enumerate(self.list_of_sues):
-            if all([int(sue[k]) == Solver.UNKNOWN_SUE[k] for k in sue.keys()]):
+            if all([int(v) == Solver.UNKNOWN_SUE[k] for k, v in sue.items()]):
                 result = i + 1
                 break
 
@@ -97,13 +86,13 @@ class Solver(SolverInterface):
         result = -1
         for i, sue in enumerate(self.list_of_sues):
             matches = []
-            for k in sue.keys():
+            for k, v in sue.items():
                 if k == "cats" or k == "trees":
-                    matches.append(int(sue[k]) > Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) > Solver.UNKNOWN_SUE[k])
                 elif k == "pomeranians" or k == "goldfish":
-                    matches.append(int(sue[k]) < Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) < Solver.UNKNOWN_SUE[k])
                 else:
-                    matches.append(int(sue[k]) == Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) == Solver.UNKNOWN_SUE[k])
             if all(matches):
                 result = i + 1
                 break

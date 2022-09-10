@@ -5,14 +5,15 @@ Firewall Rules
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/20
 """
+from dataclasses import astuple, dataclass
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -24,32 +25,21 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "Firewall Rules"
 
+    @dataclass(order=True)
+    class _RangeData:
+        lower: int
+        upper: int
+
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        pattern = compile(r"(?P<lower>\d+)-(?P<upper>\d+)")
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.input.append((int(m["lower"]), int(m["upper"])))
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
-
+        self.input = parse_lines(
+            puzzle_input,
+            (r"(?P<lower>\d+)-(?P<upper>\d+)", dataclass_processor(Solver._RangeData)),
+        )
         self.blacklist: List[Tuple[int, int]] = []
 
     def solve_part_one(self) -> int:
@@ -75,16 +65,16 @@ class Solver(SolverInterface):
         if len(self.blacklist) > 0:
             return
 
-        sorted_input = sorted(self.input, key=lambda x: x[0])
-        section_start, section_end = sorted_input[0]
-        for lower, upper in sorted_input:
-            if lower <= section_end or section_end + 1 == lower:
+        sorted_input = sorted(self.input)
+        section_start, section_end = astuple(sorted_input[0])
+        for x in sorted_input:
+            if x.lower <= section_end or section_end + 1 == x.lower:
                 # extend the section
-                section_end = max(section_end, upper)
+                section_end = max(section_end, x.upper)
             else:
                 # end the section, and start a new one
                 self.blacklist.append((section_start, section_end))
-                section_start, section_end = lower, upper
+                section_start, section_end = x.lower, x.upper
 
         # append the final section
         self.blacklist.append((section_start, section_end))

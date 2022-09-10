@@ -14,6 +14,7 @@ from typing import Any, List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -34,21 +35,14 @@ class Solver(SolverInterface):
         Raises:
             RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
+        parse_single_line(puzzle_input, r"[\[{\"\w:,-\]}]+", str_processor)
 
-        if len(puzzle_input) == 1:
-            try:
-                self.content = loads(puzzle_input[0])
-            except JSONDecodeError:
-                raise RuntimeError(f"Error parsing JSON, " f"found: {puzzle_input[0]}")
-        else:
-            raise RuntimeError(f"Error parsing JSON, " f"found: {puzzle_input[0]}")
+        try:
+            self.content = loads(puzzle_input[0])
+        except JSONDecodeError as e:
+            raise RuntimeError(
+                f"Error parsing JSON, " f"found: {puzzle_input[0]} - {e}"
+            )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

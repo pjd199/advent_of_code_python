@@ -8,13 +8,13 @@ https://adventofcode.com/2016/day/10
 from abc import ABC
 from math import prod
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import Callable, Dict, List, Tuple, cast
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -111,22 +111,11 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
         # parse the input
         self.factory_floor: Dict[str, Solver._ChipPassingProtocol] = {}
         self.log: Dict[str, Tuple[int, int]] = {}
-        self.setup = []
+        self.setup: List[Tuple[str, int]] = []
 
         def find(identifier: str) -> Solver._ChipPassingProtocol:
             if identifier not in self.factory_floor:
@@ -138,21 +127,22 @@ class Solver(SolverInterface):
                     self.factory_floor[identifier] = Solver._OutputBin(identifier)
             return self.factory_floor[identifier]
 
-        give_pattern = compile(
-            r"(?P<id>bot \d+) gives low to (?P<low_id>(?:bot|output) \d+) "
-            r"and high to (?P<high_id>(?:bot|output) \d+)"
-        )
-        setup_pattern = compile(r"value (?P<value>\d+) goes to (?P<id>bot \d+)")
-        for i, line in enumerate(puzzle_input):
-            if m := give_pattern.fullmatch(line):
-                cast(Solver._Robot, find(m["id"])).instruction(
+        parse_lines(
+            puzzle_input,
+            (
+                r"(?P<id>bot \d+) gives low to (?P<low_id>(?:bot|output) \d+) "
+                r"and high to (?P<high_id>(?:bot|output) \d+)",
+                lambda m: cast(Solver._Robot, find(m["id"])).instruction(
                     find(m["low_id"]),
                     find(m["high_id"]),
-                )
-            elif m := setup_pattern.fullmatch(line):
-                self.setup.append((m["id"], int(m["value"])))
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i}")
+                ),
+            ),
+            (
+                r"value (?P<value>\d+) goes to (?P<id>bot \d+)",
+                lambda m: self.setup.append((m["id"], int(m["value"]))),
+            ),
+        )
+
         self.not_yet_run = True
 
     def callback(self, obj: _Robot) -> None:
