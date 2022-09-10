@@ -6,7 +6,6 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/12
 """
 from json import loads
-from json.decoder import JSONDecodeError
 from pathlib import Path
 from sys import path
 from typing import Any, List
@@ -31,18 +30,10 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        parse_single_line(puzzle_input, r"[\[{\"\w:,-\]}]+", str_processor)
-
-        try:
-            self.content = loads(puzzle_input[0])
-        except JSONDecodeError as e:
-            raise RuntimeError(
-                f"Error parsing JSON, " f"found: {puzzle_input[0]} - {e}"
-            )
+        self.content = loads(
+            parse_single_line(puzzle_input, r"[\[{\"\w:,-\]}]+", str_processor)
+        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
