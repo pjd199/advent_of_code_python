@@ -41,7 +41,7 @@ def str_processor(match: Match[str]) -> str:
     Returns:
         str: the result
     """
-    return str(match[0])
+    return match[0]
 
 
 def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
@@ -95,7 +95,7 @@ def _validate_input_and_header(
     puzzle_input: List[str],
     min_length: int,
     max_length: int,
-    header: Tuple[str, ...] = (),
+    header: Tuple[str, ...],
 ) -> int:
     """Validates the input.
 
@@ -173,7 +173,6 @@ def parse_single_line(
     puzzle_input: List[str],
     pattern: str,
     match_processor: Callable[[Match[str]], T],
-    header: Tuple[str, ...] = (),
 ) -> T:
     """Load lines from the parsed patterns.
 
@@ -181,7 +180,6 @@ def parse_single_line(
         puzzle_input (List[str]): the puzzle input
         pattern (str): the regular expression pattern for each line
         match_processor (Callable[[Match[str]], T]): processor called for the match
-        header (Tuple[str, ...], optional): header to validate. Default ()
 
     Returns:
         T: _description_
@@ -191,7 +189,6 @@ def parse_single_line(
         (pattern, match_processor),
         min_length=1,
         max_length=1,
-        header=header,
     )[0]
 
 
