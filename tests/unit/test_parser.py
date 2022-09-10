@@ -221,7 +221,7 @@ def test_parse_tokens() -> None:
     puzzle_input = ["a b c", "1 2 3", "4 5 6", "7 8 9"]
 
     # test with good input
-    assert parse_tokens(puzzle_input, r"[a-z0-9]+", str_processor, delimiter=" ") == [
+    assert parse_tokens(puzzle_input, r"[a-z0-9]", str_processor, delimiter=" ") == [
         ["a", "b", "c"],
         ["1", "2", "3"],
         ["4", "5", "6"],
@@ -230,20 +230,20 @@ def test_parse_tokens() -> None:
 
     # test with header removed
     assert parse_tokens(
-        puzzle_input, r"\d+", int_processor, delimiter=" ", header=("a b c",)
+        puzzle_input, r"\d", int_processor, delimiter=" ", header=("a b c",)
     ) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
     # test with wrong delimiter
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"[a-z0-9]+", str_processor, delimiter=",")
+        parse_tokens(puzzle_input, r"[a-z0-9]", str_processor, delimiter=",")
 
     # test with wrong reg ex
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"\d+", str_processor, delimiter=" ")
+        parse_tokens(puzzle_input, r"\d", str_processor, delimiter=" ")
 
     # test wrong type
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"[a-z0-9]+", int_processor, min_length=10)
+        parse_tokens(puzzle_input, r"[a-z0-9]", int_processor)
 
     # test with too short
     with pytest.raises(RuntimeError):
