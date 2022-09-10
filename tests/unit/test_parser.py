@@ -243,15 +243,19 @@ def test_parse_tokens() -> None:
 
     # test wrong type
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"[a-z0-9]", int_processor)
+        parse_tokens(puzzle_input, r"[a-z0-9]", int_processor, delimiter=" ")
 
     # test with too short
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"[a-z0-9]+", str_processor, min_length=10)
+        parse_tokens(
+            puzzle_input, r"[a-z0-9]+", str_processor, min_length=10, delimiter=" "
+        )
 
     # test with too long
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"[a-z0-9]+", str_processor, max_length=1)
+        parse_tokens(
+            puzzle_input, r"[a-z0-9]+", str_processor, max_length=1, delimiter=" "
+        )
 
 
 def test_parse_grid() -> None:
