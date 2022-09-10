@@ -144,6 +144,10 @@ def test_validate_input_and_header() -> None:
     # test removing header
     assert _validate_input_and_header(puzzle_input, 1, 4, header=("abc", "def")) == 2
 
+    # test removing wrong header
+    with pytest.raises(RuntimeError):
+        _validate_input_and_header(puzzle_input, 1, 4, header=("xyz",))
+
 
 def test_parse_lines() -> None:
     """Unit test for parse_lines."""
@@ -235,7 +239,11 @@ def test_parse_tokens() -> None:
 
     # test with wrong reg ex
     with pytest.raises(RuntimeError):
-        parse_tokens(puzzle_input, r"\d+", int_processor, delimiter=" ")
+        parse_tokens(puzzle_input, r"\d+", str_processor, delimiter=" ")
+
+    # test wrong type
+    with pytest.raises(RuntimeError):
+        parse_tokens(puzzle_input, r"[a-z0-9]+", int_processor, min_length=10)
 
     # test with too short
     with pytest.raises(RuntimeError):

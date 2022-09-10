@@ -237,8 +237,6 @@ def parse_tokens(
     for i, line in enumerate(puzzle_input[start:]):
         try:
             output.append([match_processor(m) for m in finditer(pattern, line)])
-            if not output[-1]:
-                raise RuntimeError("No match")
         except Exception as e:
             raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
 
