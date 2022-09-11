@@ -5,20 +5,28 @@ Reindeer Olympics
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/14
 """
-from collections import namedtuple
+from dataclasses import dataclass
 from itertools import cycle
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
-Reindeer = namedtuple("Reindeer", "name speed flying resting")
+
+@dataclass
+class Reindeer:
+    """A reindeer."""
+
+    name: str
+    speed: int
+    flying: int
+    resting: int
 
 
 class Solver(SolverInterface):
@@ -34,34 +42,17 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
 
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if puzzle_input is None or len(puzzle_input) == 0:
-            raise RuntimeError("Puzzle input is empty")
-
-        pattern = compile(
-            r"(?P<name>[A-Za-z]+) can fly "
-            r"(?P<speed>[0-9]+) km/s for "
-            r"(?P<flying>[0-9]+) seconds, "
-            r"but then must rest for "
-            r"(?P<resting>[0-9]+) seconds."
+        self.herd = parse_lines(
+            puzzle_input,
+            (
+                r"(?P<name>[A-Za-z]+) can fly "
+                r"(?P<speed>[0-9]+) km/s for "
+                r"(?P<flying>[0-9]+) seconds, but then must rest for "
+                r"(?P<resting>[0-9]+) seconds.",
+                dataclass_processor(Reindeer),
+            ),
         )
-        self.herd = []
-        for i, line in enumerate(puzzle_input):
-            match = pattern.fullmatch(line)
-            if match:
-                self.herd.append(
-                    Reindeer(
-                        name=match["name"],
-                        speed=int(match["speed"]),
-                        flying=int(match["flying"]),
-                        resting=int(match["resting"]),
-                    )
-                )
-            else:
-                raise RuntimeError(f"Parse error on line {i + 1}: {line}")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

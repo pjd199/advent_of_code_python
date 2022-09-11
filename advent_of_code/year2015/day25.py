@@ -6,13 +6,13 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/25
 """
 from pathlib import Path
-from re import match
 from sys import path
 from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -29,27 +29,14 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): the puzzle input
-
-        Raises:
-            RuntimeError: raised in unable to parse input
         """
-        # validate and parse the input
-        if puzzle_input is None or len(puzzle_input) == 0:
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input into integers
-        m = match(
-            r"^To continue, please consult the code grid in the manual.  "
+        self.row, self.col = parse_single_line(
+            puzzle_input,
+            r"To continue, please consult the code grid in the manual.  "
             r"Enter the code at row (?P<row>[0-9]+), "
-            r"column (?P<col>[0-9]+).$",
-            puzzle_input[0],
+            r"column (?P<col>[0-9]+).",
+            int_tuple_processor,
         )
-
-        if m:
-            self.row = int(m.groupdict()["row"])
-            self.col = int(m.groupdict()["col"])
-        else:
-            raise RuntimeError("Invalid input at line 1")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

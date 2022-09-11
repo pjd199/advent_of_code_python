@@ -7,13 +7,13 @@ https://adventofcode.com/2016/day/10
 """
 from itertools import chain
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import int_processor, parse_tokens
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -30,26 +30,8 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        pattern = compile(r"(?P<a>[0-9]+)\s+(?P<b>[0-9]+)\s+(?P<c>[0-9]+)")
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.input.append([int(m["a"]), int(m["b"]), int(m["c"])])
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
+        self.input = parse_tokens(puzzle_input, r"[0-9]+", int_processor, r"\s+")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

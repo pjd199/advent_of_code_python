@@ -5,6 +5,7 @@ Bathroom Security
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+from enum import Enum
 from pathlib import Path
 from sys import path
 from typing import Dict, List, Tuple
@@ -12,6 +13,7 @@ from typing import Dict, List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import enum_processor, parse_tokens
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -23,30 +25,21 @@ class Solver(SolverInterface):
     DAY = 2
     TITLE = "Bathroom Security"
 
+    class _Direction(Enum):
+        UP = "U"
+        DOWN = "D"
+        LEFT = "L"
+        RIGHT = "R"
+
     def __init__(self, puzzle_input: List[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        for i, line in enumerate(puzzle_input):
-            if all([c in ["U", "D", "L", "R"] for c in line]):
-                self.input.append(line)
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
+        self.input = parse_tokens(
+            puzzle_input, r"[UDLR]", enum_processor(Solver._Direction)
+        )
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.
@@ -109,14 +102,14 @@ class Solver(SolverInterface):
         # find the code
         code = []
         for line in self.input:
-            for c in line:
-                if c == "U" and (x, y - 1) in grid:
+            for direction in line:
+                if direction == Solver._Direction.UP and (x, y - 1) in grid:
                     y -= 1
-                elif c == "D" and (x, y + 1) in grid:
+                elif direction == Solver._Direction.DOWN and (x, y + 1) in grid:
                     y += 1
-                elif c == "L" and (x - 1, y) in grid:
+                elif direction == Solver._Direction.LEFT and (x - 1, y) in grid:
                     x -= 1
-                elif c == "R" and (x + 1, y) in grid:
+                elif direction == Solver._Direction.RIGHT and (x + 1, y) in grid:
                     x += 1
             code.append(grid[(x, y)])
 

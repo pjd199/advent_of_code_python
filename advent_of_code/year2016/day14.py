@@ -18,6 +18,7 @@ from lambda_multiprocessing import Pool  # type: ignore
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -48,25 +49,8 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        pattern = compile(r"\w+")
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                self.input = m[0]
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
+        self.input = parse_single_line(puzzle_input, r"\w+", str_processor)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

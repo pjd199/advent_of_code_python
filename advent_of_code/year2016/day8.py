@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/10
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import DefaultDict, List, Tuple
 
@@ -17,6 +16,7 @@ from advent_of_code_ocr import convert_array_6  # type: ignore
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -52,38 +52,22 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input: List[Solver._Instruction] = []
-        pattern = compile(
-            r"(?:rect (?P<width>\d+)x(?P<height>\d+))"
-            r"|(?:rotate row y=(?P<row>\d+) by (?P<right>\d+))"
-            r"|(?:rotate column x=(?P<col>\d+) by (?P<down>\d+))"
+        self.input = parse_lines(
+            puzzle_input,
+            (
+                r"rect (?P<width>\d+)x(?P<height>\d+)",
+                dataclass_processor(Solver._Rect),
+            ),
+            (
+                r"rotate row y=(?P<row>\d+) by (?P<right_shift>\d+)",
+                dataclass_processor(Solver._RotateRow),
+            ),
+            (
+                r"rotate column x=(?P<col>\d+) by (?P<down_shift>\d+)",
+                dataclass_processor(Solver._RotateColumn),
+            ),
         )
-        for i, line in enumerate(puzzle_input):
-            if m := pattern.fullmatch(line):
-                if m["width"] and m["height"]:
-                    self.input.append(Solver._Rect(int(m["width"]), int(m["height"])))
-                elif m["row"] and m["right"]:
-                    self.input.append(Solver._RotateRow(int(m["row"]), int(m["right"])))
-                else:
-                    self.input.append(
-                        Solver._RotateColumn(int(m["col"]), int(m["down"]))
-                    )
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
-
         self.grid: DefaultDict[Tuple[int, int], bool] = defaultdict(bool)
         self.number_of_columns = 50
         self.number_of_rows = 6

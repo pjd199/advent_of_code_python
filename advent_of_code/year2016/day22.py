@@ -8,13 +8,13 @@ https://adventofcode.com/2016/day/22
 from dataclasses import dataclass
 from itertools import permutations
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -47,29 +47,18 @@ class Solver(SolverInterface):
         Raises:
             RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        self.input = []
-        pattern = compile(
-            r"/dev/grid/node-x(?P<x>\d+)-y(?P<y>\d+) *"
-            r"(?P<size>\d+)T *(?P<used>\d+)T *(?P<available>\d+)T *(?P<percent>\d+)%"
-        )
-        for i, line in enumerate(puzzle_input):
-            if (i == 0 and line == "root@ebhq-gridcenter# df -h") or (
-                i == 1 and line == "Filesystem              Size  Used  Avail  Use%"
-            ):
-                pass
-            elif m := pattern.fullmatch(line):
-                self.input.append(Node(**{k: int(v) for k, v in m.groupdict().items()}))
-            else:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}")
+        if puzzle_input is not None and len(puzzle_input) >= 3:
+            self.input = parse_lines(
+                puzzle_input[2:],
+                (
+                    r"/dev/grid/node-x(?P<x>\d+)-y(?P<y>\d+) *"
+                    r"(?P<size>\d+)T *(?P<used>\d+)T "
+                    r"*(?P<available>\d+)T *(?P<percent>\d+)%",
+                    dataclass_processor(Node),
+                ),
+            )
+        else:
+            raise RuntimeError("puzzle_input None or missing file headers")
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

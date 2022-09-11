@@ -7,13 +7,13 @@ https://adventofcode.com/2016/day/10
 """
 from hashlib import md5
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import Dict, Iterable, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -30,24 +30,8 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) != 1
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
-
-        # parse the input
-        pattern = compile(r"(?P<id>[a-z]+)")
-        if m := pattern.fullmatch(puzzle_input[0]):
-            self.input = m["id"]
-        else:
-            raise RuntimeError(f"Unable to parse {puzzle_input[0]} on line 1")
+        self.input = parse_single_line(puzzle_input, r"(?P<id>[a-z]+)", str_processor)
 
         # setup the empty cache to help shortcut solving part two if called
         # after part one

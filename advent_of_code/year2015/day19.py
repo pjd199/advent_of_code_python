@@ -6,13 +6,13 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/19
 """
 from pathlib import Path
-from re import compile
 from sys import path
 from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -33,19 +33,16 @@ class Solver(SolverInterface):
         Raises:
             RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
         if puzzle_input is None or len(puzzle_input) < 3:
-            raise RuntimeError("Puzzle input is empty")
+            raise RuntimeError("Puzzle input len too short")
 
-        self.replacements = []
-        pattern = compile(r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)")
-        for i, line in enumerate(puzzle_input[:-2]):
-            match = pattern.fullmatch(line)
-            if match:
-                self.replacements.append((match["a"], match["b"]))
-            else:
-                raise RuntimeError(f"Parse error on line {i + 1}: {line}")
-
+        self.replacements = [
+            (a, b)
+            for a, b in parse_lines(
+                puzzle_input[:-2],
+                (r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)", str_tuple_processor),
+            )
+        ]
         self.medication = puzzle_input[-1]
 
     def solve_part_one(self) -> int:
@@ -85,7 +82,7 @@ class Solver(SolverInterface):
 
         Args:
             molecule (str): the input molecule
-            replacement_list (List[Tuple[str, str]]): list of replacements
+            replacement_list (List[Tuple[str, ...]]): list of replacements
             reverse (bool): if True, reverses the replacement_list.
                 Defaults to False.
 

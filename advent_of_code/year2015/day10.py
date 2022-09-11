@@ -13,6 +13,7 @@ from typing import List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -30,24 +31,10 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
 
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        # validate and parse the input
-        if (
-            puzzle_input is None
-            or len(puzzle_input) == 0
-            or len(puzzle_input[0].strip()) == 0
-        ):
-            raise RuntimeError("Puzzle input is empty")
+        self.puzzle_input = parse_single_line(puzzle_input, r"\d+", str_processor)
 
-        if len(puzzle_input) != 1 or not puzzle_input[0].isnumeric():
-            raise RuntimeError(
-                f"Puzzle input should be sequence of "
-                f"numbers, found: {puzzle_input[0]}"
-            )
-
-        self.puzzle_input = puzzle_input[0]
+        self.part_one_seq = ""
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -55,10 +42,8 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        seq = self.puzzle_input
-        for _ in range(40):
-            seq = "".join(str(len(list(g))) + k for k, g in groupby(seq))
-        return len(seq)
+        self.part_one_seq = self._run(self.puzzle_input, 40)
+        return len(self.part_one_seq)
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -66,10 +51,24 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        seq = self.puzzle_input
-        for _ in range(50):
+        if not self.part_one_seq:
+            self.solve_part_one()
+
+        return len(self._run(self.part_one_seq, 10))
+
+    def _run(self, seq: str, cycles: int) -> str:
+        """Run the solution.
+
+        Args:
+            seq (str): input sequence
+            cycles (int): number of cycles to complete
+
+        Returns:
+            str: the output sequence
+        """
+        for _ in range(cycles):
             seq = "".join(str(len(list(g))) + k for k, g in groupby(seq))
-        return len(seq)
+        return seq
 
 
 if __name__ == "__main__":  # pragma: no cover
