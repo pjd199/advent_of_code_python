@@ -350,5 +350,35 @@
             "day": 25,
             "part_one": "189"
         }
+    },
+    "2017": {
+        "1": {
+            "title": "Inverse Captcha",
+            "year": 2017,
+            "day": 1,
+            "part_one": "1171",
+            "part_two": "1024"
+        },
+        "2": {
+            "title": "Corruption Checksum",
+            "year": 2017,
+            "day": 2,
+            "part_one": "43074",
+            "part_two": "280"
+        },
+        "3": {
+            "title": "Spiral Memory",
+            "year": 2017,
+            "day": 3,
+            "part_one": "552",
+            "part_two": "330785"
+        },
+        "4": {
+            "title": "High-Entropy Passphrases",
+            "year": 2017,
+            "day": 4,
+            "part_one": "455",
+            "part_two": "186"
+        }
     }
 }
