@@ -379,6 +379,13 @@
             "day": 4,
             "part_one": "455",
             "part_two": "186"
+        },
+        "5": {
+            "title": "A Maze of Twisty Trampolines, All Alike",
+            "year": 2017,
+            "day": 5,
+            "part_one": "343467",
+            "part_two": "24774780"
         }
     }
 }
