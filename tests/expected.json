@@ -386,6 +386,13 @@
             "day": 5,
             "part_one": "343467",
             "part_two": "24774780"
+        },
+        "6": {
+            "title": "Memory Reallocation",
+            "year": 2017,
+            "day": 6,
+            "part_one": "6681",
+            "part_two": "2392"
         }
     }
 }
