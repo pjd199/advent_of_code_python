@@ -393,6 +393,13 @@
             "day": 6,
             "part_one": "6681",
             "part_two": "2392"
+        },
+        "7": {
+            "title": "Recursive Circus",
+            "year": 2017,
+            "day": 7,
+            "part_one": "eqgvf",
+            "part_two": "757"
         }
     }
 }
