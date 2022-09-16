@@ -407,6 +407,13 @@
             "day": 8,
             "part_one": "4877",
             "part_two": "5471"
+        },
+        "9": {
+            "title": "Stream Processing",
+            "year": 2017,
+            "day": 9,
+            "part_one": "11347",
+            "part_two": "5404"
         }
     }
 }
