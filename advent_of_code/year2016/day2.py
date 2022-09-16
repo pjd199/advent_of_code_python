@@ -5,7 +5,7 @@ Bathroom Security
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
-from enum import Enum
+from enum import Enum, unique
 from pathlib import Path
 from sys import path
 from typing import Dict, List, Tuple
@@ -25,6 +25,7 @@ class Solver(SolverInterface):
     DAY = 2
     TITLE = "Bathroom Security"
 
+    @unique
     class _Direction(Enum):
         UP = "U"
         DOWN = "D"

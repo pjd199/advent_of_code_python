@@ -1,12 +1,13 @@
 """assembunny definitions and functions required for days 12, 23 & 25."""
 from copy import deepcopy
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, unique
 from typing import Iterator, List, Tuple
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 
 
+@unique
 class Action(Enum):
     """Enum representing the actions."""
 

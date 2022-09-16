@@ -1,5 +1,5 @@
 """Fixtures shared accross the test suite."""
-from enum import Enum, auto
+from enum import Enum, auto, unique
 from json import load
 from typing import Dict, NewType, Union
 
@@ -8,6 +8,7 @@ import pytest
 Expected = NewType("Expected", Dict[int, Dict[int, Dict[str, Union[int, str]]]])
 
 
+@unique
 class Part(Enum):
     """Enumeration of parts."""
 
