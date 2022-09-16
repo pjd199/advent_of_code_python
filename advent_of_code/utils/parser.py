@@ -91,6 +91,18 @@ def enum_processor(
     return lambda m: enum(m[0])
 
 
+def enum_re(enumeration: Type[Enum]) -> str:
+    """Syntactic sugar for using Enum's in regular expressions.
+
+    Args:
+        enumeration (Type[Enum]): the enum to use
+
+    Returns:
+        str: list of values in the enum, delimited by a "|"
+    """
+    return "|".join(str(x.value) for x in enumeration)
+
+
 def _validate_input_and_header(
     puzzle_input: List[str],
     min_length: int,

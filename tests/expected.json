@@ -400,6 +400,13 @@
             "day": 7,
             "part_one": "eqgvf",
             "part_two": "757"
+        },
+        "8": {
+            "title": "I Heard You Like Registers",
+            "year": 2017,
+            "day": 8,
+            "part_one": "4877",
+            "part_two": "5471"
         }
     }
 }
