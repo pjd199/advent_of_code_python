@@ -428,6 +428,13 @@
             "day": 11,
             "part_one": "810",
             "part_two": "1567"
+        },
+        "12": {
+            "title": "Digital Plumber",
+            "year": 2017,
+            "day": 12,
+            "part_one": "113",
+            "part_two": "202"
         }
     }
 }
