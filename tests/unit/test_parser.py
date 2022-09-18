@@ -113,6 +113,8 @@ def test_enum_processor() -> None:
         C = "C"
 
     processor = enum_processor(TestEnum)
+    with pytest.raises(ValueError, match=r"argument must be subclass of Enum"):
+        enum_processor(str)
 
     m = fullmatch(r".*", "B")
     assert m is not None

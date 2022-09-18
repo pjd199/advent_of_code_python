@@ -78,17 +78,23 @@ def dataclass_processor(
 
 
 def enum_processor(
-    enum: Type[Enum],
-) -> Callable[[Match[str]], Enum]:
+    enum: Type[T],
+) -> Callable[[Match[str]], T]:
     """Create a match processor to process match object as a data class.
 
     Args:
-        enum (Enum): the enum to initialise
+        enum (Type[T]): the enum to initialise
+
+    Raises:
+        ValueError: if T is not a subclass of Enum
 
     Returns:
-        Callable[[Match[str]], Enum]: the match processor
+        Callable[[Match[str]], T]: the match processor
     """
-    return lambda m: enum(m[0])
+    if any(cls == Enum for cls in enum.__bases__):
+        return lambda m: enum(m[0])  # type: ignore [call-arg]
+    else:
+        raise ValueError("argument must be subclass of Enum")
 
 
 def enum_re(enumeration: Type[Enum]) -> str:
@@ -100,7 +106,7 @@ def enum_re(enumeration: Type[Enum]) -> str:
     Returns:
         str: list of values in the enum, delimited by a "|"
     """
-    return "|".join(str(x.value) for x in enumeration)
+    return "|".join(sorted([str(x.value) for x in enumeration], key=len, reverse=True))
 
 
 def _validate_input_and_header(

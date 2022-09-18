@@ -421,6 +421,13 @@
             "day": 10,
             "part_one": "46600",
             "part_two": "23234babdc6afa036749cfa9b597de1b"
+        },
+        "11": {
+            "title": "Hex Ed",
+            "year": 2017,
+            "day": 11,
+            "part_one": "810",
+            "part_two": "1567"
         }
     }
 }
