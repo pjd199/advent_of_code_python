@@ -449,6 +449,13 @@
             "day": 14,
             "part_one": "8214",
             "part_two": "1093"
+        },
+        "15": {
+            "title": "Dueling Generators",
+            "year": 2017,
+            "day": 15,
+            "part_one": "592",
+            "part_two": "320"
         }
     }
 }
