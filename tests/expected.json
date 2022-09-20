@@ -435,6 +435,13 @@
             "day": 12,
             "part_one": "113",
             "part_two": "202"
+        },
+        "13": {
+            "title": "Packet Scanners",
+            "year": 2017,
+            "day": 13,
+            "part_one": "1960",
+            "part_two": "3903378"
         }
     }
 }
