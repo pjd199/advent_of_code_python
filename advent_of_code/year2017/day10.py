@@ -5,9 +5,6 @@ Knot Hash
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/10
 """
-from functools import reduce
-from itertools import chain
-from operator import xor
 from pathlib import Path
 from sys import path
 from typing import List
@@ -23,6 +20,7 @@ from advent_of_code.utils.parser import (
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
+from advent_of_code.year2017.knot_hash import knot_hash
 
 
 class Solver(SolverInterface):
@@ -66,22 +64,7 @@ class Solver(SolverInterface):
         Returns:
             str: the answer
         """
-        data = list(range(256))
-        position = 0
-        skip = 0
-        for _ in range(64):
-            for length in chain([ord(c) for c in self.str_input], [17, 31, 73, 47, 23]):
-                section = [
-                    data[i % len(data)] for i in range(position, position + length)
-                ]
-                for i, x in enumerate(reversed(section)):
-                    data[(position + i) % len(data)] = x
-                position += length + skip
-                skip += 1
-
-        dense_hash = [reduce(xor, data[i : i + 16]) for i in range(0, 256, 16)]
-
-        return "".join(f"{x:02x}" for x in dense_hash)
+        return knot_hash(self.str_input)
 
 
 if __name__ == "__main__":  # pragma: no cover

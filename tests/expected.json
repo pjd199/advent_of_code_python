@@ -442,6 +442,13 @@
             "day": 13,
             "part_one": "1960",
             "part_two": "3903378"
+        },
+        "14": {
+            "title": "Disk Defragmentation",
+            "year": 2017,
+            "day": 14,
+            "part_one": "8214",
+            "part_two": "1093"
         }
     }
 }
