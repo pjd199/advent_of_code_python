@@ -22,7 +22,11 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class _Move:
     @abstractmethod
     def step(self, dancers: List[str]) -> None:
-        pass
+        """Perform a step in the dance, modifing the dancers list.
+
+        Args:
+            dancers (List[str]): the list of dancers
+        """
 
 
 @dataclass
@@ -30,6 +34,11 @@ class _Spin(_Move):
     length: int
 
     def step(self, dancers: List[str]) -> None:
+        """Perform a step in the dance, modifing the dancers list.
+
+        Args:
+            dancers (List[str]): the list of dancers
+        """
         dancers[:] = dancers[-self.length :] + dancers[: -self.length]
 
 
@@ -39,6 +48,11 @@ class _Exchange(_Move):
     b: int
 
     def step(self, dancers: List[str]) -> None:
+        """Perform a step in the dance, modifing the dancers list.
+
+        Args:
+            dancers (List[str]): the list of dancers
+        """
         dancers[self.a], dancers[self.b] = dancers[self.b], dancers[self.a]
 
 
@@ -48,6 +62,11 @@ class _Partner(_Move):
     b: str
 
     def step(self, dancers: List[str]) -> None:
+        """Perform a step in the dance, modifing the dancers list.
+
+        Args:
+            dancers (List[str]): the list of dancers
+        """
         index_a = dancers.index(self.a)
         index_b = dancers.index(self.b)
         dancers[index_a], dancers[index_b] = dancers[index_b], dancers[index_a]

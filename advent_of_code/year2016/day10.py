@@ -58,8 +58,6 @@ class Solver(SolverInterface):
     class _OutputBin(_ChipPassingProtocol):
         """An Output Bin."""
 
-        pass
-
     class _Robot(_ChipPassingProtocol):
         """A Robot."""
 

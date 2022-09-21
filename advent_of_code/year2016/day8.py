@@ -26,7 +26,7 @@ class Solver(SolverInterface):
 
     @dataclass
     class _Instruction:
-        pass
+        """Abstract class for the instructions."""
 
     @dataclass
     class _Rect(_Instruction):
