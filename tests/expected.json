@@ -463,6 +463,13 @@
             "day": 16,
             "part_one": "namdgkbhifpceloj",
             "part_two": "ibmchklnofjpdeag"
+        },
+        "17": {
+            "title": "Spinlock",
+            "year": 2017,
+            "day": 17,
+            "part_one": "1306",
+            "part_two": "20430489"
         }
     }
 }
