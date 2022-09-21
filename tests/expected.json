@@ -456,6 +456,13 @@
             "day": 15,
             "part_one": "592",
             "part_two": "320"
+        },
+        "16": {
+            "title": "Permutation Promenade",
+            "year": 2017,
+            "day": 16,
+            "part_one": "namdgkbhifpceloj",
+            "part_two": "ibmchklnofjpdeag"
         }
     }
 }
