@@ -13,7 +13,7 @@ from typing import Dict, List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import enum_processor, parse_tokens
+from advent_of_code.utils.parser import enum_processor, enum_re, parse_tokens
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -39,7 +39,8 @@ class Solver(SolverInterface):
             puzzle_input (List[str]): The lines of the input file
         """
         self.input = parse_tokens(
-            puzzle_input, r"[UDLR]", enum_processor(Solver._Direction)
+            puzzle_input,
+            (enum_re(Solver._Direction), enum_processor(Solver._Direction)),
         )
 
     def solve_part_one(self) -> str:

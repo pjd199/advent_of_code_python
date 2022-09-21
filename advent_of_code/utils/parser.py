@@ -1,7 +1,7 @@
 """Parser utilities for the puzzle input."""
 from dataclasses import fields
 from enum import Enum
-from re import finditer, fullmatch, sub
+from re import fullmatch, search, split
 from sys import maxsize
 from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar
 
@@ -190,7 +190,7 @@ def parse_lines(
 def parse_single_line(
     puzzle_input: List[str],
     pattern: str,
-    match_processor: Callable[[Match[str]], T],
+    match_processor: (Callable[[Match[str]], T]),
 ) -> T:
     """Load lines from the parsed patterns.
 
@@ -212,8 +212,7 @@ def parse_single_line(
 
 def parse_tokens(
     puzzle_input: List[str],
-    pattern: str,
-    match_processor: Callable[[Match[str]], T],
+    *args: Tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
     min_length: int = 1,
     max_length: int = maxsize,
@@ -223,8 +222,7 @@ def parse_tokens(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        pattern (str): the regular expression pattern for each token
-        match_processor (Callable[[Match[str]], T]): processor called for the match
+        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
@@ -238,27 +236,61 @@ def parse_tokens(
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
-    # check for a valid delimiter pattern
-    line_pattern = rf"{pattern}({delimiter}{pattern})+"
-    line_pattern = sub(r"\(\?P<[a-z]+>", lambda x: r"(", line_pattern)
-    for i, line in enumerate(puzzle_input[start:]):
-        try:
-            if not fullmatch(line_pattern, line):
-                raise RuntimeError("No match for pattern with delimiter")
-        except Exception as e:
-            raise RuntimeError(
-                f"Unable to validate {line} on line {i + 1} with {line_pattern}: {e}"
-            )
-
     # parse the input
     output: List[List[T]] = []
     for i, line in enumerate(puzzle_input[start:]):
-        try:
-            output.append([match_processor(m) for m in finditer(pattern, line)])
-        except Exception as e:
-            raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
+        # check for at least one delimiter on the line
+        if line == "" or not search(delimiter, line):
+            raise RuntimeError(
+                f"Unable to parse {line} on line {i + 1}:"
+                f" Delimiter '{delimiter}' not found"
+            )
+
+        # parse each token on the line
+        output.append([])
+        tokens = list(line) if delimiter == "" else split(delimiter, line)
+        for token in tokens:
+            try:
+                # search for a matching pattern
+                found = False
+                for pattern, match_processor in args:
+                    if m := fullmatch(pattern, token):
+                        output[-1].append(match_processor(m))
+                        found = True
+                        break
+                if not found:
+                    raise RuntimeError("No match found")
+            except Exception as e:
+                raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
 
     return output
+
+
+def parse_tokens_single_line(
+    puzzle_input: List[str],
+    *args: Tuple[str, Callable[[Match[str]], T]],
+    delimiter: str = "",
+    header: Tuple[str, ...] = (),
+) -> List[T]:
+    """Load lines using the tokenised methods.
+
+    Args:
+        puzzle_input (List[str]): the puzzle input
+        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
+        delimiter (str): the delimiter expected between tokens. Defaults to "".
+        header (Tuple[str, ...], optional): header to validate. Defaults to ().
+
+    Returns:
+        List[T]: the parsed output
+    """
+    return parse_tokens(
+        puzzle_input,
+        *args,
+        delimiter=delimiter,
+        min_length=1,
+        max_length=1,
+        header=header,
+    )[0]
 
 
 def parse_grid(

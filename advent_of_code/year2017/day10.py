@@ -15,7 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 from advent_of_code.utils.parser import (
     int_processor,
     parse_single_line,
-    parse_tokens,
+    parse_tokens_single_line,
     str_processor,
 )
 from advent_of_code.utils.runner import runner
@@ -36,9 +36,11 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.int_input = parse_tokens(
-            puzzle_input, r"\d+", int_processor, delimiter=",", max_length=1
-        )[0]
+        self.int_input = parse_tokens_single_line(
+            puzzle_input,
+            (r"\d+", int_processor),
+            delimiter=",",
+        )
         self.str_input = parse_single_line(puzzle_input, r"(\d+,?)+", str_processor)
 
     def solve_part_one(self) -> int:

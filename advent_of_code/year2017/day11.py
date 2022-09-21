@@ -13,7 +13,11 @@ from typing import Callable, Dict, List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import enum_processor, enum_re, parse_tokens
+from advent_of_code.utils.parser import (
+    enum_processor,
+    enum_re,
+    parse_tokens_single_line,
+)
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -41,12 +45,11 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.input = parse_tokens(
+        self.input = parse_tokens_single_line(
             puzzle_input,
-            rf"({enum_re(_Direction)})",
-            enum_processor(_Direction),
+            (rf"({enum_re(_Direction)})", enum_processor(_Direction)),
             delimiter=",",
-        )[0]
+        )
         self.max_distance = -1
         self.final_distance = -1
 

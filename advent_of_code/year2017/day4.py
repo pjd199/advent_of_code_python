@@ -30,7 +30,9 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.input = parse_tokens(puzzle_input, r"[a-z]+", str_processor, delimiter=" ")
+        self.input = parse_tokens(
+            puzzle_input, (r"[a-z]+", str_processor), delimiter=" "
+        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
