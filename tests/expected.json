@@ -477,6 +477,13 @@
             "day": 18,
             "part_one": "3423",
             "part_two": "7493"
+        },
+        "19": {
+            "title": "A Series of Tubes",
+            "year": 2017,
+            "day": 19,
+            "part_one": "UICRNSDOK",
+            "part_two": "16064"
         }
     }
 }
