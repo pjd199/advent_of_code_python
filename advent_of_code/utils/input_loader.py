@@ -28,7 +28,7 @@ def load_file(filename: str) -> List[str]:
         lines = file.readlines()
         while len(lines) and lines[-1].strip() == "":
             del lines[-1]
-        lines = [x.strip() for x in lines]
+        lines = [x.rstrip("\n") for x in lines]
         return lines
 
 
@@ -44,5 +44,4 @@ def load_multi_line_string(content: str) -> List[str]:
     lines = content.splitlines()
     while len(lines) and lines[-1].strip() == "":
         del lines[-1]
-    lines = [x.strip() for x in lines]
     return lines

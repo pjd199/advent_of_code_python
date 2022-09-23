@@ -220,7 +220,7 @@ def test_parse_single_lines() -> None:
 
 def test_parse_tokens() -> None:
     """Unit tet for parse_tokens."""
-    puzzle_input = ["a b c", "1 2 3", "4 5 6", "7 8 9"]
+    puzzle_input = ["a b c", "  1 2 3", "4 5 6", "7 8 9"]
 
     # test with good input
     assert parse_tokens(puzzle_input, (r"[a-z0-9]", str_processor), delimiter=" ") == [

@@ -1,7 +1,7 @@
 """Parser utilities for the puzzle input."""
 from dataclasses import fields
 from enum import Enum
-from re import fullmatch, search, split
+from re import escape, fullmatch, search, split
 from sys import maxsize
 from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar
 
@@ -17,7 +17,7 @@ def int_processor(match: Match[str]) -> int:
     Returns:
         int: the result
     """
-    return int(match[0])
+    return int(match[0].strip())
 
 
 def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
@@ -106,7 +106,9 @@ def enum_re(enumeration: Type[Enum]) -> str:
     Returns:
         str: list of values in the enum, delimited by a "|"
     """
-    return "|".join(sorted([str(x.value) for x in enumeration], key=len, reverse=True))
+    return "|".join(
+        sorted([escape(str(x.value)) for x in enumeration], key=len, reverse=True)
+    )
 
 
 def _validate_input_and_header(
@@ -248,7 +250,10 @@ def parse_tokens(
 
         # parse each token on the line
         output.append([])
-        tokens = list(line) if delimiter == "" else split(delimiter, line)
+        if delimiter == "":
+            tokens = list(line)
+        else:
+            tokens = [x for x in split(delimiter, line) if x != ""]
         for token in tokens:
             try:
                 # search for a matching pattern
@@ -329,7 +334,10 @@ def parse_grid(
                 if m := fullmatch(pattern, char):
                     output[(x, y)] = match_processor(m)
                 else:
-                    raise RuntimeError("No match")
+                    raise RuntimeError(
+                        f"No match with {pattern} for "
+                        f"character '{char}' at position {x}"
+                    )
             except Exception as e:
                 raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}: {e}")
 
