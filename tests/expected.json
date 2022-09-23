@@ -470,6 +470,13 @@
             "day": 17,
             "part_one": "1306",
             "part_two": "20430489"
+        },
+        "18": {
+            "title": "Duet",
+            "year": 2017,
+            "day": 18,
+            "part_one": "3423",
+            "part_two": "7493"
         }
     }
 }
