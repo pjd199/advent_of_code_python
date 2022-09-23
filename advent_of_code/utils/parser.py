@@ -138,7 +138,7 @@ def _validate_input_and_header(
     while start < len(header):
         if puzzle_input[start] != header[start]:
             raise RuntimeError(
-                f"Unable to parse {puzzle_input[start]} " f"on line {start + 1}"
+                f"Unable to parse '{puzzle_input[start]}' on line {start + 1}"
             )
         start += 1
 
@@ -182,7 +182,7 @@ def parse_lines(
             if not found:
                 raise RuntimeError("No match found")
         except Exception as e:
-            raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
+            raise RuntimeError(f"Unable to parse '{line}' on line {i + 1}: {e}")
 
     return output
 
@@ -242,7 +242,7 @@ def parse_tokens(
         # check for at least one delimiter on the line
         if line == "" or not search(delimiter, line):
             raise RuntimeError(
-                f"Unable to parse {line} on line {i + 1}:"
+                f"Unable to parse '{line}' on line {i + 1}:"
                 f" Delimiter '{delimiter}' not found"
             )
 
@@ -261,7 +261,7 @@ def parse_tokens(
                 if not found:
                     raise RuntimeError("No match found")
             except Exception as e:
-                raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
+                raise RuntimeError(f"Unable to parse '{line}' on line {i + 1}: {e}")
 
     return output
 
@@ -323,7 +323,7 @@ def parse_grid(
     output: Dict[Tuple[int, int], T] = {}
     for y, line in enumerate(puzzle_input[start:]):
         if not line:
-            raise RuntimeError(f"Unable to parse {line} on line {y + 1}")
+            raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}")
         for x, char in enumerate(line):
             try:
                 if m := fullmatch(pattern, char):
@@ -331,6 +331,6 @@ def parse_grid(
                 else:
                     raise RuntimeError("No match")
             except Exception as e:
-                raise RuntimeError(f"Unable to parse {line} on line {y + 1}: {e}")
+                raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}: {e}")
 
     return output
