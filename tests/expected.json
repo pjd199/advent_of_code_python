@@ -484,6 +484,13 @@
             "day": 19,
             "part_one": "UICRNSDOK",
             "part_two": "16064"
+        },
+        "20": {
+            "title": "Particle Swarm",
+            "year": 2017,
+            "day": 20,
+            "part_one": "125",
+            "part_two": "461"
         }
     }
 }
