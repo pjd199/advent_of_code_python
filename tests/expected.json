@@ -498,6 +498,13 @@
             "day": 21,
             "part_one": "160",
             "part_two": "2271537"
+        },
+        "22": {
+            "title": "Sporifica Virus",
+            "year": 2017,
+            "day": 22,
+            "part_one": "5404",
+            "part_two": "2511672"
         }
     }
 }
