@@ -505,6 +505,13 @@
             "day": 22,
             "part_one": "5404",
             "part_two": "2511672"
+        },
+        "23": {
+            "title": "Coprocessor Conflagration",
+            "year": 2017,
+            "day": 23,
+            "part_one": "9409",
+            "part_two": "913"
         }
     }
 }
