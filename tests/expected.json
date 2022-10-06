@@ -512,6 +512,13 @@
             "day": 23,
             "part_one": "9409",
             "part_two": "913"
+        },
+        "24": {
+            "title": "Electromagnetic Moat",
+            "year": 2017,
+            "day": 24,
+            "part_one": "1906",
+            "part_two": "1824"
         }
     }
 }
