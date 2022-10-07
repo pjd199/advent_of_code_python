@@ -1,7 +1,7 @@
 """Parser utilities for the puzzle input."""
 from dataclasses import fields
 from enum import Enum
-from re import finditer, fullmatch, sub
+from re import escape, fullmatch, search, split
 from sys import maxsize
 from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar
 
@@ -17,7 +17,7 @@ def int_processor(match: Match[str]) -> int:
     Returns:
         int: the result
     """
-    return int(match[0])
+    return int(match[0].strip())
 
 
 def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
@@ -78,17 +78,37 @@ def dataclass_processor(
 
 
 def enum_processor(
-    enum: Type[Enum],
-) -> Callable[[Match[str]], Enum]:
+    enum: Type[T],
+) -> Callable[[Match[str]], T]:
     """Create a match processor to process match object as a data class.
 
     Args:
-        enum (Enum): the enum to initialise
+        enum (Type[T]): the enum to initialise
+
+    Raises:
+        ValueError: if T is not a subclass of Enum
 
     Returns:
-        Callable[[Match[str]], Enum]: the match processor
+        Callable[[Match[str]], T]: the match processor
     """
-    return lambda m: enum(m[0])
+    if any(cls == Enum for cls in enum.__bases__):
+        return lambda m: enum(m[0])  # type: ignore [call-arg]
+    else:
+        raise ValueError("argument must be subclass of Enum")
+
+
+def enum_re(enumeration: Type[Enum]) -> str:
+    """Syntactic sugar for using Enum's in regular expressions.
+
+    Args:
+        enumeration (Type[Enum]): the enum to use
+
+    Returns:
+        str: list of values in the enum, delimited by a "|"
+    """
+    return "|".join(
+        sorted([escape(str(x.value)) for x in enumeration], key=len, reverse=True)
+    )
 
 
 def _validate_input_and_header(
@@ -120,7 +140,7 @@ def _validate_input_and_header(
     while start < len(header):
         if puzzle_input[start] != header[start]:
             raise RuntimeError(
-                f"Unable to parse {puzzle_input[start]} " f"on line {start + 1}"
+                f"Unable to parse '{puzzle_input[start]}' on line {start + 1}"
             )
         start += 1
 
@@ -164,7 +184,7 @@ def parse_lines(
             if not found:
                 raise RuntimeError("No match found")
         except Exception as e:
-            raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
+            raise RuntimeError(f"Unable to parse '{line}' on line {i + 1}: {e}")
 
     return output
 
@@ -172,7 +192,7 @@ def parse_lines(
 def parse_single_line(
     puzzle_input: List[str],
     pattern: str,
-    match_processor: Callable[[Match[str]], T],
+    match_processor: (Callable[[Match[str]], T]),
 ) -> T:
     """Load lines from the parsed patterns.
 
@@ -194,8 +214,7 @@ def parse_single_line(
 
 def parse_tokens(
     puzzle_input: List[str],
-    pattern: str,
-    match_processor: Callable[[Match[str]], T],
+    *args: Tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
     min_length: int = 1,
     max_length: int = maxsize,
@@ -205,8 +224,7 @@ def parse_tokens(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        pattern (str): the regular expression pattern for each token
-        match_processor (Callable[[Match[str]], T]): processor called for the match
+        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
@@ -220,27 +238,64 @@ def parse_tokens(
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
-    # check for a valid delimiter pattern
-    line_pattern = rf"{pattern}({delimiter}{pattern})+"
-    line_pattern = sub(r"\(\?P<[a-z]+>", lambda x: r"(", line_pattern)
-    for i, line in enumerate(puzzle_input[start:]):
-        try:
-            if not fullmatch(line_pattern, line):
-                raise RuntimeError("No match for pattern with delimiter")
-        except Exception as e:
-            raise RuntimeError(
-                f"Unable to validate {line} on line {i + 1} with {line_pattern}: {e}"
-            )
-
     # parse the input
     output: List[List[T]] = []
     for i, line in enumerate(puzzle_input[start:]):
-        try:
-            output.append([match_processor(m) for m in finditer(pattern, line)])
-        except Exception as e:
-            raise RuntimeError(f"Unable to parse {line} on line {i + 1}: {e}")
+        # check for at least one delimiter on the line
+        if line == "" or not search(delimiter, line):
+            raise RuntimeError(
+                f"Unable to parse '{line}' on line {i + 1}:"
+                f" Delimiter '{delimiter}' not found"
+            )
+
+        # parse each token on the line
+        output.append([])
+        if delimiter == "":
+            tokens = list(line)
+        else:
+            tokens = [x for x in split(delimiter, line) if x != ""]
+        for token in tokens:
+            try:
+                # search for a matching pattern
+                found = False
+                for pattern, match_processor in args:
+                    if m := fullmatch(pattern, token):
+                        output[-1].append(match_processor(m))
+                        found = True
+                        break
+                if not found:
+                    raise RuntimeError("No match found")
+            except Exception as e:
+                raise RuntimeError(f"Unable to parse '{line}' on line {i + 1}: {e}")
 
     return output
+
+
+def parse_tokens_single_line(
+    puzzle_input: List[str],
+    *args: Tuple[str, Callable[[Match[str]], T]],
+    delimiter: str = "",
+    header: Tuple[str, ...] = (),
+) -> List[T]:
+    """Load lines using the tokenised methods.
+
+    Args:
+        puzzle_input (List[str]): the puzzle input
+        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
+        delimiter (str): the delimiter expected between tokens. Defaults to "".
+        header (Tuple[str, ...], optional): header to validate. Defaults to ().
+
+    Returns:
+        List[T]: the parsed output
+    """
+    return parse_tokens(
+        puzzle_input,
+        *args,
+        delimiter=delimiter,
+        min_length=1,
+        max_length=1,
+        header=header,
+    )[0]
 
 
 def parse_grid(
@@ -273,14 +328,17 @@ def parse_grid(
     output: Dict[Tuple[int, int], T] = {}
     for y, line in enumerate(puzzle_input[start:]):
         if not line:
-            raise RuntimeError(f"Unable to parse {line} on line {y + 1}")
+            raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}")
         for x, char in enumerate(line):
             try:
                 if m := fullmatch(pattern, char):
                     output[(x, y)] = match_processor(m)
                 else:
-                    raise RuntimeError("No match")
+                    raise RuntimeError(
+                        f"No match with {pattern} for "
+                        f"character '{char}' at position {x}"
+                    )
             except Exception as e:
-                raise RuntimeError(f"Unable to parse {line} on line {y + 1}: {e}")
+                raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}: {e}")
 
     return output

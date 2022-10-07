@@ -10,7 +10,7 @@ class _TestSolver(SolverInterface):
     TITLE = "Test Title"
 
     def __init__(self, puzzle_input: List[str]) -> None:
-        pass
+        """Noting to intialise."""
 
     def solve_part_one(self) -> str:
         return "testing testing"

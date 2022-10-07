@@ -350,5 +350,181 @@
             "day": 25,
             "part_one": "189"
         }
+    },
+    "2017": {
+        "1": {
+            "title": "Inverse Captcha",
+            "year": 2017,
+            "day": 1,
+            "part_one": "1171",
+            "part_two": "1024"
+        },
+        "2": {
+            "title": "Corruption Checksum",
+            "year": 2017,
+            "day": 2,
+            "part_one": "43074",
+            "part_two": "280"
+        },
+        "3": {
+            "title": "Spiral Memory",
+            "year": 2017,
+            "day": 3,
+            "part_one": "552",
+            "part_two": "330785"
+        },
+        "4": {
+            "title": "High-Entropy Passphrases",
+            "year": 2017,
+            "day": 4,
+            "part_one": "455",
+            "part_two": "186"
+        },
+        "5": {
+            "title": "A Maze of Twisty Trampolines, All Alike",
+            "year": 2017,
+            "day": 5,
+            "part_one": "343467",
+            "part_two": "24774780"
+        },
+        "6": {
+            "title": "Memory Reallocation",
+            "year": 2017,
+            "day": 6,
+            "part_one": "6681",
+            "part_two": "2392"
+        },
+        "7": {
+            "title": "Recursive Circus",
+            "year": 2017,
+            "day": 7,
+            "part_one": "eqgvf",
+            "part_two": "757"
+        },
+        "8": {
+            "title": "I Heard You Like Registers",
+            "year": 2017,
+            "day": 8,
+            "part_one": "4877",
+            "part_two": "5471"
+        },
+        "9": {
+            "title": "Stream Processing",
+            "year": 2017,
+            "day": 9,
+            "part_one": "11347",
+            "part_two": "5404"
+        },
+        "10": {
+            "title": "Knot Hash",
+            "year": 2017,
+            "day": 10,
+            "part_one": "46600",
+            "part_two": "23234babdc6afa036749cfa9b597de1b"
+        },
+        "11": {
+            "title": "Hex Ed",
+            "year": 2017,
+            "day": 11,
+            "part_one": "810",
+            "part_two": "1567"
+        },
+        "12": {
+            "title": "Digital Plumber",
+            "year": 2017,
+            "day": 12,
+            "part_one": "113",
+            "part_two": "202"
+        },
+        "13": {
+            "title": "Packet Scanners",
+            "year": 2017,
+            "day": 13,
+            "part_one": "1960",
+            "part_two": "3903378"
+        },
+        "14": {
+            "title": "Disk Defragmentation",
+            "year": 2017,
+            "day": 14,
+            "part_one": "8214",
+            "part_two": "1093"
+        },
+        "15": {
+            "title": "Dueling Generators",
+            "year": 2017,
+            "day": 15,
+            "part_one": "592",
+            "part_two": "320"
+        },
+        "16": {
+            "title": "Permutation Promenade",
+            "year": 2017,
+            "day": 16,
+            "part_one": "namdgkbhifpceloj",
+            "part_two": "ibmchklnofjpdeag"
+        },
+        "17": {
+            "title": "Spinlock",
+            "year": 2017,
+            "day": 17,
+            "part_one": "1306",
+            "part_two": "20430489"
+        },
+        "18": {
+            "title": "Duet",
+            "year": 2017,
+            "day": 18,
+            "part_one": "3423",
+            "part_two": "7493"
+        },
+        "19": {
+            "title": "A Series of Tubes",
+            "year": 2017,
+            "day": 19,
+            "part_one": "UICRNSDOK",
+            "part_two": "16064"
+        },
+        "20": {
+            "title": "Particle Swarm",
+            "year": 2017,
+            "day": 20,
+            "part_one": "125",
+            "part_two": "461"
+        },
+        "21": {
+            "title": "Fractal Art",
+            "year": 2017,
+            "day": 21,
+            "part_one": "160",
+            "part_two": "2271537"
+        },
+        "22": {
+            "title": "Sporifica Virus",
+            "year": 2017,
+            "day": 22,
+            "part_one": "5404",
+            "part_two": "2511672"
+        },
+        "23": {
+            "title": "Coprocessor Conflagration",
+            "year": 2017,
+            "day": 23,
+            "part_one": "9409",
+            "part_two": "913"
+        },
+        "24": {
+            "title": "Electromagnetic Moat",
+            "year": 2017,
+            "day": 24,
+            "part_one": "1906",
+            "part_two": "1824"
+        },
+        "25": {
+            "title": "The Halting Problem",
+            "year": 2017,
+            "day": 25,
+            "part_one": "2794"
+        }
     }
 }

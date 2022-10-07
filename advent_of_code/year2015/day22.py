@@ -5,7 +5,7 @@ Wizard Simulator 20XX
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/22
 """
-from enum import Enum, auto
+from enum import Enum, auto, unique
 from pathlib import Path
 from sys import maxsize, path
 from typing import Any, Dict, List
@@ -18,6 +18,7 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@unique
 class Spells(Enum):
     """Represents all the spell moves."""
 
@@ -39,6 +40,7 @@ spell_costs = {
 spell_duration = {Spells.SHIELD: 6, Spells.POISON: 6, Spells.RECHARGE: 5}
 
 
+@unique
 class Turn(Enum):
     """Who's turn is it anyway?."""
 

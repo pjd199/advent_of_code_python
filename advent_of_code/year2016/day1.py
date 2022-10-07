@@ -13,7 +13,7 @@ from typing import List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import dataclass_processor, parse_tokens
+from advent_of_code.utils.parser import dataclass_processor, parse_tokens_single_line
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -38,13 +38,14 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.input = parse_tokens(
+        self.input = parse_tokens_single_line(
             puzzle_input,
-            r"(?P<turn>[L|R])(?P<distance>[0-9]+)",
-            dataclass_processor(Solver._Instruction),
-            ", ",
-            max_length=1,
-        )[0]
+            (
+                r"(?P<turn>[L|R])(?P<distance>[0-9]+)",
+                dataclass_processor(Solver._Instruction),
+            ),
+            delimiter=", ",
+        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/6
 """
 from dataclasses import dataclass
-from enum import Enum
+from enum import Enum, unique
 from pathlib import Path
 from sys import path
 from typing import List
@@ -21,6 +21,7 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@unique
 class _Operation(Enum):
     TOGGLE = "toggle"
     ON = "turn on"

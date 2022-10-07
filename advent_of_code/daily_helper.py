@@ -81,6 +81,7 @@ class DailyHelper:
         self.expected_path = Path("./tests/expected.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
         self.solver_module_path = Path(f"./advent_of_code/year{year}/day{day}.py")
+        self.solver_init_path = Path(f"./advent_of_code/year{year}/__init__.py")
         self.template_text_path = Path("./advent_of_code/template.txt")
 
     def run(self) -> int:
@@ -151,6 +152,13 @@ class DailyHelper:
             ok_if_exists=True,
         )
 
+        # make sure the folder has an __init__.py
+        self._save(
+            self.solver_init_path,
+            '"""Nothing to initialise."""',
+            ok_if_exists=True,
+        )
+
         # run the puzzle solver
         if self.run_puzzle_cli:
             runner(
@@ -204,6 +212,7 @@ class DailyHelper:
             if not ok_if_exists:
                 self._log(f"File {path} already exists")
         else:
+            path.parent.mkdir(parents=True, exist_ok=True)
             with open(path, "w") as file:
                 if isinstance(data, str):
                     file.write(data)
@@ -301,6 +310,7 @@ class DailyHelper:
                 f"--cov=advent_of_code.year{self.year}.day{self.day}",
                 "--no-cov-on-fail",
                 "--cov-fail-under=100",
+                "--cov-reset",
             ]
             if self.verbose:
                 options += ["-v", "--cov-report", "term-missing"]

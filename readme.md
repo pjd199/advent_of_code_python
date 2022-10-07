@@ -272,12 +272,12 @@ pytest /tests/system
 ## Roadmap
 
 * [X] Automate system testing with pytest
-* [ ] Automate app.main() testing
-* [ ] Add puzzle metadata, including title and description
+* [X] Automate app.main() testing
+* [X] Add puzzle metadata, including title and description
 * [ ] Test against multiple sets of puzzle input files
 * [X] Solve puzzles for 2015
-* [ ] Solve puzzles for 2016
-* [ ] Solve puzzles for 2017
+* [X] Solve puzzles for 2016
+* [X] Solve puzzles for 2017
 * [ ] Solve puzzles for 2018
 * [ ] Solve puzzles forI 2019
 * [ ] Solve puzzles for 2020
