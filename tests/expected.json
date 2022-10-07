@@ -519,6 +519,12 @@
             "day": 24,
             "part_one": "1906",
             "part_two": "1824"
+        },
+        "25": {
+            "title": "The Halting Problem",
+            "year": 2017,
+            "day": 25,
+            "part_one": "2794"
         }
     }
 }
