@@ -123,7 +123,7 @@ def test_enum_processor() -> None:
     m = fullmatch(r".*", "D")
     assert m is not None
     with pytest.raises(
-        ValueError, match=r"'D' is not a valid test_enum_processor.<locals>.TestEnum"
+        ValueError, match=r"'D' is not a valid (test_enum_processor.<locals>.)?TestEnum"
     ):
         processor(m)
 
