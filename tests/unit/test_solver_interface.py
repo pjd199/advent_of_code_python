@@ -10,7 +10,11 @@ class _TestSolver(SolverInterface):
     TITLE = "Test Title"
 
     def __init__(self, puzzle_input: List[str]) -> None:
-        """Noting to intialise."""
+        """Noting to intialise.
+
+        Args:
+            puzzle_input (List[str]): ignored in testing
+        """
 
     def solve_part_one(self) -> str:
         return "testing testing"
