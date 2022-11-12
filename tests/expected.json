@@ -569,6 +569,20 @@
             "day": 6,
             "part_one": "4016",
             "part_two": "46306"
+        },
+        "7": {
+            "title": "The Sum of Its Parts",
+            "year": 2018,
+            "day": 7,
+            "part_one": "JNOIKSYABEQRUVWXGTZFDMHLPC",
+            "part_two": "1099"
+        },
+        "8": {
+            "title": "Memory Maneuver",
+            "year": 2018,
+            "day": 8,
+            "part_one": "40701",
+            "part_two": "21399"
         }
     }
 }
