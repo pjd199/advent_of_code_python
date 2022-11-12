@@ -555,6 +555,20 @@
             "day": 4,
             "part_one": "21083",
             "part_two": "53024"
+        },
+        "5": {
+            "title": "Alchemical Reduction",
+            "year": 2018,
+            "day": 5,
+            "part_one": "10972",
+            "part_two": "5278"
+        },
+        "6": {
+            "title": "Chronal Coordinates",
+            "year": 2018,
+            "day": 6,
+            "part_one": "4016",
+            "part_two": "46306"
         }
     }
 }
