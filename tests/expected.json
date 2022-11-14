@@ -583,6 +583,13 @@
             "day": 8,
             "part_one": "40701",
             "part_two": "21399"
+        },
+        "9": {
+            "title": "Marble Mania",
+            "year": 2018,
+            "day": 9,
+            "part_one": "388131",
+            "part_two": "3239376988"
         }
     }
 }
