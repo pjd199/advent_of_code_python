@@ -9,6 +9,7 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
+from typing import Counter as CounterType
 from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
@@ -52,7 +53,7 @@ class Solver(SolverInterface):
                 dataclass_processor(Claim),
             ),
         )
-        self.fabric: Counter[Tuple[int, int]] = Counter()
+        self.fabric: CounterType[Tuple[int, int]] = Counter()
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

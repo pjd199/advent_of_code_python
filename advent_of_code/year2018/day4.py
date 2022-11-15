@@ -10,6 +10,7 @@ from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
+from typing import Counter as CounterType
 from typing import DefaultDict, List
 
 if __name__ == "__main__":  # pragma: no cover
@@ -65,7 +66,7 @@ class Solver(SolverInterface):
                 dataclass_processor(Event),
             ),
         )
-        self.guards: DefaultDict[int, Counter[int]] = defaultdict(Counter)
+        self.guards: DefaultDict[int, CounterType[int]] = defaultdict(Counter)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
