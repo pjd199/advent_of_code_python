@@ -526,5 +526,77 @@
             "day": 25,
             "part_one": "2794"
         }
+    },
+    "2018": {
+        "1": {
+            "title": "Chronal Calibration",
+            "year": 2018,
+            "day": 1,
+            "part_one": "416",
+            "part_two": "56752"
+        },
+        "2": {
+            "title": "Inventory Management System",
+            "year": 2018,
+            "day": 2,
+            "part_one": "6696",
+            "part_two": "bvnfawcnyoeyudzrpgslimtkj"
+        },
+        "3": {
+            "title": "No Matter How You Slice It",
+            "year": 2018,
+            "day": 3,
+            "part_one": "118322",
+            "part_two": "1178"
+        },
+        "4": {
+            "title": "Repose Record",
+            "year": 2018,
+            "day": 4,
+            "part_one": "21083",
+            "part_two": "53024"
+        },
+        "5": {
+            "title": "Alchemical Reduction",
+            "year": 2018,
+            "day": 5,
+            "part_one": "10972",
+            "part_two": "5278"
+        },
+        "6": {
+            "title": "Chronal Coordinates",
+            "year": 2018,
+            "day": 6,
+            "part_one": "4016",
+            "part_two": "46306"
+        },
+        "7": {
+            "title": "The Sum of Its Parts",
+            "year": 2018,
+            "day": 7,
+            "part_one": "JNOIKSYABEQRUVWXGTZFDMHLPC",
+            "part_two": "1099"
+        },
+        "8": {
+            "title": "Memory Maneuver",
+            "year": 2018,
+            "day": 8,
+            "part_one": "40701",
+            "part_two": "21399"
+        },
+        "9": {
+            "title": "Marble Mania",
+            "year": 2018,
+            "day": 9,
+            "part_one": "388131",
+            "part_two": "3239376988"
+        },
+        "10": {
+            "title": "The Stars Align",
+            "year": 2018,
+            "day": 10,
+            "part_one": "BXJXJAEX",
+            "part_two": "10605"
+        }
     }
 }
