@@ -11,11 +11,10 @@ from pathlib import Path
 from sys import path
 from typing import DefaultDict, List, Tuple
 
-from advent_of_code_ocr import convert_array_6  # type: ignore
-
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
+from advent_of_code.utils.ocr import convert_coordinates
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -78,7 +77,9 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        self._run()
+        if not self.grid:
+            self._run()
+
         return len([k for k, v in self.grid.items() if v])
 
     def solve_part_two(self) -> str:
@@ -87,24 +88,15 @@ class Solver(SolverInterface):
         Returns:
             str: the answer
         """
-        letters = []
-        self._run()
+        if not self.grid:
+            self._run()
 
         # run the letters through OCR
-        for offset in range(self.number_of_columns // 5):
-            letters.append(
-                convert_array_6(
-                    [
-                        [
-                            "#" if self.grid[((offset * 5) + x, y)] else "."
-                            for x in range(4)
-                        ]
-                        for y in range(self.number_of_rows)
-                    ]
-                )
+        return "".join(
+            convert_coordinates(
+                {coordinate for coordinate, on in self.grid.items() if on}
             )
-
-        return "".join(letters)
+        )
 
     def _run(self) -> DefaultDict[Tuple[int, int], bool]:
         """Run the simulation.
@@ -112,9 +104,6 @@ class Solver(SolverInterface):
         Returns:
             DefaultDict[Tuple[int, int], bool]: the results
         """
-        if len(self.grid) > 0:
-            return self.grid
-
         for instruction in self.input:
             if isinstance(instruction, Solver._Rect):
                 self.grid.update(
