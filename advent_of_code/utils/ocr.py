@@ -20,8 +20,10 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     min_y = min(y for _, y in coordinates)
     max_y = max(y for _, y in coordinates)
 
-    # fix for words starting which 'i', which is three characters long
-    if (max_x + 1 - min_x) % 2 != 0:
+    # workaround for words starting which 'i', which is three characters wide
+    width = max_x + 1 - min_x
+    height = max_y + 1 - min_y
+    if (height == 6 and (width + 1) % 5 != 0) or (height == 8 and (width + 1) % 8 != 0):
         min_x -= 1
 
     return convert_array(
