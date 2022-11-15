@@ -20,6 +20,10 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     min_y = min(y for _, y in coordinates)
     max_y = max(y for _, y in coordinates)
 
+    # fix for words starting which 'i', which is three characters long
+    if (max_x + 1 - min_x) % 2 != 0:
+        min_x -= 1
+
     return convert_array(
         [
             ["#" if (x, y) in coordinates else "." for x in range(min_x, max_x + 1)]
@@ -55,14 +59,16 @@ def convert_array(
         for line in array
     ]
 
-    rows, cols = len(prepared_array), len(prepared_array[0])
-
     # validate input
-    if any(len(row) != cols for row in prepared_array):
-        raise ValueError("all rows should have the same number of columns")
+    rows = len(prepared_array)
 
     if rows not in [6, 10]:
         raise ValueError("incorrect number of rows (expected 6 or 10)")
+
+    cols = len(prepared_array[0])
+
+    if any(len(row) != cols for row in prepared_array):
+        raise ValueError("all rows should have the same number of columns")
 
     # prepare the settings for 6 or 10 rows
     if rows == 6:
