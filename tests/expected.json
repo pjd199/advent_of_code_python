@@ -597,6 +597,13 @@
             "day": 10,
             "part_one": "BXJXJAEX",
             "part_two": "10605"
+        },
+        "11": {
+            "title": "Chronal Charge",
+            "year": 2018,
+            "day": 11,
+            "part_one": "20,68",
+            "part_two": "231,273,16"
         }
     }
 }
