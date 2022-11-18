@@ -138,7 +138,7 @@ def _validate_input_and_header(
     # validate the optional header
     start = 0
     while start < len(header):
-        if puzzle_input[start] != header[start]:
+        if not fullmatch(header[start], puzzle_input[start]):
             raise RuntimeError(
                 f"Unable to parse '{puzzle_input[start]}' on line {start + 1}"
             )
