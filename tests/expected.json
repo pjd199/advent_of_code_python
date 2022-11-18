@@ -604,6 +604,13 @@
             "day": 11,
             "part_one": "20,68",
             "part_two": "231,273,16"
+        },
+        "12": {
+            "title": "Subterranean Sustainability",
+            "year": 2018,
+            "day": 12,
+            "part_one": "2281",
+            "part_two": "2250000000120"
         }
     }
 }
