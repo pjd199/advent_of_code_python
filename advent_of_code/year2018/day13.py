@@ -95,26 +95,13 @@ class Solver(SolverInterface):
             (str("\\"), str("v")): ">",
             (str("\\"), str("<")): "^",
         }
-        intersection_moves = {
-            (str("+"), str("^"), int(0)): "<",
-            (str("+"), str("^"), int(1)): "^",
-            (str("+"), str("^"), int(2)): ">",
-            (str("+"), str(">"), int(0)): "^",
-            (str("+"), str(">"), int(1)): ">",
-            (str("+"), str(">"), int(2)): "v",
-            (str("+"), str("v"), int(0)): ">",
-            (str("+"), str("v"), int(1)): "v",
-            (str("+"), str("v"), int(2)): "<",
-            (str("+"), str("<"), int(0)): "v",
-            (str("+"), str("<"), int(1)): "<",
-            (str("+"), str("<"), int(2)): "^",
-        }
         move_coordinates: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
             "^": lambda x, y: (x, y - 1),
             ">": lambda x, y: (x + 1, y),
             "v": lambda x, y: (x, y + 1),
             "<": lambda x, y: (x - 1, y),
         }
+        directions = "^>v<"
 
         # move all the carts, using a queue to manage the order in a single tick
         queue: Deque[Cart] = deque()
@@ -130,7 +117,9 @@ class Solver(SolverInterface):
             track = tracks[cart.y][cart.x]
             if track == "+":
                 # intersection
-                cart.direction = intersection_moves[(track, cart.direction, cart.turn)]
+                cart.direction = directions[
+                    (directions.index(cart.direction) + cart.turn - 1) % len(directions)
+                ]
                 cart.turn = (cart.turn + 1) % 3
             elif track in "\\/":
                 # corner
