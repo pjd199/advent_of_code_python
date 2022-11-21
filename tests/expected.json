@@ -611,6 +611,13 @@
             "day": 12,
             "part_one": "2281",
             "part_two": "2250000000120"
+        },
+        "13": {
+            "title": "Mine Cart Madness",
+            "year": 2018,
+            "day": 13,
+            "part_one": "14,42",
+            "part_two": "8,7"
         }
     }
 }
