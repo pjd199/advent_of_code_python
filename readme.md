@@ -1,6 +1,6 @@
 # Advent of Code Solver RESTful API
 
-[![python versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10-blue)](https://www.python.org/)
+[![python versions](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11-blue)](https://www.python.org/)
 ![os platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 ![cloud platform](https://img.shields.io/badge/cloud-AWS%20Lambda-blue)
 
