@@ -618,6 +618,13 @@
             "day": 13,
             "part_one": "14,42",
             "part_two": "8,7"
+        },
+        "14": {
+            "title": "Chocolate Charts",
+            "year": 2018,
+            "day": 14,
+            "part_one": "7162937112",
+            "part_two": "20195890"
         }
     }
 }
