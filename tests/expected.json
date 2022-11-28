@@ -639,6 +639,13 @@
             "day": 16,
             "part_one": "636",
             "part_two": "674"
+        },
+        "17": {
+            "title": "Reservoir Research",
+            "year": 2018,
+            "day": 17,
+            "part_one": "40879",
+            "part_two": "34693"
         }
     }
 }
