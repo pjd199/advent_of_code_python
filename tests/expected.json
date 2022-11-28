@@ -632,6 +632,13 @@
             "day": 15,
             "part_one": "191216",
             "part_two": "48050"
+        },
+        "16": {
+            "title": "Chronal Classification",
+            "year": 2018,
+            "day": 16,
+            "part_one": "636",
+            "part_two": "674"
         }
     }
 }
