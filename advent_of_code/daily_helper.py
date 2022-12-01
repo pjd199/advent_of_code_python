@@ -21,6 +21,7 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_status import puzzle_date_generator
 
 AOC_ROOT = "https://adventofcode.com"
+REPOSITORY = "https://github.com/pjd199/advent_of_code_python"
 CACHE_PATH = "./.aoc_website_cache"
 
 
@@ -288,10 +289,15 @@ class DailyHelper:
         else:
             self._log(f"Downloading {url}")
             path.parent.mkdir(parents=True, exist_ok=True)
+            headers = {
+                "User-Agent": REPOSITORY,
+            }
             if self.session:
-                response = get(url, headers={"cookie": f"session={self.session}"})
-            else:
-                response = get(url)
+                headers["cookie"] = f"session={self.session}"
+            response = get(
+                url,
+                headers=headers,
+            )
             if response.status_code == 200:
                 self._save(path, response.text)
             else:
