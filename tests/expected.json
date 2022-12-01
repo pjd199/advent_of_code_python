@@ -654,5 +654,14 @@
             "part_one": "483840",
             "part_two": "219919"
         }
+    },
+    "2022": {
+        "1": {
+            "title": "Calorie Counting",
+            "year": 2022,
+            "day": 1,
+            "part_one": "70720",
+            "part_two": "207148"
+        }
     }
 }
