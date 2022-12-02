@@ -28,9 +28,9 @@ CI/CD pipleline with automated test, build and deploy functionality.
 Free to try it out below, just don't spoil your fun by using the API until 
 you've solved the puzzle by yourself!!!
 
-## Implementation Progress
+## Development Progress
 
-![status](https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/status.gif)
+![status](https://raw.githubusercontent.com/pjd199/advent_of_code_python/dev/status.gif)
 
 ## Built with
 
