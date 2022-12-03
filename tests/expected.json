@@ -662,6 +662,20 @@
             "day": 1,
             "part_one": "70720",
             "part_two": "207148"
+        },
+        "2": {
+            "title": "Rock Paper Scissors",
+            "year": 2022,
+            "day": 2,
+            "part_one": "15691",
+            "part_two": "12989"
+        },
+        "3": {
+            "title": "Rucksack Reorganization",
+            "year": 2022,
+            "day": 3,
+            "part_one": "7831",
+            "part_two": "2683"
         }
     }
 }
