@@ -1,0 +1,48 @@
+name: Generate Test Durations
+
+on:
+  workflow_dispatch:
+  
+  schedule:
+    - cron:  "0 5 * 12 *"
+
+  pull_request:
+    types: [opened, edited, reopened]
+
+  workflow_run:
+    workflows: [CI-CD-Pipeline]
+    types: [completed]
+    branches: [dev]
+    
+concurrency: 
+  group: duration${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Updating Status Graphic
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out Respository
+        uses: actions/checkout@v3
+      
+      - name: Setup up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.9"
+          cache: "pip"
+      
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements_dev.txt
+
+      - name: Generate status graphic
+        run: python ./advent_of_code/utils/status_graphic.py
+
+      - name: Commit .test_duration file to respository      
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated status.gif
+          branch: dev

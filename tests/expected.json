@@ -597,6 +597,85 @@
             "day": 10,
             "part_one": "BXJXJAEX",
             "part_two": "10605"
+        },
+        "11": {
+            "title": "Chronal Charge",
+            "year": 2018,
+            "day": 11,
+            "part_one": "20,68",
+            "part_two": "231,273,16"
+        },
+        "12": {
+            "title": "Subterranean Sustainability",
+            "year": 2018,
+            "day": 12,
+            "part_one": "2281",
+            "part_two": "2250000000120"
+        },
+        "13": {
+            "title": "Mine Cart Madness",
+            "year": 2018,
+            "day": 13,
+            "part_one": "14,42",
+            "part_two": "8,7"
+        },
+        "14": {
+            "title": "Chocolate Charts",
+            "year": 2018,
+            "day": 14,
+            "part_one": "7162937112",
+            "part_two": "20195890"
+        },
+        "15": {
+            "title": "Beverage Bandits",
+            "year": 2018,
+            "day": 15,
+            "part_one": "191216",
+            "part_two": "48050"
+        },
+        "16": {
+            "title": "Chronal Classification",
+            "year": 2018,
+            "day": 16,
+            "part_one": "636",
+            "part_two": "674"
+        },
+        "17": {
+            "title": "Reservoir Research",
+            "year": 2018,
+            "day": 17,
+            "part_one": "40879",
+            "part_two": "34693"
+        },
+        "18": {
+            "title": "Settlers of The North Pole",
+            "year": 2018,
+            "day": 18,
+            "part_one": "483840",
+            "part_two": "219919"
+        }
+    },
+    "2022": {
+        "1": {
+            "title": "Calorie Counting",
+            "year": 2022,
+            "day": 1,
+            "part_one": "70720",
+            "part_two": "207148"
+        },
+        "2": {
+            "title": "Rock Paper Scissors",
+            "year": 2022,
+            "day": 2,
+            "part_one": "15691",
+            "part_two": "12989"
+        },
+        "3": {
+            "title": "Rucksack Reorganization",
+            "year": 2022,
+            "day": 3,
+            "part_one": "7831",
+            "part_two": "2683"
         }
     }
 }
