@@ -1,4 +1,4 @@
-name: Generate Test Durations
+name: Update Status Graphic
 
 on:
   workflow_dispatch:
