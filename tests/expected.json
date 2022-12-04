@@ -683,6 +683,13 @@
             "day": 3,
             "part_one": "7831",
             "part_two": "2683"
+        },
+        "4": {
+            "title": "Camp Cleanup",
+            "year": 2022,
+            "day": 4,
+            "part_one": "413",
+            "part_two": "806"
         }
     }
 }
