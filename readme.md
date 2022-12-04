@@ -286,8 +286,7 @@ pytest /tests/system
 * [ ] Solve puzzles forI 2019
 * [ ] Solve puzzles for 2020
 * [ ] Solve puzzles for 2021
-* [ ] Wait for the release of the next Adevent of Code adventure on
-  1st December 2022.
+* [ ] Solve puzzles for 2022
 
 ## Licence
 

@@ -1,4 +1,4 @@
-name: Generate Test Durations
+name: Update Status Graphic
 
 on:
   workflow_dispatch:
@@ -26,11 +26,13 @@ jobs:
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
+        with:
+          ref: dev
       
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: "3.11"
           cache: "pip"
       
       - name: Install dependencies
@@ -41,8 +43,8 @@ jobs:
       - name: Generate status graphic
         run: python ./advent_of_code/utils/status_graphic.py
 
-      - name: Commit .test_duration file to respository      
+      - name: Commit status graphic file to respository      
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Updated status.gif
+          commit_message: Updated status graphic
           branch: dev
