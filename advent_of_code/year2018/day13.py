@@ -85,15 +85,15 @@ class Solver(SolverInterface):
         tracks = [[track_map[v] for v in row] for row in self.input]
 
         # create the mappings to progress state on each tick
-        corner_moves = {
-            (str("/"), str("^")): ">",
-            (str("/"), str(">")): "^",
-            (str("/"), str("v")): "<",
-            (str("/"), str("<")): "v",
-            (str("\\"), str("^")): "<",
-            (str("\\"), str(">")): "v",
-            (str("\\"), str("v")): ">",
-            (str("\\"), str("<")): "^",
+        corner_moves: Dict[Tuple[str, str], str] = {
+            ("/", "^"): ">",
+            ("/", ">"): "^",
+            ("/", "v"): "<",
+            ("/", "<"): "v",
+            ("\\", "^"): "<",
+            ("\\", ">"): "v",
+            ("\\", "v"): ">",
+            ("\\", "<"): "^",
         }
         move_coordinates: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
             "^": lambda x, y: (x, y - 1),
