@@ -6,9 +6,6 @@ on:
   schedule:
     - cron:  "0 5 * 12 *"
 
-  pull_request:
-    types: [opened, edited, reopened]
-
   workflow_call:
     
 concurrency: 
