@@ -1,7 +1,6 @@
 """Create and save the status graphic to track progress of Advent of Code."""
 from pathlib import Path
 from sys import path
-from time import perf_counter_ns
 
 from PIL import Image, ImageDraw, ImageFont
 
@@ -22,7 +21,6 @@ def save_status_graphic(filename: str) -> None:
     Args:
         filename (str): the filename to save
     """
-    print("starting...")
     # prepare for the images
     images = []
     regular_font = ImageFont.truetype(
@@ -34,7 +32,6 @@ def save_status_graphic(filename: str) -> None:
     border = 10
 
     for frame in puzzle_date_generator():
-        print(frame)
         # Generate the lines to print
         lines = []
         for year in range(first_puzzle_date().year, last_puzzle_date().year + 1):
@@ -87,18 +84,12 @@ def save_status_graphic(filename: str) -> None:
         images.append(image)
 
     # save the image sequence
-    start = perf_counter_ns()
-
-    print(f"\nsaving {len(images)} frames")
     images[0].save(
         filename,
         save_all=True,
         append_images=images[1:],
         duration=25,
     )
-    stop = perf_counter_ns()
-
-    print(f"\ncomplete in {(stop - start) / 1000000000:.2f}s")
 
 
 if __name__ == "__main__":  # pragma: no cover
