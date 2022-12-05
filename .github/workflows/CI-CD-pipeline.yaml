@@ -191,6 +191,8 @@ jobs:
         run: pytest ./tests/system -k _dev -n auto
 
   update_status_graphic:
+    name: Update Status Graphic
+    needs: system-test
     uses: ./.github/workflows/update_status_graphic.yaml
 
   dump:
