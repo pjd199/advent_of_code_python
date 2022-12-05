@@ -32,7 +32,7 @@ class Solver(SolverInterface):
         """
         self.input = parse_single_line(puzzle_input, r"\^[NSEW|()]+\$", str_processor)
 
-        self.rooms = {(0, 0): 0}  # {(x, y) : doors}
+        self.rooms: Dict[Tuple[int, int], int] = {(0, 0): 0}  # {(x, y) : doors}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
