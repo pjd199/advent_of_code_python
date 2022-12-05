@@ -18,7 +18,7 @@ from advent_of_code.utils.parser import (
     dataclass_processor,
     int_tuple_processor,
     parse_lines,
-    str_processor,
+    split_sections,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -56,46 +56,34 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        # parse the input
-        parsed = parse_lines(
-            puzzle_input,
-            (r"Before: \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
+        self.samples: List[Sample] = []
+
+        # parse the input into sections
+        sections = split_sections(puzzle_input, "", min_length=7)
+
+        # parse the samples section
+        self.samples = [
+            Sample(before, Instruction(*instruction), after)
+            for before, instruction, after in (
+                parse_lines(
+                    section,
+                    (r"Before: \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
+                    (r"(\d+) (\d+) (\d+) (\d+)", int_tuple_processor),
+                    (r"After:  \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
+                    min_length=3,
+                    max_length=3,
+                )
+                for section in sections[:-1]
+            )
+        ]
+
+        self.program = parse_lines(
+            sections[-1],
             (
                 r"(?P<opcode>\d+) (?P<a>\d+) (?P<b>\d+) (?P<c>\d+)",
                 dataclass_processor(Instruction),
             ),
-            (r"After:  \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
-            (r"", str_processor),
-            min_length=8,
         )
-
-        self.samples: List[Sample] = []
-        self.program: List[Instruction] = []
-
-        # divide input into the samples and the program
-        i = 0
-        reading_samples = True
-        while i < len(parsed):
-            if reading_samples:
-                if parsed[i] == "":
-                    reading_samples = False
-                    i += 2
-                else:
-                    before = parsed[i]
-                    instruction = parsed[i + 1]
-                    after = parsed[i + 2]
-                    if (
-                        isinstance(before, tuple)
-                        and isinstance(instruction, Instruction)
-                        and isinstance(after, tuple)
-                    ):
-                        self.samples.append(Sample(before, instruction, after))
-                    i += 4
-            else:
-                instruction = parsed[i]
-                if isinstance(instruction, Instruction):
-                    self.program.append(instruction)
-                    i += 1
 
         # define the actions
         self.actions: Dict[str, Callable[[Tuple[int, ...], Instruction], int]] = {
