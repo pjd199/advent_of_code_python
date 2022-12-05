@@ -15,6 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
+    split_sections,
     str_tuple_processor,
 )
 from advent_of_code.utils.runner import runner
@@ -34,20 +35,22 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
+        # parse into sections
+        state_section, rules_section = split_sections(puzzle_input, expected_sections=2)
+
+        # parse the inital state
+        self.initial_state = parse_single_line(
+            state_section, r"initial state: ([\.#]+)", lambda m: m[1]
+        )
+
         # parse the rules
         self.rules: Dict[str, str] = {
             key: value
             for key, value in parse_lines(
-                puzzle_input,
+                rules_section,
                 (r"([\.#]+) => ([\.#])", str_tuple_processor),
-                header=(r"initial state: ([\.#]+)", ""),
             )
         }
-
-        # parse the inital state
-        self.initial_state = parse_single_line(
-            puzzle_input[0:1], r"initial state: ([\.#]+)", lambda m: m[1]
-        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

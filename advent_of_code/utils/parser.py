@@ -342,3 +342,49 @@ def parse_grid(
                 raise RuntimeError(f"Unable to parse '{line}' on line {y + 1}: {e}")
 
     return output
+
+
+def split_sections(
+    puzzle_input: List[str],
+    section_break: str = "",
+    expected_sections: int = maxsize,
+    min_length: int = 1,
+    max_length: int = maxsize,
+    header: Tuple[str, ...] = (),
+) -> List[List[str]]:
+    """Split the input into sections where a lines matches the section_break regex.
+
+    Args:
+        puzzle_input (List[str]): the puzzle input
+        section_break (str): the section break regex
+        expected_sections (int): the number of sections to expect.
+        min_length (int): the minimum number of lines expected
+        max_length (int): the maximum number of lines expected
+        header (Tuple[str, ...], optional): header to validate. Default ()
+
+    Raises:
+        RuntimeError: if the puzzle_input has incorrect length or number of sections
+
+    Returns:
+        List[T]: the parsed output
+    """
+    start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
+
+    # parse the input into sections
+    output: List[List[str]] = []
+    section: List[str] = []
+    for line in puzzle_input[start:]:
+        if fullmatch(section_break, line):
+            if section:
+                output.append(section)
+                section = []
+        else:
+            section.append(line)
+    output.append(section)
+
+    if expected_sections < maxsize and len(output) != expected_sections:
+        raise RuntimeError(
+            f"Found {len(output)} sections, expected {expected_sections}"
+        )
+
+    return output

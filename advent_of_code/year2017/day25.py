@@ -14,7 +14,7 @@ from typing import DefaultDict, Dict, List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines
+from advent_of_code.utils.parser import parse_lines, split_sections
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -44,34 +44,42 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        tokens = iter(
-            parse_lines(
-                puzzle_input,
-                (r"Begin in state ([A-Z]).", lambda m: m[1]),
-                (r"Perform a diagnostic checksum after (\d+) steps.", lambda m: m[1]),
+        # split the sections for parsing
+        sections = split_sections(puzzle_input)
+
+        # parse the initial state and target
+        self.start_state, stop = parse_lines(
+            sections[0],
+            (r"Begin in state ([A-Z]).", lambda m: m[1]),
+            (r"Perform a diagnostic checksum after (\d+) steps.", lambda m: m[1]),
+            min_length=2,
+            max_length=2,
+        )
+        self.stop = int(stop)
+
+        # parse the state transitions
+        self.input: Dict[str, _State] = {}
+        for section in sections[1:]:
+            tokens = parse_lines(
+                section,
                 (r"In state ([A-Z]):", lambda m: m[1]),
                 (r"  If the current value is ([01]):", lambda m: m[1]),
                 (r"    - Write the value ([01]).", lambda m: m[1]),
                 (
                     r"    - Move one slot to the (left|right).",
-                    lambda m: -1 if m[1] == "left" else 1,
+                    lambda m: "-1" if m[1] == "left" else "1",
                 ),
                 (r"    - Continue with state ([A-Z]).", lambda m: m[1]),
                 (r"", lambda m: "BLANK"),
-                min_length=12,
+                min_length=9,
+                max_length=9,
             )
-        )
-        self.input: Dict[str, _State] = {}
-        self.start_state = str(next(tokens))
-        self.stop = int(next(tokens))
-        while next(tokens, False):
-            s = _State([])
-            self.input[str(next(tokens))] = s
-            for _ in range(2):
-                next(tokens)
-                s.actions.append(
-                    _Action(int(next(tokens)), int(next(tokens)), str(next(tokens)))
-                )
+            state = tokens[0]
+            moves = [tokens[2:5], tokens[6:9]]
+
+            self.input[state] = _State(
+                [_Action(int(move[0]), int(move[1]), str(move[2])) for move in moves]
+            )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
