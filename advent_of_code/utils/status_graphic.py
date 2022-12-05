@@ -22,6 +22,7 @@ def save_status_graphic(filename: str) -> None:
     Args:
         filename (str): the filename to save
     """
+    print("starting...")
     # prepare for the images
     images = []
     regular_font = ImageFont.truetype(
