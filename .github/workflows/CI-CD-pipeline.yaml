@@ -190,6 +190,9 @@ jobs:
         if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
         run: pytest ./tests/system -k _dev -n auto
 
+  update_status_graphic:
+    uses: ./.github/workflows/update_status_graphic.yaml
+
   dump:
     name: Dump Environment Variables
     runs-on: ubuntu-latest

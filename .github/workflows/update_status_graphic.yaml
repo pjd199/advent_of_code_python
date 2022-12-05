@@ -9,10 +9,7 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
-  workflow_run:
-    workflows: [CI-CD-Pipeline]
-    types: [completed]
-    branches: [dev]
+  workflow_call:
     
 concurrency: 
   group: duration${{github.ref}}
