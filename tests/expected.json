@@ -660,6 +660,11 @@
             "day": 19,
             "part_one": "2072",
             "part_two": "27578880"
+        },
+        "20": {
+            "title": "A Regular Map",
+            "year": 2018,
+            "day": 20
         }
     },
     "2022": {
@@ -690,6 +695,13 @@
             "day": 4,
             "part_one": "413",
             "part_two": "806"
+        },
+        "5": {
+            "title": "Supply Stacks",
+            "year": 2022,
+            "day": 5,
+            "part_one": "VWLCWGSDQ",
+            "part_two": "TCGLQSLPW"
         }
     }
 }
