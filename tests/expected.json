@@ -671,7 +671,9 @@
         "21": {
             "title": "Chronal Conversion",
             "year": 2018,
-            "day": 21
+            "day": 21,
+            "part_one": "6132825",
+            "part_two": "8307757"
         }
     },
     "2022": {
