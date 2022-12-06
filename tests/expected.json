@@ -667,6 +667,11 @@
             "day": 20,
             "part_one": "3966",
             "part_two": "8173"
+        },
+        "21": {
+            "title": "Chronal Conversion",
+            "year": 2018,
+            "day": 21
         }
     },
     "2022": {
@@ -704,6 +709,13 @@
             "day": 5,
             "part_one": "VWLCWGSDQ",
             "part_two": "TCGLQSLPW"
+        },
+        "6": {
+            "title": "Tuning Trouble",
+            "year": 2022,
+            "day": 6,
+            "part_one": "1566",
+            "part_two": "2265"
         }
     }
 }
