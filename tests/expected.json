@@ -718,6 +718,13 @@
             "day": 6,
             "part_one": "1566",
             "part_two": "2265"
+        },
+        "7": {
+            "title": "No Space Left On Device",
+            "year": 2022,
+            "day": 7,
+            "part_one": "1444896",
+            "part_two": "404395"
         }
     }
 }
