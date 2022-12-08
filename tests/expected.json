@@ -725,6 +725,13 @@
             "day": 7,
             "part_one": "1444896",
             "part_two": "404395"
+        },
+        "8": {
+            "title": "Treetop Tree House",
+            "year": 2022,
+            "day": 8,
+            "part_one": "1679",
+            "part_two": "536625"
         }
     }
 }
