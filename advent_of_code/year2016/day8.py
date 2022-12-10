@@ -14,7 +14,7 @@ from typing import DefaultDict, List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.ocr import convert_coordinates
+from advent_of_code.utils.ocr import ocr_coordinates
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -93,9 +93,7 @@ class Solver(SolverInterface):
 
         # run the letters through OCR
         return "".join(
-            convert_coordinates(
-                {coordinate for coordinate, on in self.grid.items() if on}
-            )
+            ocr_coordinates({coordinate for coordinate, on in self.grid.items() if on})
         )
 
     def _run(self) -> DefaultDict[Tuple[int, int], bool]:

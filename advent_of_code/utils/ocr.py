@@ -6,7 +6,7 @@ Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT Licens
 from typing import Sequence, Set, Tuple, Union
 
 
-def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
+def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     """Convert a set of co-ordinates into letters.
 
     Args:
@@ -26,7 +26,7 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     if (height == 6 and (width + 1) % 5 != 0) or (height == 8 and (width + 1) % 8 != 0):
         min_x -= 1
 
-    return convert_array(
+    return ocr_array(
         [
             ["#" if (x, y) in coordinates else "." for x in range(min_x, max_x + 1)]
             for y in range(min_y, max_y + 1)
@@ -34,7 +34,7 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     )
 
 
-def convert_array(
+def ocr_array(
     array: Sequence[Sequence[Union[str, int, bool]]],
     fill_pixel: Union[str, int, bool] = "#",
     empty_pixel: Union[str, int, bool] = ".",

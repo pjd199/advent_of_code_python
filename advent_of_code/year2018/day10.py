@@ -14,7 +14,7 @@ from typing import List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.ocr import convert_coordinates
+from advent_of_code.utils.ocr import ocr_coordinates
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -120,7 +120,7 @@ class Solver(SolverInterface):
                 )
 
             if max(y for _, y in sky) - min(y for _, y in sky) < 10:
-                self.word = convert_coordinates(sky)
+                self.word = ocr_coordinates(sky)
                 self.time = i
                 break
 
