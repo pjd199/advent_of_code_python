@@ -17,7 +17,7 @@ def int_processor(match: Match[str]) -> int:
     Returns:
         int: the result
     """
-    return int(match[0].strip())
+    return int(match[0] if len(match.groups()) == 0 else match[1])
 
 
 def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
@@ -41,7 +41,7 @@ def str_processor(match: Match[str]) -> str:
     Returns:
         str: the result
     """
-    return match[0]
+    return match[0] if len(match.groups()) == 0 else match[1]
 
 
 def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
