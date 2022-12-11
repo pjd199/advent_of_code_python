@@ -732,6 +732,20 @@
             "day": 8,
             "part_one": "1679",
             "part_two": "536625"
+        },
+        "9": {
+            "title": "Rope Bridge",
+            "year": 2022,
+            "day": 9,
+            "part_one": "5878",
+            "part_two": "2405"
+        },
+        "10": {
+            "title": "Cathode-Ray Tube",
+            "year": 2022,
+            "day": 10,
+            "part_one": "14420",
+            "part_two": "RGLRBZAU"
         }
     }
 }
