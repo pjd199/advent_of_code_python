@@ -93,12 +93,17 @@ class DailyHelper:
         """
         self._flush()
 
-        # download the webpage from Advent of Code website
-        url = f"{AOC_ROOT}/{self.year}/day/{self.day}"
-        self._download(url, self.html_path, ok_if_exists=True)
+        # define the page and input url's
+        page_url = f"{AOC_ROOT}/{self.year}/day/{self.day}"
+        input_url = f"{AOC_ROOT}/{self.year}/day/{self.day}/input"
 
+        # open in a browser, if requested
         if self.open_webpage:
-            webbrowser_open(url)
+            webbrowser_open(page_url)
+            webbrowser_open(input_url)
+
+        # download the webpage from Advent of Code website
+        self._download(page_url, self.html_path, ok_if_exists=True)
 
         # parse the html file
         with open(self.html_path) as file:
