@@ -746,6 +746,13 @@
             "day": 10,
             "part_one": "14420",
             "part_two": "RGLRBZAU"
+        },
+        "11": {
+            "title": "Monkey in the Middle",
+            "year": 2022,
+            "day": 11,
+            "part_one": "120756",
+            "part_two": "39109444654"
         }
     }
 }
