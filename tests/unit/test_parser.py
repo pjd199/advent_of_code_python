@@ -10,12 +10,14 @@ from advent_of_code.utils.parser import (
     dataclass_processor,
     enum_processor,
     int_processor,
+    int_processor_group,
     int_tuple_processor,
     parse_grid,
     parse_lines,
     parse_single_line,
     parse_tokens,
     str_processor,
+    str_processor_group,
     str_tuple_processor,
 )
 
@@ -38,6 +40,31 @@ def test_int_processor() -> None:
         int_processor(m)
 
 
+def test_int_processor_group() -> None:
+    """Unit test for int_processor_group."""
+    m = fullmatch(r"(\d)(\d+)(\d)", "1234")
+    assert m is not None
+    assert int_processor_group(0)(m) == 1234
+    assert int_processor_group(1)(m) == 1
+    assert int_processor_group(2)(m) == 23
+    assert int_processor_group(3)(m) == 4
+    with pytest.raises(IndexError, match=r"no such group"):
+        int_processor_group(4)(m)
+    with pytest.raises(IndexError, match=r"no such group"):
+        int_processor_group("value")(m)
+
+    m = fullmatch(r"(?P<value>-?\d+)", "-5678")
+    assert m is not None
+    assert int_processor_group("value")(m) == -5678
+
+    m = fullmatch(r".*", "abc")
+    assert m is not None
+    with pytest.raises(
+        ValueError, match=r"invalid literal for int\(\) with base 10: 'abc'"
+    ):
+        int_processor_group(0)(m)
+
+
 def test_int_tuple_processor() -> None:
     """Unit test for int_tuple_processor."""
     m = fullmatch(r"(.*) (.*) (.*)", "1 -2 3")
@@ -57,6 +84,20 @@ def test_str_processor() -> None:
     m = fullmatch(r".*", "hello world")
     assert m is not None
     assert str_processor(m) == "hello world"
+
+
+def test_str_processor_group() -> None:
+    """Unit test for str_processor_group."""
+    m = fullmatch(r"(?P<greeting>[a-z]+) ([a-z]+)", "hello world")
+    assert m is not None
+    assert str_processor_group(0)(m) == "hello world"
+    assert str_processor_group("greeting")(m) == "hello"
+    assert str_processor_group(1)(m) == "hello"
+    assert str_processor_group(2)(m) == "world"
+    with pytest.raises(IndexError, match=r"no such group"):
+        int_processor_group(3)(m)
+    with pytest.raises(IndexError, match=r"no such group"):
+        int_processor_group("location")(m)
 
 
 def test_str_tuple_processor() -> None:
