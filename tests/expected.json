@@ -753,6 +753,13 @@
             "day": 11,
             "part_one": "120756",
             "part_two": "39109444654"
+        },
+        "12": {
+            "title": "Hill Climbing Algorithm",
+            "year": 2022,
+            "day": 12,
+            "part_one": "447",
+            "part_two": "446"
         }
     }
 }
