@@ -3,7 +3,7 @@ from dataclasses import fields
 from enum import Enum
 from re import escape, fullmatch, search, split
 from sys import maxsize
-from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar
+from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar, Union
 
 T = TypeVar("T")
 
@@ -17,7 +17,19 @@ def int_processor(match: Match[str]) -> int:
     Returns:
         int: the result
     """
-    return int(match[0] if len(match.groups()) == 0 else match[1])
+    return int(match[0])
+
+
+def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
+    """Process match object as a str.
+
+    Args:
+        match (Match[str]): the regular expression Match
+
+    Returns:
+        str: the result
+    """
+    return lambda m: int(m.group(group))
 
 
 def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
@@ -41,7 +53,19 @@ def str_processor(match: Match[str]) -> str:
     Returns:
         str: the result
     """
-    return match[0] if len(match.groups()) == 0 else match[1]
+    return match[0]
+
+
+def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
+    """Process match object as a str.
+
+    Args:
+        match (Match[str]): the regular expression Match
+
+    Returns:
+        str: the result
+    """
+    return lambda m: m.group(group)
 
 
 def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
