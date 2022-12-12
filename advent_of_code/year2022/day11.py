@@ -15,7 +15,7 @@ from typing import Callable, Dict, List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, split_sections, str_processor
+from advent_of_code.utils.parser import parse_lines, split_sections, str_processor_group
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -49,12 +49,12 @@ class Solver(SolverInterface):
         for section in split_sections(puzzle_input):
             lines = parse_lines(
                 section,
-                (r"Monkey (\d+):", str_processor),
-                (r"  Starting items: ([0-9, ]+)", str_processor),
-                (r"  Operation: new = old ([+*] (\d+|old))", str_processor),
-                (r"  Test: divisible by (\d+)", str_processor),
-                (r"    If true: throw to monkey (\d+)", str_processor),
-                (r"    If false: throw to monkey (\d+)", str_processor),
+                (r"Monkey (\d+):", str_processor_group(1)),
+                (r"  Starting items: ([0-9, ]+)", str_processor_group(1)),
+                (r"  Operation: new = old ([+*] (\d+|old))", str_processor_group(1)),
+                (r"  Test: divisible by (\d+)", str_processor_group(1)),
+                (r"    If true: throw to monkey (\d+)", str_processor_group(1)),
+                (r"    If false: throw to monkey (\d+)", str_processor_group(1)),
             )
             op, value = lines[2].split(" ")
             self.monkeys.append(
