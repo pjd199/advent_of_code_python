@@ -674,6 +674,13 @@
             "day": 21,
             "part_one": "6132825",
             "part_two": "8307757"
+        },
+        "22": {
+            "title": "Mode Maze",
+            "year": 2018,
+            "day": 22,
+            "part_one": "4479",
+            "part_two": "1032"
         }
     },
     "2022": {
