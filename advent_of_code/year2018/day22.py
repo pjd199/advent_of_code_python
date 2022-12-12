@@ -145,6 +145,7 @@ class Solver(SolverInterface):
         """Create the terrain map."""
         width = self.target_x + 100
         height = self.target_y + 100
+
         geologic = [[0] * width for _ in range(height)]
         erosion = [[0] * width for _ in range(height)]
         self.terrain = [[Terrain.ROCKY] * width for _ in range(height)]
