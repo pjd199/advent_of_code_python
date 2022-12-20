@@ -14,12 +14,7 @@ from typing import DefaultDict, Dict, List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import (
-    parse_lines,
-    split_sections,
-    str_processor,
-    str_processor_group,
-)
+from advent_of_code.utils.parser import parse_lines, split_sections, str_processor_group
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -70,15 +65,14 @@ class Solver(SolverInterface):
         for section in sections[1:]:
             tokens = parse_lines(
                 section,
-                (r"In state ([A-Z]):", str_processor),
-                (r"  If the current value is ([01]):", str_processor),
-                (r"    - Write the value ([01]).", str_processor),
+                (r"In state ([A-Z]):", str_processor_group(1)),
+                (r"  If the current value is ([01]):", str_processor_group(1)),
+                (r"    - Write the value ([01]).", str_processor_group(1)),
                 (
                     r"    - Move one slot to the (left|right).",
-                    lambda m: "-1" if m[1] == "left" else "1",
+                    str_processor_group(1),
                 ),
-                (r"    - Continue with state ([A-Z]).", str_processor),
-                (r"", lambda m: "BLANK"),
+                (r"    - Continue with state ([A-Z]).", str_processor_group(1)),
                 min_length=9,
                 max_length=9,
             )
@@ -86,7 +80,10 @@ class Solver(SolverInterface):
             moves = [tokens[2:5], tokens[6:9]]
 
             self.input[state] = _State(
-                [_Action(int(move[0]), int(move[1]), str(move[2])) for move in moves]
+                [
+                    _Action(int(move[0]), -1 if move[1] == "left" else 1, move[2])
+                    for move in moves
+                ]
             )
 
     def solve_part_one(self) -> int:
