@@ -781,6 +781,20 @@
             "day": 14,
             "part_one": "897",
             "part_two": "26683"
+        },
+        "15": {
+            "title": "Beacon Exclusion Zone",
+            "year": 2022,
+            "day": 15,
+            "part_one": "5147333",
+            "part_two": "13734006908372"
+        },
+        "17": {
+            "title": "Pyroclastic Flow",
+            "year": 2022,
+            "day": 17,
+            "part_one": "3157",
+            "part_two": "1581449275319"
         }
     }
 }
