@@ -16,6 +16,7 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     split_sections,
+    str_processor_group,
     str_tuple_processor,
 )
 from advent_of_code.utils.runner import runner
@@ -40,7 +41,7 @@ class Solver(SolverInterface):
 
         # parse the inital state
         self.initial_state = parse_single_line(
-            state_section, r"initial state: ([\.#]+)", lambda m: m[1]
+            state_section, r"initial state: ([\.#]+)", str_processor_group(1)
         )
 
         # parse the rules
