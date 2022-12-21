@@ -795,6 +795,13 @@
             "day": 17,
             "part_one": "3157",
             "part_two": "1581449275319"
+        },
+        "18": {
+            "title": "Boiling Boulders",
+            "year": 2022,
+            "day": 18,
+            "part_one": "3564",
+            "part_two": "2106"
         }
     }
 }
