@@ -809,6 +809,13 @@
             "day": 18,
             "part_one": "3564",
             "part_two": "2106"
+        },
+        "19": {
+            "title": "Not Enough Minerals",
+            "year": 2022,
+            "day": 19,
+            "part_one": "1306",
+            "part_two": "37604"
         }
     }
 }
