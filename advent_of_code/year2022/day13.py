@@ -68,21 +68,24 @@ class Solver(SolverInterface):
     def _compare(
         self, left: Union[int, List[Any]], right: Union[int, List[Any]]
     ) -> int:
+        result = -1
         if type(left) is int and type(right) is int:
-            return left - right
+            result = left - right
         elif type(left) is int and type(right) is list:
-            return self._compare([left], right)
+            result = self._compare([left], right)
         elif type(left) is list and type(right) is int:
-            return self._compare(left, [right])
+            result = self._compare(left, [right])
         elif type(left) is list and type(right) is list:
             # left and right are lists
+            result = len(left) - len(right)
             for i in range(min(len(left), len(right))):
-                result = self._compare(left[i], right[i])
-                if result != 0:
-                    return result
-            return len(left) - len(right)
+                res = self._compare(left[i], right[i])
+                if res != 0:
+                    result = res
+                    break
+            return result
 
-        return 0
+        return result
 
 
 if __name__ == "__main__":  # pragma: no cover

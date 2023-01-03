@@ -68,8 +68,6 @@ class Solver(SolverInterface):
                 last = b
             if b > last:
                 result += b - last
-                if any(last <= beacon <= b for beacon in beacons):
-                    result -= 1
                 last = b
 
         return result
