@@ -56,12 +56,9 @@ class Solver(SolverInterface):
         """
         # starting at (0,0,0), do a BFS to find all cubes that are water,
         # then find surface area by calculating edges rock touches water
-        min_x = min(x for x, _, _ in self.input) - 1
-        max_x = max(x for x, _, _ in self.input) + 1
-        min_y = min(y for _, y, _ in self.input) - 1
-        max_y = max(y for _, y, _ in self.input) + 1
-        min_z = min(z for _, _, z in self.input) - 1
-        max_z = min(z for _, _, z in self.input) + 1
+        (min_x, max_x), (min_y, max_y), (min_z, max_z) = (
+            (min(a), max(a)) for a in zip(*self.input)
+        )
 
         queue: Deque[Tuple[int, int, int]] = deque([(0, 0, 0)])
         water = set()
@@ -73,9 +70,9 @@ class Solver(SolverInterface):
                 if (
                     (x1, y1, z1) not in water
                     and (x1, y1, z1) not in self.input
-                    and min_x <= x1 <= max_x
-                    and min_y <= y1 <= max_y
-                    and min_z <= z1 <= max_z
+                    and min_x - 1 <= x1 <= max_x + 1
+                    and min_y - 1 <= y1 <= max_y + 1
+                    and min_z - 1 <= z1 <= max_z + 1
                 ):
                     queue.append((x1, y1, z1))
                     water.add((x1, y1, z1))
