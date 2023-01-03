@@ -31,8 +31,8 @@ class _Blueprint:
     """A blueprint from the input."""
 
     identifier: int
-    robots: Tuple[
-        Tuple[int, int, int, int],  # ore, clay, obsidian, geode
+    robots: Tuple[  # ore, clay, obsidian, geode
+        Tuple[int, int, int, int],
         Tuple[int, int, int, int],
         Tuple[int, int, int, int],
         Tuple[int, int, int, int],
@@ -124,79 +124,52 @@ class Solver(SolverInterface):
         Returns:
             int: the best result (highest number of geodes)
         """
-        if time == 0 or time == 1:
-            return materials[GEODE] + (robots[GEODE] * time)
-
-        # abandon path if too far behind best path
-        if (time + 1) in best and materials[GEODE] < best[time + 1]:
+        # abandon path if behind best path
+        if materials[GEODE] < best.get(time + 1, 0):
             return 0
 
+        # record the best path results for far
         if materials[GEODE] > 0:
             best[time] = max(best.get(time, 0), materials[GEODE])
 
-        results = []
+        # initialise results with the result of not building any more robots
+        results = [materials[GEODE] + (robots[GEODE] * time)]
 
-        # build robots
-        for robot_to_build in [GEODE, OBSIDIAN, CLAY, ORE]:
+        # build robots, if possible
+        for robot_to_build in [ORE, CLAY, OBSIDIAN, GEODE]:
             if robots[robot_to_build] < blueprint.max_materials[robot_to_build]:
-                if all(
-                    m >= b for m, b in zip(materials, blueprint.robots[robot_to_build])
-                ):
-                    # enough material to build robot now
+                # calculate time to get mine enough material to build robot,
+                # using maxsize as infinity
+                delta = max(
+                    max(0, ceil((b - m) / r)) if r > 0 else maxsize
+                    for r, m, b in zip(
+                        robots, materials, blueprint.robots[robot_to_build]
+                    )
+                    if b > 0
+                )
+
+                # if we have enough time to build and use the robot before time is up,
+                # then build the robot
+                if time - delta > 1:
                     results.append(
                         self._solve(
                             blueprint,
                             tuple(
-                                m + r - b
+                                m + (r * (delta + 1)) - b
                                 for m, r, b in zip(
-                                    materials, robots, blueprint.robots[robot_to_build]
+                                    materials,
+                                    robots,
+                                    blueprint.robots[robot_to_build],
                                 )
                             ),
                             tuple(
                                 r + (1 if i == robot_to_build else 0)
                                 for i, r in enumerate(robots)
                             ),
-                            time - 1,
+                            time - delta - 1,
                             best,
                         )
                     )
-                elif all(
-                    r > 0
-                    for r, b in zip(robots, blueprint.robots[robot_to_build])
-                    if b > 0
-                ):
-                    # calculate time to get enough material to build robot
-                    delta = max(
-                        ceil((b - m) / r)
-                        for r, m, b in zip(
-                            robots, materials, blueprint.robots[robot_to_build]
-                        )
-                        if b > 0
-                    )
-                    if time - delta > 1:
-                        results.append(
-                            self._solve(
-                                blueprint,
-                                tuple(
-                                    m + (r * (delta + 1)) - b
-                                    for m, r, b in zip(
-                                        materials,
-                                        robots,
-                                        blueprint.robots[robot_to_build],
-                                    )
-                                ),
-                                tuple(
-                                    r + (1 if i == robot_to_build else 0)
-                                    for i, r in enumerate(robots)
-                                ),
-                                time - delta - 1,
-                                best,
-                            )
-                        )
-        if not results:
-            # not enough time to build any useful robots,
-            # so calculate the final geode number
-            return materials[GEODE] + (robots[GEODE] * time)
 
         return max(results)
 
