@@ -816,6 +816,13 @@
             "day": 19,
             "part_one": "1306",
             "part_two": "37604"
+        },
+        "20": {
+            "title": "Grove Positioning System",
+            "year": 2022,
+            "day": 20,
+            "part_one": "988",
+            "part_two": "7768531372516"
         }
     }
 }
