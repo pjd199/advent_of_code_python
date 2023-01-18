@@ -830,6 +830,13 @@
             "day": 21,
             "part_one": "104272990112064",
             "part_two": "3220993874133"
+        },
+        "23": {
+            "title": "Unstable Diffusion",
+            "year": 2022,
+            "day": 23,
+            "part_one": "4052",
+            "part_two": "978"
         }
     }
 }
