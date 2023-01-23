@@ -101,7 +101,7 @@ class Solver(SolverInterface):
 
         if new_root.left in route_to_human:
             expressions[new_root.left] = rearrange_left[new_root.operator](new_root)
-        else:
+        else:  # pragma: no cover
             expressions[new_root.right] = rearrange_right[new_root.operator](new_root)
 
         # rearrange the formulee on the path between root and human
