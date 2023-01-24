@@ -106,10 +106,10 @@ class Solver(SolverInterface):
             x, carry = encoder[digit]
             encoded.append(x)
 
-        # reverse the encoding and handle the last carry
-        result = (["1"] * carry) + list(reversed(encoded))
+        # handle the last carry
+        encoded = encoded + (["1"] * carry)
 
-        return "".join(result)
+        return "".join(reversed(encoded))
 
 
 if __name__ == "__main__":  # pragma: no cover
