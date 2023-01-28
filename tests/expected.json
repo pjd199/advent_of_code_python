@@ -683,6 +683,50 @@
             "part_two": "1032"
         }
     },
+    "2019": {
+        "1": {
+            "title": "The Tyranny of the Rocket Equation",
+            "year": 2019,
+            "day": 1,
+            "part_one": "3399394",
+            "part_two": "5096223"
+        },
+        "2": {
+            "title": "1202 Program Alarm",
+            "year": 2019,
+            "day": 2,
+            "part_one": "3085697",
+            "part_two": "9425"
+        },
+        "3": {
+            "title": "Crossed Wires",
+            "year": 2019,
+            "day": 3,
+            "part_one": "266",
+            "part_two": "19242"
+        },
+        "4": {
+            "title": "Secure Container",
+            "year": 2019,
+            "day": 4,
+            "part_one": "1929",
+            "part_two": "1306"
+        },
+        "5": {
+            "title": "Sunny with a Chance of Asteroids",
+            "year": 2019,
+            "day": 5,
+            "part_one": "13087969",
+            "part_two": "14110739"
+        },
+        "6": {
+            "title": "Universal Orbit Map",
+            "year": 2019,
+            "day": 6,
+            "part_one": "387356",
+            "part_two": "532"
+        }
+    },
     "2022": {
         "1": {
             "title": "Calorie Counting",
