@@ -681,6 +681,13 @@
             "day": 22,
             "part_one": "4479",
             "part_two": "1032"
+        },
+        "23": {
+            "title": "Experimental Emergency Teleportation",
+            "year": 2018,
+            "day": 23,
+            "part_one": "580",
+            "part_two": "97816347"
         }
     },
     "2019": {
