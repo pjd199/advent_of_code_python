@@ -9,7 +9,7 @@ from math import ceil, log2
 from operator import itemgetter
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
+from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -73,17 +73,19 @@ class Solver(SolverInterface):
         while side != 0:
             # break down the bounding box into smaller boxes,
             # and count how many nanobots are in range
-            best: Dict[Tuple[int, int, int], int] = {}
-            for x in range(min_x, max_x + 1, side):
-                for y in range(min_y, max_y + 1, side):
-                    for z in range(min_z, max_z + 1, side):
-                        best[(x, y, z)] = sum(
-                            1
-                            for (x1, y1, z1), r in self.input.items()
-                            if abs(x - x1) + abs(y - y1) + abs(z - z1) <= r + side
-                        )
+            best = {
+                (x, y, z): sum(
+                    1
+                    for (x1, y1, z1), r in self.input.items()
+                    if abs(x - x1) + abs(y - y1) + abs(z - z1) <= r + side
+                )
+                for x in range(min_x, max_x + 1, side)
+                for y in range(min_y, max_y + 1, side)
+                for z in range(min_z, max_z + 1, side)
+            }
 
-            # calculate the next bounding box based on best bounding box found
+            # centre the next bounding box around the best location,
+            # then shrink the bounding box
             (x, y, z), _ = sorted(
                 best.items(),
                 key=lambda a: (-a[1], abs(a[0][0]) + abs(a[0][1]) + abs(a[0][2])),
