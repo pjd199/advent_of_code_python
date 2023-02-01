@@ -688,6 +688,13 @@
             "day": 23,
             "part_one": "580",
             "part_two": "97816347"
+        },
+        "24": {
+            "title": "Immune System Simulator 20XX",
+            "year": 2018,
+            "day": 24,
+            "part_one": "21891",
+            "part_two": "7058"
         }
     },
     "2019": {
