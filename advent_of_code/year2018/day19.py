@@ -18,6 +18,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import (
     dataclass_processor,
+    int_processor_group,
     parse_lines,
     parse_single_line,
 )
@@ -60,7 +61,7 @@ class Solver(SolverInterface):
         )
         # parse the instruction pointer
         self.instruction_pointer = parse_single_line(
-            puzzle_input[0:1], r"#ip (\d)", lambda m: int(m[1])
+            puzzle_input[0:1], r"#ip (\d)", int_processor_group(1)
         )
 
     def solve_part_one(self) -> int:
@@ -116,9 +117,7 @@ class Solver(SolverInterface):
             "eqrr": lambda r, i: 1 if r[i.a] == r[i.b] else 0,
         }
         pointer = 0
-        count = 0
         while 0 <= pointer < len(program) and pointer != break_at_line:
-            count += 1
             registers[self.instruction_pointer] = pointer
             instruction = program[pointer]
             registers[instruction.c] = self.actions[instruction.opcode](
