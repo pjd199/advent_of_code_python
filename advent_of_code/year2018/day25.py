@@ -41,7 +41,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        # use a breath first search to group the closest points together
+        # use a breadth first search to group the closest points together
         available = set(self.input)
         constellations: List[Set[Tuple[int, ...]]] = []
         queue: Deque[Tuple[int, ...]] = deque([])
