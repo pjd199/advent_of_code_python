@@ -15,10 +15,7 @@ def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     Returns:
         str: the OCR'd word
     """
-    min_x = min(x for x, _ in coordinates)
-    max_x = max(x for x, _ in coordinates)
-    min_y = min(y for _, y in coordinates)
-    max_y = max(y for _, y in coordinates)
+    (min_x, max_x), (min_y, max_y) = ((min(a), max(a)) for a in zip(*coordinates))
 
     # workaround for words starting which 'i', which is three characters wide
     width = max_x + 1 - min_x
