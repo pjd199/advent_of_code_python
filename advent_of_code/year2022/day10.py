@@ -16,7 +16,7 @@ import numpy as np
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.ocr import ocr_array
+from advent_of_code.utils.ocr import ocr_sequence
 from advent_of_code.utils.parser import dataclass_processor, enum_re, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -80,7 +80,7 @@ class Solver(SolverInterface):
         if not self.cycles_ready:
             self._solve()
 
-        return ocr_array(
+        return ocr_sequence(
             [
                 [
                     "#"
