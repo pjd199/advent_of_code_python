@@ -6,7 +6,6 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/2
 """
 from itertools import product
-from operator import add, mul
 from pathlib import Path
 from sys import path
 from typing import List
@@ -14,9 +13,10 @@ from typing import List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_processor, parse_tokens_single_line
+
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
+from advent_of_code.year2019.IntcodeComputer import IntcodeComputer
 
 
 class Solver(SolverInterface):
@@ -32,9 +32,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.input = parse_tokens_single_line(
-            puzzle_input, (r"\d+", int_processor), delimiter=","
-        )
+        self.computer = IntcodeComputer(puzzle_input)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -42,7 +40,11 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return self._execute(12, 2)
+        self.computer.reset()
+        memory = self.computer.direct_memory_access()
+        memory[1:3] = [12, 2]
+        self.computer.execute()
+        return memory[0]
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -50,39 +52,17 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return next(
-            (100 * noun) + verb
-            for noun, verb in product(range(100), range(100))
-            if self._execute(noun, verb) == 19690720
-        )
+        result = -1
+        for noun, verb in product(range(100), range(100)):
+            self.computer.reset()
+            memory = self.computer.direct_memory_access()
+            memory[1:3] = [noun, verb]
+            self.computer.execute()
+            if memory[0] == 19690720:
+                result = (100 * noun) + verb
+                break
 
-    def _execute(self, noun: int, verb: int) -> int:
-        """Execute the program.
-
-        Args:
-            noun (int): the first input
-            verb (int): the second input
-
-        Returns:
-            int: the output
-        """
-        # duplicate the program and set the inputs
-        program = list(self.input)
-        program[1] = noun
-        program[2] = verb
-
-        # load the operators
-        operators = {1: add, 2: mul}
-
-        # run the program
-        i = 0
-        while program[i] != 99:
-            opcode, a, b, c = program[i : i + 4]
-            program[c] = operators[opcode](program[a], program[b])
-            i += 4
-
-        # return the result
-        return program[0]
+        return result
 
 
 if __name__ == "__main__":  # pragma: no cover
