@@ -5,9 +5,16 @@ Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT Licens
 from itertools import chain
 from typing import Set, Tuple
 
+import numpy as np
 import pytest
 
-from advent_of_code.utils.ocr import ALPHABET_6, ALPHABET_10, ocr_array, ocr_coordinates
+from advent_of_code.utils.ocr import (
+    ALPHABET_6,
+    ALPHABET_10,
+    ocr_coordinates,
+    ocr_numpy,
+    ocr_sequence,
+)
 
 
 @pytest.mark.parametrize(
@@ -20,7 +27,7 @@ def test_single_letter(test_input: str, expected: str) -> None:
         test_input (str): the input array
         expected (str): the expected result
     """
-    assert ocr_array(test_input.splitlines()) == expected
+    assert ocr_sequence(test_input.splitlines()) == expected
 
 
 @pytest.mark.parametrize(
@@ -77,7 +84,7 @@ def test_three_letters(test_input: str, expected: str) -> None:
         test_input (str): the input array
         expected (str): the expected result
     """
-    assert ocr_array(test_input.splitlines()) == expected
+    assert ocr_sequence(test_input.splitlines()) == expected
 
 
 @pytest.mark.parametrize(
@@ -406,7 +413,9 @@ def test_different_characters(
         expected(str): the expected result
     """
     assert (
-        ocr_array(test_input.splitlines(), fill_pixel=fill_char, empty_pixel=empty_char)
+        ocr_sequence(
+            test_input.splitlines(), fill_pixel=fill_char, empty_pixel=empty_char
+        )
         == expected
     )
 
@@ -427,7 +436,7 @@ def test_long_string() -> None:
         "#..#.###...##..####.#.....###.#..#..###..##.."
         "#..#.####..##..#....#..#.###...##....#..####"
     )
-    assert ocr_array(string.splitlines()) == "ABCEFGHIJKLOPRSUYZ"
+    assert ocr_sequence(string.splitlines()) == "ABCEFGHIJKLOPRSUYZ"
 
 
 @pytest.mark.parametrize("rows", [0, 1, 5, 7, 9, 11])
@@ -440,7 +449,7 @@ def test_number_of_rows(rows: int) -> None:
     with pytest.raises(
         ValueError, match=r"incorrect number of rows \(expected 6 or 10\)"
     ):
-        ocr_array("\n".join("test" for _ in range(rows)))
+        ocr_sequence("\n".join("test" for _ in range(rows)))
 
 
 @pytest.mark.parametrize(("rows", "cols"), [(6, 6), (6, 12), (10, 16), (10, 32)])
@@ -457,10 +466,10 @@ def test_number_of_cols(rows: int, cols: int) -> None:
     with pytest.raises(
         ValueError, match="all rows should have the same number of columns"
     ):
-        ocr_array(array)
+        ocr_sequence(array)
 
 
-def test_array_nested_list() -> None:
+def test_sequence_nested_list() -> None:
     """Test parsing a nested array."""
     array = [
         ["X", "O", "O", "X", "X", "X", "O", "O", "X"],
@@ -470,4 +479,19 @@ def test_array_nested_list() -> None:
         ["O", "X", "X", "O", "X", "O", "X", "X", "O"],
         ["O", "X", "X", "O", "X", "X", "O", "O", "X"],
     ]
-    assert ocr_array(array, fill_pixel="O", empty_pixel="X") == "AC"
+    assert ocr_sequence(array, fill_pixel="O", empty_pixel="X") == "AC"
+
+
+def test_numpy() -> None:
+    """Test parsing a numpy array."""
+    array = np.array(
+        [
+            ["X", "O", "O", "X", "X", "X", "O", "O", "X"],
+            ["O", "X", "X", "O", "X", "O", "X", "X", "O"],
+            ["O", "X", "X", "O", "X", "O", "X", "X", "X"],
+            ["O", "O", "O", "O", "X", "O", "X", "X", "X"],
+            ["O", "X", "X", "O", "X", "O", "X", "X", "O"],
+            ["O", "X", "X", "O", "X", "X", "O", "O", "X"],
+        ]
+    )
+    assert ocr_numpy(array, fill_pixel="O", empty_pixel="X") == "AC"
