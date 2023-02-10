@@ -745,6 +745,20 @@
             "day": 6,
             "part_one": "387356",
             "part_two": "532"
+        },
+        "7": {
+            "title": "Amplification Circuit",
+            "year": 2019,
+            "day": 7,
+            "part_one": "359142",
+            "part_two": "4374895"
+        },
+        "8": {
+            "title": "Space Image Format",
+            "year": 2019,
+            "day": 8,
+            "part_one": "2125",
+            "part_two": "JYZHF"
         }
     },
     "2022": {
