@@ -766,6 +766,13 @@
             "day": 9,
             "part_one": "3380552333",
             "part_two": "78831"
+        },
+        "10": {
+            "title": "Monitoring Station",
+            "year": 2019,
+            "day": 10,
+            "part_one": "319",
+            "part_two": "517"
         }
     },
     "2022": {
