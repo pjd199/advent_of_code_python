@@ -16,7 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
-from advent_of_code.year2019.IntcodeComputer import IntcodeComputer
+from advent_of_code.year2019.intcode import IntcodeComputer
 
 
 class Solver(SolverInterface):
@@ -41,11 +41,10 @@ class Solver(SolverInterface):
             int: the answer
         """
         self.computer.reset()
-        memory = self.computer.direct_memory_access()
-        memory[1] = 12
-        memory[2] = 2
+        self.computer.memory[1] = 12
+        self.computer.memory[2] = 2
         self.computer.execute()
-        return memory[0]
+        return self.computer.memory[0]
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -56,11 +55,10 @@ class Solver(SolverInterface):
         result = -1
         for noun, verb in product(range(100), range(100)):
             self.computer.reset()
-            memory = self.computer.direct_memory_access()
-            memory[1] = noun
-            memory[2] = verb
+            self.computer.memory[1] = noun
+            self.computer.memory[2] = verb
             self.computer.execute()
-            if memory[0] == 19690720:
+            if self.computer.memory[0] == 19690720:
                 result = (100 * noun) + verb
                 break
 

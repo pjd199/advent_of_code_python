@@ -15,7 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
-from advent_of_code.year2019.IntcodeComputer import IntcodeComputer
+from advent_of_code.year2019.intcode import IntcodeComputer
 
 
 class Solver(SolverInterface):
@@ -64,15 +64,13 @@ class Solver(SolverInterface):
         for phase_settings in permutations(range(min_phase, max_phase + 1), 5):
             for amplifier, phase in zip(self.amplifiers, phase_settings):
                 amplifier.reset()
-                amplifier.append_input(phase)
+                amplifier.input_data(phase)
             output = 0
-            while not any(a.has_terminated() for a in self.amplifiers):
+            while not any(a.terminated for a in self.amplifiers):
                 for amplifier in self.amplifiers:
-                    amplifier.append_input(output)
-                    amplifier.execute(break_on_output=True)
-                    if amplifier.has_terminated():
-                        break
-                    output = amplifier.read_output()
+                    amplifier.input_data(output)
+                    if amplifier.execute(sleep_after_output=True):
+                        output = amplifier.read_output()
                 if not feedback_loop:
                     break
             result = max(result, output)

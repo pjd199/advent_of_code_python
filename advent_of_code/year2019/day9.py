@@ -14,7 +14,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
-from advent_of_code.year2019.IntcodeComputer import IntcodeComputer
+from advent_of_code.year2019.intcode import IntcodeComputer
 
 
 class Solver(SolverInterface):
@@ -39,9 +39,8 @@ class Solver(SolverInterface):
             int: the answer
         """
         self.computer.reset()
-        self.computer.append_input(1)
+        self.computer.input_data(1)
         self.computer.execute()
-
         return self.computer.read_output()
 
     def solve_part_two(self) -> int:
@@ -51,7 +50,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         self.computer.reset()
-        self.computer.append_input(2)
+        self.computer.input_data(2)
         self.computer.execute()
         return self.computer.read_output()
 

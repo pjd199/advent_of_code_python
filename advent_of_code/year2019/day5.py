@@ -5,7 +5,6 @@ Sunny with a Chance of Asteroids
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/5
 """
-from copy import deepcopy
 from pathlib import Path
 from sys import path
 from typing import List
@@ -15,7 +14,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
-from advent_of_code.year2019.intcode import execute_intcode, parse_intcode
+from advent_of_code.year2019.intcode import IntcodeComputer
 
 
 class Solver(SolverInterface):
@@ -31,7 +30,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        self.input = parse_intcode(puzzle_input)
+        self.computer = IntcodeComputer(puzzle_input)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -39,7 +38,10 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return execute_intcode(deepcopy(self.input), [1])[-1]
+        self.computer.reset()
+        self.computer.input_data(1)
+        self.computer.execute()
+        return list(self.computer.iterate_output())[-1]
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -47,7 +49,10 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return execute_intcode(deepcopy(self.input), [5])[-1]
+        self.computer.reset()
+        self.computer.input_data(5)
+        self.computer.execute()
+        return list(self.computer.iterate_output())[-1]
 
 
 if __name__ == "__main__":  # pragma: no cover
