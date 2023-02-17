@@ -24,7 +24,7 @@ def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
     """Process match object as a str.
 
     Args:
-        match (Match[str]): the regular expression Match
+        group (Union[str, int]): the group name of numvber to match
 
     Returns:
         str: the result
@@ -60,7 +60,7 @@ def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
     """Process match object as a str.
 
     Args:
-        match (Match[str]): the regular expression Match
+        group (Union[str, int]): the group name of numvber to match
 
     Returns:
         str: the result
