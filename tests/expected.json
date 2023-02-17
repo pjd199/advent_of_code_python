@@ -780,6 +780,13 @@
             "day": 11,
             "part_one": "2339",
             "part_two": "PGUEPLPR"
+        },
+        "12": {
+            "title": "The N-Body Problem",
+            "year": 2019,
+            "day": 12,
+            "part_one": "9139",
+            "part_two": "420788524631496"
         }
     },
     "2022": {
