@@ -101,20 +101,21 @@ class Solver(SolverInterface):
             dependancies[chemical].update({x for _, x in ingredients})
 
         # perform a topological sorting algorithm
-        visited = set()
-        while any(x for x in dependancies.values()):
+        visited: Set[str] = set()
+        while len(visited) < len(dependancies):
             # find the chemicals with no dependancies
-            for chemical, dependancy in dependancies.items():
-                if not dependancy and chemical not in visited:
-                    self.topo.append(chemical)
-                    visited.add(chemical)
+            zero_dependancies = {
+                chemical
+                for chemical, dependancy in dependancies.items()
+                if not dependancy and chemical not in visited
+            }
+            # add zero dependancies to the topo list and mark as visited
+            self.topo.extend(zero_dependancies)
+            visited.update(zero_dependancies)
 
             # clear the visited chemicals from each dependancy list
             for dependancy in dependancies.values():
-                dependancy.difference_update(visited)
-
-        #  add the FUEL chemical to complete the topo list
-        self.topo.append("FUEL")
+                dependancy.difference_update(zero_dependancies)
 
     def ore_requirements(self, units_of_fuel: int) -> int:
         """Calculate the ORE requirement for the requests units of FUEL.
