@@ -51,6 +51,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
+        self.generate_grid()
         return self.navigate(start=(0, 0), finish=self.oxygen_system_location)
 
     def solve_part_two(self) -> int:
@@ -59,6 +60,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
+        self.generate_grid()
         return self.navigate(start=self.oxygen_system_location, finish=None)
 
     def generate_grid(self) -> None:
@@ -119,8 +121,6 @@ class Solver(SolverInterface):
         Returns:
             int: number of steps from start and finish
         """
-        self.generate_grid()
-
         # create a set of co-ordinates to visit, and find target point
         grid = {(x, y) for (x, y), v in self.grid.items() if v != GridValue.wall}
 
