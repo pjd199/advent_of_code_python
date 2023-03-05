@@ -801,6 +801,13 @@
             "day": 14,
             "part_one": "720484",
             "part_two": "1993284"
+        },
+        "15": {
+            "title": "Oxygen System",
+            "year": 2019,
+            "day": 15,
+            "part_one": "252",
+            "part_two": "350"
         }
     },
     "2022": {
