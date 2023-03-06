@@ -808,6 +808,13 @@
             "day": 15,
             "part_one": "252",
             "part_two": "350"
+        },
+        "16": {
+            "title": "Flawed Frequency Transmission",
+            "year": 2019,
+            "day": 16,
+            "part_one": "18933364",
+            "part_two": "28872305"
         }
     },
     "2022": {
