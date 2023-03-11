@@ -39,7 +39,7 @@ class IntcodeComputer:
         self._memory.clear()
         self._input_buffer.clear()
         self._output_buffer.clear()
-        self._memory.update({i: value for i, value in enumerate(self.program_source)})
+        self._memory.update(enumerate(self.program_source))
         self._pointer = 0
         self._relative_base = 0
         self._terminated = False
@@ -96,7 +96,7 @@ class IntcodeComputer:
         Raises:
             RuntimeError: if the program has already finished
 
-        Return:
+        Returns:
             bool: True if output is generated, else false
         """
         if self.terminated:  # pragma: no cover
