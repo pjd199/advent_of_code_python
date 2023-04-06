@@ -822,6 +822,111 @@
             "day": 17,
             "part_one": "12512",
             "part_two": "1409507"
+        },
+        "18": {
+            "title": "Many-Worlds Interpretation",
+            "year": 2019,
+            "day": 18
+        }
+    },
+    "2020": {
+        "1": {
+            "title": "Report Repair",
+            "year": 2020,
+            "day": 1,
+            "part_one": "802011",
+            "part_two": "248607374"
+        },
+        "2": {
+            "title": "Password Philosophy",
+            "year": 2020,
+            "day": 2,
+            "part_one": "483",
+            "part_two": "482"
+        },
+        "3": {
+            "title": "Toboggan Trajectory",
+            "year": 2020,
+            "day": 3,
+            "part_one": "228",
+            "part_two": "6818112000"
+        },
+        "4": {
+            "title": "Passport Processing",
+            "year": 2020,
+            "day": 4,
+            "part_one": "190",
+            "part_two": "121"
+        },
+        "5": {
+            "title": "Binary Boarding",
+            "year": 2020,
+            "day": 5,
+            "part_one": "963",
+            "part_two": "592"
+        },
+        "6": {
+            "title": "Custom Customs",
+            "year": 2020,
+            "day": 6,
+            "part_one": "7110",
+            "part_two": "3628"
+        },
+        "7": {
+            "title": "Handy Haversacks",
+            "year": 2020,
+            "day": 7,
+            "part_one": "151",
+            "part_two": "41559"
+        },
+        "8": {
+            "title": "Handheld Halting",
+            "year": 2020,
+            "day": 8,
+            "part_one": "2003",
+            "part_two": "1984"
+        },
+        "9": {
+            "title": "Encoding Error",
+            "year": 2020,
+            "day": 9,
+            "part_one": "731031916",
+            "part_two": "93396727"
+        },
+        "10": {
+            "title": "Adapter Array",
+            "year": 2020,
+            "day": 10,
+            "part_one": "2210",
+            "part_two": "7086739046912"
+        },
+        "11": {
+            "title": "Seating System",
+            "year": 2020,
+            "day": 11,
+            "part_one": "2427",
+            "part_two": "2199"
+        },
+        "12": {
+            "title": "Rain Risk",
+            "year": 2020,
+            "day": 12,
+            "part_one": "796",
+            "part_two": "39446"
+        },
+        "13": {
+            "title": "Shuttle Search",
+            "year": 2020,
+            "day": 13,
+            "part_one": "222",
+            "part_two": "408270049879073"
+        },
+        "14": {
+            "title": "Docking Data",
+            "year": 2020,
+            "day": 14,
+            "part_one": "8332632930672",
+            "part_two": "4753238784664"
         }
     },
     "2022": {
