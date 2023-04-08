@@ -124,7 +124,8 @@ class Solver(SolverInterface):
         move = 0
 
         # navigate the points, recording the instructions
-        while True:
+        end = False
+        while not end:
             if looks[direction](x, y) in points:
                 move += 1
                 x, y = looks[direction](x, y)
@@ -139,7 +140,7 @@ class Solver(SolverInterface):
                     direction = (direction - 1) % len(looks)
                     turn = "L"
                 else:
-                    break
+                    end = True
 
         return ",".join(route)
 
