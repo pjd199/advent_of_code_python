@@ -934,6 +934,13 @@
             "day": 15,
             "part_one": "1280",
             "part_two": "651639"
+        },
+        "16": {
+            "title": "Ticket Translation",
+            "year": 2020,
+            "day": 16,
+            "part_one": "26980",
+            "part_two": "3021381607403"
         }
     },
     "2022": {
