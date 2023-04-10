@@ -941,6 +941,20 @@
             "day": 16,
             "part_one": "26980",
             "part_two": "3021381607403"
+        },
+        "17": {
+            "title": "Conway Cubes",
+            "year": 2020,
+            "day": 17,
+            "part_one": "424",
+            "part_two": "2460"
+        },
+        "18": {
+            "title": "Operation Order",
+            "year": 2020,
+            "day": 18,
+            "part_one": "53660285675207",
+            "part_two": "141993988282687"
         }
     },
     "2022": {
