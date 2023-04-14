@@ -962,6 +962,13 @@
             "day": 19,
             "part_one": "120",
             "part_two": "350"
+        },
+        "20": {
+            "title": "Jurassic Jigsaw",
+            "year": 2020,
+            "day": 20,
+            "part_one": "79412832860579",
+            "part_two": "2155"
         }
     },
     "2022": {
