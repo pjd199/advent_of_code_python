@@ -983,6 +983,26 @@
             "day": 22,
             "part_one": "32199",
             "part_two": "33780"
+        },
+        "23": {
+            "title": "Crab Cups",
+            "year": 2020,
+            "day": 23,
+            "part_one": "96342875",
+            "part_two": "563362809504"
+        },
+        "24": {
+            "title": "Lobby Layout",
+            "year": 2020,
+            "day": 24,
+            "part_one": "300",
+            "part_two": "3466"
+        },
+        "25": {
+            "title": "Combo Breaker",
+            "year": 2020,
+            "day": 25,
+            "part_one": "16311885"
         }
     },
     "2022": {
