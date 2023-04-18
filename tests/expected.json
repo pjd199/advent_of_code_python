@@ -1005,6 +1005,64 @@
             "part_one": "16311885"
         }
     },
+    "2021": {
+        "1": {
+            "title": "Sonar Sweep",
+            "year": 2021,
+            "day": 1,
+            "part_one": "1665",
+            "part_two": "1702"
+        },
+        "2": {
+            "title": "Dive!",
+            "year": 2021,
+            "day": 2,
+            "part_one": "1604850",
+            "part_two": "1685186100"
+        },
+        "3": {
+            "title": "Binary Diagnostic",
+            "year": 2021,
+            "day": 3,
+            "part_one": "3969000",
+            "part_two": "4267809"
+        },
+        "4": {
+            "title": "Giant Squid",
+            "year": 2021,
+            "day": 4,
+            "part_one": "27027",
+            "part_two": "36975"
+        },
+        "5": {
+            "title": "Hydrothermal Venture",
+            "year": 2021,
+            "day": 5,
+            "part_one": "8622",
+            "part_two": "22037"
+        },
+        "6": {
+            "title": "Lanternfish",
+            "year": 2021,
+            "day": 6,
+            "part_one": "385391",
+            "part_two": "1728611055389"
+        },
+        "7": {
+            "title": "The Treachery of Whales",
+            "year": 2021,
+            "day": 7,
+            "part_one": "349769",
+            "part_two": "99540554"
+        },
+        "8": {
+            "title": "Seven Segment Search",
+            "year": 2021,
+            "day": 8,
+            "part_one": "473",
+            "part_two": "1097568"
+        }
+    },
     "2022": {
         "1": {
             "title": "Calorie Counting",
