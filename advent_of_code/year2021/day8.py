@@ -58,8 +58,8 @@ class Solver(SolverInterface):
         """
         total = 0
         for patterns, digits in self.input:
-            # easy mappings based on length
-            mappings = {
+            # easy mapping based on length
+            mapping = {
                 1: next(x for x in patterns if len(x) == 2),
                 4: next(x for x in patterns if len(x) == 4),
                 7: next(x for x in patterns if len(x) == 3),
@@ -68,37 +68,32 @@ class Solver(SolverInterface):
 
             # work out the horizontal segments in the display
             cross_bars = frozenset.intersection(*[x for x in patterns if len(x) == 5])
-            top = cross_bars & mappings[7]
-            middle = cross_bars & mappings[4]
+            top = cross_bars & mapping[7]
+            middle = cross_bars & mapping[4]
             bottom = cross_bars - top - middle
 
-            # work out more mappings using the crossbars
-            mappings[0] = mappings[8] - middle
-            mappings[3] = cross_bars | mappings[1]
-            mappings[9] = mappings[4] | top | bottom
-            mappings[6] = frozenset(
+            # work out more mapping using the crossbars
+            mapping[0] = mapping[8] - middle
+            mapping[3] = cross_bars | mapping[1]
+            mapping[9] = mapping[4] | top | bottom
+            mapping[6] = frozenset(
                 next(
                     x
                     for x in patterns
-                    if len(x) == 6 and set(x) != mappings[9] and set(x) != mappings[0]
+                    if len(x) == 6 and set(x) != mapping[9] and set(x) != mapping[0]
                 )
             )
 
-            # find lower left and upper right to finish the mappings
-            lower_left = mappings[8] - mappings[9]
-            mappings[5] = mappings[6] - lower_left
-            upper_right = mappings[1] - mappings[6]
-            mappings[2] = cross_bars | upper_right | lower_left
+            # find lower left and upper right to finish the mapping
+            lower_left = mapping[8] - mapping[9]
+            mapping[5] = mapping[6] - lower_left
+            upper_right = mapping[1] - mapping[6]
+            mapping[2] = cross_bars | upper_right | lower_left
 
-            # map the digits to a string, then add that number to the running total
-            total += int(
-                "".join(
-                    [
-                        str(next(k for k, v in mappings.items() if set(digit) == v))
-                        for digit in digits
-                    ]
-                )
-            )
+            # invert the mapping, decode each digit,
+            # then add that number to the running total
+            decoder = {v: str(k) for k, v in mapping.items()}
+            total += int("".join([decoder[digit] for digit in digits]))
 
         return total
 
