@@ -664,7 +664,345 @@
         "20": {
             "title": "A Regular Map",
             "year": 2018,
-            "day": 20
+            "day": 20,
+            "part_one": "3966",
+            "part_two": "8173"
+        },
+        "21": {
+            "title": "Chronal Conversion",
+            "year": 2018,
+            "day": 21,
+            "part_one": "6132825",
+            "part_two": "8307757"
+        },
+        "22": {
+            "title": "Mode Maze",
+            "year": 2018,
+            "day": 22,
+            "part_one": "4479",
+            "part_two": "1032"
+        },
+        "23": {
+            "title": "Experimental Emergency Teleportation",
+            "year": 2018,
+            "day": 23,
+            "part_one": "580",
+            "part_two": "97816347"
+        },
+        "24": {
+            "title": "Immune System Simulator 20XX",
+            "year": 2018,
+            "day": 24,
+            "part_one": "21891",
+            "part_two": "7058"
+        },
+        "25": {
+            "title": "Four-Dimensional Adventure",
+            "year": 2018,
+            "day": 25,
+            "part_one": "420"
+        }
+    },
+    "2019": {
+        "1": {
+            "title": "The Tyranny of the Rocket Equation",
+            "year": 2019,
+            "day": 1,
+            "part_one": "3399394",
+            "part_two": "5096223"
+        },
+        "2": {
+            "title": "1202 Program Alarm",
+            "year": 2019,
+            "day": 2,
+            "part_one": "3085697",
+            "part_two": "9425"
+        },
+        "3": {
+            "title": "Crossed Wires",
+            "year": 2019,
+            "day": 3,
+            "part_one": "266",
+            "part_two": "19242"
+        },
+        "4": {
+            "title": "Secure Container",
+            "year": 2019,
+            "day": 4,
+            "part_one": "1929",
+            "part_two": "1306"
+        },
+        "5": {
+            "title": "Sunny with a Chance of Asteroids",
+            "year": 2019,
+            "day": 5,
+            "part_one": "13087969",
+            "part_two": "14110739"
+        },
+        "6": {
+            "title": "Universal Orbit Map",
+            "year": 2019,
+            "day": 6,
+            "part_one": "387356",
+            "part_two": "532"
+        },
+        "7": {
+            "title": "Amplification Circuit",
+            "year": 2019,
+            "day": 7,
+            "part_one": "359142",
+            "part_two": "4374895"
+        },
+        "8": {
+            "title": "Space Image Format",
+            "year": 2019,
+            "day": 8,
+            "part_one": "2125",
+            "part_two": "JYZHF"
+        },
+        "9": {
+            "title": "Sensor Boost",
+            "year": 2019,
+            "day": 9,
+            "part_one": "3380552333",
+            "part_two": "78831"
+        },
+        "10": {
+            "title": "Monitoring Station",
+            "year": 2019,
+            "day": 10,
+            "part_one": "319",
+            "part_two": "517"
+        },
+        "11": {
+            "title": "Space Police",
+            "year": 2019,
+            "day": 11,
+            "part_one": "2339",
+            "part_two": "PGUEPLPR"
+        },
+        "12": {
+            "title": "The N-Body Problem",
+            "year": 2019,
+            "day": 12,
+            "part_one": "9139",
+            "part_two": "420788524631496"
+        },
+        "13": {
+            "title": "Care Package",
+            "year": 2019,
+            "day": 13,
+            "part_one": "255",
+            "part_two": "12338"
+        },
+        "14": {
+            "title": "Space Stoichiometry",
+            "year": 2019,
+            "day": 14,
+            "part_one": "720484",
+            "part_two": "1993284"
+        },
+        "15": {
+            "title": "Oxygen System",
+            "year": 2019,
+            "day": 15,
+            "part_one": "252",
+            "part_two": "350"
+        },
+        "16": {
+            "title": "Flawed Frequency Transmission",
+            "year": 2019,
+            "day": 16,
+            "part_one": "18933364",
+            "part_two": "28872305"
+        },
+        "17": {
+            "title": "Set and Forget",
+            "year": 2019,
+            "day": 17,
+            "part_one": "12512",
+            "part_two": "1409507"
+        },
+        "18": {
+            "title": "Many-Worlds Interpretation",
+            "year": 2019,
+            "day": 18
+        }
+    },
+    "2020": {
+        "1": {
+            "title": "Report Repair",
+            "year": 2020,
+            "day": 1,
+            "part_one": "802011",
+            "part_two": "248607374"
+        },
+        "2": {
+            "title": "Password Philosophy",
+            "year": 2020,
+            "day": 2,
+            "part_one": "483",
+            "part_two": "482"
+        },
+        "3": {
+            "title": "Toboggan Trajectory",
+            "year": 2020,
+            "day": 3,
+            "part_one": "228",
+            "part_two": "6818112000"
+        },
+        "4": {
+            "title": "Passport Processing",
+            "year": 2020,
+            "day": 4,
+            "part_one": "190",
+            "part_two": "121"
+        },
+        "5": {
+            "title": "Binary Boarding",
+            "year": 2020,
+            "day": 5,
+            "part_one": "963",
+            "part_two": "592"
+        },
+        "6": {
+            "title": "Custom Customs",
+            "year": 2020,
+            "day": 6,
+            "part_one": "7110",
+            "part_two": "3628"
+        },
+        "7": {
+            "title": "Handy Haversacks",
+            "year": 2020,
+            "day": 7,
+            "part_one": "151",
+            "part_two": "41559"
+        },
+        "8": {
+            "title": "Handheld Halting",
+            "year": 2020,
+            "day": 8,
+            "part_one": "2003",
+            "part_two": "1984"
+        },
+        "9": {
+            "title": "Encoding Error",
+            "year": 2020,
+            "day": 9,
+            "part_one": "731031916",
+            "part_two": "93396727"
+        },
+        "10": {
+            "title": "Adapter Array",
+            "year": 2020,
+            "day": 10,
+            "part_one": "2210",
+            "part_two": "7086739046912"
+        },
+        "11": {
+            "title": "Seating System",
+            "year": 2020,
+            "day": 11,
+            "part_one": "2427",
+            "part_two": "2199"
+        },
+        "12": {
+            "title": "Rain Risk",
+            "year": 2020,
+            "day": 12,
+            "part_one": "796",
+            "part_two": "39446"
+        },
+        "13": {
+            "title": "Shuttle Search",
+            "year": 2020,
+            "day": 13,
+            "part_one": "222",
+            "part_two": "408270049879073"
+        },
+        "14": {
+            "title": "Docking Data",
+            "year": 2020,
+            "day": 14,
+            "part_one": "8332632930672",
+            "part_two": "4753238784664"
+        },
+        "15": {
+            "title": "Rambunctious Recitation",
+            "year": 2020,
+            "day": 15,
+            "part_one": "1280",
+            "part_two": "651639"
+        },
+        "16": {
+            "title": "Ticket Translation",
+            "year": 2020,
+            "day": 16,
+            "part_one": "26980",
+            "part_two": "3021381607403"
+        },
+        "17": {
+            "title": "Conway Cubes",
+            "year": 2020,
+            "day": 17,
+            "part_one": "424",
+            "part_two": "2460"
+        },
+        "18": {
+            "title": "Operation Order",
+            "year": 2020,
+            "day": 18,
+            "part_one": "53660285675207",
+            "part_two": "141993988282687"
+        },
+        "19": {
+            "title": "Monster Messages",
+            "year": 2020,
+            "day": 19,
+            "part_one": "120",
+            "part_two": "350"
+        },
+        "20": {
+            "title": "Jurassic Jigsaw",
+            "year": 2020,
+            "day": 20,
+            "part_one": "79412832860579",
+            "part_two": "2155"
+        },
+        "21": {
+            "title": "Allergen Assessment",
+            "year": 2020,
+            "day": 21,
+            "part_one": "1930",
+            "part_two": "spcqmzfg,rpf,dzqlq,pflk,bltrbvz,xbdh,spql,bltzkxx"
+        },
+        "22": {
+            "title": "Crab Combat",
+            "year": 2020,
+            "day": 22,
+            "part_one": "32199",
+            "part_two": "33780"
+        },
+        "23": {
+            "title": "Crab Cups",
+            "year": 2020,
+            "day": 23,
+            "part_one": "96342875",
+            "part_two": "563362809504"
+        },
+        "24": {
+            "title": "Lobby Layout",
+            "year": 2020,
+            "day": 24,
+            "part_one": "300",
+            "part_two": "3466"
+        },
+        "25": {
+            "title": "Combo Breaker",
+            "year": 2020,
+            "day": 25,
+            "part_one": "16311885"
         }
     },
     "2022": {
@@ -702,6 +1040,138 @@
             "day": 5,
             "part_one": "VWLCWGSDQ",
             "part_two": "TCGLQSLPW"
+        },
+        "6": {
+            "title": "Tuning Trouble",
+            "year": 2022,
+            "day": 6,
+            "part_one": "1566",
+            "part_two": "2265"
+        },
+        "7": {
+            "title": "No Space Left On Device",
+            "year": 2022,
+            "day": 7,
+            "part_one": "1444896",
+            "part_two": "404395"
+        },
+        "8": {
+            "title": "Treetop Tree House",
+            "year": 2022,
+            "day": 8,
+            "part_one": "1679",
+            "part_two": "536625"
+        },
+        "9": {
+            "title": "Rope Bridge",
+            "year": 2022,
+            "day": 9,
+            "part_one": "5878",
+            "part_two": "2405"
+        },
+        "10": {
+            "title": "Cathode-Ray Tube",
+            "year": 2022,
+            "day": 10,
+            "part_one": "14420",
+            "part_two": "RGLRBZAU"
+        },
+        "11": {
+            "title": "Monkey in the Middle",
+            "year": 2022,
+            "day": 11,
+            "part_one": "120756",
+            "part_two": "39109444654"
+        },
+        "12": {
+            "title": "Hill Climbing Algorithm",
+            "year": 2022,
+            "day": 12,
+            "part_one": "447",
+            "part_two": "446"
+        },
+        "13": {
+            "title": "Distress Signal",
+            "year": 2022,
+            "day": 13,
+            "part_one": "5292",
+            "part_two": "23868"
+        },
+        "14": {
+            "title": "Regolith Reservoir",
+            "year": 2022,
+            "day": 14,
+            "part_one": "897",
+            "part_two": "26683"
+        },
+        "15": {
+            "title": "Beacon Exclusion Zone",
+            "year": 2022,
+            "day": 15,
+            "part_one": "5147333",
+            "part_two": "13734006908372"
+        },
+        "16": {
+            "title": "Proboscidea Volcanium",
+            "year": 2022,
+            "day": 16,
+            "part_one": "2077",
+            "part_two": "2741"
+        },
+        "17": {
+            "title": "Pyroclastic Flow",
+            "year": 2022,
+            "day": 17,
+            "part_one": "3157",
+            "part_two": "1581449275319"
+        },
+        "18": {
+            "title": "Boiling Boulders",
+            "year": 2022,
+            "day": 18,
+            "part_one": "3564",
+            "part_two": "2106"
+        },
+        "19": {
+            "title": "Not Enough Minerals",
+            "year": 2022,
+            "day": 19,
+            "part_one": "1306",
+            "part_two": "37604"
+        },
+        "20": {
+            "title": "Grove Positioning System",
+            "year": 2022,
+            "day": 20,
+            "part_one": "988",
+            "part_two": "7768531372516"
+        },
+        "21": {
+            "title": "Monkey Math",
+            "year": 2022,
+            "day": 21,
+            "part_one": "104272990112064",
+            "part_two": "3220993874133"
+        },
+        "23": {
+            "title": "Unstable Diffusion",
+            "year": 2022,
+            "day": 23,
+            "part_one": "4052",
+            "part_two": "978"
+        },
+        "24": {
+            "title": "Blizzard Basin",
+            "year": 2022,
+            "day": 24,
+            "part_one": "305",
+            "part_two": "905"
+        },
+        "25": {
+            "title": "Full of Hot Air",
+            "year": 2022,
+            "day": 25,
+            "part_one": "122-0==-=211==-2-200"
         }
     }
 }

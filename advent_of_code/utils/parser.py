@@ -3,7 +3,7 @@ from dataclasses import fields
 from enum import Enum
 from re import escape, fullmatch, search, split
 from sys import maxsize
-from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar
+from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar, Union
 
 T = TypeVar("T")
 
@@ -17,7 +17,19 @@ def int_processor(match: Match[str]) -> int:
     Returns:
         int: the result
     """
-    return int(match[0].strip())
+    return int(match[0])
+
+
+def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
+    """Process match object as a str.
+
+    Args:
+        group (Union[str, int]): the group name of numvber to match
+
+    Returns:
+        str: the result
+    """
+    return lambda m: int(m.group(group))
 
 
 def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
@@ -42,6 +54,18 @@ def str_processor(match: Match[str]) -> str:
         str: the result
     """
     return match[0]
+
+
+def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
+    """Process match object as a str.
+
+    Args:
+        group (Union[str, int]): the group name of numvber to match
+
+    Returns:
+        str: the result
+    """
+    return lambda m: m.group(group)
 
 
 def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
@@ -216,6 +240,7 @@ def parse_tokens(
     puzzle_input: List[str],
     *args: Tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
+    require_delimiter: bool = True,
     min_length: int = 1,
     max_length: int = maxsize,
     header: Tuple[str, ...] = (),
@@ -226,6 +251,7 @@ def parse_tokens(
         puzzle_input (List[str]): the puzzle input
         *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
+        require_delimiter (bool): delimiter must be present when True. Defaults to True.
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
         header (Tuple[str, ...], optional): header to validate. Defaults to ().
@@ -242,7 +268,7 @@ def parse_tokens(
     output: List[List[T]] = []
     for i, line in enumerate(puzzle_input[start:]):
         # check for at least one delimiter on the line
-        if line == "" or not search(delimiter, line):
+        if line == "" or (require_delimiter and not search(delimiter, line)):
             raise RuntimeError(
                 f"Unable to parse '{line}' on line {i + 1}:"
                 f" Delimiter '{delimiter}' not found"
@@ -275,6 +301,7 @@ def parse_tokens_single_line(
     puzzle_input: List[str],
     *args: Tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
+    require_delimiter: bool = True,
     header: Tuple[str, ...] = (),
 ) -> List[T]:
     """Load lines using the tokenised methods.
@@ -292,6 +319,7 @@ def parse_tokens_single_line(
         puzzle_input,
         *args,
         delimiter=delimiter,
+        require_delimiter=require_delimiter,
         min_length=1,
         max_length=1,
         header=header,

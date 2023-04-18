@@ -5,8 +5,11 @@ Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT Licens
 """
 from typing import Sequence, Set, Tuple, Union
 
+import numpy as np
+from numpy.typing import ArrayLike
 
-def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
+
+def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     """Convert a set of co-ordinates into letters.
 
     Args:
@@ -15,10 +18,7 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     Returns:
         str: the OCR'd word
     """
-    min_x = min(x for x, _ in coordinates)
-    max_x = max(x for x, _ in coordinates)
-    min_y = min(y for _, y in coordinates)
-    max_y = max(y for _, y in coordinates)
+    (min_x, max_x), (min_y, max_y) = ((min(a), max(a)) for a in zip(*coordinates))
 
     # workaround for words starting which 'i', which is three characters wide
     width = max_x + 1 - min_x
@@ -26,7 +26,7 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     if (height == 6 and (width + 1) % 5 != 0) or (height == 8 and (width + 1) % 8 != 0):
         min_x -= 1
 
-    return convert_array(
+    return ocr_sequence(
         [
             ["#" if (x, y) in coordinates else "." for x in range(min_x, max_x + 1)]
             for y in range(min_y, max_y + 1)
@@ -34,7 +34,25 @@ def convert_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
     )
 
 
-def convert_array(
+def ocr_numpy(
+    array: ArrayLike,
+    fill_pixel: Union[str, int, bool] = "#",
+    empty_pixel: Union[str, int, bool] = ".",
+) -> str:
+    """Convert an array of pixels into letters.
+
+    Args:
+        array (ArrayLike): the input array
+        fill_pixel (Union[str, int, bool], optional): the filled pixel. Defaults to "#".
+        empty_pixel (Union[str, int, bool], optional): the empty pixel. Defaults to ".".
+
+    Returns:
+        str: the result
+    """
+    return ocr_sequence(np.array(array).tolist(), fill_pixel, empty_pixel)
+
+
+def ocr_sequence(
     array: Sequence[Sequence[Union[str, int, bool]]],
     fill_pixel: Union[str, int, bool] = "#",
     empty_pixel: Union[str, int, bool] = ".",
@@ -51,7 +69,7 @@ def convert_array(
         ValueError: Raised if the columns are not all equal length
 
     Returns:
-        str: _description_
+        str: the result
     """
     prepared_array = [
         [

@@ -12,7 +12,7 @@ from typing import Iterator, List
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines
+from advent_of_code.utils.parser import int_processor_group, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -31,7 +31,7 @@ class Solver(SolverInterface):
             puzzle_input (List[str]): The lines of the input file
         """
         self.seed_a, self.seed_b = parse_lines(
-            puzzle_input, (r"Generator [AB] starts with (\d+)", lambda m: int(m[1]))
+            puzzle_input, (r"Generator [AB] starts with (\d+)", int_processor_group(1))
         )
 
     def solve_part_one(self) -> int:

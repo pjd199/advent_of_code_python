@@ -84,7 +84,6 @@ def save_status_graphic(filename: str) -> None:
         images.append(image)
 
     # save the image sequence
-    print(f"\nsaving {len(images)} frames")
     images[0].save(
         filename,
         save_all=True,
