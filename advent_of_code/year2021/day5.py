@@ -8,7 +8,6 @@ https://adventofcode.com/2021/day/5
 from collections import Counter
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,7 +24,7 @@ class Solver(SolverInterface):
     DAY = 5
     TITLE = "Hydrothermal Venture"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
@@ -60,7 +59,7 @@ class Solver(SolverInterface):
         Returns:
             int: the result
         """
-        counter: Counter[Tuple[int, int]] = Counter()
+        counter: Counter[tuple[int, int]] = Counter()
         for x1, y1, x2, y2 in self.input:
             if x1 == x2:
                 counter.update((x1, y) for y in range(min(y1, y2), max(y1, y2) + 1))

@@ -1061,6 +1061,69 @@
             "day": 8,
             "part_one": "473",
             "part_two": "1097568"
+        },
+        "9": {
+            "title": "Smoke Basin",
+            "year": 2021,
+            "day": 9,
+            "part_one": "504",
+            "part_two": "1558722"
+        },
+        "10": {
+            "title": "Syntax Scoring",
+            "year": 2021,
+            "day": 10,
+            "part_one": "367059",
+            "part_two": "1952146692"
+        },
+        "11": {
+            "title": "Dumbo Octopus",
+            "year": 2021,
+            "day": 11,
+            "part_one": "1681",
+            "part_two": "276"
+        },
+        "12": {
+            "title": "Passage Pathing",
+            "year": 2021,
+            "day": 12,
+            "part_one": "5104",
+            "part_two": "149220"
+        },
+        "13": {
+            "title": "Transparent Origami",
+            "year": 2021,
+            "day": 13,
+            "part_one": "607",
+            "part_two": "CPZLPFZL"
+        },
+        "14": {
+            "title": "Extended Polymerization",
+            "year": 2021,
+            "day": 14,
+            "part_one": "2027",
+            "part_two": "2265039461737"
+        },
+        "15": {
+            "title": "Chiton",
+            "year": 2021,
+            "day": 15,
+            "part_one": "621",
+            "part_two": "2904"
+        },
+        "16": {
+            "title": "Packet Decoder",
+            "year": 2021,
+            "day": 16,
+            "part_one": "917",
+            "part_two": "2536453523344"
+        },
+        "17": {
+            "title": "Trick Shot",
+            "year": 2021,
+            "day": 17,
+            "part_one": "2628",
+            "part_two": "1334"
         }
     },
     "2022": {
