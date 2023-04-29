@@ -1124,6 +1124,34 @@
             "day": 17,
             "part_one": "2628",
             "part_two": "1334"
+        },
+        "18": {
+            "title": "Snailfish",
+            "year": 2021,
+            "day": 18,
+            "part_one": "4137",
+            "part_two": "4573"
+        },
+        "19": {
+            "title": "Beacon Scanner",
+            "year": 2021,
+            "day": 19,
+            "part_one": "353",
+            "part_two": "10832"
+        },
+        "20": {
+            "title": "Trench Map",
+            "year": 2021,
+            "day": 20,
+            "part_one": "5391",
+            "part_two": "16383"
+        },
+        "21": {
+            "title": "Dirac Dice",
+            "year": 2021,
+            "day": 21,
+            "part_one": "684495",
+            "part_two": "152587196649184"
         }
     },
     "2022": {
