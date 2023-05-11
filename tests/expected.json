@@ -822,11 +822,6 @@
             "day": 17,
             "part_one": "12512",
             "part_two": "1409507"
-        },
-        "18": {
-            "title": "Many-Worlds Interpretation",
-            "year": 2019,
-            "day": 18
         }
     },
     "2020": {
@@ -1152,6 +1147,33 @@
             "day": 21,
             "part_one": "684495",
             "part_two": "152587196649184"
+        },
+        "22": {
+            "title": "Reactor Reboot",
+            "year": 2021,
+            "day": 22,
+            "part_one": "537042",
+            "part_two": "1304385553084863"
+        },
+        "23": {
+            "title": "Amphipod",
+            "year": 2021,
+            "day": 23,
+            "part_one": "14350",
+            "part_two": "49742"
+        },
+        "24": {
+            "title": "Arithmetic Logic Unit",
+            "year": 2021,
+            "day": 24,
+            "part_one": "99911993949684",
+            "part_two": "62911941716111"
+        },
+        "25": {
+            "title": "Sea Cucumber",
+            "year": 2021,
+            "day": 25,
+            "part_one": "406"
         }
     },
     "2022": {
