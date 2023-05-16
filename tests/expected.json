@@ -822,6 +822,27 @@
             "day": 17,
             "part_one": "12512",
             "part_two": "1409507"
+        },
+        "18": {
+            "title": "Many-Worlds Interpretation",
+            "year": 2019,
+            "day": 18,
+            "part_one": "3270",
+            "part_two": "1628"
+        },
+        "19": {
+            "title": "Tractor Beam",
+            "year": 2019,
+            "day": 19,
+            "part_one": "147",
+            "part_two": "13280865"
+        },
+        "20": {
+            "title": "Donut Maze",
+            "year": 2019,
+            "day": 20,
+            "part_one": "692",
+            "part_two": "8314"
         }
     },
     "2020": {
