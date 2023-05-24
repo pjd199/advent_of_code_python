@@ -843,6 +843,40 @@
             "day": 20,
             "part_one": "692",
             "part_two": "8314"
+        },
+        "21": {
+            "title": "Springdroid Adventure",
+            "year": 2019,
+            "day": 21,
+            "part_one": "19350938",
+            "part_two": "1142986901"
+        },
+        "22": {
+            "title": "Slam Shuffle",
+            "year": 2019,
+            "day": 22,
+            "part_one": "2480",
+            "part_two": "62416301438548"
+        },
+        "23": {
+            "title": "Category Six",
+            "year": 2019,
+            "day": 23,
+            "part_one": "17740",
+            "part_two": "12567"
+        },
+        "24": {
+            "title": "Planet of Discord",
+            "year": 2019,
+            "day": 24,
+            "part_one": "28778811",
+            "part_two": "2097"
+        },
+        "25": {
+            "title": "Cryostasis",
+            "year": 2019,
+            "day": 25,
+            "part_one": "278664"
         }
     },
     "2020": {

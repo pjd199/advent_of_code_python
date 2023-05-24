@@ -87,21 +87,20 @@ class IntcodeComputer:
         """
         return self._terminated
 
-    def execute(self, sleep_after_output: bool = False) -> bool:
+    def execute(
+        self,
+        sleep_after_output: bool = False,
+        sleep_when_waiting_for_input: bool = False,
+    ) -> bool:
         """Execute the program.
 
         Args:
             sleep_after_output (bool): if True, returns after an output is generated.
-
-        Raises:
-            RuntimeError: if the program has already finished
+            sleep_when_waiting_for_input (bool): if True, return when waiting for input.
 
         Returns:
             bool: True if output is generated, else false
         """
-        if self.terminated:  # pragma: no cover
-            raise RuntimeError("Program has terminated")
-
         result = False
 
         # define the instructions
@@ -139,6 +138,10 @@ class IntcodeComputer:
                 )
                 for j in range(length)
             ]
+
+            # check for input, and sleep if required
+            if opcode == 3 and not self._input_buffer and sleep_when_waiting_for_input:
+                break
 
             # execute the instruction
             value = operator(params)
