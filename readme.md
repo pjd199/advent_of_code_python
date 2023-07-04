@@ -44,7 +44,7 @@ you've solved the puzzle by yourself!!!
 
 ### Prerequisites
 
-* [Python 3.8-3.11](https://www.python.org/)
+* [Python 3.9-3.11](https://www.python.org/)
 * [AWS SAM CLI and AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 * [AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html) - locally or as secrets for Github Action
 
@@ -282,11 +282,12 @@ pytest /tests/system
 * [X] Solve puzzles for 2015
 * [X] Solve puzzles for 2016
 * [X] Solve puzzles for 2017
-* [ ] Solve puzzles for 2018
-* [ ] Solve puzzles forI 2019
-* [ ] Solve puzzles for 2020
-* [ ] Solve puzzles for 2021
-* [ ] Solve puzzles for 2022
+* [X] Solve puzzles for 2018
+* [X] Solve puzzles forI 2019
+* [X] Solve puzzles for 2020
+* [X] Solve puzzles for 2021
+* [X] Solve puzzles for 2022
+* [ ] Wait for Advent of Code to start on 1st December 2023!!!
 
 ## Licence
 

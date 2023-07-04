@@ -826,7 +826,57 @@
         "18": {
             "title": "Many-Worlds Interpretation",
             "year": 2019,
-            "day": 18
+            "day": 18,
+            "part_one": "3270",
+            "part_two": "1628"
+        },
+        "19": {
+            "title": "Tractor Beam",
+            "year": 2019,
+            "day": 19,
+            "part_one": "147",
+            "part_two": "13280865"
+        },
+        "20": {
+            "title": "Donut Maze",
+            "year": 2019,
+            "day": 20,
+            "part_one": "692",
+            "part_two": "8314"
+        },
+        "21": {
+            "title": "Springdroid Adventure",
+            "year": 2019,
+            "day": 21,
+            "part_one": "19350938",
+            "part_two": "1142986901"
+        },
+        "22": {
+            "title": "Slam Shuffle",
+            "year": 2019,
+            "day": 22,
+            "part_one": "2480",
+            "part_two": "62416301438548"
+        },
+        "23": {
+            "title": "Category Six",
+            "year": 2019,
+            "day": 23,
+            "part_one": "17740",
+            "part_two": "12567"
+        },
+        "24": {
+            "title": "Planet of Discord",
+            "year": 2019,
+            "day": 24,
+            "part_one": "28778811",
+            "part_two": "2097"
+        },
+        "25": {
+            "title": "Cryostasis",
+            "year": 2019,
+            "day": 25,
+            "part_one": "278664"
         }
     },
     "2020": {
@@ -1005,6 +1055,182 @@
             "part_one": "16311885"
         }
     },
+    "2021": {
+        "1": {
+            "title": "Sonar Sweep",
+            "year": 2021,
+            "day": 1,
+            "part_one": "1665",
+            "part_two": "1702"
+        },
+        "2": {
+            "title": "Dive!",
+            "year": 2021,
+            "day": 2,
+            "part_one": "1604850",
+            "part_two": "1685186100"
+        },
+        "3": {
+            "title": "Binary Diagnostic",
+            "year": 2021,
+            "day": 3,
+            "part_one": "3969000",
+            "part_two": "4267809"
+        },
+        "4": {
+            "title": "Giant Squid",
+            "year": 2021,
+            "day": 4,
+            "part_one": "27027",
+            "part_two": "36975"
+        },
+        "5": {
+            "title": "Hydrothermal Venture",
+            "year": 2021,
+            "day": 5,
+            "part_one": "8622",
+            "part_two": "22037"
+        },
+        "6": {
+            "title": "Lanternfish",
+            "year": 2021,
+            "day": 6,
+            "part_one": "385391",
+            "part_two": "1728611055389"
+        },
+        "7": {
+            "title": "The Treachery of Whales",
+            "year": 2021,
+            "day": 7,
+            "part_one": "349769",
+            "part_two": "99540554"
+        },
+        "8": {
+            "title": "Seven Segment Search",
+            "year": 2021,
+            "day": 8,
+            "part_one": "473",
+            "part_two": "1097568"
+        },
+        "9": {
+            "title": "Smoke Basin",
+            "year": 2021,
+            "day": 9,
+            "part_one": "504",
+            "part_two": "1558722"
+        },
+        "10": {
+            "title": "Syntax Scoring",
+            "year": 2021,
+            "day": 10,
+            "part_one": "367059",
+            "part_two": "1952146692"
+        },
+        "11": {
+            "title": "Dumbo Octopus",
+            "year": 2021,
+            "day": 11,
+            "part_one": "1681",
+            "part_two": "276"
+        },
+        "12": {
+            "title": "Passage Pathing",
+            "year": 2021,
+            "day": 12,
+            "part_one": "5104",
+            "part_two": "149220"
+        },
+        "13": {
+            "title": "Transparent Origami",
+            "year": 2021,
+            "day": 13,
+            "part_one": "607",
+            "part_two": "CPZLPFZL"
+        },
+        "14": {
+            "title": "Extended Polymerization",
+            "year": 2021,
+            "day": 14,
+            "part_one": "2027",
+            "part_two": "2265039461737"
+        },
+        "15": {
+            "title": "Chiton",
+            "year": 2021,
+            "day": 15,
+            "part_one": "621",
+            "part_two": "2904"
+        },
+        "16": {
+            "title": "Packet Decoder",
+            "year": 2021,
+            "day": 16,
+            "part_one": "917",
+            "part_two": "2536453523344"
+        },
+        "17": {
+            "title": "Trick Shot",
+            "year": 2021,
+            "day": 17,
+            "part_one": "2628",
+            "part_two": "1334"
+        },
+        "18": {
+            "title": "Snailfish",
+            "year": 2021,
+            "day": 18,
+            "part_one": "4137",
+            "part_two": "4573"
+        },
+        "19": {
+            "title": "Beacon Scanner",
+            "year": 2021,
+            "day": 19,
+            "part_one": "353",
+            "part_two": "10832"
+        },
+        "20": {
+            "title": "Trench Map",
+            "year": 2021,
+            "day": 20,
+            "part_one": "5391",
+            "part_two": "16383"
+        },
+        "21": {
+            "title": "Dirac Dice",
+            "year": 2021,
+            "day": 21,
+            "part_one": "684495",
+            "part_two": "152587196649184"
+        },
+        "22": {
+            "title": "Reactor Reboot",
+            "year": 2021,
+            "day": 22,
+            "part_one": "537042",
+            "part_two": "1304385553084863"
+        },
+        "23": {
+            "title": "Amphipod",
+            "year": 2021,
+            "day": 23,
+            "part_one": "14350",
+            "part_two": "49742"
+        },
+        "24": {
+            "title": "Arithmetic Logic Unit",
+            "year": 2021,
+            "day": 24,
+            "part_one": "99911993949684",
+            "part_two": "62911941716111"
+        },
+        "25": {
+            "title": "Sea Cucumber",
+            "year": 2021,
+            "day": 25,
+            "part_one": "406"
+        }
+    },
     "2022": {
         "1": {
             "title": "Calorie Counting",
@@ -1152,6 +1378,13 @@
             "day": 21,
             "part_one": "104272990112064",
             "part_two": "3220993874133"
+        },
+        "22": {
+            "title": "Monkey Map",
+            "year": 2022,
+            "day": 22,
+            "part_one": "97356",
+            "part_two": "120175"
         },
         "23": {
             "title": "Unstable Diffusion",
