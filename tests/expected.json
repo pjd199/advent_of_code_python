@@ -1379,6 +1379,13 @@
             "part_one": "104272990112064",
             "part_two": "3220993874133"
         },
+        "22": {
+            "title": "Monkey Map",
+            "year": 2022,
+            "day": 22,
+            "part_one": "97356",
+            "part_two": "120175"
+        },
         "23": {
             "title": "Unstable Diffusion",
             "year": 2022,
