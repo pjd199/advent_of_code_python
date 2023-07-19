@@ -1,14 +1,11 @@
 """Parser utilities for the puzzle input."""
-from dataclasses import fields
+from dataclasses import fields, is_dataclass
 from enum import Enum
 from re import escape, fullmatch, search, split
 from sys import maxsize
 from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar, Union
 
-from _typeshed import DataclassInstance
-
 T = TypeVar("T")
-S = TypeVar("S", bound=DataclassInstance)
 
 
 def int_processor(match: Match[str]) -> int:
@@ -84,8 +81,8 @@ def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
 
 
 def dataclass_processor(
-    cls: Type[S],
-) -> Callable[[Match[str]], S]:
+    cls: Type[T],
+) -> Callable[[Match[str]], T]:
     """Create a match processor to process match object as a data class.
 
     Args:
@@ -93,15 +90,21 @@ def dataclass_processor(
 
     Returns:
         Callable[[Match[str]], T]: the match processor
+
+    Raises:
+        TypeError: if cls is not a DataClass (needed due to mypy typing bug)
     """
-    fields_dict = {f.name: f for f in fields(cls) if f.init}
-    return lambda m: cls(
-        **{
-            k: fields_dict[k].type(v)
-            for k, v in m.groupdict().items()
-            if k in fields_dict and v is not None
-        }
-    )
+    if is_dataclass(cls):
+        fields_dict = {f.name: f for f in fields(cls) if f.init}
+        return lambda m: cls(
+            **{
+                k: fields_dict[k].type(v)
+                for k, v in m.groupdict().items()
+                if k in fields_dict and v is not None
+            }
+        )
+    else:
+        raise TypeError("Unsupported type")  # pragma: no cover
 
 
 def enum_processor(
@@ -313,6 +316,7 @@ def parse_tokens_single_line(
         puzzle_input (List[str]): the puzzle input
         *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
+        require_delimiter (bool): when false, the delimiter is optional in the input
         header (Tuple[str, ...], optional): header to validate. Defaults to ().
 
     Returns:
