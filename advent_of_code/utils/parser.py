@@ -5,7 +5,10 @@ from re import escape, fullmatch, search, split
 from sys import maxsize
 from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar, Union
 
+from _typeshed import DataclassInstance
+
 T = TypeVar("T")
+S = TypeVar("S", bound=DataclassInstance)
 
 
 def int_processor(match: Match[str]) -> int:
@@ -81,8 +84,8 @@ def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
 
 
 def dataclass_processor(
-    cls: Type[T],
-) -> Callable[[Match[str]], T]:
+    cls: Type[S],
+) -> Callable[[Match[str]], S]:
     """Create a match processor to process match object as a data class.
 
     Args:
