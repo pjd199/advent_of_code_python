@@ -11,8 +11,6 @@ from pathlib import Path
 from sys import maxsize, path
 from typing import Dict, List, Tuple
 
-from lambda_multiprocessing import Pool  # type: ignore
-
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
@@ -84,11 +82,10 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
-            results = pool.starmap(
-                self._solve,
-                ((b, (0, 0, 0, 0), (1, 0, 0, 0), 24, {}) for b in self.input),
-            )
+        results = [
+            self._solve(b, (0, 0, 0, 0), (1, 0, 0, 0), 24, {}) for b in self.input
+        ]
+
         return sum(b.identifier * result for b, result in zip(self.input, results))
 
     def solve_part_two(self) -> int:
@@ -97,11 +94,10 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
-            results = pool.starmap(
-                self._solve,
-                ((b, (0, 0, 0, 0), (1, 0, 0, 0), 32, {}) for b in self.input[:3]),
-            )
+        results = [
+            self._solve(b, (0, 0, 0, 0), (1, 0, 0, 0), 32, {}) for b in self.input[:3]
+        ]
+
         return int(prod(results))
 
     def _solve(

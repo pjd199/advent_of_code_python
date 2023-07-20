@@ -21,35 +21,36 @@ from advent_of_code.utils.solver_status import (
     is_solver_implemented,
 )
 
-# constants for URL parameter positions
-YEAR = 0
-DAY = 1
-PART = 2
-
 # initialise the flask app
 app = Flask(__name__)
 lambda_handler = make_lambda_handler(app)
 
+cache_max_age = 3600  # one hour
+
 
 @app.route("/", methods=["GET"])
-def handle_root_path() -> Tuple[Dict[str, Any], int]:
+def handle_root_path() -> Tuple[Dict[str, Any], int, Dict[str, str]]:
     """Handles the root path - / .
 
     Returns:
         tuple[Json, int]: a JSON response and a HTTP status number
     """
     dates = [date for date, status in implementation_status().items() if status]
-    return {
-        "years": [
-            {"year": year, "days": [x.day for x in dates if x.year == year]}
-            for year in sorted({x.year for x in dates})
-        ]
-    }, 200
+    return (
+        {
+            "years": [
+                {"year": year, "days": [x.day for x in dates if x.year == year]}
+                for year in sorted({x.year for x in dates})
+            ]
+        },
+        200,
+        {"Cache-Control": f"public, max-age={cache_max_age}"},
+    )
 
 
 @app.route("/<int:year>/", methods=["GET"])
 @app.route("/<int:year>", methods=["GET"])
-def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
+def handle_year_path(year: int) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
     """Handles the year path - eg /2015 .
 
     Args:
@@ -63,7 +64,11 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
     if not days:
         abort(404)
 
-    return {"year": year, "days": days}, 200
+    return (
+        {"year": year, "days": days},
+        200,
+        {"Cache-Control": f"public, max-age={cache_max_age}"},
+    )
 
 
 @app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])
@@ -72,7 +77,7 @@ def handle_year_path(year: int) -> Tuple[Dict[str, Any], int]:
 @app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
 def handle_solve_path_with_part(
     year: int, day: int, part: Optional[str] = None
-) -> Tuple[Dict[str, Any], int]:
+) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
     """Handles the solve all parts path - eg /2015/1.
 
     Args:
@@ -96,7 +101,7 @@ def handle_solve_path_with_part(
     if request.method == "POST":
         puzzle_input = load_multi_line_string(request.get_data(as_text=True))
     elif query_input is not None:
-        puzzle_input = load_multi_line_string(get(query_input).text)
+        puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
     else:
         puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
 
@@ -119,7 +124,11 @@ def handle_solve_path_with_part(
     if part_two:
         body["part_two"] = str(part_two)
 
-    return body, 200
+    return (
+        body,
+        200,
+        {"Cache-Control": f"public, max-age={cache_max_age}"},
+    )
 
 
 @app.errorhandler(HTTPException)
@@ -179,7 +188,7 @@ def main() -> None:  # pragma: no cover
         try:
             # time the call to the development server
             start_time = perf_counter_ns()
-            response = get(f"http://{host}:{port}{url}")
+            response = get(f"http://{host}:{port}{url}", timeout=300)
             end_time = perf_counter_ns()
             elapsed_time = end_time - start_time
             # print the time, then the response body in JSON

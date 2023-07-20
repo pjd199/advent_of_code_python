@@ -105,7 +105,9 @@ jobs:
         run: coverage xml --omit="*/test*"
 
       - name: Send coverage report to Codecov
-        uses: codecov/codecov-action@v1
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
             
       - name: Check for 100% coverage
         run: coverage report --fail-under=100 --omit="*/test*"

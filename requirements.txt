@@ -1,6 +1,6 @@
 # Production dependancies
-Flask==2.1.3
-apig-wsgi==2.15.0
-numpy==1.24.3
-requests==2.29.0
+Flask==2.3.2
+apig-wsgi==2.18.0
+numpy==1.25.1
+requests==2.31.0
 lambda-multiprocessing==0.3
