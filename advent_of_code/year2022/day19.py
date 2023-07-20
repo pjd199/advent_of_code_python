@@ -84,11 +84,16 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
+        pool = Pool()
+        try:
+            pool.__enter__()
             results = pool.starmap(
                 self._solve,
                 ((b, (0, 0, 0, 0), (1, 0, 0, 0), 24, {}) for b in self.input),
             )
+        finally:
+            pool.close()
+            pool.join()
         return sum(b.identifier * result for b, result in zip(self.input, results))
 
     def solve_part_two(self) -> int:
@@ -97,11 +102,17 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
+        pool = Pool()
+        try:
+            pool.__enter__()
             results = pool.starmap(
                 self._solve,
                 ((b, (0, 0, 0, 0), (1, 0, 0, 0), 32, {}) for b in self.input[:3]),
             )
+        finally:
+            pool.close()
+            pool.join()
+
         return int(prod(results))
 
     def _solve(

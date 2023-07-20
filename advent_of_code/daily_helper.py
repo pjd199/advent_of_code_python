@@ -299,10 +299,7 @@ class DailyHelper:
             }
             if self.session:
                 headers["cookie"] = f"session={self.session}"
-            response = get(
-                url,
-                headers=headers,
-            )
+            response = get(url, headers=headers, timeout=60)
             if response.status_code == 200:
                 self._save(path, response.text)
             else:
