@@ -8,9 +8,11 @@ Resources:
     Properties:
       CodeUri: .
       Handler: advent_of_code.app.lambda_handler
-      Runtime: python3.9
-      Timeout: 60
+      Runtime: python3.10
+      Timeout: 300
       MemorySize: 2048
+      Architectures:
+      - arm64
       FunctionUrlConfig:
         AuthType: NONE
 
