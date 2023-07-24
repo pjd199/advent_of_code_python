@@ -15,8 +15,10 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
     Metadata:
+      DockerTag: AdventOfCodeFunction
       Dockerfile: Dockerfile
       DockerContext: .
+
 Outputs:
   HelloWorldFunction:
     Description: "Advent of Code Function ARN"
