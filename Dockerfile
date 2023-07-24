@@ -2,9 +2,9 @@ FROM public.ecr.aws/lambda/python:3.9
 
 ARG wd=/var/task
 
-COPY . ${LAMBDA_TASK_ROOT}
+COPY . ${wd}
 
-RUN python3.11 -m pip install -r requirements.txt
+RUN python3.9 -m pip install -r requirements.txt -t ${wd}
 
 CMD ["advent_of_code.app.lambda_handler"]
 
