@@ -147,8 +147,8 @@ jobs:
       
       - name: Build Base Image
         run: |
-          docker buildx .
-          
+          docker buildx build .
+
 
 
           
