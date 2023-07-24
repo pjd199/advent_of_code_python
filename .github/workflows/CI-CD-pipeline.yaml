@@ -147,7 +147,7 @@ jobs:
       
       - name: Build the Container
         run: |
-          docker build
+          docker build .
           ls -l
           
         # aws ecr create-repository --repository-name python-lambda-runtime
