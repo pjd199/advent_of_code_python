@@ -1,6 +1,8 @@
 name: CI-CD-Pipeline
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
@@ -112,7 +114,7 @@ jobs:
   #     - name: Check for 100% coverage
   #       run: coverage report --fail-under=100 --omit="*/test*"
 
-deploy-to-aws-lambda:
+  deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
     runs-on: ubuntu-latest
     steps:
