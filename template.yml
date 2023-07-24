@@ -16,7 +16,7 @@ Resources:
       FunctionUrlConfig:
         AuthType: NONE
     Metadata:
-#      DockerTag: AdventOfCodeFunction
+      DockerTag: AdventOfCodeFunction
       Dockerfile: Dockerfile
       DockerContext: .
 
