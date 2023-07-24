@@ -11,8 +11,8 @@ Resources:
       Timeout: 300
       MemorySize: 2048
       Architectures:
-      # - arm64
-      - x86_64
+      - arm64
+      # - x86_64
       FunctionUrlConfig:
         AuthType: NONE
     Metadata:
