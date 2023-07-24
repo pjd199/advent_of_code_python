@@ -1,7 +1,7 @@
 # Define custom function directory
 ARG FUNCTION_DIR="/var/task/"
 
-FROM --platform=arm64 python:3.11-slim-buster as build-image
+FROM --platform=linux/arm64 python:3.11-slim-buster as build-image
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
@@ -20,7 +20,7 @@ RUN apt-get update && \
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 
-FROM --platform=arm64 python:3.11-slim-buster
+FROM --platform=linux/arm64 python:3.11-slim-buster
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
