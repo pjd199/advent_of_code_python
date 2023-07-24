@@ -2,7 +2,7 @@
 ARG FUNCTION_DIR="/var/task/"
 
 #
-# Build the base image 
+# Create the build image 
 #
 FROM --platform=linux/arm64 python:3.11.4-slim-bookworm as build-image
 
@@ -19,11 +19,17 @@ RUN apt-get update && \
   unzip \
   libcurl4-openssl-dev
 
-# Install the function's dependencies
+# Install awslambdaric
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
+# add the project files
+COPY . ${FUNCTION_DIR}
+RUN chmod -R 0755 .
+RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
+
+
 #
-# Build the runtime image
+# Create the runtime image from the build image
 #
 FROM --platform=arm64 python:3.11.4-slim-bookworm
 
@@ -34,12 +40,7 @@ WORKDIR ${FUNCTION_DIR}
 
 # Copy in the built dependencies
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
+
+# Set entry point and lambda handler
 ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
-
-# add the project files
-COPY . ${FUNCTION_DIR}
-RUN chmod -R 0755 .
-RUN pip install -r requirements.txt
-
-# sent the AWS Lambda handler
 CMD ["advent_of_code.app.lambda_handler"]
