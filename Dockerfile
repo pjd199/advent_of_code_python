@@ -24,7 +24,7 @@ RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
 COPY . ${FUNCTION_DIR}
-RUN chmod -R 0755 ${FUNCTION_DIR}
+#RUN chmod -R 0755 ${FUNCTION_DIR}
 RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
 
 #
