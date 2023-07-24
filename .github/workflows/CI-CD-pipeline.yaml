@@ -151,10 +151,10 @@ jobs:
       #     pip install -r requirements.txt
 
       - name: SAM Validate
-        run: sam validate
+        run: sam validate --lint
 
       - name: SAM Build
-        run: sam build --use-container --config-file ${{ env.SAM_CONFIG_FILE }}
+        run: sam build --use-container --config-file ${{ env.SAM_CONFIG_FILE }} --debug
     
       - name: SAM Deploy to AWS Lambda
         run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
