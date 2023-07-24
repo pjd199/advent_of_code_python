@@ -12,7 +12,6 @@ Resources:
       MemorySize: 2048
       Architectures:
       - arm64
-      # - x86_64
       FunctionUrlConfig:
         AuthType: NONE
     Metadata:
@@ -27,29 +26,3 @@ Outputs:
   AdventOfCodeFunctionURL:
     Description: "Advent of Code Function URL HTTP endpoint"
     Value: !GetAtt AdventOfCodeFunctionUrl.FunctionUrl
-
-# AWSTemplateFormatVersion: '2010-09-09'
-# Transform: AWS::Serverless-2016-10-31
-# Description: Template for the Advent of Code RESTful API
-
-# Resources:
-#   AdventOfCodeFunction:
-#     Type: AWS::Serverless::Function
-#     Properties:
-#       CodeUri: .
-#       Handler: advent_of_code.app.lambda_handler
-#       Runtime: python3.10
-#       Timeout: 300
-#       MemorySize: 2048
-#       Architectures:
-#       - arm64
-#       FunctionUrlConfig:
-#         AuthType: NONE
-
-# Outputs:
-#   HelloWorldFunction:
-#     Description: "Advent of Code Function ARN"
-#     Value: !GetAtt AdventOfCodeFunction.Arn
-#   AdventOfCodeFunctionURL:
-#     Description: "Advent of Code Function URL HTTP endpoint"
-#     Value: !GetAtt AdventOfCodeFunctionUrl.FunctionUrl
