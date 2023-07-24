@@ -4,7 +4,7 @@ ARG wd=/var/task
 
 COPY . ${wd}
 
-RUN python -m pip install -r requirements.txt -t "${wd}"
+RUN python3.11 -m pip install -r requirements.txt -t "${wd}"
 
 CMD ["advent_of_code.app.lambda_handler"]
 
