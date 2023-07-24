@@ -127,7 +127,7 @@ jobs:
       
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+        run: echo "SAM_CONFIG_FILE=samconfig_dev_container.toml" >> $GITHUB_ENV
 
       - name: Setup up python
         uses: actions/setup-python@v4
