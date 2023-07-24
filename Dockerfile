@@ -23,10 +23,8 @@ RUN apt-get update && \
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
-WORKDIR ${FUNCTION_DIR}
 COPY . ${FUNCTION_DIR}
-#RUN chmod -R 0755 ${FUNCTION_DIR}
-RUN pip install --target ${FUNCTION_DIR} -r requirements.txt
+RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 
 #
 # Create the runtime image from the build image
@@ -41,8 +39,6 @@ WORKDIR ${FUNCTION_DIR}
 # Copy in the built dependencies
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
-# Set entry point and lambda
+# Set entry point and lambda handler
 ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
-
-# set the AWS Lambda handler
 CMD ["advent_of_code.app.lambda_handler"]
