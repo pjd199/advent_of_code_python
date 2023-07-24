@@ -58,20 +58,23 @@ def lambda_urls() -> Dict[str, str]:
     """
     urls = {}
     for file in ["./samconfig.toml", "./samconfig_dev.toml"]:
-        sam_config = load_toml(file)
-        stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
-        region_name = sam_config["default"]["deploy"]["parameters"]["region"]
+        try:
+            sam_config = load_toml(file)
+            stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
+            region_name = sam_config["default"]["deploy"]["parameters"]["region"]
 
-        cf_client = client("cloudformation", region_name=region_name)
-        stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
+            cf_client = client("cloudformation", region_name=region_name)
+            stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
 
-        if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
-            for stack in stack_descriptions["Stacks"]:
-                if stack["StackName"] == stack_name:
-                    for output in stack["Outputs"]:
-                        if output["OutputKey"] == "AdventOfCodeFunctionURL":
-                            urls[file] = output["OutputValue"].strip("/")
-                            break
+            if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
+                for stack in stack_descriptions["Stacks"]:
+                    if stack["StackName"] == stack_name:
+                        for output in stack["Outputs"]:
+                            if output["OutputKey"] == "AdventOfCodeFunctionURL":
+                                urls[file] = output["OutputValue"].strip("/")
+                                break
+        except Exception:
+            None
     return urls
 
 
