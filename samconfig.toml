@@ -7,4 +7,4 @@ s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr"
 s3_prefix = "advent-of-code-python2"
 region = "eu-west-2"
 capabilities = "CAPABILITY_IAM"
-image_repositories = ["AdventOfCodeFunction=012346180589.dkr.ecr.eu-west-2.amazonaws.com/advent-of-code-function"]
+image_repositories = ["AdventOfCodeFunction=public.ecr.aws/s4l3u6g3/advent-of-code-function"]
