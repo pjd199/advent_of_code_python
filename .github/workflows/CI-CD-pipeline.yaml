@@ -173,8 +173,8 @@ jobs:
       - name: SAM Build
         run: sam build --config-file ${{ env.SAM_CONFIG_FILE }} --debug
     
-      # - name: SAM Deploy to AWS Lambda
-      #   run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }} --debug
+      - name: SAM Deploy to AWS Lambda
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }} --debug
 
       - name: Test Dev
         run: curl https://xfoq3sv7npeid5x6nzzlgdqqmy0uyesa.lambda-url.eu-west-2.on.aws
