@@ -10,6 +10,9 @@ FROM --platform=linux/arm64 python:3.11.4-slim-bookworm as build-image
 ARG FUNCTION_DIR
 RUN mkdir -p ${FUNCTION_DIR}
 
+# Update pip and setuptools
+RUN pip install --upgrade pip setuptools
+
 # Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
   apt-get install -y \
@@ -20,10 +23,9 @@ RUN apt-get update && \
   libcurl4-openssl-dev
 
 # Install awslambdaric
-RUN pip install --upgrade pip setuptools
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
-# add the project files
+# Add the project files and install dependancies
 COPY . ${FUNCTION_DIR}
 RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 
