@@ -24,6 +24,7 @@ RUN apt-get update && \
   libcurl4-openssl-dev
 
 # Install awslambdaric
+RUN python -m pip install --upgrade pip setuptools
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
