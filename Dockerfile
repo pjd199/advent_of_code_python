@@ -21,11 +21,11 @@ RUN apt-get update && \
   libcurl4-openssl-dev
 
 # Install awslambdaric
-RUN pypy3 -m pip install --target ${FUNCTION_DIR} awslambdaric
+RUN /opt/pypy/bin/pypy3 -m pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
 COPY . ${FUNCTION_DIR}
-RUN pypy3 -m pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+RUN /opt/pypy/bin/pypy3 -m pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 
 #
 # Create the runtime image from the build image
@@ -42,5 +42,5 @@ COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
 # Set entry point and lambda handler
 #ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
-ENTRYPOINT [ "pypy3", "-m", "awslambdaric" ]
+ENTRYPOINT [ "/opt/pypy/bin/pypy3", "-m", "awslambdaric" ]
 CMD ["advent_of_code.app.lambda_handler"]
