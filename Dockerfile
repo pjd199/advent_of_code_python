@@ -4,15 +4,11 @@ ARG FUNCTION_DIR="/var/task/"
 #
 # Create the build image 
 #
-#FROM --platform=linux/arm64 python:3.11.4-slim-bookworm as build-image
-FROM --platform=linux/arm64 pypy:3.10-slim-bookworm as build-image
+FROM --platform=linux/arm64 python:3.11.4-slim-bookworm as build-image
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
 RUN mkdir -p ${FUNCTION_DIR}
-
-# Create a symbolic link for pypy
-RUN ln -s /usr/local/bin/pypy3 /usr/local/bin/python
 
 # Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
@@ -24,7 +20,7 @@ RUN apt-get update && \
   libcurl4-openssl-dev
 
 # Install awslambdaric
-RUN python -m pip install --upgrade pip setuptools
+RUN pip install --upgrade pip setuptools
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
@@ -34,7 +30,7 @@ RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 #
 # Create the runtime image from the build image
 #
-FROM --platform=linux/arm64 pypy:3.10-slim-bookworm
+FROM --platform=arm64 python:3.11.4-slim-bookworm
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
