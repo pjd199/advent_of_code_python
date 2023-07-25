@@ -148,6 +148,9 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
+      - name: Docker Build
+        run: docker buildx build 
+
       - name: SAM Validate
         run: sam validate --lint
 
