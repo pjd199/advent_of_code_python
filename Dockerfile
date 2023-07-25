@@ -32,7 +32,7 @@ RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 #
 # Create the runtime image from the build image
 #
-FROM --platform=arm64 python:3.11.4-slim-bookworm
+FROM --platform=linux/arm64 python:3.11.4-slim-bookworm
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
