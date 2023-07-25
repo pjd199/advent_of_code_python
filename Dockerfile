@@ -21,11 +21,11 @@ RUN apt-get update && \
   libcurl4-openssl-dev
 
 # Install awslambdaric
-RUN pypy -m pip install --target ${FUNCTION_DIR} awslambdaric
+RUN pypy3 -m pip install --target ${FUNCTION_DIR} awslambdaric
 
 # add the project files
 COPY . ${FUNCTION_DIR}
-RUN pypy -m pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+RUN pypy3 -m pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 
 #
 # Create the runtime image from the build image
