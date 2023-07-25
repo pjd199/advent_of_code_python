@@ -11,6 +11,9 @@ FROM --platform=linux/arm64 pypy:3.10-slim-bookworm as build-image
 ARG FUNCTION_DIR
 RUN mkdir -p ${FUNCTION_DIR}
 
+# Create a symbolic link for pypy
+RUN ln -s /usr/local/bin/pypy3 /usr/local/bin/python
+
 # Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
   apt-get install -y \
@@ -42,5 +45,4 @@ COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
 # Set entry point and lambda handler
 ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
-#ENTRYPOINT [ "/usr/local/bin/pypy3", "-m", "awslambdaric" ]
 CMD ["advent_of_code.app.lambda_handler"]
