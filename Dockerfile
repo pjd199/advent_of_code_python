@@ -13,12 +13,12 @@ RUN mkdir -p ${FUNCTION_DIR}
 # Update pip and setuptools
 RUN pip install --upgrade pip setuptools
 
-# Install awslambdaric
-RUN pip install --target ${FUNCTION_DIR} awslambdaric
-
 # Add the project files and install dependancies
 COPY . ${FUNCTION_DIR}
 RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+
+# Install awslambdaric
+RUN pip install --target ${FUNCTION_DIR} awslambdaric
 
 #
 # Create a slim runtime image from the build image
