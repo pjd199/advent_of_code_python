@@ -15,7 +15,7 @@ RUN pip install --upgrade pip setuptools
 
 # Add the project files and install dependancies
 COPY . ${FUNCTION_DIR}
-# RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
 
 # Install aws-lambda-cpp build dependencies
 RUN apt-get update && \
@@ -43,7 +43,7 @@ WORKDIR ${FUNCTION_DIR}
 COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
 # Set python to be pypy3
-RUN ls -sf /opt/pypy/bin/pypy3 /usr/local/bin/python
+RUN ln -sf /opt/pypy/bin/pypy3 /usr/local/bin/python
 
 # Set entry point and lambda handler
 ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
