@@ -132,7 +132,7 @@ jobs:
         run: docker buildx build -f Dockerfile_wheels --tag wheely . 
 
       - name: List containers
-        run: docker container ls --all --format > file.txt
+        run: docker container ls --all > file.txt
 
       # - name: Copy files from Docker image
       #   run: |
