@@ -119,7 +119,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [aws/aws-lambda-python-runtime-interface-client numpy/numpy]
+        package: [aws/aws-lambda-python-runtime-interface-client, numpy/numpy]
 
     steps:
       - name: Checkout ${{ matrix.package }}
