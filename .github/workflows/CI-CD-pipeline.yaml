@@ -129,7 +129,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Use Docker to build wheels
-        run: docker buildx build -f Dockerfile_wheels -t wheely:latest . 
+        run: docker buildx build -f Dockerfile_wheels --name wheely . 
 
       - name: List containers
         run: docker container ls --all --quiet
@@ -137,7 +137,7 @@ jobs:
       - name: Copy files from Docker image
         run: |
           mkdir -p ./wheelhouse
-          docker cp $(docker container ls --all --quiet):/var/wheels ./wheelhouse
+          docker wheely:/var/wheels ./wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
