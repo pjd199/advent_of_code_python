@@ -132,13 +132,13 @@ jobs:
         run: docker buildx build -f Dockerfile_wheels --tag wheely . 
 
       - name: List containers
-        run: docker container ls --all
+        run: docker container ls --all --format "{{.Name}}"
 
       - name: Copy files from Docker image
         run: |
           mkdir -p wheelhouse
           docker exec wheely
-          docker cp $(docker container ls --all --quiet):/var/wheels wheelhouse
+          docker cp $(docker container ls --all --format "{{.Name}}"):/var/wheels wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
