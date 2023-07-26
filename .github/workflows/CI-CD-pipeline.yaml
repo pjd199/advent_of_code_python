@@ -132,17 +132,18 @@ jobs:
         run: docker buildx build -f Dockerfile_wheels --tag wheely . 
 
       - name: List containers
-        run: docker container ls --all --format "{{println .Name}}"
+        run: docker container ls --all --format > file.txt
 
-      - name: Copy files from Docker image
-        run: |
-          mkdir -p wheelhouse
-          docker exec wheely ls
-          docker cp $(docker container ls --all --format "{{println .Name}}"):/var/wheels wheelhouse
+      # - name: Copy files from Docker image
+      #   run: |
+      #     mkdir -p wheelhouse
+      #     docker exec wheely ls
+      #     docker cp $(docker container ls --all --format "{{println .Name}}"):/var/wheels wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
-          path: wheelhouse/*.whl
+          #path: wheelhouse/*.whl
+          path: file.txt
 
       # - name: Commit updated wheels to repository
       #   uses: stefanzweifel/git-auto-commit-action@v4
