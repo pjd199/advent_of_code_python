@@ -143,21 +143,21 @@ jobs:
         with:
           path: ./wheelhouse/*.whl
 
-  deploy-to-aws-lambda:
-    name: Deploy to AWS Lambda
-    # needs: coverage
-    runs-on: ubuntu-latest
-    steps:
-      -  name: Check out respository
-         uses: actions/checkout@v3
+  # deploy-to-aws-lambda:
+  #   name: Deploy to AWS Lambda
+  #   # needs: coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     -  name: Check out respository
+  #        uses: actions/checkout@v3
 
-      - name: Set variables for Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
+  #     - name: Set variables for Production
+  #       if: github.ref == 'refs/heads/main'
+  #       run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
       
-      - name: Set variables for Development
-        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+  #     - name: Set variables for Development
+  #       if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
+  #       run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
 
       # - name: Setup AWS SAM
       #   uses: aws-actions/setup-sam@v2
