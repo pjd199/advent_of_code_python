@@ -136,12 +136,12 @@ jobs:
 
       - name: Copy files from Docker image
         run: |
-          mkdir -p ./wheelhouse
-          docker cp wheely:/var/wheels ./wheelhouse
+          mkdir -p wheelhouse
+          docker cp $(docker container ls --all --quiet):/var/wheels wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
-          path: ./wheelhouse/*.whl
+          path: wheelhouse/*.whl
 
       # - name: Commit updated wheels to repository
       #   uses: stefanzweifel/git-auto-commit-action@v4
