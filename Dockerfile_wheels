@@ -11,16 +11,16 @@ ARG WHEEL_DIR
 RUN mkdir -p ${WHEEL_DIR}
 
 # Update pip and setuptools
-RUN pip install --upgrade pip setuptools
+# RUN pip install --upgrade pip setuptools
 
 # Install aws-lambda-cpp build dependencies
-RUN apt-get update && \
-    apt-get install -y \
-    g++ \
-    make \
-    cmake \
-    unzip \
-    libcurl4-openssl-dev
+# RUN apt-get update && \
+#     apt-get install -y \
+#     g++ \
+#     make \
+#     cmake \
+#     unzip \
+#     libcurl4-openssl-dev
 
 # Add the project files and install dependancies
 COPY ./requirements.txt .
