@@ -132,7 +132,7 @@ jobs:
         run: docker buildx build -f Dockerfile_wheels -t wheely:latest . 
 
       - name: List containers
-        run: docker container ls
+        run: docker container ls --all --quiet --filter "wheely"
 
       - name: Copy files from Docker image
         run: |
@@ -142,8 +142,6 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           path: ./wheelhouse/*.whl
-
-      
 
       # - name: Commit updated wheels to repository
       #   uses: stefanzweifel/git-auto-commit-action@v4
