@@ -11,9 +11,9 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
-concurrency: 
-  group: CICD${{ github.ref }}
-  cancel-in-progress: true
+# concurrency: 
+#   group: CICD${{ github.ref }}
+#   cancel-in-progress: true
 
 jobs:
   # check:
@@ -114,79 +114,86 @@ jobs:
   #     - name: Check for 100% coverage
   #       run: coverage report --fail-under=100 --omit="*/test*"
 
-  # build_wheels:
-  #   name: Build ${{ matrix.package }} wheel for PyPy on amd64
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     matrix:
-  #       package: [aws/aws-lambda-python-runtime-interface-client, numpy/numpy]
-
-  #   steps:
-  #     - name: Checkout ${{ matrix.package }}
-  #       uses: actions/checkout@v3
-  #       with:
-  #         repository: ${{ matrix.package }}
-
-  #     - name: Set up QEMU
-  #       uses: docker/setup-qemu-action@v2
-  #       with:
-  #         platforms: all
-
-  #     - name: Build wheels
-  #       uses: pypa/cibuildwheel@v2.14.1
-  #       env:
-  #         CIBW_ARCHS_LINUX: aarch64
-  #         CIBW_BUILD: pp310-manylinux_aarch64
-
-  #     - uses: actions/upload-artifact@v3
-  #       with:
-  #         path: ./wheelhouse/*.whl
-
-  deploy-to-aws-lambda:
-    name: Deploy to AWS Lambda
-    # needs: coverage
+  build_wheels:
+    name: Build project wheels for PyPy on amd64
     runs-on: ubuntu-latest
+
     steps:
-      -  name: Check out respository
-         uses: actions/checkout@v3
-
-      - name: Set variables for Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
-      
-      - name: Set variables for Development
-        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-
-      - name: Setup AWS SAM
-        uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-      
+      - name: Checkout Respository
+        uses: actions/checkout@v3
+  
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Docker test build
-        run: docker buildx build .
+      - name: Use Docker to build wheels
+        run: docker buildx build -f Dockerfile_wheels -t wheely:latest . 
 
-      - name: SAM Validate
-        run: sam validate --lint
+      - name: Copy files from Docker image
+        run: |
+          mkdir -p ./wheelhouse
+          docker cp wheely:latest:/var/wheels ./wheelhouse
 
-      - name: SAM Build
-        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
+      - uses: actions/upload-artifact@v3
+        with:
+          path: ./wheelhouse/*.whl
+
+      
+
+      # - name: Commit updated wheels to repository
+      #   uses: stefanzweifel/git-auto-commit-action@v4
+      #   with:
+      #     commit_message: Updated status graphic
+      #     branch: dev
+
+
+  # deploy-to-aws-lambda:
+  #   name: Deploy to AWS Lambda
+  #   # needs: coverage
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     -  name: Check out respository
+  #        uses: actions/checkout@v3
+
+  #     - name: Set variables for Production
+  #       if: github.ref == 'refs/heads/main'
+  #       run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
+      
+  #     - name: Set variables for Development
+  #       if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
+  #       run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+
+  #     - name: Setup AWS SAM
+  #       uses: aws-actions/setup-sam@v2
+  #       with:
+  #         use-installer: true
+
+  #     - name: Configure AWS credentials
+  #       uses: aws-actions/configure-aws-credentials@v2
+  #       with:
+  #         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  #         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  #         aws-region: eu-west-2
+      
+  #     - name: Set up QEMU
+  #       uses: docker/setup-qemu-action@v2
+      
+  #     - name: Set up Docker Buildx
+  #       uses: docker/setup-buildx-action@v2
+
+  #     - name: Docker test build
+  #       run: docker buildx build .
+
+  #     - name: SAM Validate
+  #       run: sam validate --lint
+
+  #     - name: SAM Build
+  #       run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
     
-      - name: SAM Deploy to AWS Lambda
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
+  #     - name: SAM Deploy to AWS Lambda
+  #       run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
 
   # system-test:
   #   name: System Testing
