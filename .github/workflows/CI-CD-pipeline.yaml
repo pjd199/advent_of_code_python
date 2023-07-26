@@ -129,7 +129,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Use Docker to build wheels
-        run: docker buildx build -f Dockerfile_wheels --name wheely . 
+        run: docker buildx build -f Dockerfile_wheels --tag wheely . 
 
       - name: List containers
         run: docker container ls --all --quiet
