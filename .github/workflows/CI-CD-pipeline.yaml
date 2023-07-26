@@ -131,6 +131,9 @@ jobs:
       - name: Use Docker to build wheels
         run: docker buildx build -f Dockerfile_wheels -t wheely:latest . 
 
+      - name: List containers
+        run: docker container ls
+
       - name: Copy files from Docker image
         run: |
           mkdir -p ./wheelhouse
@@ -147,6 +150,7 @@ jobs:
       #   with:
       #     commit_message: Updated status graphic
       #     branch: dev
+      #     file_pattern: 'wheelhouse/*.whl'
 
 
   # deploy-to-aws-lambda:
