@@ -132,7 +132,7 @@ jobs:
         run: docker buildx build -f Dockerfile_wheels -t wheely:latest . 
 
       - name: List containers
-        run: docker container ls --all --quiet --filter "wheely"
+        run: docker container ls --all --quiet --filter "name=wheely"
 
       - name: Copy files from Docker image
         run: |
