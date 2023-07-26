@@ -134,11 +134,12 @@ jobs:
       - name: List containers
         run: docker container ls --all > file.txt
 
-      # - name: Copy files from Docker image
-      #   run: |
-      #     mkdir -p wheelhouse
-      #     docker exec wheely ls
-      #     docker cp $(docker container ls --all --format "{{println .Name}}"):/var/wheels wheelhouse
+      - name: Copy files from Docker image
+        run: |
+          mkdir -p wheelhouse
+          docker run wheely
+          docker cp wheely:/var/wheels wheelhouse
+          docker kill wheely
 
       - uses: actions/upload-artifact@v3
         with:
