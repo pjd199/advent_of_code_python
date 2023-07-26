@@ -119,14 +119,13 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [aws/aws-lambda-python-runtime-interface-client]
+        package: [aws/aws-lambda-python-runtime-interface-client numpy/numpy]
 
     steps:
       - name: Checkout ${{ matrix.package }}
         uses: actions/checkout@v3
         with:
           repository: ${{ matrix.package }}
-          branch: main
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
