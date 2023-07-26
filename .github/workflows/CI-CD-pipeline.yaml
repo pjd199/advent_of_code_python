@@ -137,7 +137,7 @@ jobs:
       - name: Copy files from Docker image
         run: |
           mkdir -p ./wheelhouse
-          docker cp wheely:/var/wheels ./wheelhouse
+          docker cp $(docker container ls --all --quiet):/var/wheels ./wheelhouse
 
       - uses: actions/upload-artifact@v3
         with:
