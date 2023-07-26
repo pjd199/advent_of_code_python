@@ -15,7 +15,16 @@ RUN pip install --upgrade pip setuptools
 
 # Add the project files and install dependancies
 COPY . ${FUNCTION_DIR}
-RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+# RUN pip install --target ${FUNCTION_DIR} -r ${FUNCTION_DIR}/requirements.txt
+
+# Install aws-lambda-cpp build dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    g++ \
+    make \
+    cmake \
+    unzip \
+    libcurl4-openssl-dev
 
 # Install awslambdaric
 RUN pip install --target ${FUNCTION_DIR} awslambdaric
