@@ -124,7 +124,7 @@ jobs:
 
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
-    needs: [unit-check, check, coverage]
+    needs: [unit-test, check, coverage]
     runs-on: ubuntu-latest
     steps:
       -  name: Check out respository
