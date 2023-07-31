@@ -10,7 +10,6 @@ from sys import path
 from typing import List, Tuple
 
 import numpy as np
-from lambda_multiprocessing import Pool  # type: ignore
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -58,10 +57,9 @@ class Solver(SolverInterface):
         if not self.ready:
             self._calc_power_levels()
 
-        with Pool() as pool:
-            results = pool.map(self._find_largest, range(1, 300))
-
-        _, largest_x, largest_y, largest_size = max(results)
+        _, largest_x, largest_y, largest_size = max(
+            self._find_largest(i) for i in range(1, 300)
+        )
 
         return f"{largest_x},{largest_y},{largest_size}"
 

@@ -13,8 +13,6 @@ from re import compile
 from sys import path
 from typing import Iterator, List
 
-from lambda_multiprocessing import Pool  # type: ignore
-
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
@@ -68,12 +66,9 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
-            return self._find(
-                iter(
-                    pool.map(stretch_digest, (f"{self.input}{j}" for j in range(25000)))
-                )
-            )
+        return self._find(
+            iter((stretch_digest(f"{self.input}{j}") for j in range(25000)))
+        )
 
     def _find(self, iterator: Iterator[str]) -> int:
         """Search for the answers.
