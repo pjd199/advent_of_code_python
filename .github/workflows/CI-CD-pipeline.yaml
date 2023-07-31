@@ -124,7 +124,7 @@ jobs:
 
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
-    needs: coverage
+    needs: [coverage, check]
     runs-on: ubuntu-latest
     steps:
       -  name: Check out respository
@@ -155,9 +155,6 @@ jobs:
       
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-
-      # - name: Docker test build
-      #   run: docker buildx build .
 
       - name: SAM Validate
         run: sam validate --lint
@@ -213,37 +210,3 @@ jobs:
     steps:
       - name: Dump context
         uses: crazy-max/ghaction-dump-context@v1
-
-
-  build_wheels:
-    name: Build project wheels for PyPy on amd64
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout Respository
-        uses: actions/checkout@v3
-  
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: Use Docker to build wheels
-        run: docker buildx build -f Dockerfile_wheels --tag wheely . 
-
-      - name: List containers
-        run: |
-          docker images
-
-      - name: Copy files from Docker image
-        run: |
-          mkdir -p wheelhouse
-          docker run wheely
-          docker cp wheely:/var/wheels wheelhouse
-          docker kill wheely
-
-      - uses: actions/upload-artifact@v3
-        with:
-          #path: wheelhouse/*.whl
-          path: file.txt
