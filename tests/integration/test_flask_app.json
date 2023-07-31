@@ -123,6 +123,55 @@
     },
     {
       "request": {
+        "path": "/puzzles/2015/1",
+        "method": "GET",
+        "timestamp": "2023-07-31T11:27:50Z"
+      },
+      "response": {
+        "status": 200,
+        "body": {
+          "api_version": "2.0.0",
+          "description": "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
+          "links": [],
+          "results": [
+            {
+              "average_timing": {
+                "parse": -1,
+                "part_one": -1,
+                "part_two": -1,
+                "units": "ms"
+              },
+              "code_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/advent_of_code/year2015/day1.py",
+              "day": 1,
+              "links": [
+                {
+                  "action": "GET",
+                  "description": "Get the answer for 2015 day 1.",
+                  "href": "http://api.adventofcode.dibdin.me/answers/2015/1",
+                  "parameters": ["input"],
+                  "rel": "answers"
+                },
+                {
+                  "action": "POST",
+                  "description": "Get the answer for 2015 day 1.",
+                  "href": "http://api.adventofcode.dibdin.me/answers/2015/1",
+                  "rel": "answers"
+                }
+              ],
+              "official_url": "https://adventofcode.com/2015/day/1",
+              "overview": "OVERVIEW GOES HERE",
+              "repository_url": "https://github.com/pjd199/advent_of_code_python/blob/main/advent_of_code/year2015/day1.py",
+              "title": "TITLE GOES HERE",
+              "year": 2015
+            }
+          ],
+          "self": "http://api.adventofcode.dibdin.me/puzzles/2015/1",
+          "timestamp": "2023-07-31T11:27:50Z"
+        }
+      }
+    },
+    {
+      "request": {
         "path": "/2100",
         "method": "GET"
       },
@@ -187,6 +236,24 @@
       },
       "response": {
         "status": 404
+      }
+    },
+    {
+      "request": {
+        "path": "/answers/2014/1",
+        "method": "GET"
+      },
+      "response": {
+        "status": 404
+      }
+    },
+    {
+      "request": {
+        "path": "/answers/2015/1",
+        "method": "GET"
+      },
+      "response": {
+        "status": 400
       }
     },
     {

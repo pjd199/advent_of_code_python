@@ -12,7 +12,6 @@ Expected = NewType("Expected", Dict[int, Dict[int, Dict[str, Union[int, str]]]])
 class Part(Enum):
     """Enumeration of parts."""
 
-    ALL = auto()
     ONE = auto()
     TWO = auto()
 

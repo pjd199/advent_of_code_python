@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -64,14 +65,7 @@ class Solver(SolverInterface):
         _, most_to_lose = self._battle()
         return most_to_lose
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts.
-
-        Returns:
-            List[int]: the results
-        """
-        return list(self._battle())
-
+    @cache_result
     def _battle(self) -> Tuple[int, int]:
         """Fight.
 

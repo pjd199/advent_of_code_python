@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -34,16 +35,7 @@ class Solver(SolverInterface):
         """
         self.input = parse_single_line(puzzle_input, r"[a-z]+", str_processor)
 
-    def solve_all(self) -> List[str]:
-        """Solve both parts.
-
-        Returns:
-            List[str]: the answers
-        """
-        first = self._next_password_after(self.input)
-        second = self._next_password_after(first)
-        return [first, second]
-
+    @cache_result
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.
 
@@ -52,13 +44,14 @@ class Solver(SolverInterface):
         """
         return self._next_password_after(self.input)
 
+    @cache_result
     def solve_part_two(self) -> str:
         """Solve part two of the puzzle.
 
         Returns:
             str: the answer
         """
-        return self._next_password_after(self._next_password_after(self.input))
+        return self._next_password_after(self.solve_part_one())
 
     def _next_password_after(self, password: str) -> str:
         """Searches for the next password in the sequence.
