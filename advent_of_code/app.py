@@ -54,18 +54,23 @@ def standard_response(
         Response: a response object
     """
     return make_response(
-        {
-            "self": f"{root_url}{path}",
-            "api_version": api_version,
-            "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ"),
-            "description": description,
-            "results": results if results else [],
-            "links": links if links else [],
-        },
+        dumps(
+            {
+                "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ"),
+                "self": f"{root_url}{path}",
+                "api_version": api_version,
+                "description": description,
+                "results": results if results else [],
+                "links": links if links else [],
+            },
+            sort_keys=False,
+            indent=4,
+        ),
         200,
         {
             "Cache-Control": "public, max-age=3600",
             "Strict-Transport-Security": "max-age=3600; includeSubDomains; preload",
+            "Content-Type": "application/json",
         },
     )
 
@@ -401,13 +406,13 @@ def main() -> None:  # pragma: no cover
             # print the headers
             print("Response Headers")
             print("================")
-            print(dumps(dict(response.headers), indent=2))
+            print(dumps(dict(response.headers)))
             print()
 
             # pretty print the results
             print("Response Body")
             print("=============")
-            print(dumps(response.json(), indent=2))
+            print(dumps(response.json(), indent=4))
             print()
 
             # print the elapsed time
