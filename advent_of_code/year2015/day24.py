@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import int_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -34,6 +35,7 @@ class Solver(SolverInterface):
         """
         self.presents = parse_lines(puzzle_input, (r"[0-9]+", int_processor))
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one.
 
@@ -42,6 +44,7 @@ class Solver(SolverInterface):
         """
         return self._find(3)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve two one.
 
@@ -67,10 +70,10 @@ class Solver(SolverInterface):
         for _ in range(groups):
             group, remainder = self._split(remainder, target)
             result.append(group)
-        return prod(result[0])
+        return int(prod(result[0]))
 
     def _split(self, items: List[int], target: int) -> Tuple[List[int], List[int]]:
-        """Split the item list into two groups, the first of which has the sum of target.
+        """Split the item list into two groups, the first having the sum of target.
 
         Args:
             items (List[int]): the items to group

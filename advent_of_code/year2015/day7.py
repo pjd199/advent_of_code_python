@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -63,7 +64,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        parsed = parse_lines(
+        parsed: list[_Expression] = parse_lines(
             puzzle_input,
             (
                 r"(?P<signal>[0-9]+) -> (?P<output>[a-z]+)",
@@ -83,33 +84,26 @@ class Solver(SolverInterface):
         )
 
         self.wiring_diagram: Dict[str, _Expression] = {x.output: x for x in parsed}
-        self.part_one = -1
-        self.part_two = -1
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
         Returns:
             int: the answer
         """
-        if self.part_one == -1:
-            self.part_one = self._resolve("a", {})
-        return self.part_one
+        return self._resolve("a", {})
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
         Returns:
             int: the answer
         """
-        if self.part_one == -1:
-            self.part_one = self._resolve("a", {})
-
-        if self.part_two == -1:
-            self.wiring_diagram["b"] = _Signal("b", self._resolve("a", {}))
-            self.part_two = self._resolve("a", {})
-
-        return self.part_two
+        self.solve_part_one()
+        self.wiring_diagram["b"] = _Signal("b", self._resolve("a", {}))
+        return self._resolve("a", {})
 
     def _resolve(
         self,

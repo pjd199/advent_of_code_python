@@ -15,6 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -245,6 +246,7 @@ class Solver(SolverInterface):
         self.boss_hp = values["Hit Points"]
         self.boss_damage = values["Damage"]
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -259,6 +261,7 @@ class Solver(SolverInterface):
             hard_mode=False,
         ).battle()
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 

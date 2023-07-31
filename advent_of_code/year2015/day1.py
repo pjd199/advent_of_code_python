@@ -14,6 +14,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_tokens_single_line
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -37,6 +38,7 @@ class Solver(SolverInterface):
             (r"[\(\)]", lambda m: 1 if m[0] == "(" else -1),
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -45,6 +47,7 @@ class Solver(SolverInterface):
         """
         return sum(self.input)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 

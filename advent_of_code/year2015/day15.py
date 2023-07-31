@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 PROPERTIES = ["capacity", "durability", "flavor", "texture", "calories"]
@@ -56,10 +57,8 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        if not self.has_run:
-            self._bake()
-
-        return self.top_score
+        top_score, _ = self._bake()
+        return top_score
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
@@ -67,15 +66,18 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        if not self.has_run:
-            self._bake()
+        _, top_calorie_counting_score = self._bake()
+        return top_calorie_counting_score
 
-        return self.top_calorie_counting_score
+    @cache_result
+    def _bake(self) -> tuple[int, int]:
+        """Do some baking.
 
-    def _bake(self) -> None:
-        """Run the simulation."""
-        self.top_score = 0
-        self.top_calorie_counting_score = 0
+        Returns:
+            tuple[int, int]: [top_score, top_calorie_counting_score]
+        """
+        top_score = 0
+        top_calorie_counting_score = 0
         for combo in combinations_with_replacement(self.ingredients.keys(), 100):
             property_scores = [0] * len(PROPERTIES)
             recipe = {k: len(list(g)) for k, g in groupby(combo)}
@@ -84,13 +86,11 @@ class Solver(SolverInterface):
                     property_scores[x] += recipe[item] * self.ingredients[item][x]
             property_scores = [max(x, 0) for x in property_scores]
             score = prod(property_scores[:-1])
-            self.top_score = max(score, self.top_score)
+            top_score = max(score, top_score)
             if property_scores[-1] == 500:
-                self.top_calorie_counting_score = max(
-                    score, self.top_calorie_counting_score
-                )
+                top_calorie_counting_score = max(score, top_calorie_counting_score)
 
-        self.has_run = True
+        return top_score, top_calorie_counting_score
 
 
 if __name__ == "__main__":  # pragma: no cover

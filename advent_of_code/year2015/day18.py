@@ -15,6 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_grid, str_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -34,6 +35,7 @@ class Solver(SolverInterface):
         """
         self.input = parse_grid(puzzle_input, r"[#\.]", str_processor)
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -46,6 +48,7 @@ class Solver(SolverInterface):
 
         return len([x for x in grid.values() if x == "#"])
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -54,7 +57,12 @@ class Solver(SolverInterface):
         """
         # solve the puzzle
         grid = deepcopy(self.input)
-        corners_stuck_on = {(0, 0): "#", (0, 99): "#", (99, 0): "#", (99, 99): "#"}
+        corners_stuck_on: dict[tuple[int, int], str] = {
+            (0, 0): "#",
+            (0, 99): "#",
+            (99, 0): "#",
+            (99, 99): "#",
+        }
         for _ in range(100):
             grid.update(corners_stuck_on)
             grid.update({key: self._next_state(grid, *key) for key in grid})

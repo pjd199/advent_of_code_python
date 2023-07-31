@@ -14,6 +14,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -38,6 +39,7 @@ class Solver(SolverInterface):
             int_tuple_processor,
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 

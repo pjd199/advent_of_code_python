@@ -15,6 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import int_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -33,6 +34,7 @@ class Solver(SolverInterface):
         """
         self.sizes = parse_lines(puzzle_input, (r"[0-9]+", int_processor))
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -48,6 +50,7 @@ class Solver(SolverInterface):
             ]
         )
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 

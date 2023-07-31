@@ -16,6 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -54,6 +55,7 @@ class Solver(SolverInterface):
             ),
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -63,6 +65,7 @@ class Solver(SolverInterface):
         positions, _ = self._race()
         return max(positions)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -72,6 +75,7 @@ class Solver(SolverInterface):
         _, points = self._race()
         return max(points)
 
+    @cache_result
     def _race(self) -> Tuple[List[int], List[int]]:
         # positions will hold the current position of each reindeer
         # points will hold the current points of each reindeer

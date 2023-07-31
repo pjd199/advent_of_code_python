@@ -15,6 +15,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -31,7 +32,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        tuples = parse_lines(
+        self.input = parse_lines(
             puzzle_input,
             (
                 r"(?P<a>[A-Za-z]+) to (?P<b>[A-Za-z]+) = (?P<dist>[0-9]+)",
@@ -39,33 +40,41 @@ class Solver(SolverInterface):
             ),
         )
 
-        self.cities = {a for a, _, _ in tuples}
-        self.cities.update({b for _, b, _ in tuples})
-
-        self.routes = {(a, b): int(dist) for a, b, dist in tuples}
-        self.routes.update({(b, a): int(dist) for a, b, dist in tuples})
-
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
         Returns:
             int: the answer
         """
-        return min(
-            sum(map(lambda x, y: self.routes[(x, y)], perm, perm[1:]))
-            for perm in permutations(self.cities)
-        )
+        return min(self.solve())
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
         Returns:
             int: the answer
         """
-        return max(
-            sum(map(lambda x, y: self.routes[(x, y)], perm, perm[1:]))
-            for perm in permutations(self.cities)
-        )
+        return max(self.solve())
+
+    @cache_result
+    def solve(self) -> list[int]:
+        """Find the routes.
+
+        Returns:
+            list[int]: a list of route distances
+        """
+        cities = {a for a, _, _ in self.input}
+        cities.update({b for _, b, _ in self.input})
+
+        routes = {(a, b): int(dist) for a, b, dist in self.input}
+        routes.update({(b, a): int(dist) for a, b, dist in self.input})
+
+        return [
+            sum(map(lambda x, y: routes[(x, y)], perm, perm[1:]))
+            for perm in permutations(cities)
+        ]
 
 
 if __name__ == "__main__":  # pragma: no cover
