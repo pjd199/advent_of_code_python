@@ -74,7 +74,7 @@ def lambda_urls() -> Dict[str, str]:
                                 urls[file] = output["OutputValue"].strip("/")
                                 break
         except Exception:
-            None
+            ...
     return urls
 
 
@@ -134,15 +134,46 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
     assert response.status_code == test_case_data["response"]["status"]
 
     # check the body, with "/" being the special case
-    if test_case_data["request"]["path"] == "/":
+    if test_case_data["request"]["path"] == "/calendars":
         dates = [date for date, status in implementation_status().items() if status]
+        results = [
+            {
+                "days": [x.day for x in dates if x.year == year],
+                "links": [
+                    {
+                        "action": "GET",
+                        "description": "Discover detailed puzzle information"
+                        f" for {year}.",
+                        "href": f"http://api.adventofcode.dibdin.me/puzzles/{year}",
+                        "rel": "puzzles",
+                    }
+                ],
+                "year": year,
+            }
+            for year in sorted({x.year for x in dates})
+        ]
+
         body = {
-            "years": [
-                {"year": year, "days": [x.day for x in dates if x.year == year]}
-                for year in sorted({x.year for x in dates})
-            ]
+            "api_version": "2.0.0",
+            "description": "List of available puzzles, filtered using "
+            "/calendars/{year}",
+            "links": [],
+            "results": results,
+            "self": "http://api.adventofcode.dibdin.me/calendars",
         }
-        assert response.json() == body
+        a = {k: v for k, v in response.json().items() if k != "timestamp"}
+
+        assert a == body
 
     elif "body" in test_case_data["response"]:
-        assert response.json() == test_case_data["response"]["body"]
+        # check body is identical, ignoring timestamp and timings
+        a = {k: v for k, v in response.json().items() if k != "timestamp"}
+        b = {
+            k: v
+            for k, v in test_case_data["response"]["body"].items()
+            if k != "timestamp"
+        }
+        if test_case_data["request"]["path"].startswith("/answers"):
+            del a["results"]["timing"]
+            del b["results"]["timing"]
+        assert a == b

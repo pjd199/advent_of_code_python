@@ -1,7 +1,7 @@
 """Unit tests for the lambda_handler function."""
 from datetime import date
 from json import load
-from typing import Any, Dict, Iterable
+from typing import Any, Iterable
 
 import pytest
 from flask.testing import FlaskClient
@@ -9,10 +9,7 @@ from freezegun import freeze_time
 from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
-from advent_of_code.utils.solver_status import (
-    implementation_status,
-    is_solver_implemented,
-)
+from advent_of_code.utils.solver_status import implementation_status
 from tests.conftest import Expected
 
 
@@ -53,11 +50,8 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             ids=[f"{d.year:04}-{d.day:02}" for d in all_dates],
         )
 
-    if "part" in metafunc.fixturenames:
-        metafunc.parametrize("part", ["all", "part_one", "part_two"])
 
-
-def test_other_routes(test_case: Dict["str", Any], client: FlaskClient) -> None:
+def test_other_routes(test_case: dict["str", Any], client: FlaskClient) -> None:
     """Integration test for GET method.
 
     Args:
@@ -78,8 +72,8 @@ def test_other_routes(test_case: Dict["str", Any], client: FlaskClient) -> None:
             return client.post(test_case["request"]["path"])
 
     # set the time, if needed
-    if "date" in test_case["request"]:
-        with freeze_time(test_case["request"]["date"]):
+    if "timestamp" in test_case["request"]:
+        with freeze_time(test_case["request"]["timestamp"]):
             response = send_request()
     else:
         response = send_request()
@@ -92,7 +86,6 @@ def test_other_routes(test_case: Dict["str", Any], client: FlaskClient) -> None:
 
 def test_all_solver_routes(
     puzzle: date,
-    part: str,
     expected: Expected,
     client: FlaskClient,
 ) -> None:
@@ -100,33 +93,38 @@ def test_all_solver_routes(
 
     Args:
         puzzle (date): the year and day to test
-        part (str): the part to test
         expected (Expected): the expected results file
         client (FlaskClient): the FlaskClient
 
     Raises:
         AssertionError: Raised if the server gives a bad response
     """
-    if part == "all":
-        response = client.get(f"/{puzzle.year}/{puzzle.day}")
-    else:
-        response = client.get(f"/{puzzle.year}/{puzzle.day}/{part}")
+    with open(f"./puzzle_input/year{puzzle.year}/day{puzzle.day}.txt") as file:
+        input_file = file.read()
+    response = client.post(
+        f"/answers/{puzzle.year}/{puzzle.day}",
+        data=input_file,
+        headers={"Content-Type": "text/plain"},
+        follow_redirects=True,
+    )
 
     if response.status_code == 200:
         assert puzzle.year in expected
         assert puzzle.day in expected[puzzle.year]
         body = response.get_json()
-        if body is not None:
-            assert body["title"] == expected[puzzle.year][puzzle.day]["title"]
-            assert body["year"] == puzzle.year
-            assert body["day"] == puzzle.day
-            if part in ["all", "part_one"]:
-                assert body["part_one"] == expected[puzzle.year][puzzle.day]["part_one"]
-            if part in ["all", "part_two"] and puzzle.day != 25:
-                assert body["part_two"] == expected[puzzle.year][puzzle.day]["part_two"]
-    elif response.status_code == 404:
-        assert not is_solver_implemented(puzzle.year, puzzle.day) or (
-            part == "part_two" and puzzle.day == 25
+        assert body is not None
+        assert "results" in body
+        assert body["results"]["year"] == puzzle.year
+        assert body["results"]["day"] == puzzle.day
+        assert "part_one" in body["results"]
+        assert (
+            body["results"]["part_one"] == expected[puzzle.year][puzzle.day]["part_one"]
         )
+        if puzzle.day != 25:
+            assert "part_two" in body["results"]
+            assert (
+                body["results"]["part_two"]
+                == expected[puzzle.year][puzzle.day]["part_two"]
+            )
     else:
         raise AssertionError(f"Received status_code {response.status_code}")

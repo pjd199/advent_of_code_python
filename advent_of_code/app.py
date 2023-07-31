@@ -1,21 +1,31 @@
 """Flask Application for Advent of Code Solver RESTful API."""
+from datetime import datetime
 from importlib import import_module
+from json import dumps
 from os import environ
 from pathlib import Path
+from platform import (
+    architecture,
+    machine,
+    platform,
+    python_implementation,
+    python_version,
+)
 from sys import path
 from threading import Thread
-from time import perf_counter_ns, sleep
-from typing import Any, Dict, Optional, Tuple
+from time import sleep
+from typing import Any, Optional
 
 from apig_wsgi import make_lambda_handler
-from flask import Flask, abort, request
+from flask import Flask, Response, abort, make_response, request
 from requests import get
 from werkzeug.exceptions import HTTPException
 
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
-from advent_of_code.utils.input_loader import load_file, load_multi_line_string
+from advent_of_code.utils.function_timer import function_timer
+from advent_of_code.utils.input_loader import load_multi_line_string
 from advent_of_code.utils.solver_status import (
     implementation_status,
     is_solver_implemented,
@@ -25,75 +35,213 @@ from advent_of_code.utils.solver_status import (
 app = Flask(__name__)
 lambda_handler = make_lambda_handler(app)
 
-cache_max_age = 3600  # one hour
+root_url = "http://api.adventofcode.dibdin.me"
+api_version = "2.0.0"
+
+
+def standard_response(
+    path: str, description: str, results: Any = None, links: Any = None
+) -> Response:
+    """Generates the standard body.
+
+    Args:
+        path (str): the path for this function
+        description (str): the descriptionn for this function
+        results (Any): the results of the api call
+        links (Any): the links associated with this api call
+
+    Returns:
+        Response: a response object
+    """
+    return make_response(
+        {
+            "self": f"{root_url}{path}",
+            "api_version": api_version,
+            "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ"),
+            "description": description,
+            "results": results if results else [],
+            "links": links if links else [],
+        },
+        200,
+        {
+            "Cache-Control": "public, max-age=3600",
+            "Strict-Transport-Security": "max-age=3600; includeSubDomains; preload",
+        },
+    )
 
 
 @app.route("/", methods=["GET"])
-def handle_root_path() -> Tuple[Dict[str, Any], int, Dict[str, str]]:
+def handle_root_path() -> Response:
     """Handles the root path - / .
 
     Returns:
-        tuple[Json, int]: a JSON response and a HTTP status number
+        Response: the response object
     """
-    dates = [date for date, status in implementation_status().items() if status]
-    return (
+    results = ["calendars", "puzzles", "answers"]
+    links = [
         {
-            "years": [
-                {"year": year, "days": [x.day for x in dates if x.year == year]}
-                for year in sorted({x.year for x in dates})
-            ]
+            "rel": "calendars",
+            "href": f"{root_url}/calendars",
+            "description": "Discover available puzzles and answers, "
+            "filtered using /calendars/{year}.",
+            "action": "GET",
         },
-        200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+        {
+            "rel": "puzzles",
+            "href": f"{root_url}/puzzles",
+            "description": "Discover detailed puzzle information, "
+            "filtered using /puzzles/{year}/{day}.",
+            "action": "GET",
+        },
+        {
+            "rel": "answers",
+            "href": f"{root_url}/answers",
+            "description": "Find answer for given input by calling "
+            "/answers/{year}/{day} with puzzle input as POST body "
+            "or URL provided as input paramerater.",
+            "action": "GET",
+            "parameters": ["input"],
+        },
+        {
+            "rel": "answers",
+            "href": f"{root_url}/answers",
+            "description": "Find answer for given input by calling "
+            "/answers/{year}/{day} with puzzle input as POST body "
+            "or URL provided as input paramerater.",
+            "action": "POST",
+        },
+    ]
+
+    return standard_response(
+        "", "Discover resourses available through this API.", results, links
     )
 
 
-@app.route("/<int:year>/", methods=["GET"])
-@app.route("/<int:year>", methods=["GET"])
-def handle_year_path(year: int) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
-    """Handles the year path - eg /2015 .
+@app.route("/calendars", methods=["GET"])
+@app.route("/calendars/", methods=["GET"])
+@app.route("/calendars/<int:year_filter>", methods=["GET"])
+@app.route("/calendars/<int:year_filter>/", methods=["GET"])
+def handle_calendars_path(
+    year_filter: Optional[int] = None,
+) -> Response:
+    """Handles the root path - /calendars .
 
     Args:
-        year (int): the year from the path
+        year_filter (int): The year_filter element from the URL
 
     Returns:
-        tuple[Json, int]: a JSON response
+        Response: the response object
     """
-    dates = [date for date, status in implementation_status().items() if status]
-    days = [x.day for x in dates if x.year == year]
-    if not days:
-        abort(404)
+    results = [
+        {
+            "year": year,
+            "days": [
+                x.day
+                for x, status in implementation_status().items()
+                if status and x.year == year
+            ],
+            "links": [
+                {
+                    "rel": "puzzles",
+                    "href": f"{root_url}/puzzles/{year}",
+                    "description": f"Discover detailed puzzle information "
+                    f"for {year}.",
+                    "action": "GET",
+                },
+            ],
+        }
+        for year in sorted({date.year for date in implementation_status()})
+        if year_filter is None or year_filter == year
+    ]
 
-    return (
-        {"year": year, "days": days},
-        200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+    return standard_response(
+        "/calendars",
+        "List of available puzzles, filtered using /calendars/{year}",
+        results,
     )
 
 
-@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
-def handle_solve_path_with_part(
-    year: int, day: int, part: Optional[str] = None
-) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
+@app.route("/puzzles", methods=["GET"])
+@app.route("/puzzles/", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/<int:day_filter>", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/<int:day_filter>/", methods=["GET"])
+def handle_puzzles_path(
+    year_filter: Optional[int] = None, day_filter: Optional[int] = None
+) -> Response:
+    """Handles the root path - /puzzles .
+
+    Args:
+        year_filter (int): The year_filter element from the URL
+        day_filter (int): The day_filter element from the URL
+
+    Returns:
+        Response: the response object
+    """
+    results = [
+        {
+            "year": year,
+            "day": day,
+            "title": "TITLE GOES HERE",
+            "overview": "OVERVIEW GOES HERE",
+            "average_timing": {
+                "parse": -1,
+                "part_one": -1,
+                "part_two": -1,
+                "units": "ms",
+            },
+            "official_url": f"https://adventofcode.com/{year}/day/{day}",
+            "repository_url": "https://github.com/pjd199/advent_of_code_python"
+            f"/blob/main/advent_of_code/year{year}/day{day}.py",
+            "code_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
+            f"/main/advent_of_code/year{year}/day{day}.py",
+            "links": [
+                {
+                    "rel": "answers",
+                    "href": f"{root_url}/answers/{year}/{day}",
+                    "description": f"Get the answer for {year} day {day}.",
+                    "action": "GET",
+                    "parameters": ["input"],
+                },
+                {
+                    "rel": "answers",
+                    "href": f"{root_url}/answers/{year}/{day}",
+                    "description": f"Get the answer for {year} day {day}.",
+                    "action": "POST",
+                },
+            ],
+        }
+        for year in sorted({date.year for date in implementation_status()})
+        for day in range(1, 26)
+        if (year_filter is None or year_filter == year)
+        and (day_filter is None or day_filter == day)
+    ]
+
+    return standard_response(
+        (
+            "/puzzles"
+            + (f"/{year_filter}" if year_filter else "")
+            + (f"/{day_filter}" if day_filter else "")
+        ),
+        "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
+        results,
+    )
+
+
+@app.route("/answers/<int:year>/<int:day>", methods=["GET", "POST"])
+@app.route("/answers/<int:year>/<int:day>/", methods=["GET", "POST"])
+def handle_answers_path(year: int, day: int) -> Response:
     """Handles the solve all parts path - eg /2015/1.
 
     Args:
         year (int): the year from the path
         day (int): the  day from the path
-        part (Optional[str]): the part from the path
 
     Returns:
-        tuple[Json, int]: a JSON response
+        Response: the standard response object
     """
-    if (
-        not is_solver_implemented(year, day)
-        or part not in [None, "part_one", "part_two"]
-        or (request.method == "POST" and request.args.get("input"))
-        or (day == 25 and part == "part_two")
-    ):
+    if not is_solver_implemented(year, day):
         abort(404)
 
     # load the input data
@@ -103,49 +251,107 @@ def handle_solve_path_with_part(
     elif query_input is not None:
         puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
     else:
-        puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
+        abort(400)
+
+    results: dict[str, Any] = {"year": year, "day": day}
+    timing: dict[str, str | int] = {"units": "ms"}
 
     # find the solver
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    solver, timing["parse"] = function_timer(mod.Solver, puzzle_input)
 
-    # solve puzzle
-    if part == "part_one" or day == 25:
-        part_one, part_two = solver.solve_part_one(), None
-    elif part == "part_two":
-        part_one, part_two = None, str(solver.solve_part_two())
-    else:
-        part_one, part_two = solver.solve_all()
+    # run the sovler to find the answers
+    results["part_one"], timing["part_one"] = function_timer(
+        lambda: str(solver.solve_part_one())
+    )
 
-    # construct the body
-    body: Dict[str, Any] = {"title": solver.TITLE, "year": year, "day": day}
-    if part_one:
-        body["part_one"] = str(part_one)
-    if part_two:
-        body["part_two"] = str(part_two)
+    if day != 25:
+        results["part_two"], timing["part_two"] = function_timer(
+            lambda: str(solver.solve_part_two())
+        )
 
-    return (
-        body,
-        200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+    results["timing"] = timing
+
+    links = [
+        {
+            "rel": "puzzles",
+            "href": f"{root_url}/puzzles/{year}/{day}",
+            "description": f"Get the answer for {year} day {day}.",
+            "action": "GET",
+        }
+    ]
+
+    return standard_response(
+        f"/answers/{year}/{day}",
+        "Get the answer to the puzzle, with input file provide as POST, "
+        "or URL provided as input paramerater.",
+        results,
+        links,
     )
 
 
+@app.route("/system", methods=["GET"])
+@app.route("/system/", methods=["GET"])
+def handle_system_path() -> Response:  # pragma: no cover
+    """Handles the system path - /system/ .
+
+    Returns:
+        Response: return system information
+    """
+    results = {
+        "url": request.url,
+        "headers": dict(request.headers.items()),
+        "query": request.environ["QUERY_STRING"],
+        "method": request.environ["REQUEST_METHOD"],
+        "platform": platform(),
+        "machine": machine(),
+        "architecture": architecture()[0],
+        "compiler": f"{python_implementation()} {python_version()}",
+        "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
+        "/main/license.md",
+        "license": "MIT",
+    }
+    try:
+        if "apig_wsgi.context" in request.environ:
+            results.update(
+                {
+                    "aws_function": request.environ["apig_wsgi.context"].function_name,
+                    "memory": request.environ["apig_wsgi.context"].memory_limit_in_mb,
+                }
+            )
+    except Exception as e:
+        results["apig_wsgi.context"] = str(e)
+    try:
+        if "apig_wsgi.full_event" in request.environ:
+            results["event"] = request.environ["apig_wsgi.full_event"]
+    except Exception as e:
+        results["apig_wsgi.full_event"] = str(e)
+
+    ##############################
+    # add total memory!!!
+
+    return standard_response("/system", "System information.", results)
+
+
 @app.errorhandler(HTTPException)
-def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
+def handle_exception(e: HTTPException) -> tuple[dict[str, Any], int, dict[str, str]]:
     """Return JSON instead of HTML for HTTP errors.
 
     Args:
         e (HTTPException): the expection
 
     Returns:
-        Dict[str, Any]: the response
+        dict[str, Any]: the response
     """
-    return {
-        "code": e.code,
-        "name": e.name,
-        "description": e.description,
-    }, e.code if e.code is not None else 500
+    return (
+        {
+            "code": e.code,
+            "name": e.name,
+            "description": e.description,
+        },
+        e.code if e.code is not None else 500,
+        {"Cache-Control": "no-cache"},
+    )
 
 
 def main() -> None:  # pragma: no cover
@@ -170,12 +376,13 @@ def main() -> None:  # pragma: no cover
     print("---")
     print("Available routes:")
     print(" - /")
-    print(" - /{year}")
-    print(" - /{year}/{day}")
-    print(" - /{year}/{day}?input={url_for_puzzle_input_file}")
-    print(" - /{year}/{day}/part_one")
-    print(" - /{year}/{day}/part_two")
-    print("eg - /2015/25")
+    print(" - /calendars/{year}")
+    print(" - /puzzles/{year}")
+    print(" - /puzzles/{year}/{day}")
+    print(" - /answers/{year}/{day}?input={url_for_puzzle_input_file}")
+    print(" - /system")
+    print(" - /license")
+    print("eg - /answers/2015/25")
     print("---")
 
     # loop until Ctrl-C exits the loop
@@ -187,18 +394,32 @@ def main() -> None:  # pragma: no cover
 
         try:
             # time the call to the development server
-            start_time = perf_counter_ns()
-            response = get(f"http://{host}:{port}{url}", timeout=300)
-            end_time = perf_counter_ns()
-            elapsed_time = end_time - start_time
-            # print the time, then the response body in JSON
-            if elapsed_time <= 1000000:
-                print("Time: <1ms")
-            elif elapsed_time >= 1000000000:
-                print(f"Time: {elapsed_time / 1000000000:.2f}s")
+            response, elapsed_time = function_timer(
+                get, f"http://{host}:{port}{url}", timeout=300
+            )
+
+            # print the headers
+            print("Response Headers")
+            print("================")
+            print(dumps(dict(response.headers), indent=2))
+            print()
+
+            # pretty print the results
+            print("Response Body")
+            print("=============")
+            print(dumps(response.json(), indent=2))
+            print()
+
+            # print the elapsed time
+            print("Time")
+            print("====")
+            if elapsed_time == 0:
+                print("Round Trip Time: <1ms")
+            elif elapsed_time >= 1000:
+                print(f"Round Trip Time: {elapsed_time / 1000:.2f}s")
             else:
-                print(f"Time: {(elapsed_time) // 1000000}ms")
-            print(response.json())
+                print(f"Round Trip Time: {elapsed_time}ms")
+
         except Exception as e:
             print(e)
 
