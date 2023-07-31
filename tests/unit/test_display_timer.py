@@ -22,10 +22,8 @@ def test_display_timer(
     """
     # execute display timer
     message = "TEST "
-    dt = DisplayTimer(message, interval)
-    dt.start()
-    sleep(duration)
-    dt.cancel()
+    with DisplayTimer(message, interval):
+        sleep(duration)
     captured = capfd.readouterr().out
 
     # check capture is as expected
