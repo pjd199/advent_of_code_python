@@ -32,9 +32,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         )
 
     if "part" in metafunc.fixturenames:
-        metafunc.parametrize(
-            "part", [Part.ONE, Part.TWO, Part.ALL], ids=["part_one", "part_two", "all"]
-        )
+        metafunc.parametrize("part", [Part.ONE, Part.TWO], ids=["part_one", "part_two"])
 
 
 def test_module_spec(puzzle: date, expected: Expected) -> None:
@@ -122,24 +120,25 @@ def test_solve(puzzle: date, expected: Expected, part: Part) -> None:
     mod = import_module(f"advent_of_code.year{puzzle.year}.day{puzzle.day}")
     solver = mod.Solver(load_puzzle_input_file(puzzle.year, puzzle.day))
 
-    if not (puzzle.day == 25 and part == Part.TWO):
-        part_mapper = {
-            Part.ALL: solver.solve_all,
-            Part.ONE: lambda: [solver.solve_part_one(), None],
-            Part.TWO: lambda: [None, solver.solve_part_two()],
-        }
-        answers = part_mapper[part]()
-        if part in [Part.ONE, Part.ALL]:
-            assert str(answers[0]) == expected[puzzle.year][puzzle.day]["part_one"]
-        if part in [Part.TWO, Part.ALL] and puzzle.day != 25:
-            assert str(answers[1]) == expected[puzzle.year][puzzle.day]["part_two"]
-    else:
-        with pytest.raises(NotImplementedError) as exception_info:
-            answers = solver.solve_part_two()
-        assert "NotImplementedError" in str(exception_info), (
-            f"Found an answer for {puzzle.year} {puzzle.day}: "
-            "expected to raise NotImplementedError"
+    if part == Part.ONE:
+        assert (
+            str(solver.solve_part_one())
+            == expected[puzzle.year][puzzle.day]["part_one"]
         )
+
+    if part == Part.TWO:
+        if puzzle.day != 25:
+            assert (
+                str(solver.solve_part_two())
+                == expected[puzzle.year][puzzle.day]["part_two"]
+            )
+        else:
+            with pytest.raises(NotImplementedError) as exception_info:
+                solver.solve_part_two()
+            assert "NotImplementedError" in str(exception_info), (
+                f"Found an answer for {puzzle.year} {puzzle.day}: "
+                "expected to raise NotImplementedError"
+            )
 
 
 def test_cli(puzzle: date, expected: Expected) -> None:

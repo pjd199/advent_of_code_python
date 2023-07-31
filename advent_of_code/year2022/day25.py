@@ -49,14 +49,6 @@ class Solver(SolverInterface):
         """
         raise NotImplementedError("No part two on Christmas Day!!!")
 
-    def solve_all(self) -> List[str]:
-        """Solve the one and only part to this puzzle.
-
-        Returns:
-            List[int]: the result
-        """
-        return [self.solve_part_one()]
-
     def _to_decimal(self, snafu: str) -> int:
         """Convert a SNAFU string into a decimal int.
 

@@ -72,15 +72,6 @@ class Solver(SolverInterface):
         _, points = self._race()
         return max(points)
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts of the puzzle.
-
-        Returns:
-            List[int]: the answer
-        """
-        positions, points = self._race()
-        return [max(positions), max(points)]
-
     def _race(self) -> Tuple[List[int], List[int]]:
         # positions will hold the current position of each reindeer
         # points will hold the current points of each reindeer

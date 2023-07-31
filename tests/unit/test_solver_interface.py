@@ -31,4 +31,3 @@ def test_solver_interface() -> None:
     assert solver.TITLE == "Test Title"
     assert solver.solve_part_one() == "testing testing"
     assert solver.solve_part_two() == 123
-    assert solver.solve_all() == ["testing testing", 123]

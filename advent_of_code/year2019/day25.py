@@ -144,14 +144,6 @@ class Solver(SolverInterface):
         """
         raise NotImplementedError("No part two on Christmas Day!!!")
 
-    def solve_all(self) -> list[int]:
-        """Solve the one and only part to this puzzle.
-
-        Returns:
-            list[int]: the result
-        """
-        return [self.solve_part_one()]
-
 
 if __name__ == "__main__":  # pragma: no cover
     runner(Solver)
