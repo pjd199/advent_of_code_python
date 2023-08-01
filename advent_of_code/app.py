@@ -35,7 +35,7 @@ from advent_of_code.utils.solver_status import (
 app = Flask(__name__)
 lambda_handler = make_lambda_handler(app)
 
-root_url = "http://api.adventofcode.dibdin.me"
+root_url = "https://api.adventofcode.dibdin.me"
 api_version = "2.0.0"
 
 
