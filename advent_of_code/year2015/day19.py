@@ -12,7 +12,13 @@ from typing import List, Tuple
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, str_tuple_processor
+from advent_of_code.utils.parser import (
+    parse_lines,
+    parse_single_line,
+    split_sections,
+    str_processor,
+    str_tuple_processor,
+)
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -30,21 +36,17 @@ class Solver(SolverInterface):
 
         Args:
             puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
         """
-        if puzzle_input is None or len(puzzle_input) < 3:
-            raise RuntimeError("Puzzle input len too short")
+        sections = split_sections(puzzle_input, expected_sections=2)
 
         self.replacements = [
             (a, b)
             for a, b in parse_lines(
-                puzzle_input[:-2],
+                sections[0],
                 (r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)", str_tuple_processor),
             )
         ]
-        self.medication = puzzle_input[-1]
+        self.medication = parse_single_line(sections[1], r"[A-Za-z]+", str_processor)
 
     @cache_result
     def solve_part_one(self) -> int:

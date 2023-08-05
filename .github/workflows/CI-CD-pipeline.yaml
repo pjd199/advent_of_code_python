@@ -114,14 +114,6 @@ jobs:
       - name: Check for 100% coverage
         run: coverage report --fail-under=100 --omit="*/test*"
 
-      - name: Commit updated wheels to repository
-        uses: stefanzweifel/git-auto-commit-action@v4
-        with:
-          commit_message: Updated status graphic
-          branch: dev
-          file_pattern: 'wheelhouse/*.whl'
-
-
   deploy-to-aws-lambda:
     name: Deploy to AWS Lambda
     needs: [unit-test, check, coverage]

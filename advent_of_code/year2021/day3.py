@@ -54,8 +54,9 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        # target : least common = False, most common = True
+
         def find(values: Set[str], target: bool, index: int = 0) -> int:
+            # target : least common = False, most common = True
             if len(values) == 1:
                 return int(values.pop(), 2)
 

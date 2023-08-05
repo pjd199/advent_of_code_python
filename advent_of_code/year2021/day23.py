@@ -190,7 +190,6 @@ class Solver(SolverInterface):
                     yield tuple(next_state), cost
 
     def _solve(self, input_grid: dict[tuple[int, int], str]) -> int:
-
         # create the inital state
         max_y = max(y for _, y in input_grid)
         state: State = (

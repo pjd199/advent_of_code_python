@@ -1,30 +1,16 @@
 """Unit tests for the lambda_handler function."""
 from datetime import date
 from json import load
-from typing import Any, Iterable
+from typing import Any
 
 import pytest
-from flask.testing import FlaskClient
 from freezegun import freeze_time
 from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
+from tests.compare_json import json_equals
 from tests.conftest import Expected
-
-
-@pytest.fixture(scope="module")
-def client() -> Iterable[FlaskClient]:
-    """Load the Flask test client.
-
-    Yields:
-        _type_: the test client
-    """
-    client = app.test_client()
-    ctx = app.app_context()
-    ctx.push()
-    yield client
-    ctx.pop()
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -51,25 +37,33 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         )
 
 
-def test_other_routes(test_case: dict["str", Any], client: FlaskClient) -> None:
+def test_other_routes(test_case: dict["str", Any]) -> None:
     """Integration test for GET method.
 
     Args:
         test_case (Json): the test case data
-        client: the Flask test client
     """
 
     def send_request() -> TestResponse:
-        if test_case["request"]["method"] == "GET":
-            return client.get(test_case["request"]["path"])
-        elif "body" in test_case["request"] and "content_type" in test_case["request"]:
-            return client.post(
-                test_case["request"]["path"],
-                data=test_case["request"]["body"],
-                content_type=test_case["request"]["content_type"],
-            )
-        else:
-            return client.post(test_case["request"]["path"])
+        with app.test_client() as client:
+            if test_case["request"]["method"] == "GET":
+                return client.get(
+                    test_case["request"]["path"], base_url="http://localhost:5000"
+                )
+            elif (
+                "body" in test_case["request"]
+                and "content_type" in test_case["request"]
+            ):
+                return client.post(
+                    test_case["request"]["path"],
+                    data=test_case["request"]["body"],
+                    content_type=test_case["request"]["content_type"],
+                    base_url="http://localhost:5000",
+                )
+            else:
+                return client.post(
+                    test_case["request"]["path"], base_url="http://localhost:5000"
+                )
 
     # set the time, if needed
     if "timestamp" in test_case["request"]:
@@ -78,35 +72,50 @@ def test_other_routes(test_case: dict["str", Any], client: FlaskClient) -> None:
     else:
         response = send_request()
 
-    # check the response code and body
+    # check the response code and body, ignoring the timing value
     assert response.status_code == test_case["response"]["status"]
     if "body" in test_case["response"]:
-        assert response.get_json() == test_case["response"]["body"]
+        assert json_equals(
+            response.get_json(), test_case["response"]["body"], ("timings",)
+        )
+        # check timings structure, but not values as they are variable
+        if "response" in test_case["response"]["body"]:
+            if "part_one" in test_case["response"]["body"]["results"]:
+                assert "timings" in test_case["response"]["body"]["results"]
+                assert isinstance(
+                    test_case["response"]["body"]["results"]["timings"]["parse"], int
+                )
+                assert isinstance(
+                    test_case["response"]["body"]["results"]["timings"]["part_one"], int
+                )
+                assert (
+                    test_case["response"]["body"]["results"]["timings"]["units"] == "ms"
+                )
+            if "part_two" in test_case["response"]["body"]["results"]:
+                assert isinstance(
+                    test_case["response"]["body"]["results"]["timings"]["part_two"], int
+                )
 
 
-def test_all_solver_routes(
-    puzzle: date,
-    expected: Expected,
-    client: FlaskClient,
-) -> None:
+def test_all_solver_routes(puzzle: date, expected: Expected) -> None:
     """Test all expected routes - implemented or not.
 
     Args:
         puzzle (date): the year and day to test
         expected (Expected): the expected results file
-        client (FlaskClient): the FlaskClient
 
     Raises:
         AssertionError: Raised if the server gives a bad response
     """
-    with open(f"./puzzle_input/year{puzzle.year}/day{puzzle.day}.txt") as file:
-        input_file = file.read()
-    response = client.post(
-        f"/answers/{puzzle.year}/{puzzle.day}",
-        data=input_file,
-        headers={"Content-Type": "text/plain"},
-        follow_redirects=True,
-    )
+    with app.test_client() as client:
+        with open(f"./puzzle_input/year{puzzle.year}/day{puzzle.day}.txt") as file:
+            input_file = file.read()
+        response = client.post(
+            f"/answers/{puzzle.year}/{puzzle.day}",
+            data=input_file,
+            headers={"Content-Type": "text/plain"},
+            follow_redirects=True,
+        )
 
     if response.status_code == 200:
         assert puzzle.year in expected
@@ -126,5 +135,6 @@ def test_all_solver_routes(
                 body["results"]["part_two"]
                 == expected[puzzle.year][puzzle.day]["part_two"]
             )
+
     else:
         raise AssertionError(f"Received status_code {response.status_code}")

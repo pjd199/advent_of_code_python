@@ -55,7 +55,6 @@ class Solver(SolverInterface):
         return self._solve(50)
 
     def _solve(self, cycles: int) -> int:
-
         # try speeds with lists and numpy
 
         infinite_pixel = "."

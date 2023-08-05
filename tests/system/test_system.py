@@ -11,6 +11,7 @@ from toml import load as load_toml
 
 from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
+from tests.compare_json import json_equals
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -37,7 +38,7 @@ def development_server() -> str:
         str: the http url of the server
     """
     # start the development server on the localhost
-    host = "127.0.0.1"
+    host = "localhost"
     port = 5000
     environ["FLASK_ENV"] = "development"
     flask_thread = Thread(
@@ -144,7 +145,7 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
                         "action": "GET",
                         "description": "Discover detailed puzzle information"
                         f" for {year}.",
-                        "href": f"http://api.adventofcode.dibdin.me/puzzles/{year}",
+                        "href": f"http://localhost:5000/puzzles/{year}",
                         "rel": "puzzles",
                     }
                 ],
@@ -159,21 +160,14 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
             "/calendars/{year}",
             "links": [],
             "results": results,
-            "self": "http://api.adventofcode.dibdin.me/calendars",
+            "self": "http://localhost:5000/calendars",
         }
-        a = {k: v for k, v in response.json().items() if k != "timestamp"}
-
-        assert a == body
+        assert json_equals(response.json(), body, ("timestamp",))
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
-        a = {k: v for k, v in response.json().items() if k != "timestamp"}
-        b = {
-            k: v
-            for k, v in test_case_data["response"]["body"].items()
-            if k != "timestamp"
-        }
-        if test_case_data["request"]["path"].startswith("/answers"):
-            del a["results"]["timing"]
-            del b["results"]["timing"]
-        assert a == b
+        assert json_equals(
+            response.json(),
+            test_case_data["response"]["body"],
+            ("timings", "timestamp"),
+        )

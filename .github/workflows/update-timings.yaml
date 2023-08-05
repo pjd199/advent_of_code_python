@@ -1,22 +1,19 @@
-name: Update Status Graphic
+name: Update Timings
 
 on:
   workflow_dispatch:
   
-  schedule:
-    - cron:  "0 5 * 12 *"
-
   workflow_call:
     
 concurrency: 
-  group: status${{github.ref}}
+  group: timings${{github.ref}}
   cancel-in-progress: true
 
 jobs:
   generate:
-    name: Updating Status Graphic
+    name: Updating Timing in metadata
     runs-on: ubuntu-latest
-
+    
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
@@ -34,11 +31,19 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements_dev.txt
 
-      - name: Generate status graphic
-        run: python ./advent_of_code/utils/status_graphic.py
+      - name: Update timings
+        run: |
+          for year in {2015..2022}
+          do
+              for day in {1..25}
+              do
+                  echo === $year $day ===
+                  python advent_of_code/daily_helper.py $year $day -T
+              done
+          done
 
-      - name: Commit status graphic file to respository      
+      - name: Commit updated file to respository      
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
-          commit_message: Updated status graphic
+          commit_message: Updated timings in metadata
           branch: dev

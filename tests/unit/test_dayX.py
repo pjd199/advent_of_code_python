@@ -10,6 +10,7 @@ from subprocess import run
 import pytest
 
 from advent_of_code.utils.input_loader import load_file, load_puzzle_input_file
+from advent_of_code.utils.parser import ParseException
 from advent_of_code.utils.solver_interface import SolverInterface
 from advent_of_code.utils.solver_status import implementation_status
 from tests.conftest import Expected, Part
@@ -83,23 +84,23 @@ def test_init_solver(puzzle: date) -> None:
     mod.Solver(load_puzzle_input_file(puzzle.year, puzzle.day))
 
     # test with None input, which should cause a problem
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseException):
         mod.Solver(None)
 
     # test with empty input, which should cause a problem
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseException):
         mod.Solver([])
 
     # test with single "" input, which should cause a problem
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseException):
         mod.Solver([""])
 
     # test with a single line of random input, which should cause a problem
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseException):
         mod.Solver(["".join([choice(printable) for _ in range(randbelow(99) + 101)])])
 
     # test with multiple lines of random input, which should cause a problem
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseException):
         mod.Solver(
             [
                 "".join([choice(printable) for _ in range(randbelow(99) + 101)])

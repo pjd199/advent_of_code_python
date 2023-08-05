@@ -1,6 +1,6 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
 from argparse import ArgumentParser
-from datetime import date
+from datetime import date, datetime
 from importlib import import_module
 from json import dump, load
 from pathlib import Path
@@ -17,6 +17,8 @@ from requests import get
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code.utils.function_timer import function_timer
+from advent_of_code.utils.input_loader import load_puzzle_input_file
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_status import puzzle_date_generator
 
@@ -50,6 +52,7 @@ class DailyHelper:
         test: bool = False,
         open_webpage: bool = False,
         run_puzzle_cli: bool = False,
+        timing: bool = False,
     ):
         """Initialise the helper for a specific day.
 
@@ -62,6 +65,7 @@ class DailyHelper:
             test (bool): if True, enables testing. Default False
             open_webpage (bool): if True, open the url in a browser. Default False
             run_puzzle_cli (bool): if True, run the puzzle CLI. Default False
+            timing (bool): if True, store the timings. Default False
         """
         self.year = year
         self.day = day
@@ -71,6 +75,7 @@ class DailyHelper:
         self.test = test
         self.open_webpage = open_webpage
         self.run_puzzle_cli = run_puzzle_cli
+        self.timing = timing
 
         self.title = ""
         self.answers: List[str] = []
@@ -80,6 +85,7 @@ class DailyHelper:
         self.part_two_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_two.md")
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
         self.expected_path = Path("./tests/expected.json")
+        self.puzzle_metadata_path = Path("./puzzle_input/puzzle_metadata.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
         self.solver_module_path = Path(f"./advent_of_code/year{year}/day{day}.py")
         self.solver_init_path = Path(f"./advent_of_code/year{year}/__init__.py")
@@ -137,6 +143,9 @@ class DailyHelper:
                 self.answers.append(x.code.string)
         self._save_response()
 
+        # extract the excerpt
+        self.excerpt = parts[0].find_all("p")[0].text
+
         # save the expected responses
         self._save_expected()
 
@@ -170,6 +179,9 @@ class DailyHelper:
             runner(
                 import_module(f"advent_of_code.year{self.year}.day{self.day}").Solver
             )
+
+        # save the puzzle metadata
+        self._save_metadata()
 
         # run the testing
         self._testing()
@@ -278,6 +290,88 @@ class DailyHelper:
         # save the answers
         self._save(Path(self.response_path), response)
 
+    def _save_metadata(self) -> None:
+        """Save metadata.json."""
+        # open existing metadata file
+        file_updated = False
+        with open(self.puzzle_metadata_path) as file:
+            metadata = load(file)
+
+        if str(self.year) not in metadata:
+            metadata[str(self.year)] = {}
+
+        if str(self.day) not in metadata[str(self.year)]:
+            self._log(f"Creating entry in {self.puzzle_metadata_path}")
+            # first save of metadata
+            metadata[str(self.year)][str(self.day)] = {
+                "year": self.year,
+                "day": self.day,
+                "title": self.title,
+                "excerpt": self.excerpt,
+                "has_part_one": True,
+                "has_part_two": self.day != 25,
+                "part_one_solved": len(self.answers) >= 1,
+                "part_two_solved": len(self.answers) == 2,
+            }
+            file_updated = True
+        elif metadata[str(self.year)][str(self.day)]["part_one_solved"] != (
+            len(self.answers) >= 1
+        ) or metadata[str(self.year)][str(self.day)]["part_two_solved"] != (
+            len(self.answers) == 2
+        ):
+            self._log(f"Updating status in {self.puzzle_metadata_path}")
+            metadata[str(self.year)][str(self.day)]["part_one_solved"] = (
+                len(self.answers) >= 1
+            )
+            metadata[str(self.year)][str(self.day)]["part_two_solved"] = (
+                len(self.answers) == 2
+            )
+            file_updated = True
+
+        if (
+            len(self.answers) == 2 or (len(self.answers) == 1 and self.day == 25)
+        ) and "completion_date" not in metadata[str(self.year)][str(self.day)]:
+            self._log(f"Updating completion date {self.puzzle_metadata_path}")
+            metadata[str(self.year)][str(self.day)][
+                "completion_date"
+            ] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ")
+            file_updated = True
+
+        if self.timing:
+            self._log(f"Updating timings {self.puzzle_metadata_path}")
+
+            metadata[str(self.year)][str(self.day)]["timings"] = {}
+            metadata[str(self.year)][str(self.day)]["timings"]["unit"] = "ms"
+
+            self._log("Timing parse")
+            mod = import_module(f"advent_of_code.year{self.year}.day{self.day}")
+            puzzle_input = load_puzzle_input_file(self.year, self.day)
+            solver, time = function_timer(mod.Solver, puzzle_input)
+            metadata[str(self.year)][str(self.day)]["timings"]["parse"] = time
+
+            self._log("Timing part one")
+            _, time = function_timer(solver.solve_part_one)
+            metadata[str(self.year)][str(self.day)]["timings"]["part_one"] = time
+
+            if self.day != 25:
+                print("Timing for part two")
+                _, time = function_timer(solver.solve_part_two)
+                metadata[str(self.year)][str(self.day)]["timings"]["part_two"] = time
+            file_updated = True
+        elif "timings" not in metadata[str(self.year)][str(self.day)]:
+            print("No timings in metadata - run daily_helper with -T to time function.")
+
+        if file_updated:
+            self._save(
+                self.puzzle_metadata_path,
+                sorted_with_numeric_key(
+                    {k: sorted_with_numeric_key(v) for k, v in metadata.items()}
+                ),
+                force=True,
+            )
+        else:
+            self._log(f"Data already stored in {self.puzzle_metadata_path}")
+
     def _download(self, url: str, path: Path, ok_if_exists: bool) -> None:
         """Download file from URL.
 
@@ -370,9 +464,13 @@ def main() -> int:
         help="open puzzle on the Advent of Code website",
         action="store_true",
     )
+    parser.add_argument(
+        "--timing", "-T", help="update timing in metadata", action="store_true"
+    )
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
     parser.add_argument("--run", "-r", help="run the puzzle file", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
+
     args = parser.parse_args()
 
     # handle the session cookie loading and saving
@@ -399,6 +497,7 @@ def main() -> int:
             args.test,
             args.open,
             args.run,
+            args.timing,
         ).run()
 
     else:

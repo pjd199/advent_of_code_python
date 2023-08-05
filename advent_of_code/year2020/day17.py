@@ -73,7 +73,7 @@ class Solver(SolverInterface):
             )
 
             # for each of the neighbouring squares
-            for (x, y, z, w) in product(
+            for x, y, z, w in product(
                 range(min_x - 1, max_x + 2),
                 range(min_y - 1, max_y + 2),
                 range(min_z - 1, max_z + 2),

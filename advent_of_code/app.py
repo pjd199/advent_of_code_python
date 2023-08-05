@@ -1,7 +1,7 @@
 """Flask Application for Advent of Code Solver RESTful API."""
 from datetime import datetime
 from importlib import import_module
-from json import dumps
+from json import dumps, load
 from os import environ
 from pathlib import Path
 from platform import (
@@ -17,7 +17,7 @@ from time import sleep
 from typing import Any, Optional
 
 from apig_wsgi import make_lambda_handler
-from flask import Flask, Response, abort, make_response, request
+from flask import Flask, Response, make_response, request
 from requests import get
 from werkzeug.exceptions import HTTPException
 
@@ -35,20 +35,22 @@ from advent_of_code.utils.solver_status import (
 app = Flask(__name__)
 lambda_handler = make_lambda_handler(app)
 
-root_url = "http://api.adventofcode.dibdin.me"
 api_version = "2.0.0"
 
 
 def standard_response(
-    path: str, description: str, results: Any = None, links: Any = None
+    description: str,
+    status: int = 200,
+    results: Any = None,
+    links: Any = None,
 ) -> Response:
     """Generates the standard body.
 
     Args:
-        path (str): the path for this function
         description (str): the descriptionn for this function
         results (Any): the results of the api call
         links (Any): the links associated with this api call
+        status (int) : the HTTP status code, defaults to 200 (OK)
 
     Returns:
         Response: a response object
@@ -57,7 +59,7 @@ def standard_response(
         dumps(
             {
                 "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ"),
-                "self": f"{root_url}{path}",
+                "self": request.base_url.strip("/"),
                 "api_version": api_version,
                 "description": description,
                 "results": results if results else [],
@@ -66,9 +68,9 @@ def standard_response(
             sort_keys=False,
             indent=4,
         ),
-        200,
+        status,
         {
-            "Cache-Control": "public, max-age=3600",
+            "Cache-Control": "public, max-age=3600" if status == 200 else "no-cache",
             "Strict-Transport-Security": "max-age=3600; includeSubDomains; preload",
             "Content-Type": "application/json",
         },
@@ -86,21 +88,21 @@ def handle_root_path() -> Response:
     links = [
         {
             "rel": "calendars",
-            "href": f"{root_url}/calendars",
+            "href": f"{request.host_url.strip('/')}/calendars",
             "description": "Discover available puzzles and answers, "
             "filtered using /calendars/{year}.",
             "action": "GET",
         },
         {
             "rel": "puzzles",
-            "href": f"{root_url}/puzzles",
+            "href": f"{request.host_url.strip('/')}/puzzles",
             "description": "Discover detailed puzzle information, "
             "filtered using /puzzles/{year}/{day}.",
             "action": "GET",
         },
         {
             "rel": "answers",
-            "href": f"{root_url}/answers",
+            "href": f"{request.host_url.strip('/')}/answers",
             "description": "Find answer for given input by calling "
             "/answers/{year}/{day} with puzzle input as POST body "
             "or URL provided as input paramerater.",
@@ -109,7 +111,7 @@ def handle_root_path() -> Response:
         },
         {
             "rel": "answers",
-            "href": f"{root_url}/answers",
+            "href": f"{request.host_url.strip('/')}/answers",
             "description": "Find answer for given input by calling "
             "/answers/{year}/{day} with puzzle input as POST body "
             "or URL provided as input paramerater.",
@@ -118,7 +120,7 @@ def handle_root_path() -> Response:
     ]
 
     return standard_response(
-        "", "Discover resourses available through this API.", results, links
+        "Discover resourses available through this API.", 200, results, links
     )
 
 
@@ -148,7 +150,7 @@ def handle_calendars_path(
             "links": [
                 {
                     "rel": "puzzles",
-                    "href": f"{root_url}/puzzles/{year}",
+                    "href": f"{request.host_url.strip('/')}/puzzles/{year}",
                     "description": f"Discover detailed puzzle information "
                     f"for {year}.",
                     "action": "GET",
@@ -160,8 +162,8 @@ def handle_calendars_path(
     ]
 
     return standard_response(
-        "/calendars",
         "List of available puzzles, filtered using /calendars/{year}",
+        200,
         results,
     )
 
@@ -184,18 +186,21 @@ def handle_puzzles_path(
     Returns:
         Response: the response object
     """
+    with open("./puzzle_input/puzzle_metadata.json") as file:
+        metadata = load(file)
+
     results = [
         {
             "year": year,
             "day": day,
-            "title": "TITLE GOES HERE",
-            "overview": "OVERVIEW GOES HERE",
-            "average_timing": {
-                "parse": -1,
-                "part_one": -1,
-                "part_two": -1,
-                "units": "ms",
-            },
+            "title": metadata[str(year)][str(day)]["title"],
+            "excerpt": metadata[str(year)][str(day)]["excerpt"],
+            "has_part_one": metadata[str(year)][str(day)]["has_part_one"],
+            "has_part_two": metadata[str(year)][str(day)]["has_part_two"],
+            "part_one_solved": metadata[str(year)][str(day)]["part_one_solved"],
+            "part_two_solved": metadata[str(year)][str(day)]["part_two_solved"],
+            "completion_date": metadata[str(year)][str(day)]["completion_date"],
+            "timings": metadata[str(year)][str(day)]["timings"],
             "official_url": f"https://adventofcode.com/{year}/day/{day}",
             "repository_url": "https://github.com/pjd199/advent_of_code_python"
             f"/blob/main/advent_of_code/year{year}/day{day}.py",
@@ -204,32 +209,33 @@ def handle_puzzles_path(
             "links": [
                 {
                     "rel": "answers",
-                    "href": f"{root_url}/answers/{year}/{day}",
+                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
                     "description": f"Get the answer for {year} day {day}.",
                     "action": "GET",
                     "parameters": ["input"],
                 },
                 {
                     "rel": "answers",
-                    "href": f"{root_url}/answers/{year}/{day}",
+                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
                     "description": f"Get the answer for {year} day {day}.",
                     "action": "POST",
                 },
             ],
         }
-        for year in sorted({date.year for date in implementation_status()})
-        for day in range(1, 26)
+        for year, day in sorted(
+            {
+                (date.year, date.day)
+                for date, status in implementation_status().items()
+                if status
+            }
+        )
         if (year_filter is None or year_filter == year)
         and (day_filter is None or day_filter == day)
     ]
 
     return standard_response(
-        (
-            "/puzzles"
-            + (f"/{year_filter}" if year_filter else "")
-            + (f"/{day_filter}" if day_filter else "")
-        ),
         "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
+        200,
         results,
     )
 
@@ -246,24 +252,49 @@ def handle_answers_path(year: int, day: int) -> Response:
     Returns:
         Response: the standard response object
     """
+
+    def error_response(text: str) -> Response:
+        return standard_response(
+            "Get the answer to the puzzle, with input file provide as POST, "
+            "or URL provided as input paramerater.",
+            400,
+            text,
+        )
+
     if not is_solver_implemented(year, day):
-        abort(404)
+        return error_response(
+            f"year {year} day {day} is invalid. "
+            f"Please call {request.host_url.strip('/')}/calendars for valid values.",
+        )
 
     # load the input data
-    query_input = request.args.get("input")
-    if request.method == "POST":
-        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
-    elif query_input is not None:
-        puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
-    else:
-        abort(400)
+    puzzle_input = []
+    try:
+        query_input = request.args.get("input")
+        if request.method == "POST":
+            puzzle_input = load_multi_line_string(request.get_data(as_text=True))
+        elif query_input is not None:
+            puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
+        else:
+            return error_response(
+                "Unable to load the input data. Send fine as a text/plain POST, "
+                "or URL provided with the URL input paramerater.",
+            )
+    except Exception:
+        return error_response(
+            "Unable to load the input data. Send fine as a text/plain POST, "
+            "or URL provided with the URL input paramerater.",
+        )
 
     results: dict[str, Any] = {"year": year, "day": day}
     timing: dict[str, str | int] = {"units": "ms"}
 
     # find the solver
-    mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver, timing["parse"] = function_timer(mod.Solver, puzzle_input)
+    try:
+        mod = import_module(f"advent_of_code.year{year}.day{day}")
+        solver, timing["parse"] = function_timer(mod.Solver, puzzle_input)
+    except Exception:
+        return error_response("Unable to parse puzzle input.")
 
     # run the sovler to find the answers
     results["part_one"], timing["part_one"] = function_timer(
@@ -275,21 +306,21 @@ def handle_answers_path(year: int, day: int) -> Response:
             lambda: str(solver.solve_part_two())
         )
 
-    results["timing"] = timing
+    results["timings"] = timing
 
     links = [
         {
             "rel": "puzzles",
-            "href": f"{root_url}/puzzles/{year}/{day}",
+            "href": f"{request.host_url.strip('/')}/puzzles/{year}/{day}",
             "description": f"Get the answer for {year} day {day}.",
             "action": "GET",
         }
     ]
 
     return standard_response(
-        f"/answers/{year}/{day}",
         "Get the answer to the puzzle, with input file provide as POST, "
         "or URL provided as input paramerater.",
+        200,
         results,
         links,
     )
@@ -305,8 +336,9 @@ def handle_system_path() -> Response:  # pragma: no cover
     """
     results = {
         "url": request.url,
+        "host": request.host,
         "headers": dict(request.headers.items()),
-        "query": request.environ["QUERY_STRING"],
+        "query": request.args,
         "method": request.environ["REQUEST_METHOD"],
         "platform": platform(),
         "machine": machine(),
@@ -335,34 +367,30 @@ def handle_system_path() -> Response:  # pragma: no cover
     ##############################
     # add total memory!!!
 
-    return standard_response("/system", "System information.", results)
+    return standard_response("System information.", 200, results)
 
 
 @app.errorhandler(HTTPException)
-def handle_exception(e: HTTPException) -> tuple[dict[str, Any], int, dict[str, str]]:
+def handle_exception(e: HTTPException) -> Response:
     """Return JSON instead of HTML for HTTP errors.
 
     Args:
         e (HTTPException): the expection
 
     Returns:
-        dict[str, Any]: the response
+        Response: the response
     """
-    return (
-        {
-            "code": e.code,
-            "name": e.name,
-            "description": e.description,
-        },
+    return standard_response(
+        f"{e.description}",
         e.code if e.code is not None else 500,
-        {"Cache-Control": "no-cache"},
+        f"{e.name}",
     )
 
 
 def main() -> None:  # pragma: no cover
     """Called when run from the command line."""
     # start the development server on the localhost
-    host = "127.0.0.1"
+    host = "localhost"
     port = 5000
     environ["FLASK_ENV"] = "development"
     print(f"Starting development server on {host} at {port}")
@@ -398,6 +426,7 @@ def main() -> None:  # pragma: no cover
             break
 
         try:
+            print(f"Requesting http://{host}:{port}{url}")
             # time the call to the development server
             response, elapsed_time = function_timer(
                 get, f"http://{host}:{port}{url}", timeout=300
