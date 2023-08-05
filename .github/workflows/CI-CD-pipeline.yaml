@@ -52,6 +52,7 @@ jobs:
     name: Unit & Integration Test
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:

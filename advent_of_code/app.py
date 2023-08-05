@@ -271,7 +271,12 @@ def handle_answers_path(year: int, day: int) -> Response:
     puzzle_input = []
     try:
         query_input = request.args.get("input")
-        if request.method == "POST":
+        if (
+            request.method == "POST"
+            and request.content_type == "text/plain"
+            and request.content_length
+            and request.content_length > 0
+        ):
             puzzle_input = load_multi_line_string(request.get_data(as_text=True))
         elif query_input is not None:
             puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
