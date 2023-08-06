@@ -8,8 +8,8 @@ from freezegun import freeze_time
 from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
+from advent_of_code.utils.json import equals
 from advent_of_code.utils.solver_status import implementation_status
-from tests.compare_json import json_equals
 from tests.conftest import Expected
 
 
@@ -75,9 +75,7 @@ def test_other_routes(test_case: dict["str", Any]) -> None:
     # check the response code and body, ignoring the timing value
     assert response.status_code == test_case["response"]["status"]
     if "body" in test_case["response"]:
-        assert json_equals(
-            response.get_json(), test_case["response"]["body"], ("timings",)
-        )
+        assert equals(response.get_json(), test_case["response"]["body"], ["timings"])
         # check timings structure, but not values as they are variable
         if "response" in test_case["response"]["body"]:
             if "part_one" in test_case["response"]["body"]["results"]:

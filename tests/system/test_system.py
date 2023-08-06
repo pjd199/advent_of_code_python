@@ -10,8 +10,8 @@ from requests import get, post
 from toml import load as load_toml
 
 from advent_of_code.app import app
+from advent_of_code.utils.json import equals
 from advent_of_code.utils.solver_status import implementation_status
-from tests.compare_json import json_equals
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -162,12 +162,12 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
             "results": results,
             "self": "http://localhost:5000/calendars",
         }
-        assert json_equals(response.json(), body, ("timestamp",))
+        assert equals(response.json(), body, ["timestamp"])
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
-        assert json_equals(
+        assert equals(
             response.json(),
             test_case_data["response"]["body"],
-            ("timings", "timestamp"),
+            ["timings", "timestamp"],
         )
