@@ -222,6 +222,24 @@
     },
     {
       "request": {
+        "path": "/answers/2015/1?input=ThisIsNotValidForUrls",
+        "method": "GET",
+        "timestamp": "2023-07-31T10:31:18Z"
+      },
+      "response": {
+        "status": 400,
+        "body": {
+          "timestamp": "2023-07-31T10:31:18Z",
+          "self": "http://localhost:5000/answers/2015/1",
+          "api_version": "2.0.0",
+          "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
+          "results": "Unable to load the input data. Send fine as a text/plain POST, or URL provided with the URL input paramerater.",
+          "links": []
+        }
+      }
+    },
+    {
+      "request": {
         "path": "/2014/14",
         "method": "GET",
         "timestamp": "2023-08-05T10:57:39Z"
