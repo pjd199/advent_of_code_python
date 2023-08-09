@@ -14,31 +14,31 @@
             {
               "action": "GET",
               "description": "Discover available puzzles and answers, filtered using /calendars/{year}.",
-              "href": "http://localhost:5000/calendars",
+              "href": "{base_url}/calendars",
               "rel": "calendars"
             },
             {
               "action": "GET",
               "description": "Discover detailed puzzle information, filtered using /puzzles/{year}/{day}.",
-              "href": "http://localhost:5000/puzzles",
+              "href": "{base_url}/puzzles",
               "rel": "puzzles"
             },
             {
               "action": "GET",
               "description": "Find answer for given input by calling /answers/{year}/{day} with puzzle input as POST body or URL provided as input paramerater.",
-              "href": "http://localhost:5000/answers",
+              "href": "{base_url}/answers",
               "parameters": ["input"],
               "rel": "answers"
             },
             {
               "action": "POST",
               "description": "Find answer for given input by calling /answers/{year}/{day} with puzzle input as POST body or URL provided as input paramerater.",
-              "href": "http://localhost:5000/answers",
+              "href": "{base_url}/answers",
               "rel": "answers"
             }
           ],
           "results": ["calendars", "puzzles", "answers"],
-          "self": "http://localhost:5000",
+          "self": "{base_url}",
           "timestamp": "2023-07-31T11:23:33Z"
         }
       }
@@ -63,7 +63,7 @@
         "status": 200,
         "body": {
           "timestamp": "2023-08-05T10:07:37Z",
-          "self": "http://localhost:5000/puzzles/2015",
+          "self": "{base_url}/puzzles/2015",
           "api_version": "2.0.0",
           "description": "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
           "results": [
@@ -89,14 +89,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/1",
+                  "href": "{base_url}/answers/2015/1",
                   "description": "Get the answer for 2015 day 1.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/1",
+                  "href": "{base_url}/answers/2015/1",
                   "description": "Get the answer for 2015 day 1.",
                   "action": "POST"
                 }
@@ -124,14 +124,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/2",
+                  "href": "{base_url}/answers/2015/2",
                   "description": "Get the answer for 2015 day 2.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/2",
+                  "href": "{base_url}/answers/2015/2",
                   "description": "Get the answer for 2015 day 2.",
                   "action": "POST"
                 }
@@ -159,14 +159,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/3",
+                  "href": "{base_url}/answers/2015/3",
                   "description": "Get the answer for 2015 day 3.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/3",
+                  "href": "{base_url}/answers/2015/3",
                   "description": "Get the answer for 2015 day 3.",
                   "action": "POST"
                 }
@@ -194,14 +194,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/4",
+                  "href": "{base_url}/answers/2015/4",
                   "description": "Get the answer for 2015 day 4.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/4",
+                  "href": "{base_url}/answers/2015/4",
                   "description": "Get the answer for 2015 day 4.",
                   "action": "POST"
                 }
@@ -229,14 +229,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/5",
+                  "href": "{base_url}/answers/2015/5",
                   "description": "Get the answer for 2015 day 5.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/5",
+                  "href": "{base_url}/answers/2015/5",
                   "description": "Get the answer for 2015 day 5.",
                   "action": "POST"
                 }
@@ -264,14 +264,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/6",
+                  "href": "{base_url}/answers/2015/6",
                   "description": "Get the answer for 2015 day 6.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/6",
+                  "href": "{base_url}/answers/2015/6",
                   "description": "Get the answer for 2015 day 6.",
                   "action": "POST"
                 }
@@ -299,14 +299,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/7",
+                  "href": "{base_url}/answers/2015/7",
                   "description": "Get the answer for 2015 day 7.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/7",
+                  "href": "{base_url}/answers/2015/7",
                   "description": "Get the answer for 2015 day 7.",
                   "action": "POST"
                 }
@@ -334,14 +334,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/8",
+                  "href": "{base_url}/answers/2015/8",
                   "description": "Get the answer for 2015 day 8.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/8",
+                  "href": "{base_url}/answers/2015/8",
                   "description": "Get the answer for 2015 day 8.",
                   "action": "POST"
                 }
@@ -369,14 +369,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/9",
+                  "href": "{base_url}/answers/2015/9",
                   "description": "Get the answer for 2015 day 9.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/9",
+                  "href": "{base_url}/answers/2015/9",
                   "description": "Get the answer for 2015 day 9.",
                   "action": "POST"
                 }
@@ -404,14 +404,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/10",
+                  "href": "{base_url}/answers/2015/10",
                   "description": "Get the answer for 2015 day 10.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/10",
+                  "href": "{base_url}/answers/2015/10",
                   "description": "Get the answer for 2015 day 10.",
                   "action": "POST"
                 }
@@ -439,14 +439,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/11",
+                  "href": "{base_url}/answers/2015/11",
                   "description": "Get the answer for 2015 day 11.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/11",
+                  "href": "{base_url}/answers/2015/11",
                   "description": "Get the answer for 2015 day 11.",
                   "action": "POST"
                 }
@@ -474,14 +474,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/12",
+                  "href": "{base_url}/answers/2015/12",
                   "description": "Get the answer for 2015 day 12.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/12",
+                  "href": "{base_url}/answers/2015/12",
                   "description": "Get the answer for 2015 day 12.",
                   "action": "POST"
                 }
@@ -509,14 +509,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/13",
+                  "href": "{base_url}/answers/2015/13",
                   "description": "Get the answer for 2015 day 13.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/13",
+                  "href": "{base_url}/answers/2015/13",
                   "description": "Get the answer for 2015 day 13.",
                   "action": "POST"
                 }
@@ -544,14 +544,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/14",
+                  "href": "{base_url}/answers/2015/14",
                   "description": "Get the answer for 2015 day 14.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/14",
+                  "href": "{base_url}/answers/2015/14",
                   "description": "Get the answer for 2015 day 14.",
                   "action": "POST"
                 }
@@ -579,14 +579,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/15",
+                  "href": "{base_url}/answers/2015/15",
                   "description": "Get the answer for 2015 day 15.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/15",
+                  "href": "{base_url}/answers/2015/15",
                   "description": "Get the answer for 2015 day 15.",
                   "action": "POST"
                 }
@@ -614,14 +614,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/16",
+                  "href": "{base_url}/answers/2015/16",
                   "description": "Get the answer for 2015 day 16.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/16",
+                  "href": "{base_url}/answers/2015/16",
                   "description": "Get the answer for 2015 day 16.",
                   "action": "POST"
                 }
@@ -649,14 +649,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/17",
+                  "href": "{base_url}/answers/2015/17",
                   "description": "Get the answer for 2015 day 17.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/17",
+                  "href": "{base_url}/answers/2015/17",
                   "description": "Get the answer for 2015 day 17.",
                   "action": "POST"
                 }
@@ -684,14 +684,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/18",
+                  "href": "{base_url}/answers/2015/18",
                   "description": "Get the answer for 2015 day 18.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/18",
+                  "href": "{base_url}/answers/2015/18",
                   "description": "Get the answer for 2015 day 18.",
                   "action": "POST"
                 }
@@ -719,14 +719,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/19",
+                  "href": "{base_url}/answers/2015/19",
                   "description": "Get the answer for 2015 day 19.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/19",
+                  "href": "{base_url}/answers/2015/19",
                   "description": "Get the answer for 2015 day 19.",
                   "action": "POST"
                 }
@@ -754,14 +754,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/20",
+                  "href": "{base_url}/answers/2015/20",
                   "description": "Get the answer for 2015 day 20.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/20",
+                  "href": "{base_url}/answers/2015/20",
                   "description": "Get the answer for 2015 day 20.",
                   "action": "POST"
                 }
@@ -789,14 +789,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/21",
+                  "href": "{base_url}/answers/2015/21",
                   "description": "Get the answer for 2015 day 21.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/21",
+                  "href": "{base_url}/answers/2015/21",
                   "description": "Get the answer for 2015 day 21.",
                   "action": "POST"
                 }
@@ -824,14 +824,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/22",
+                  "href": "{base_url}/answers/2015/22",
                   "description": "Get the answer for 2015 day 22.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/22",
+                  "href": "{base_url}/answers/2015/22",
                   "description": "Get the answer for 2015 day 22.",
                   "action": "POST"
                 }
@@ -859,14 +859,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/23",
+                  "href": "{base_url}/answers/2015/23",
                   "description": "Get the answer for 2015 day 23.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/23",
+                  "href": "{base_url}/answers/2015/23",
                   "description": "Get the answer for 2015 day 23.",
                   "action": "POST"
                 }
@@ -894,14 +894,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/24",
+                  "href": "{base_url}/answers/2015/24",
                   "description": "Get the answer for 2015 day 24.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/24",
+                  "href": "{base_url}/answers/2015/24",
                   "description": "Get the answer for 2015 day 24.",
                   "action": "POST"
                 }
@@ -929,14 +929,14 @@
               "links": [
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/25",
+                  "href": "{base_url}/answers/2015/25",
                   "description": "Get the answer for 2015 day 25.",
                   "action": "GET",
                   "parameters": ["input"]
                 },
                 {
                   "rel": "answers",
-                  "href": "http://localhost:5000/answers/2015/25",
+                  "href": "{base_url}/answers/2015/25",
                   "description": "Get the answer for 2015 day 25.",
                   "action": "POST"
                 }
@@ -961,7 +961,7 @@
             {
               "action": "GET",
               "description": "Get the answer for 2015 day 1.",
-              "href": "http://localhost:5000/puzzles/2015/1",
+              "href": "{base_url}/puzzles/2015/1",
               "rel": "puzzles"
             }
           ],
@@ -977,7 +977,7 @@
             },
             "year": 2015
           },
-          "self": "http://localhost:5000/answers/2015/1",
+          "self": "{base_url}/answers/2015/1",
           "timestamp": "2023-07-31T11:29:46Z"
         }
       }
@@ -998,7 +998,7 @@
             {
               "action": "GET",
               "description": "Get the answer for 2015 day 2.",
-              "href": "http://localhost:5000/puzzles/2015/2",
+              "href": "{base_url}/puzzles/2015/2",
               "rel": "puzzles"
             }
           ],
@@ -1014,7 +1014,7 @@
             },
             "year": 2015
           },
-          "self": "http://localhost:5000/answers/2015/2",
+          "self": "{base_url}/answers/2015/2",
           "timestamp": "2023-07-31T11:30:35Z"
         }
       }

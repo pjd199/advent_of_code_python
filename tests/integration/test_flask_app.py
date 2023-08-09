@@ -1,16 +1,15 @@
 """Unit tests for the lambda_handler function."""
 from datetime import date
 from json import load
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 from freezegun import freeze_time
 from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
-from advent_of_code.utils.json import equals
 from advent_of_code.utils.solver_status import implementation_status
-from tests.conftest import Expected
+from tests.conftest import Expected, Json
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -37,11 +36,14 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         )
 
 
-def test_other_routes(test_case: dict["str", Any]) -> None:
+def test_other_routes(
+    test_case: dict["str", Any], check_json: Callable[[Json, Json, list[str]], None]
+) -> None:
     """Integration test for GET method.
 
     Args:
         test_case (Json): the test case data
+        check_json (Callable[[Json, Json, list[str]]): JSON checker
     """
 
     def send_request() -> TestResponse:
@@ -75,7 +77,7 @@ def test_other_routes(test_case: dict["str", Any]) -> None:
     # check the response code and body, ignoring the timing value
     assert response.status_code == test_case["response"]["status"]
     if "body" in test_case["response"]:
-        assert equals(response.get_json(), test_case["response"]["body"], ["timings"])
+        check_json(response.get_json(), test_case["response"]["body"], ["timings"])
         # check timings structure, but not values as they are variable
         if "response" in test_case["response"]["body"]:
             if "part_one" in test_case["response"]["body"]["results"]:

@@ -10,8 +10,95 @@ from requests import get, post
 from toml import load as load_toml
 
 from advent_of_code.app import app
-from advent_of_code.utils.json import equals
 from advent_of_code.utils.solver_status import implementation_status
+from tests.conftest import check_json
+
+
+def sam_url_lookup(filename: str) -> str:
+    """Open the SAM config file, and use the stack name to find the Fucntion URL.
+
+    Args:
+        filename (str): the name of the file to scan
+
+    Returns:
+        str: the discovered url
+    """
+    base_url = ""
+
+    sam_config = load_toml(filename)
+    stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
+    region_name = sam_config["default"]["deploy"]["parameters"]["region"]
+
+    cf_client = client("cloudformation", region_name=region_name)
+    stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
+
+    if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
+        for stack in stack_descriptions["Stacks"]:
+            if stack["StackName"] == stack_name:
+                for output in stack["Outputs"]:
+                    if output["OutputKey"] == "AdventOfCodeFunctionURL":
+                        base_url = output["OutputValue"].strip("/")
+                        break
+
+    return base_url
+
+
+@pytest.fixture(scope="module")
+def localhost_url() -> str:
+    """Starts the development server on the localhost.
+
+    Returns:
+        str: the https url of the server
+    """
+    scheme = "https"
+    host = "127.0.0.1"
+    port = 5000
+
+    # start the development server on the localhost
+    environ["FLASK_ENV"] = "development"
+    flask_thread = Thread(
+        target=app.run,
+        kwargs={
+            "host": host,
+            "port": port,
+            "use_reloader": False,
+            "ssl_context": "adhoc" if scheme == "https" else None,
+        },
+        daemon=True,
+    )
+    flask_thread.start()
+
+    return f"{scheme}://{host}:{port}"
+
+
+@pytest.fixture(scope="module")
+def sam_dev_url() -> str:
+    """The SAM development branch URL.
+
+    Returns:
+        str: The SAM development URL.
+    """
+    return sam_url_lookup("./samconfig_dev.toml")
+
+
+@pytest.fixture(scope="module")
+def sam_main_url() -> str:
+    """The SAM main branch URL.
+
+    Returns:
+        str: The SAM development URL.
+    """
+    return sam_url_lookup("./samconfig.toml")
+
+
+@pytest.fixture(scope="module")
+def cdn_url() -> str:
+    """The CDN URL.
+
+    Returns:
+        str: The CDN URL
+    """
+    return "https://api.adventofcode.dibdin.me"
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -30,106 +117,68 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-@pytest.fixture(scope="module")
-def development_server() -> str:
-    """Starts the development server on the localhost.
-
-    Returns:
-        str: the http url of the server
-    """
-    # start the development server on the localhost
-    host = "localhost"
-    port = 5000
-    environ["FLASK_ENV"] = "development"
-    flask_thread = Thread(
-        target=lambda: app.run(host=host, port=port, use_reloader=False)
-    )
-    flask_thread.daemon = True
-    flask_thread.start()
-
-    return f"http://{host}:{port}"
-
-
-@pytest.fixture(scope="module")
-def lambda_urls() -> Dict[str, str]:
-    """Open the SAM config file, and use the stack name to find the Fucntion URL.
-
-    Returns:
-        Dict[str, str]: the discovered urls, one for each file
-    """
-    urls = {}
-    for file in ["./samconfig.toml", "./samconfig_dev.toml"]:
-        try:
-            sam_config = load_toml(file)
-            stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
-            region_name = sam_config["default"]["deploy"]["parameters"]["region"]
-
-            cf_client = client("cloudformation", region_name=region_name)
-            stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
-
-            if stack_descriptions["ResponseMetadata"]["HTTPStatusCode"] == 200:
-                for stack in stack_descriptions["Stacks"]:
-                    if stack["StackName"] == stack_name:
-                        for output in stack["Outputs"]:
-                            if output["OutputKey"] == "AdventOfCodeFunctionURL":
-                                urls[file] = output["OutputValue"].strip("/")
-                                break
-        except Exception:
-            ...
-    return urls
-
-
-def test_main(lambda_urls: Dict[str, str], test_case: Dict["str", Any]) -> None:
+def test_main(sam_main_url: str, test_case: Dict["str", Any]) -> None:
     """Test using the main branch Lambda Function URL.
 
     Args:
-        lambda_urls (Dict[str, str]): the urls for testing
+        sam_main_url (str): the url for testing
         test_case (Dict["str", Any]): the test case
     """
-    call_lambda_function(lambda_urls["./samconfig.toml"], test_case)
+    call_lambda_function(sam_main_url, test_case)
 
 
-def test_dev(lambda_urls: Dict[str, str], test_case: Dict["str", Any]) -> None:
+def test_cdn(cdn_url: str, test_case: Dict["str", Any]) -> None:
+    """Test using the CDN URL.
+
+    Args:
+        cdn_url (str): the url for testing
+        test_case (Dict["str", Any]): the test case
+    """
+    call_lambda_function(cdn_url, test_case)
+
+
+def test_dev(sam_dev_url: str, test_case: Dict["str", Any]) -> None:
     """Test using the development branch Lambda Function URL.
 
     Args:
-        lambda_urls (Dict[str, str]): the urls for testing
+        sam_dev_url (str): the url for testing
         test_case (Dict["str", Any]): the test case
     """
-    call_lambda_function(lambda_urls["./samconfig_dev.toml"], test_case)
+    call_lambda_function(sam_dev_url, test_case)
 
 
-def test_local(development_server: str, test_case: Dict["str", Any]) -> None:
-    """Test using the main branch Lambda Function URL.
+def test_local(localhost_url: str, test_case: Dict["str", Any]) -> None:
+    """Test using the localhost URL.
 
     Args:
-        development_server (str): the fixture providing the server url
+        localhost_url (str): the localhost URL
         test_case (Dict["str", Any]): the test case
     """
-    call_lambda_function(development_server, test_case)
+    call_lambda_function(localhost_url, test_case)
 
 
-def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
+def call_lambda_function(base_url: str, test_case_data: Dict["str", Any]) -> None:
     """System test.
 
     Args:
-        url (str): the Funciton URL of the deployed AWS Lambda function
+        base_url (str): the Funciton URL of the deployed AWS Lambda function
         test_case_data (data: Dict["str", Any]): the test case data
     """
     # make the request
     if test_case_data["request"]["method"] == "GET":
-        response = get(url + test_case_data["request"]["path"])
+        response = get(base_url + test_case_data["request"]["path"], verify=False)
     elif (
         "body" in test_case_data["request"]
         and "content_type" in test_case_data["request"]
     ):
         response = post(
-            url + test_case_data["request"]["path"],
+            base_url + test_case_data["request"]["path"],
             data=test_case_data["request"]["body"].encode(),
             headers={"Content-Type": test_case_data["request"]["content_type"]},
+            verify=False,
         )
     else:
-        response = post(url + test_case_data["request"]["path"])
+        response = post(base_url + test_case_data["request"]["path"], verify=False)
 
     # check the response code
     assert response.status_code == test_case_data["response"]["status"]
@@ -145,7 +194,7 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
                         "action": "GET",
                         "description": "Discover detailed puzzle information"
                         f" for {year}.",
-                        "href": f"http://localhost:5000/puzzles/{year}",
+                        "href": f"{base_url}/puzzles/{year}",
                         "rel": "puzzles",
                     }
                 ],
@@ -160,14 +209,15 @@ def call_lambda_function(url: str, test_case_data: Dict["str", Any]) -> None:
             "/calendars/{year}",
             "links": [],
             "results": results,
-            "self": "http://localhost:5000/calendars",
+            "self": f"{base_url}/calendars",
         }
-        assert equals(response.json(), body, ["timestamp"])
+        check_json(response.json(), body, ["timestamp"], None)
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
-        assert equals(
+        check_json(
             response.json(),
             test_case_data["response"]["body"],
             ["timings", "timestamp"],
+            [("{base_url}", base_url)],
         )

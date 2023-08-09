@@ -1,10 +1,14 @@
 """Unit tests for advent_of_code.utils.json."""
-from advent_of_code.utils.json import equals
+from typing import Callable
+
+import pytest
+
+from tests.conftest import Json
 
 
-def test_equals() -> None:
+def test_check_json(check_json: Callable[[Json, Json, list[str]], None]) -> None:
     """Unit test."""
-    first = {
+    left = {
         "str": "value",
         "int": 123,
         "float": 0.5,
@@ -13,7 +17,7 @@ def test_equals() -> None:
         "list": ["a", "b", "c"],
         "dict": {"x": "1", "y": 2, "z": 3.0},
     }
-    second = {
+    right = {
         "str": "value",
         "int": 123,
         "float": 0.5,
@@ -22,6 +26,15 @@ def test_equals() -> None:
         "nested": [{"p": "q"}, {"r": "s"}],
         "dict": {"x": "1", "y": 2, "z": 3.0, "w": 4},
     }
-    assert not equals(first, second, [])
-    assert equals(first, second, ["list", "w"])
-    assert equals(first, second, ["list", "dict"])
+    with pytest.raises(AssertionError):
+        check_json(left, right, [])
+
+    check_json(left, right, ["list", "w"])
+
+    with pytest.raises(AssertionError):
+        check_json(left, right, ["list"])
+
+    with pytest.raises(AssertionError):
+        check_json(left, right, ["w"])
+
+    check_json(left, right, ["list", "dict"])
