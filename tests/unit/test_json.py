@@ -1,12 +1,10 @@
 """Unit tests for advent_of_code.utils.json."""
-from typing import Callable
-
 import pytest
 
-from tests.conftest import Json
+from tests.conftest import check_json
 
 
-def test_check_json(check_json: Callable[[Json, Json, list[str]], None]) -> None:
+def test_check_json() -> None:
     """Unit test."""
     left = {
         "str": "value",
