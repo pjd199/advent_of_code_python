@@ -395,12 +395,18 @@ def handle_exception(e: HTTPException) -> Response:
 def main() -> None:  # pragma: no cover
     """Called when run from the command line."""
     # start the development server on the localhost
-    host = "localhost"
+    scheme = "https"
+    host = "127.0.0.1"
     port = 5000
     environ["FLASK_ENV"] = "development"
-    print(f"Starting development server on {host} at {port}")
+    print(f"Starting {scheme} server on {host} at {port}")
     flask_thread = Thread(
-        target=lambda: app.run(host=host, port=port, use_reloader=False)
+        target=lambda: app.run(
+            host=host,
+            port=port,
+            use_reloader=False,
+            ssl_context="adhoc" if scheme == "https" else None,
+        )
     )
     flask_thread.daemon = True
     flask_thread.start()
@@ -431,10 +437,10 @@ def main() -> None:  # pragma: no cover
             break
 
         try:
-            print(f"Requesting http://{host}:{port}{url}")
+            print(f"Requesting {scheme}://{host}:{port}{url}")
             # time the call to the development server
             response, elapsed_time = function_timer(
-                get, f"http://{host}:{port}{url}", timeout=300
+                get, f"{scheme}://{host}:{port}{url}", timeout=300, verify=False
             )
 
             # print the headers
