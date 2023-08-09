@@ -1,7 +1,7 @@
 """Unit tests for the lambda_handler function."""
 from datetime import date
 from json import load
-from typing import Any, Callable
+from typing import Any
 
 import pytest
 from freezegun import freeze_time
@@ -9,7 +9,7 @@ from werkzeug.test import TestResponse
 
 from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
-from tests.conftest import Expected, Json
+from tests.conftest import Expected, check_json
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -36,14 +36,11 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         )
 
 
-def test_other_routes(
-    test_case: dict["str", Any], check_json: Callable[[Json, Json, list[str]], None]
-) -> None:
+def test_other_routes(test_case: dict["str", Any]) -> None:
     """Integration test for GET method.
 
     Args:
         test_case (Json): the test case data
-        check_json (Callable[[Json, Json, list[str]]): JSON checker
     """
 
     def send_request() -> TestResponse:
