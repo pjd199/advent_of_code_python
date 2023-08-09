@@ -14,6 +14,7 @@ def test_check_json() -> None:
         "nested": [{"p": "q"}, {"r": "s"}],
         "list": ["a", "b", "c"],
         "dict": {"x": "1", "y": 2, "z": 3.0},
+        "abc": "xyz",
     }
     right = {
         "str": "value",
@@ -23,16 +24,17 @@ def test_check_json() -> None:
         "list": ["a", "b", "c", "d"],
         "nested": [{"p": "q"}, {"r": "s"}],
         "dict": {"x": "1", "y": 2, "z": 3.0, "w": 4},
+        "abc": "abc",
     }
     with pytest.raises(AssertionError):
         check_json(left, right, [])
 
-    check_json(left, right, ["list", "w"])
+    check_json(left, right, ["list", "w", "abc"])
 
     with pytest.raises(AssertionError):
-        check_json(left, right, ["list"])
+        check_json(left, right, ["list", "abc"])
 
     with pytest.raises(AssertionError):
-        check_json(left, right, ["w"])
+        check_json(left, right, ["w", "abc"])
 
-    check_json(left, right, ["list", "dict"])
+    check_json(left, right, ["list", "dict"], [("abc", "xyz")])
