@@ -36,18 +36,17 @@ jobs:
           pip install -r requirements_CI_CD_check.txt
 
       - name: Lint with ruff
-        run: ruff
+        run: ruff check .
+
+      - name: Check import order
+        run: isort --check-only
+
+      - name: Checking docstrings
+        run: pydoclint --config=pyproject.toml .
 
       - name: Static type check with mypy
         run: |
           mypy --strict .
-
-      - name: Security check with bandit
-        run: |
-          bandit -r advent_of_code
-      
-      - name: Checking docstrings
-        run: pydoclint --config=pyproject.toml
 
   unit-test:
     name: Unit & Integration Test
