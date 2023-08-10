@@ -1,0 +1,6 @@
+[tool.pydoclint]
+style = "google"
+allow-init-docstring = true
+
+[tool.isort]
+profile = "black"

@@ -35,10 +35,8 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements_CI_CD_check.txt
 
-      - name: Lint with flake8
-        run: |
-          flake8 . --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Lint with ruff
+        run: ruff
 
       - name: Static type check with mypy
         run: |
@@ -47,6 +45,9 @@ jobs:
       - name: Security check with bandit
         run: |
           bandit -r advent_of_code
+      
+      - name: Checking docstrings
+        run: pydoclint --config=pyproject.toml
 
   unit-test:
     name: Unit & Integration Test
