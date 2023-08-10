@@ -87,7 +87,7 @@ class Solver(SolverInterface):
 
         Args:
             molecule (str): the input molecule
-            replacement_list (List[Tuple[str, ...]]): list of replacements
+            replacement_list (List[Tuple[str, str]]): list of replacements
             reverse (bool): if True, reverses the replacement_list.
                 Defaults to False.
 

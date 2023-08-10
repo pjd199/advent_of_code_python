@@ -7,7 +7,7 @@ https://adventofcode.com/2020/day/25
 """
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
+from typing import Generator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -39,7 +39,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def transform(subject_number: int) -> Iterator[int]:
+        def transform(subject_number: int) -> Generator[int, None, None]:
             value = subject_number
             while True:
                 value *= subject_number
@@ -54,6 +54,9 @@ class Solver(SolverInterface):
 
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
+
+        Returns:
+            int: but never does!
 
         Raises:
             NotImplementedError: always!

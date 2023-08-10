@@ -84,7 +84,7 @@ class Solver(SolverInterface):
             start_y (int): starting y co-ordinate
 
         Returns:
-            Set[int]: the found group
+            Set[Tuple[int, int]]: the found group
         """
         group = set()
         queue: Deque[Tuple[int, int]] = deque()

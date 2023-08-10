@@ -30,7 +30,7 @@ class Solver(SolverInterface):
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r".*", int_processor))
         self.points: dict[tuple[int, int], int] = {}

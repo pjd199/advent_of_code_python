@@ -14,7 +14,7 @@ from platform import (
 from sys import path
 from threading import Thread
 from time import sleep
-from typing import Any, Optional
+from typing import Any
 
 from apig_wsgi import make_lambda_handler
 from flask import Flask, Response, make_response, request
@@ -48,9 +48,9 @@ def standard_response(
 
     Args:
         description (str): the descriptionn for this function
+        status (int) : the HTTP status code, defaults to 200 (OK)
         results (Any): the results of the api call
         links (Any): the links associated with this api call
-        status (int) : the HTTP status code, defaults to 200 (OK)
 
     Returns:
         Response: a response object
@@ -129,12 +129,12 @@ def handle_root_path() -> Response:
 @app.route("/calendars/<int:year_filter>", methods=["GET"])
 @app.route("/calendars/<int:year_filter>/", methods=["GET"])
 def handle_calendars_path(
-    year_filter: Optional[int] = None,
+    year_filter: int | None = None,
 ) -> Response:
     """Handles the root path - /calendars .
 
     Args:
-        year_filter (int): The year_filter element from the URL
+        year_filter (int | None): The year_filter element from the URL
 
     Returns:
         Response: the response object
@@ -175,13 +175,13 @@ def handle_calendars_path(
 @app.route("/puzzles/<int:year_filter>/<int:day_filter>", methods=["GET"])
 @app.route("/puzzles/<int:year_filter>/<int:day_filter>/", methods=["GET"])
 def handle_puzzles_path(
-    year_filter: Optional[int] = None, day_filter: Optional[int] = None
+    year_filter: (int | None) = None, day_filter: (int | None) = None
 ) -> Response:
     """Handles the root path - /puzzles .
 
     Args:
-        year_filter (int): The year_filter element from the URL
-        day_filter (int): The day_filter element from the URL
+        year_filter (int | None): The year_filter element from the URL
+        day_filter (int | None): The day_filter element from the URL
 
     Returns:
         Response: the response object

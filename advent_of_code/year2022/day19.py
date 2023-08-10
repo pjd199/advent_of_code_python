@@ -112,8 +112,8 @@ class Solver(SolverInterface):
 
         Args:
             blueprint (_Blueprint): the blueprint to solve
-            materials (Tuple[int, int, int, int]): the current materials
-            robots (Tuple[int, int, int, int]): the current robots
+            materials (Tuple[int, ...]): the current materials
+            robots (Tuple[int, ...]): the current robots
             time (int): the remaining time
             best (Dict[int, int]): mapping of seconds remaining to best geode produced
 

@@ -9,7 +9,7 @@ from collections import deque
 from itertools import islice
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, Iterator, List, Tuple
+from typing import Callable, Dict, Generator, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -144,7 +144,7 @@ class Solver(SolverInterface):
 
         return ",".join(route)
 
-    def subs(self, route: str) -> Iterator[str]:
+    def subs(self, route: str) -> Generator[str, None, None]:
         """Helper function, to find possible substrings.
 
         Args:

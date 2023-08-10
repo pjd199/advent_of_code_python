@@ -33,7 +33,7 @@ def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
         group (Union[str, int]): the group name of numvber to match
 
     Returns:
-        str: the result
+        Callable[[Match[str]], int]: the result
     """
     return lambda m: int(m.group(group))
 
@@ -45,7 +45,7 @@ def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
         match (Match[str]): the regular expression Match[str]
 
     Returns:
-        Tuple[int,...]: the result
+        Tuple[int, ...]: the result
     """
     return tuple(int(x) for x in match.groups())
 
@@ -69,7 +69,7 @@ def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
         group (Union[str, int]): the group name of numvber to match
 
     Returns:
-        str: the result
+        Callable[[Match[str]], str]: the result
     """
     return lambda m: m.group(group)
 
@@ -194,10 +194,10 @@ def parse_lines(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
+        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (Tuple[str, ...], optional): header to validate. Default ()
+        header (Tuple[str, ...]): header to validate. Default ()
 
     Raises:
         ParseException: if the puzzle_input has the wrong length
@@ -261,12 +261,12 @@ def parse_tokens(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
+        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         require_delimiter (bool): delimiter must be present when True. Defaults to True.
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
-        header (Tuple[str, ...], optional): header to validate. Defaults to ().
+        header (Tuple[str, ...]): header to validate. Defaults to ().
 
     Raises:
         ParseException: if the input has an invalid pattern and delimiter combination
@@ -320,10 +320,10 @@ def parse_tokens_single_line(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        *args: Tuple[str, Callable[[Match[str]], T]]: processors called for each match
+        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         require_delimiter (bool): when false, the delimiter is optional in the input
-        header (Tuple[str, ...], optional): header to validate. Defaults to ().
+        header (Tuple[str, ...]): header to validate. Defaults to ().
 
     Returns:
         List[T]: the parsed output
@@ -351,8 +351,8 @@ def parse_grid(
 
     Args:
         puzzle_input (List[str]): the puzzle input
-        match_processor (Callable[[Match[str]], T]]): processor called for the match
         pattern (str): the regular expression pattern for each line
+        match_processor (Callable[[Match[str]], T]): processor called for the match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
         header (Tuple[str, ...]): header to validate. Default ()
@@ -401,13 +401,13 @@ def split_sections(
         expected_sections (int): the number of sections to expect.
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (Tuple[str, ...], optional): header to validate. Default ()
+        header (Tuple[str, ...]): header to validate. Default ()
 
     Raises:
         ParseException: if the puzzle_input has incorrect length or number of sections
 
     Returns:
-        List[T]: the parsed output
+        List[List[str]]: the parsed output
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 

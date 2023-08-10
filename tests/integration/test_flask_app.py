@@ -36,11 +36,11 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
         )
 
 
-def test_other_routes(test_case: dict["str", Any]) -> None:
+def test_other_routes(test_case: dict[str, Any]) -> None:
     """Integration test for GET method.
 
     Args:
-        test_case (Json): the test case data
+        test_case (dict[str, Any]): the test case data
     """
 
     def send_request() -> TestResponse:

@@ -73,7 +73,7 @@ class Solver(SolverInterface):
             the length of the third side
 
         Args:
-            itr (Iterable[List[List[int]]]): the input
+            itr (List[List[int]]): the input
 
         Returns:
             int: the count

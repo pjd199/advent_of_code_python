@@ -7,7 +7,7 @@ https://adventofcode.com/2017/day/15
 """
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
+from typing import Generator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -62,7 +62,9 @@ class Solver(SolverInterface):
             if (next(iter_a) & 65535) == (next(iter_b) & 65535)
         )
 
-    def _generator(self, seed: int, factor: int, modulo: int = 1) -> Iterator[int]:
+    def _generator(
+        self, seed: int, factor: int, modulo: int = 1
+    ) -> Generator[int, None, None]:
         """Simulate the Generator in the puzzle.
 
         Args:
@@ -71,7 +73,7 @@ class Solver(SolverInterface):
             modulo (int): Only return results multiples of modulo. Defaults to 1.
 
         Yields:
-            Iterator[int]: the next number in the sequence
+            Generator[int, None, None]: the next number in the sequence
         """
         value = seed
         if modulo == 1:

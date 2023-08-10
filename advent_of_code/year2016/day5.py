@@ -8,7 +8,7 @@ https://adventofcode.com/2016/day/10
 from hashlib import md5
 from pathlib import Path
 from sys import path
-from typing import Dict, Iterable, List
+from typing import Dict, Generator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -67,11 +67,11 @@ class Solver(SolverInterface):
 
         return "".join(password)
 
-    def _digests(self) -> Iterable[str]:
+    def _digests(self) -> Generator[str, None, None]:
         """An iterator for MD5 digests.
 
         Yields:
-            Iterator[Iterable[str]]: The next digest in the stream
+            Generator[str, None, None]: The next digest in the stream
         """
         i = 0
 

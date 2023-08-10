@@ -9,7 +9,7 @@ from functools import lru_cache
 from itertools import cycle, product
 from pathlib import Path
 from sys import path
-from typing import Iterator
+from typing import Generator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -44,7 +44,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def dice_iter() -> Iterator[int]:
+        def dice_iter() -> Generator[int, None, None]:
             dice = 1
             while True:
                 yield dice

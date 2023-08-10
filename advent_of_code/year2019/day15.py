@@ -10,7 +10,7 @@ from copy import deepcopy
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Deque, Dict, List, Optional, Tuple
+from typing import Deque, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -100,7 +100,7 @@ class Solver(SolverInterface):
             y (int): y co-ordinate
 
         Returns:
-            Iterator[Tuple[int, int, int]]: the moves
+            Tuple[Tuple[int, int, int], ...]: the moves
         """
         return (
             (x, y - 1, 1),
@@ -109,14 +109,12 @@ class Solver(SolverInterface):
             (x + 1, y, 4),
         )
 
-    def navigate(
-        self, start: Tuple[int, int], finish: Optional[Tuple[int, int]]
-    ) -> int:
+    def navigate(self, start: Tuple[int, int], finish: Tuple[int, int] | None) -> int:
         """Navigate the grid, from start to finish.
 
         Args:
-            start (Tuple[int,int]): starting co-ordinates. Defaults to (0, 0).
-            finish (Tuple[int,int]): finishing co-ordinates. Defaults to None.
+            start (Tuple[int, int]): starting co-ordinates. Defaults to (0, 0).
+            finish (Tuple[int, int] | None): finishing co-ordinates. Defaults to None.
 
         Returns:
             int: number of steps from start and finish

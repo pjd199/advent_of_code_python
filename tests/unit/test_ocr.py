@@ -368,7 +368,7 @@ def test_coordinates_three_letters(
     """Test that all the letters can be read.
 
     Args:
-        test_input (Set[Tuple[int,int]]): the input array
+        test_input (Set[Tuple[int, int]]): the input array
         expected (str): the expected result
     """
     assert ocr_coordinates(test_input) == expected

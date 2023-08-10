@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
+from typing import Generator, List
 
 import numpy as np
 
@@ -96,7 +96,7 @@ class Solver(SolverInterface):
     def _solve(self) -> None:
         """Calculate the register value for each time cycle."""
 
-        def cycle_sequence() -> Iterator[int]:
+        def cycle_sequence() -> Generator[int, None, None]:
             yield 1  # initialises register with value 1
             for x in self.input:
                 if x.op == Operator.ADDX:

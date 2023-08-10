@@ -70,6 +70,9 @@ class Solver(SolverInterface):
     def solve_part_two(self) -> int:
         """There is no part two on Christmas Day.
 
+        Returns:
+            int: but never can!
+
         Raises:
             NotImplementedError: Always.
         """

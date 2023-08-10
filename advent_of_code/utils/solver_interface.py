@@ -14,21 +14,13 @@ class SolverInterface(ABC):
         """Initialise the object, parse and validate the input.
 
         Args:
-            puzzle_input (List[str]): _description_
+            puzzle_input (list[str]): _description_
         """
 
     @abstractmethod
     def solve_part_one(self) -> int | str:
-        """Solve part one of the puzzle.
-
-        Returns:
-            int | str: the answer, as either a str or an int
-        """
+        """Solve part one of the puzzle."""
 
     @abstractmethod
     def solve_part_two(self) -> int | str:
-        """Solve part two of the puzzle.
-
-        Returns:
-            int | str: the answer, as either a str or an int
-        """
+        """Solve part two of the puzzle."""

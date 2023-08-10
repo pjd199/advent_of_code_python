@@ -70,7 +70,7 @@ class Solver(SolverInterface):
 
             Args:
                 identifier (str): The robot's identifier
-                giving_callback (Callable[[&quot;Solver._Robot&quot;], None]): called
+                giving_callback (Callable[["Solver._Robot"], None]): called
                     when values are given away
             """
             super().__init__(identifier)

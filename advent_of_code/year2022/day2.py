@@ -107,7 +107,7 @@ class Solver(SolverInterface):
         """Play a game of Rock, Paper, Scissors.
 
         Args:
-            rounds (List[Tuple[str, str]]): the input
+            rounds (List[Tuple[Shape, Shape]]): the input
 
         Returns:
             int: the results

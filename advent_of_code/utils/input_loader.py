@@ -1,13 +1,13 @@
 """Load puzzle input form a file and strip the whitespace."""
-from typing import List, Union
+from typing import List
 
 
-def load_puzzle_input_file(year: Union[int, str], day: Union[int, str]) -> List[str]:
+def load_puzzle_input_file(year: int | str, day: int | str) -> List[str]:
     """Load the file, remove whitespace and return a list of strings.
 
     Args:
-        year (int): the year to load
-        day (int): the day to load
+        year (int | str): the year to load
+        day (int | str): the day to load
 
     Returns:
         List[str]: the lines of the file

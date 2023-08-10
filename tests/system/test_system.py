@@ -92,13 +92,28 @@ def sam_main_url() -> str:
 
 
 @pytest.fixture(scope="module")
-def cdn_url() -> str:
+def cdn_url(sam_main_url: str) -> str:
     """The CDN URL.
+
+    Args:
+        sam_main_url (str): the main URL
 
     Returns:
         str: The CDN URL
     """
-    return "https://api.adventofcode.dibdin.me"
+    url = ""
+
+    cf_client = client("cloudfront")
+    dists = cf_client.list_distributions()
+
+    for d in dists["DistributionList"]["Items"]:
+        for o in d["Origins"]:
+            if sam_main_url in o["Items"]["DomainName"]:
+                for alias in d["Aliases"]:
+                    url = alias
+                    break
+
+    return url
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -157,16 +172,18 @@ def test_local(localhost_url: str, test_case: Dict["str", Any]) -> None:
     call_lambda_function(localhost_url, test_case)
 
 
-def call_lambda_function(base_url: str, test_case_data: Dict["str", Any]) -> None:
+def call_lambda_function(base_url: str, test_case_data: Dict[str, Any]) -> None:
     """System test.
 
     Args:
         base_url (str): the Funciton URL of the deployed AWS Lambda function
-        test_case_data (data: Dict["str", Any]): the test case data
+        test_case_data (Dict[str, Any]): the test case data
     """
+    verify = "127.0.0.1" not in base_url
+
     # make the request
     if test_case_data["request"]["method"] == "GET":
-        response = get(base_url + test_case_data["request"]["path"], verify=False)
+        response = get(base_url + test_case_data["request"]["path"], verify=verify)
     elif (
         "body" in test_case_data["request"]
         and "content_type" in test_case_data["request"]
@@ -175,10 +192,10 @@ def call_lambda_function(base_url: str, test_case_data: Dict["str", Any]) -> Non
             base_url + test_case_data["request"]["path"],
             data=test_case_data["request"]["body"].encode(),
             headers={"Content-Type": test_case_data["request"]["content_type"]},
-            verify=False,
+            verify=verify,
         )
     else:
-        response = post(base_url + test_case_data["request"]["path"], verify=False)
+        response = post(base_url + test_case_data["request"]["path"], verify=verify)
 
     # check the response code
     assert response.status_code == test_case_data["response"]["status"]

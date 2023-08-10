@@ -84,7 +84,7 @@ class Solver(SolverInterface):
             part_one (bool): toggles result for part one and part two
 
         Returns:
-            _type_: the result
+            int: the result
         """
         input_number = self.input[7].a
 

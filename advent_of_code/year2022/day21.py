@@ -122,7 +122,7 @@ class Solver(SolverInterface):
 
         Args:
             current (str): _description_
-            expressions (Dict[str, Union[int, Expression]): _description_
+            expressions (Dict[str, Union[int, Expression]]): _description_
 
         Returns:
             int: _description_

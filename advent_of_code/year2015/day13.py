@@ -81,10 +81,10 @@ class Solver(SolverInterface):
 
         Args:
             names (Set[str]): The names of the guest
-            values (Dict[tuple[str, str], int]): the happiness values
+            values (Dict[Tuple[str, str], int]): the happiness values
 
         Returns:
-            int : the result
+            int: the result
         """
         # create a dictionary of the values of each pairing of guests
         # seated next to one another

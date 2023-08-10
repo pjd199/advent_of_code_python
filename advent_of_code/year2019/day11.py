@@ -58,11 +58,12 @@ class Solver(SolverInterface):
             initial (int): The color of the inital square
 
         Returns:
-            pixels (Dict[Tuple[int, int], int]): the pixels, which are painted in situ
+            Dict[Tuple[int, int], int]: the pixels, which are painted in situ
         """
         self.computer.reset()
 
-        x, y = (0, 0)
+        x: int = 0
+        y: int = 0
         pixels = {(x, y): initial}
         direction = 0  # 0 is north, 1 is east, 2 is south, 3 is west
         while not self.computer.terminated:

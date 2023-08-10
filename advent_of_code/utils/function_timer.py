@@ -13,8 +13,8 @@ def function_timer(
 
     Args:
         function (Callable[P, T]): the function to call
-        args: arguments passed to function
-        kwargs: keyword arguments passed to function
+        *args (P.args): arguments passed to function
+        **kwargs (P.kwargs): keyword arguments passed to function
 
     Returns:
         tuple[T, int]: the result, plus the time in milliseconds

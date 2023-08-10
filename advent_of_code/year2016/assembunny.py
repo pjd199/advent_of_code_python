@@ -2,7 +2,7 @@
 from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum, unique
-from typing import Iterator, List, Tuple
+from typing import Generator, List, Tuple
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 
@@ -86,7 +86,7 @@ def run_iter(
     b: int = 0,
     c: int = 0,
     d: int = 0,
-) -> Iterator[int]:
+) -> Generator[int, None, None]:
     """Run the simulation.
 
     Args:
@@ -97,7 +97,7 @@ def run_iter(
         d (int): initial value for register d. Default 0.
 
     Yields:
-        Iterator[int]: the output from the out instruction
+        Generator[int, None, None]: the output from the out instruction
     """
     # create a copy to preserve the original
     program = deepcopy(program)

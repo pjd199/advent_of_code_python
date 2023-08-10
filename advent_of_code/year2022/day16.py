@@ -103,7 +103,7 @@ class Solver(SolverInterface):
         self.paths: Dict[Tuple[str, ...], int] = {}
 
     def _dykstra_single_source_all_distances(self, initial: str) -> Dict[str, int]:
-        """Use Dykstra's Algorithm to find distances between the source and all other nodes.
+        """Use Dykstra's Algorithm to find distances between source and all other nodes.
 
         Args:
             initial (str): the starting node

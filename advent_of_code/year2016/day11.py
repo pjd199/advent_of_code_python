@@ -11,7 +11,7 @@ from itertools import combinations
 from pathlib import Path
 from re import findall
 from sys import path
-from typing import DefaultDict, Deque, Iterable, List, Tuple
+from typing import DefaultDict, Deque, Generator, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -44,7 +44,7 @@ class Item(ABC):
         """
 
 
-class Generator(Item):
+class Generator_Item(Item):
     """The generator item."""
 
     def safe(self, others: List[Item]) -> bool:
@@ -80,7 +80,10 @@ class Microchip(Item):
             bool: True if safe, otherwise False
         """
         return any(
-            [isinstance(x, Generator) and self.material == x.material for x in others]
+            [
+                isinstance(x, Generator_Item) and self.material == x.material
+                for x in others
+            ]
         ) or all([isinstance(x, Microchip) for x in others])
 
     def __repr__(self) -> str:
@@ -107,11 +110,11 @@ class State(ABC):
         self.floors = floors
         self.step = step
 
-    def next_state(self) -> Iterable["State"]:
+    def next_state(self) -> Generator["State", None, None]:
         """Iterator for all the safe moves from here.
 
         Yields:
-            Iterable[State]: the next safe state
+            Generator["State", None, None]: the next safe state
         """
         for items_in_elevator in [2, 1]:
             for items in combinations(self.floors[self.elevator], items_in_elevator):
@@ -136,7 +139,7 @@ class State(ABC):
         """Create a comparator of states, focusing on pairs rather than names.
 
         Returns:
-            Tuple[int, Tuple[Tuple[int, int]]]: the formatted output
+            Tuple[int, Tuple[Tuple[int, ...], ...]]: the formatted output
         """
         mapper: DefaultDict[str, List[int]] = defaultdict(lambda: [0, 0])
         for i, floor in enumerate(self.floors):
@@ -162,7 +165,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (List[str]): The lines of the input file
         """
-        item_initializers = {"generator": Generator, "microchip": Microchip}
+        item_initializers = {"generator": Generator_Item, "microchip": Microchip}
         floors = parse_lines(
             puzzle_input,
             (
@@ -199,9 +202,9 @@ class Solver(SolverInterface):
         """
         floors = self.start_state.floors
         floors[0] += [
-            Generator("elerium"),
+            Generator_Item("elerium"),
             Microchip("elerium"),
-            Generator("dilithium"),
+            Generator_Item("dilithium"),
             Microchip("dilithium"),
         ]
 

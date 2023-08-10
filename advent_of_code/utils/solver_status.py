@@ -1,7 +1,7 @@
 """Functions based on the implementation status of solvers."""
 from datetime import date, datetime, timezone
 from importlib import import_module
-from typing import Dict, Iterable
+from typing import Dict, Generator
 
 
 def first_puzzle_date() -> date:
@@ -33,14 +33,14 @@ def last_puzzle_date() -> date:
         return date(today.year, 12, min(today.day, 25))
 
 
-def puzzle_date_generator() -> Iterable[date]:
+def puzzle_date_generator() -> Generator[date, None, None]:
     """Generate a list of all puzzles on the AoC website.
 
     Raises:
         RuntimeError: if the clock is wrong
 
     Yields:
-        Iterable: _description_
+        Generator[date, None, None]: All the puzzle dates
     """
     today = datetime.now(timezone.utc).date()
 

@@ -16,7 +16,7 @@ def test_display_timer(
     """Unit test for the DisplayTimer class.
 
     Args:
-        capfd: the stdout / stderr capture fixture
+        capfd (pytest.CaptureFixture[str]): the stdout / stderr capture fixture
         interval(float): the parametrized interval
         duration(int): the number of seconds to run the timer for
     """

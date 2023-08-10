@@ -8,7 +8,7 @@ https://adventofcode.com/2021/day/19
 from itertools import permutations, product
 from pathlib import Path
 from sys import path
-from typing import Iterator
+from typing import Generator
 
 import numpy as np
 from numpy.typing import NDArray
@@ -131,7 +131,9 @@ class Solver(SolverInterface):
             for x, y, z in aligned_scanner
         }
 
-    def _rotations(self, array: NDArray[np.int_]) -> Iterator[NDArray[np.int_]]:
+    def _rotations(
+        self, array: NDArray[np.int_]
+    ) -> Generator[NDArray[np.int_], None, None]:
         for x, y, z in permutations([0, 1, 2]):
             for sx, sy, sz in product([-1, 1], repeat=3):
                 rotation_matrix = np.zeros((3, 3), dtype=np.int_)

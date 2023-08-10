@@ -69,13 +69,13 @@ class Solver(SolverInterface):
         self, left: Union[int, List[Any]], right: Union[int, List[Any]]
     ) -> int:
         result = -1
-        if type(left) is int and type(right) is int:
+        if isinstance(left, int) and isinstance(right, int):
             result = left - right
-        elif type(left) is int and type(right) is list:
+        elif isinstance(left, int) and isinstance(right, list):
             result = self._compare([left], right)
-        elif type(left) is list and type(right) is int:
+        elif isinstance(left, list) and isinstance(right, int):
             result = self._compare(left, [right])
-        elif type(left) is list and type(right) is list:
+        elif isinstance(left, list) and isinstance(right, list):
             # left and right are lists
             result = len(left) - len(right)
             for i in range(min(len(left), len(right))):

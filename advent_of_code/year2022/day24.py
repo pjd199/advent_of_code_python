@@ -8,7 +8,7 @@ https://adventofcode.com/2022/day/24
 from collections import deque
 from pathlib import Path
 from sys import path
-from typing import FrozenSet, Iterator, List, Tuple
+from typing import FrozenSet, Generator, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -51,11 +51,11 @@ class Solver(SolverInterface):
         """
         return self._solve([self.start, self.finish, self.start, self.finish])
 
-    def _safe_places(self) -> Iterator[FrozenSet[Tuple[int, int]]]:
-        """Iterator of the safe places in the map for each minute that passes.
+    def _safe_places(self) -> Generator[frozenset[tuple[int, int]], None, None]:
+        """Iterate over the safe places in the map for each minute that passes.
 
         Yields:
-            Iterator[FrozenSet[Tuple[int, int]]]: set of co-ordinates
+            Generator[frozenset[tuple[int, int]], None, None]: set of co-ordinates
         """
         # calculate the extent of the grid bounded by the valley walls
         min_x, min_y = (1, 1)

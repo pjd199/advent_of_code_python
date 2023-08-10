@@ -67,7 +67,7 @@ class Solver(SolverInterface):
         """Solve the puzzle.
 
         Returns:
-            Tuple[str,str]: the answer (part one, part two)
+            Tuple[str, str]: the answer (part one, part two)
         """
         first_crash_location = ""
 

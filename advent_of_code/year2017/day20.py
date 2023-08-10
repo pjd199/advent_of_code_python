@@ -47,7 +47,7 @@ class _Point:
         """Add a Point to this Point.
 
         Args:
-            other (Point): the other point
+            other ("_Point"): the other point
         """
         self.x += other.x
         self.y += other.y

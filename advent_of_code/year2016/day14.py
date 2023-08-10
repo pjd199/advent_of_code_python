@@ -11,7 +11,7 @@ from itertools import count
 from pathlib import Path
 from re import compile
 from sys import path
-from typing import Iterator, List
+from typing import Generator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -70,11 +70,11 @@ class Solver(SolverInterface):
             iter((stretch_digest(f"{self.input}{j}") for j in range(25000)))
         )
 
-    def _find(self, iterator: Iterator[str]) -> int:
+    def _find(self, iterator: Generator[str, None, None]) -> int:
         """Search for the answers.
 
         Args:
-            iterator (Iterator[str]): the iterator for the MD5 hash stream
+            iterator (Generator[str, None, None]): the iterator for the MD5 hash stream
 
         Returns:
             int: the index after 64 successful 5* hashes

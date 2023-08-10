@@ -7,7 +7,7 @@ https://adventofcode.com/2021/day/11
 """
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
+from typing import Generator, List
 
 import numpy as np
 
@@ -55,7 +55,7 @@ class Solver(SolverInterface):
             i + 1 for i, flashes in enumerate(self._solve()) if flashes == target
         )
 
-    def _solve(self) -> Iterator[int]:
+    def _solve(self) -> Generator[int, None, None]:
         # using caching to improve speed
         if self.cache:
             yield from self.cache

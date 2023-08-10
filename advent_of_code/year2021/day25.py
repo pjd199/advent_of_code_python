@@ -75,6 +75,8 @@ class Solver(SolverInterface):
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
+        Returns:
+            int: But can never do it!
         Raises:
             NotImplementedError: always!
         """

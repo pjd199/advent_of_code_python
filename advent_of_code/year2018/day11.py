@@ -83,7 +83,7 @@ class Solver(SolverInterface):
             size (int): the size of the square
 
         Returns:
-            Tuple[int, int, int]: a tuple of (power, x, y, size)
+            Tuple[int, int, int, int]: a tuple of (power, x, y, size)
         """
         largest, largest_x, largest_y = max(
             [
