@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/17
 """
 from collections import deque
+from collections.abc import Callable, Generator
 from itertools import islice
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, Generator, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,14 +27,14 @@ class Solver(SolverInterface):
     DAY = 17
     TITLE = "Set and Forget"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.computer = IntcodeComputer(puzzle_input)
-        self.grid: Dict[Tuple[int, int], str] = {}
+        self.grid: dict[tuple[int, int], str] = {}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -113,7 +113,7 @@ class Solver(SolverInterface):
         # prepare the navigate
         arrows = ["^", ">", "v", "<"]
         direction = arrows.index(arrow)
-        looks: Dict[int, Callable[[int, int], Tuple[int, int]]] = {
+        looks: dict[int, Callable[[int, int], tuple[int, int]]] = {
             0: lambda x1, y1: (x1, y1 - 1),
             1: lambda x1, y1: (x1 + 1, y1),
             2: lambda x1, y1: (x1, y1 + 1),
@@ -151,7 +151,7 @@ class Solver(SolverInterface):
             route (str): the starting route
 
         Yields:
-            Tuple[str]: the substrings
+            tuple[str]: the substrings
         """
         comma_locations = (i for i, v in enumerate(route[:20]) if v == ",")
         yield from (route[: i + 1] for i in islice(comma_locations, 1, None, 2))

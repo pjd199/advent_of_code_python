@@ -1,7 +1,7 @@
 """Functions based on the implementation status of solvers."""
+from collections.abc import Generator
 from datetime import date, datetime, timezone
 from importlib import import_module
-from typing import Dict, Generator
 
 
 def first_puzzle_date() -> date:
@@ -70,10 +70,10 @@ def is_solver_implemented(year: int, day: int) -> bool:
         return False
 
 
-def implementation_status() -> Dict[date, bool]:
+def implementation_status() -> dict[date, bool]:
     """Create a dictionary mapping AoC dates to implementation status.
 
     Returns:
-        Dict[date, bool]: the dictionary
+        dict[date, bool]: the dictionary
     """
     return {x: is_solver_implemented(x.year, x.day) for x in puzzle_date_generator()}

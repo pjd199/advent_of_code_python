@@ -1,7 +1,7 @@
 """Simualte an IntCode Computer, as part of Advent of Code 2019."""
 from collections import defaultdict, deque
+from collections.abc import Callable, Generator
 from enum import Enum, unique
-from typing import Callable, DefaultDict, Deque, Dict, Generator, List, Tuple
 
 from advent_of_code.utils.parser import int_processor, parse_tokens_single_line
 
@@ -20,18 +20,18 @@ class Action(Enum):
 class IntcodeComputer:
     """Emulate the Intcode Computer."""
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initalise the computer witht he given puzzle_input.
 
         Args:
-            puzzle_input (List[str]): the input data
+            puzzle_input (list[str]): the input data
         """
         self.program_source = parse_tokens_single_line(
             puzzle_input, (r"-?\d+", int_processor), delimiter=","
         )
-        self._memory: DefaultDict[int, int] = defaultdict(int)
-        self._input_buffer: Deque[int] = deque()
-        self._output_buffer: Deque[int] = deque()
+        self._memory: defaultdict[int, int] = defaultdict(int)
+        self._input_buffer: deque[int] = deque()
+        self._output_buffer: deque[int] = deque()
         self.reset()
 
     def reset(self) -> None:
@@ -70,11 +70,11 @@ class IntcodeComputer:
             yield self._output_buffer.popleft()
 
     @property
-    def memory(self) -> Dict[int, int]:
+    def memory(self) -> dict[int, int]:
         """Provides direct access to the computer's memory.
 
         Returns:
-            Dict[int, int]: the computer's memory, mapped address to value
+            dict[int, int]: the computer's memory, mapped address to value
         """
         return self._memory
 
@@ -104,7 +104,7 @@ class IntcodeComputer:
         result = False
 
         # define the instructions
-        instructions: Dict[int, Tuple[int, Callable[[List[int]], int], Action]] = {
+        instructions: dict[int, tuple[int, Callable[[list[int]], int], Action]] = {
             1: (3, lambda p: p[0] + p[1], Action.write),
             2: (3, lambda p: p[0] * p[1], Action.write),
             3: (1, lambda _: self._input_buffer.popleft(), Action.write),

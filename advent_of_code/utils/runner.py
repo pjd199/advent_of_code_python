@@ -1,5 +1,5 @@
 """Simple runner function for printing solver results with timings."""
-from typing import Type
+from builtins import type
 
 from advent_of_code.utils.display_timer import DisplayTimer
 from advent_of_code.utils.function_timer import function_timer
@@ -7,11 +7,11 @@ from advent_of_code.utils.input_loader import load_puzzle_input_file
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
-def runner(solver_class: Type[SolverInterface]) -> None:
+def runner(solver_class: type[SolverInterface]) -> None:
     """Run the Solver, printing results with timings.
 
     Args:
-        solver_class (Type[SolverInterface]): The solver to run
+        solver_class (type[SolverInterface]): The solver to run
     """
     print(f"Solving '{solver_class.TITLE}' [{solver_class.YEAR}-{solver_class.DAY:02}]")
     solver = solver_class(load_puzzle_input_file(solver_class.YEAR, solver_class.DAY))

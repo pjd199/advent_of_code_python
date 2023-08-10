@@ -3,7 +3,6 @@
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 """
 from itertools import chain
-from typing import Set, Tuple
 
 import numpy as np
 import pytest
@@ -363,12 +362,12 @@ def test_three_letters(test_input: str, expected: str) -> None:
     ],
 )
 def test_coordinates_three_letters(
-    test_input: Set[Tuple[int, int]], expected: str
+    test_input: set[tuple[int, int]], expected: str
 ) -> None:
     """Test that all the letters can be read.
 
     Args:
-        test_input (Set[Tuple[int, int]]): the input array
+        test_input (set[tuple[int, int]]): the input array
         expected (str): the expected result
     """
     assert ocr_coordinates(test_input) == expected

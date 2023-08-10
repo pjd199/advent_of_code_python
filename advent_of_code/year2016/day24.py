@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/24
 """
 from collections import deque
+from collections.abc import Callable
 from itertools import permutations
 from pathlib import Path
 from sys import maxsize, path
-from typing import Callable, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Air Duct Spelunking"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.grid = parse_grid(puzzle_input, r"[.#0-9]", str_processor)
         self.destinations = {v: k for k, v in self.grid.items() if v.isnumeric()}
@@ -62,7 +62,7 @@ class Solver(SolverInterface):
         self.run_once = True
 
         # functions for the moves
-        moves: List[Callable[[int, int], Tuple[int, int]]] = [
+        moves: list[Callable[[int, int], tuple[int, int]]] = [
             lambda x, y: (x, y - 1),
             lambda x, y: (x + 1, y),
             lambda x, y: (x, y + 1),

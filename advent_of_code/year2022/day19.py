@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from math import ceil, prod
 from pathlib import Path
 from sys import maxsize, path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -29,13 +28,13 @@ class _Blueprint:
     """A blueprint from the input."""
 
     identifier: int
-    robots: Tuple[  # ore, clay, obsidian, geode
-        Tuple[int, int, int, int],
-        Tuple[int, int, int, int],
-        Tuple[int, int, int, int],
-        Tuple[int, int, int, int],
+    robots: tuple[  # ore, clay, obsidian, geode
+        tuple[int, int, int, int],
+        tuple[int, int, int, int],
+        tuple[int, int, int, int],
+        tuple[int, int, int, int],
     ]
-    max_materials: Tuple[int, int, int, int]
+    max_materials: tuple[int, int, int, int]
 
 
 class Solver(SolverInterface):
@@ -45,11 +44,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Not Enough Minerals"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         parsed = parse_lines(
             puzzle_input,
@@ -103,19 +102,19 @@ class Solver(SolverInterface):
     def _solve(
         self,
         blueprint: _Blueprint,
-        materials: Tuple[int, ...],
-        robots: Tuple[int, ...],
+        materials: tuple[int, ...],
+        robots: tuple[int, ...],
         time: int,
-        best: Dict[int, int],
+        best: dict[int, int],
     ) -> int:
         """Recusively solve the puzzle, focusing on the next robot to build.
 
         Args:
             blueprint (_Blueprint): the blueprint to solve
-            materials (Tuple[int, ...]): the current materials
-            robots (Tuple[int, ...]): the current robots
+            materials (tuple[int, ...]): the current materials
+            robots (tuple[int, ...]): the current robots
             time (int): the remaining time
-            best (Dict[int, int]): mapping of seconds remaining to best geode produced
+            best (dict[int, int]): mapping of seconds remaining to best geode produced
 
         Returns:
             int: the best result (highest number of geodes)

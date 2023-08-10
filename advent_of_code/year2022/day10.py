@@ -5,11 +5,11 @@ Cathode-Ray Tube
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/10
 """
+from collections.abc import Generator
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Generator, List
 
 import numpy as np
 
@@ -45,11 +45,11 @@ class Solver(SolverInterface):
     DAY = 10
     TITLE = "Cathode-Ray Tube"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,

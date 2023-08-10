@@ -8,7 +8,6 @@ https://adventofcode.com/2017/day/7
 from dataclasses import dataclass, field
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -30,16 +29,16 @@ class Solver(SolverInterface):
         name: str
         weight: int
         contents: str = ""
-        disc: List["Solver._Program"] = field(default_factory=list)
+        disc: list["Solver._Program"] = field(default_factory=list)
 
         def total_weight(self) -> int:
             return self.weight + sum(x.total_weight() for x in self.disc)
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = {
             x.name: x

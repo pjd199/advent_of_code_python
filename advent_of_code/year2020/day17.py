@@ -8,7 +8,6 @@ https://adventofcode.com/2020/day/17
 from itertools import product
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 17
     TITLE = "Conway Cubes"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_grid(puzzle_input, r"[#.]", str_processor)
 
@@ -59,14 +58,14 @@ class Solver(SolverInterface):
             int: the result
         """
         cycles = 6
-        grid: Dict[Tuple[int, int, int, int], bool] = {
+        grid: dict[tuple[int, int, int, int], bool] = {
             (x, y, 0, 0): v == "#" for (x, y), v in self.input.items()
         }
 
         # for each cycle, create the next iteration of the grid
         for _ in range(cycles):
             # prepare the next grid
-            next_grid: Dict[Tuple[int, int, int, int], bool] = {}
+            next_grid: dict[tuple[int, int, int, int], bool] = {}
             # find the min and max values on each dimension
             (min_x, max_x), (min_y, max_y), (min_z, max_z), (min_w, max_w) = (
                 (min(a), max(a)) for a in zip(*grid.keys())

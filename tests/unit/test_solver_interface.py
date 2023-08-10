@@ -1,5 +1,4 @@
 """Unit test for advent_of_code.utils.sovler_interface."""
-from typing import List
 
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -9,11 +8,11 @@ class _TestSolver(SolverInterface):
     DAY = 456
     TITLE = "Test Title"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Noting to intialise.
 
         Args:
-            puzzle_input (List[str]): ignored in testing
+            puzzle_input (list[str]): ignored in testing
         """
 
     def solve_part_one(self) -> str:

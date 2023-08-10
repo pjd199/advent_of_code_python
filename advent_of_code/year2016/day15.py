@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/15
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -33,11 +32,11 @@ class Solver(SolverInterface):
     DAY = 15
     TITLE = "Timing is Everything"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.discs = parse_lines(
             puzzle_input,
@@ -64,11 +63,11 @@ class Solver(SolverInterface):
         """
         return self._run(self.discs + [Disc(11, 0)])
 
-    def _run(self, discs: List[Disc]) -> int:
+    def _run(self, discs: list[Disc]) -> int:
         """Run the simulation.
 
         Args:
-            discs (List[Disc]): the input discs
+            discs (list[Disc]): the input discs
 
         Returns:
             int: the result

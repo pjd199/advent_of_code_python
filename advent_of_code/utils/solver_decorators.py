@@ -1,5 +1,6 @@
 """Decorators to help subclasses of the SolverInterface."""
-from typing import Callable, ParamSpec, TypeVar
+from collections.abc import Callable
+from typing import ParamSpec, TypeVar
 
 T = TypeVar("T")
 P = ParamSpec("P")

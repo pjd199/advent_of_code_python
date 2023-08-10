@@ -8,7 +8,6 @@ https://adventofcode.com/2018/day/5
 from pathlib import Path
 from string import ascii_lowercase, ascii_uppercase
 from sys import maxsize, path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 5
     TITLE = "Alchemical Reduction"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"[a-zA-Z]+", str_processor)
 
@@ -53,15 +52,15 @@ class Solver(SolverInterface):
 
         return lowest
 
-    def _react(self, polymer: List[str], remove: str = "") -> List[str]:
+    def _react(self, polymer: list[str], remove: str = "") -> list[str]:
         """Perform a polymer reaction.
 
         Args:
-            polymer (List[str]): The polymer to react
+            polymer (list[str]): The polymer to react
             remove (str): any types to ignore
 
         Returns:
-            List[str]: the result
+            list[str]: the result
         """
         result = list(polymer)
         i = 0

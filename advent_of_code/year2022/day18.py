@@ -8,7 +8,6 @@ https://adventofcode.com/2022/day/18
 from collections import deque
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 18
     TITLE = "Boiling Boulders"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = set(
             parse_lines(puzzle_input, (r"(\d+),(\d+),(\d+)", int_tuple_processor))
@@ -60,7 +59,7 @@ class Solver(SolverInterface):
             (min(a), max(a)) for a in zip(*self.input)
         )
 
-        queue: Deque[Tuple[int, int, int]] = deque([(0, 0, 0)])
+        queue: deque[tuple[int, int, int]] = deque([(0, 0, 0)])
         water = set()
 
         while queue:
@@ -84,7 +83,7 @@ class Solver(SolverInterface):
             if (x1, y1, z1) in water
         )
 
-    def _adjacent(self, x: int, y: int, z: int) -> List[Tuple[int, int, int]]:
+    def _adjacent(self, x: int, y: int, z: int) -> list[tuple[int, int, int]]:
         return [
             (x + 1, y, z),
             (x - 1, y, z),

@@ -8,7 +8,6 @@ https://adventofcode.com/2020/day/8
 from copy import deepcopy
 from pathlib import Path
 from sys import path
-from typing import List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 8
     TITLE = "Handheld Halting"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = [
             (word, int(num))
@@ -68,18 +67,18 @@ class Solver(SolverInterface):
 
         return result
 
-    def _loop_detector(self, program: List[Tuple[str, int]]) -> Tuple[bool, int]:
+    def _loop_detector(self, program: list[tuple[str, int]]) -> tuple[bool, int]:
         """Detect a loop in the given program.
 
         Args:
-            program (List[Tuple[str, int]]): the input program
+            program (list[tuple[str, int]]): the input program
 
         Returns:
-            Tuple[bool, int]: the results (loop detected, accumulator value)
+            tuple[bool, int]: the results (loop detected, accumulator value)
         """
         pointer = 0
         accumulator = 0
-        visited: Set[int] = set()
+        visited: set[int] = set()
         loop_detected = False
 
         while 0 <= pointer < len(program):

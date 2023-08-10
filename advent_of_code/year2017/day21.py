@@ -8,7 +8,6 @@ https://adventofcode.com/2017/day/21
 from itertools import chain
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 21
     TITLE = "Fractal Art"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input, (r"([#/.]+) => ([#/.]+)", str_tuple_processor)
@@ -62,8 +61,8 @@ class Solver(SolverInterface):
         """
 
         def rotations(
-            x: Tuple[Tuple[str, ...], ...]
-        ) -> List[Tuple[Tuple[str, ...], ...]]:
+            x: tuple[tuple[str, ...], ...]
+        ) -> list[tuple[tuple[str, ...], ...]]:
             result = [x]
             for _ in range(3):
                 x = tuple(zip(*x[::-1]))
@@ -93,7 +92,7 @@ class Solver(SolverInterface):
         # run the iterations of the simulation
         for _ in range(cycles):
             width = 2 if len(grid) % 2 == 0 else 3
-            new_grid: List[List[str]] = []
+            new_grid: list[list[str]] = []
             for y in range(0, len(grid), width):
                 new_grid += [[] for _ in range(width + 1)]
                 for x in range(0, len(grid), width):

@@ -9,7 +9,6 @@ from collections import Counter
 from functools import lru_cache
 from pathlib import Path
 from sys import path
-from typing import List, Set
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,14 +25,14 @@ class Solver(SolverInterface):
     DAY = 10
     TITLE = "Adapter Array"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"\d+", int_processor))
-        self.adapters: Set[int] = set()
+        self.adapters: set[int] = set()
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

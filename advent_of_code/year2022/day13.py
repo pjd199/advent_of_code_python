@@ -11,7 +11,7 @@ from json import loads
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Any, List, Union
+from typing import Any
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -28,11 +28,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "Distress Signal"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = [
             parse_lines(section, (r"[\[0-9,\]]+", lambda m: loads(m[0])))
@@ -65,9 +65,7 @@ class Solver(SolverInterface):
 
         return prod(i + 1 for i, x in enumerate(packets) if x in dividers)
 
-    def _compare(
-        self, left: Union[int, List[Any]], right: Union[int, List[Any]]
-    ) -> int:
+    def _compare(self, left: int | list[Any], right: int | list[Any]) -> int:
         result = -1
         if isinstance(left, int) and isinstance(right, int):
             result = left - right

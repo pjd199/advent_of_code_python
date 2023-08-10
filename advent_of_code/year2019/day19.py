@@ -5,10 +5,10 @@ Tractor Beam
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/19
 """
+from collections.abc import Generator
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import Generator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))

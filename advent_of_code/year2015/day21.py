@@ -9,7 +9,6 @@ from collections import namedtuple
 from itertools import combinations
 from pathlib import Path
 from sys import maxsize, path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 21
     TITLE = "RPG Simulator 20XX"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         values = {
             k: int(v)
@@ -66,11 +65,11 @@ class Solver(SolverInterface):
         return most_to_lose
 
     @cache_result
-    def _battle(self) -> Tuple[int, int]:
+    def _battle(self) -> tuple[int, int]:
         """Fight.
 
         Returns:
-            Tuple[int, int]: results of the two parts
+            tuple[int, int]: results of the two parts
         """
         Item = namedtuple("Item", ["cost", "damage", "armor"])
 

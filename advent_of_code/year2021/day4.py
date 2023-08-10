@@ -7,7 +7,6 @@ https://adventofcode.com/2021/day/4
 """
 from pathlib import Path
 from sys import path
-from typing import List, Set
 
 import numpy as np
 
@@ -31,11 +30,11 @@ class Solver(SolverInterface):
     DAY = 4
     TITLE = "Giant Squid"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input)
         self.numbers = parse_tokens_single_line(
@@ -45,7 +44,7 @@ class Solver(SolverInterface):
             parse_tokens(section, (r"\d+", int_processor), delimiter=" ")
             for section in sections[1:]
         ]
-        self.winning_scores: List[int] = []
+        self.winning_scores: list[int] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -71,7 +70,7 @@ class Solver(SolverInterface):
 
         boards = np.array([np.array(b) for b in self.boards])
         marks = np.full_like(boards, False, dtype=np.bool_)
-        visited: Set[int] = set()
+        visited: set[int] = set()
 
         for number in self.numbers:
             # mark the new number as seen

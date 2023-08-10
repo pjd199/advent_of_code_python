@@ -9,7 +9,6 @@ from collections import defaultdict
 from itertools import chain
 from pathlib import Path
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 7
     TITLE = "The Sum of Its Parts"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         lines = parse_lines(
             puzzle_input,
@@ -78,7 +77,7 @@ class Solver(SolverInterface):
         """
         result = []
         pool = set(self.steps.keys()) - set(chain.from_iterable(self.steps.values()))
-        working: Dict[str, int] = {}
+        working: dict[str, int] = {}
         complete = set()
         tick = -1
 

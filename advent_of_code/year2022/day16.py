@@ -8,7 +8,6 @@ https://adventofcode.com/2022/day/16
 from operator import itemgetter
 from pathlib import Path
 from sys import maxsize, path
-from typing import Dict, FrozenSet, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 16
     TITLE = "Proboscidea Volcanium"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         lines = parse_lines(
             puzzle_input,
@@ -70,7 +69,7 @@ class Solver(SolverInterface):
         del self.paths[("AA",)]
 
         # iterate over routes, keeping the max score for each set of values
-        valve_sets: Dict[FrozenSet[str], int] = {}
+        valve_sets: dict[frozenset[str], int] = {}
         for route, score in self.paths.items():
             frozen = frozenset(route[1:])
             valve_sets[frozen] = max(valve_sets.get(frozen, 0), score)
@@ -100,16 +99,16 @@ class Solver(SolverInterface):
             for node in self.nodes
         }
 
-        self.paths: Dict[Tuple[str, ...], int] = {}
+        self.paths: dict[tuple[str, ...], int] = {}
 
-    def _dykstra_single_source_all_distances(self, initial: str) -> Dict[str, int]:
+    def _dykstra_single_source_all_distances(self, initial: str) -> dict[str, int]:
         """Use Dykstra's Algorithm to find distances between source and all other nodes.
 
         Args:
             initial (str): the starting node
 
         Returns:
-            Dict[str, int]: dictionary of distances between nodes
+            dict[str, int]: dictionary of distances between nodes
         """
         routes = {
             start: {finish: 1 for finish in paths}
@@ -118,8 +117,8 @@ class Solver(SolverInterface):
 
         distances = {node: maxsize for node in self.routes}
         distances[initial] = 0
-        previous: Dict[str, str] = {}
-        visited: Set[str] = set()
+        previous: dict[str, str] = {}
+        visited: set[str] = set()
 
         while len(visited) < len(distances):
             current, dist = min(
@@ -139,13 +138,13 @@ class Solver(SolverInterface):
         return distances
 
     def _find_routes(
-        self, current: str, route: List[str], score: int, time: int
+        self, current: str, route: list[str], score: int, time: int
     ) -> int:
         """Recursively find all the routes between each valve.
 
         Args:
             current (str): the current valve
-            route (List[str]): the route so far
+            route (list[str]): the route so far
             score (int): the current score
             time (int): the time remaining
 

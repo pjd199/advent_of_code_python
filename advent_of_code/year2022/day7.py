@@ -9,7 +9,6 @@ from dataclasses import dataclass, field
 from itertools import chain
 from pathlib import Path
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -23,8 +22,8 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class Dir:
     """A file system directory structure."""
 
-    dirs: Dict[str, "Dir"] = field(default_factory=dict)
-    files: Dict[str, int] = field(default_factory=dict)
+    dirs: dict[str, "Dir"] = field(default_factory=dict)
+    files: dict[str, int] = field(default_factory=dict)
     _size: int = -1
 
     def size(self) -> int:
@@ -39,11 +38,11 @@ class Dir:
             )
         return self._size
 
-    def subdirectories(self) -> List["Dir"]:
+    def subdirectories(self) -> list["Dir"]:
         """A list of the all the subdirectories in this directory.
 
         Returns:
-            List["Dir"]: A
+            list["Dir"]: A
         """
         return list(self.dirs.values()) + list(
             chain.from_iterable(x.subdirectories() for x in self.dirs.values())
@@ -57,11 +56,11 @@ class Solver(SolverInterface):
     DAY = 7
     TITLE = "No Space Left On Device"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the input into a tree structure using Dir
         self.root = Dir()

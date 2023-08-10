@@ -1,9 +1,11 @@
 """Parser utilities for the puzzle input."""
+from builtins import type
+from collections.abc import Callable
 from dataclasses import fields, is_dataclass
 from enum import Enum
-from re import escape, fullmatch, search, split
+from re import Match, escape, fullmatch, search, split
 from sys import maxsize
-from typing import Callable, Dict, List, Match, Tuple, Type, TypeVar, Union
+from typing import TypeVar
 
 T = TypeVar("T")
 
@@ -26,11 +28,11 @@ def int_processor(match: Match[str]) -> int:
     return int(match[0])
 
 
-def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
+def int_processor_group(group: str | int) -> Callable[[Match[str]], int]:
     """Process match object as a str.
 
     Args:
-        group (Union[str, int]): the group name of numvber to match
+        group (str | int): the group name of numvber to match
 
     Returns:
         Callable[[Match[str]], int]: the result
@@ -38,14 +40,14 @@ def int_processor_group(group: Union[str, int]) -> Callable[[Match[str]], int]:
     return lambda m: int(m.group(group))
 
 
-def int_tuple_processor(match: Match[str]) -> Tuple[int, ...]:
+def int_tuple_processor(match: Match[str]) -> tuple[int, ...]:
     """Process match object as an int tuple.
 
     Args:
         match (Match[str]): the regular expression Match[str]
 
     Returns:
-        Tuple[int, ...]: the result
+        tuple[int, ...]: the result
     """
     return tuple(int(x) for x in match.groups())
 
@@ -62,11 +64,11 @@ def str_processor(match: Match[str]) -> str:
     return match[0]
 
 
-def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
+def str_processor_group(group: str | int) -> Callable[[Match[str]], str]:
     """Process match object as a str.
 
     Args:
-        group (Union[str, int]): the group name of numvber to match
+        group (str | int): the group name of numvber to match
 
     Returns:
         Callable[[Match[str]], str]: the result
@@ -74,25 +76,25 @@ def str_processor_group(group: Union[str, int]) -> Callable[[Match[str]], str]:
     return lambda m: m.group(group)
 
 
-def str_tuple_processor(match: Match[str]) -> Tuple[str, ...]:
+def str_tuple_processor(match: Match[str]) -> tuple[str, ...]:
     """Process match object as a str tuple.
 
     Args:
         match (Match[str]): the regular expression Match
 
     Returns:
-        Tuple[str, ...]: the result
+        tuple[str, ...]: the result
     """
     return match.groups()
 
 
 def dataclass_processor(
-    cls: Type[T],
+    cls: type[T],
 ) -> Callable[[Match[str]], T]:
     """Create a match processor to process match object as a data class.
 
     Args:
-        cls (Type[T]): the data class to initialise
+        cls (type[T]): the data class to initialise
 
     Returns:
         Callable[[Match[str]], T]: the match processor
@@ -114,12 +116,12 @@ def dataclass_processor(
 
 
 def enum_processor(
-    enum: Type[T],
+    enum: type[T],
 ) -> Callable[[Match[str]], T]:
     """Create a match processor to process match object as a data class.
 
     Args:
-        enum (Type[T]): the enum to initialise
+        enum (type[T]): the enum to initialise
 
     Raises:
         ValueError: if T is not a subclass of Enum
@@ -133,11 +135,11 @@ def enum_processor(
         raise ValueError("argument must be subclass of Enum")
 
 
-def enum_re(enumeration: Type[Enum]) -> str:
+def enum_re(enumeration: type[Enum]) -> str:
     """Syntactic sugar for using Enum's in regular expressions.
 
     Args:
-        enumeration (Type[Enum]): the enum to use
+        enumeration (type[Enum]): the enum to use
 
     Returns:
         str: list of values in the enum, delimited by a "|"
@@ -148,18 +150,18 @@ def enum_re(enumeration: Type[Enum]) -> str:
 
 
 def _validate_input_and_header(
-    puzzle_input: List[str],
+    puzzle_input: list[str],
     min_length: int,
     max_length: int,
-    header: Tuple[str, ...],
+    header: tuple[str, ...],
 ) -> int:
     """Validates the input.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
+        puzzle_input (list[str]): the puzzle input
         min_length (int): the minimum allowable length
         max_length (int): the maximum allowable length
-        header (Tuple[str, ...], optional): header to validate. Default ()
+        header (tuple[str, ...], optional): header to validate. Default ()
 
     Raises:
         ParseException: raised on invalid puzzle_input
@@ -184,31 +186,31 @@ def _validate_input_and_header(
 
 
 def parse_lines(
-    puzzle_input: List[str],
-    *args: Tuple[str, Callable[[Match[str]], T]],
+    puzzle_input: list[str],
+    *args: tuple[str, Callable[[Match[str]], T]],
     min_length: int = 1,
     max_length: int = maxsize,
-    header: Tuple[str, ...] = (),
-) -> List[T]:
+    header: tuple[str, ...] = (),
+) -> list[T]:
     """Load lines from the parsed patterns.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
-        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
+        puzzle_input (list[str]): the puzzle input
+        *args (tuple[str, Callable[[Match[str]], T]]): processors called for each match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (Tuple[str, ...]): header to validate. Default ()
+        header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
         ParseException: if the puzzle_input has the wrong length
 
     Returns:
-        List[T]: the parsed output
+        list[T]: the parsed output
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
     # parse the input
-    output: List[T] = []
+    output: list[T] = []
     for i, line in enumerate(puzzle_input[start:]):
         try:
             found = False
@@ -226,14 +228,14 @@ def parse_lines(
 
 
 def parse_single_line(
-    puzzle_input: List[str],
+    puzzle_input: list[str],
     pattern: str,
     match_processor: (Callable[[Match[str]], T]),
 ) -> T:
     """Load lines from the parsed patterns.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
+        puzzle_input (list[str]): the puzzle input
         pattern (str): the regular expression pattern for each line
         match_processor (Callable[[Match[str]], T]): processor called for the match
 
@@ -249,35 +251,35 @@ def parse_single_line(
 
 
 def parse_tokens(
-    puzzle_input: List[str],
-    *args: Tuple[str, Callable[[Match[str]], T]],
+    puzzle_input: list[str],
+    *args: tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
     require_delimiter: bool = True,
     min_length: int = 1,
     max_length: int = maxsize,
-    header: Tuple[str, ...] = (),
-) -> List[List[T]]:
+    header: tuple[str, ...] = (),
+) -> list[list[T]]:
     """Load lines using the tokenised methods.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
-        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
+        puzzle_input (list[str]): the puzzle input
+        *args (tuple[str, Callable[[Match[str]], T]]): processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         require_delimiter (bool): delimiter must be present when True. Defaults to True.
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
-        header (Tuple[str, ...]): header to validate. Defaults to ().
+        header (tuple[str, ...]): header to validate. Defaults to ().
 
     Raises:
         ParseException: if the input has an invalid pattern and delimiter combination
 
     Returns:
-        List[List[T]]: the parsed output
+        list[list[T]]: the parsed output
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
     # parse the input
-    output: List[List[T]] = []
+    output: list[list[T]] = []
     for i, line in enumerate(puzzle_input[start:]):
         # check for at least one delimiter on the line
         if line == "" or (require_delimiter and not search(delimiter, line)):
@@ -310,23 +312,23 @@ def parse_tokens(
 
 
 def parse_tokens_single_line(
-    puzzle_input: List[str],
-    *args: Tuple[str, Callable[[Match[str]], T]],
+    puzzle_input: list[str],
+    *args: tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
     require_delimiter: bool = True,
-    header: Tuple[str, ...] = (),
-) -> List[T]:
+    header: tuple[str, ...] = (),
+) -> list[T]:
     """Load lines using the tokenised methods.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
-        *args (Tuple[str, Callable[[Match[str]], T]]): processors called for each match
+        puzzle_input (list[str]): the puzzle input
+        *args (tuple[str, Callable[[Match[str]], T]]): processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         require_delimiter (bool): when false, the delimiter is optional in the input
-        header (Tuple[str, ...]): header to validate. Defaults to ().
+        header (tuple[str, ...]): header to validate. Defaults to ().
 
     Returns:
-        List[T]: the parsed output
+        list[T]: the parsed output
     """
     return parse_tokens(
         puzzle_input,
@@ -340,33 +342,33 @@ def parse_tokens_single_line(
 
 
 def parse_grid(
-    puzzle_input: List[str],
+    puzzle_input: list[str],
     pattern: str,
     match_processor: Callable[[Match[str]], T],
     min_length: int = 1,
     max_length: int = maxsize,
-    header: Tuple[str, ...] = (),
-) -> Dict[Tuple[int, int], T]:
+    header: tuple[str, ...] = (),
+) -> dict[tuple[int, int], T]:
     """Load lines as an x y grid and initialise classes with the whole pattern match.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
+        puzzle_input (list[str]): the puzzle input
         pattern (str): the regular expression pattern for each line
         match_processor (Callable[[Match[str]], T]): processor called for the match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (Tuple[str, ...]): header to validate. Default ()
+        header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
         ParseException: if the puzzle_input has the wrong length
 
     Returns:
-        Dict[Tuple[int, int], T]: the parsed output
+        dict[tuple[int, int], T]: the parsed output
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
     # parse the input
-    output: Dict[Tuple[int, int], T] = {}
+    output: dict[tuple[int, int], T] = {}
     for y, line in enumerate(puzzle_input[start:]):
         if not line:
             raise ParseException(f"Unable to parse '{line}' on line {y + 1}")
@@ -386,34 +388,34 @@ def parse_grid(
 
 
 def split_sections(
-    puzzle_input: List[str],
+    puzzle_input: list[str],
     section_break: str = "",
     expected_sections: int = maxsize,
     min_length: int = 1,
     max_length: int = maxsize,
-    header: Tuple[str, ...] = (),
-) -> List[List[str]]:
+    header: tuple[str, ...] = (),
+) -> list[list[str]]:
     """Split the input into sections where a lines matches the section_break regex.
 
     Args:
-        puzzle_input (List[str]): the puzzle input
+        puzzle_input (list[str]): the puzzle input
         section_break (str): the section break regex
         expected_sections (int): the number of sections to expect.
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (Tuple[str, ...]): header to validate. Default ()
+        header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
         ParseException: if the puzzle_input has incorrect length or number of sections
 
     Returns:
-        List[List[str]]: the parsed output
+        list[list[str]]: the parsed output
     """
     start = _validate_input_and_header(puzzle_input, min_length, max_length, header)
 
     # parse the input into sections
-    output: List[List[str]] = []
-    section: List[str] = []
+    output: list[list[str]] = []
+    section: list[str] = []
     for line in puzzle_input[start:]:
         if fullmatch(section_break, line):
             if section:

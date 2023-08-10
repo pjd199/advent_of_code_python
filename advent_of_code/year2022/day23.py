@@ -6,9 +6,9 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/23
 """
 from collections import Counter, deque
+from collections.abc import Callable
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 23
     TITLE = "Unstable Diffusion"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_grid(puzzle_input, r"[.#]", str_processor)
 
@@ -49,10 +49,10 @@ class Solver(SolverInterface):
         """
         return self._solve(10000)[1]
 
-    def _solve(self, rounds: int) -> Tuple[int, int]:
+    def _solve(self, rounds: int) -> tuple[int, int]:
         elves = {k for k, v in self.input.items() if v == "#"}
 
-        take_move: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+        take_move: dict[str, Callable[[int, int], tuple[int, int]]] = {
             "N": lambda x, y: (x, y - 1),
             "S": lambda x, y: (x, y + 1),
             "W": lambda x, y: (x - 1, y),

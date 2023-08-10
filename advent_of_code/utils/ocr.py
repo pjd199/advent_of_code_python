@@ -3,17 +3,17 @@
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 
 """
-from typing import Sequence, Set, Tuple, Union
+from collections.abc import Sequence
 
 import numpy as np
 from numpy.typing import ArrayLike
 
 
-def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
+def ocr_coordinates(coordinates: set[tuple[int, int]]) -> str:
     """Convert a set of co-ordinates into letters.
 
     Args:
-        coordinates (Set[Tuple[int, int]]): the (x,y) pixels of the text
+        coordinates (set[tuple[int, int]]): the (x,y) pixels of the text
 
     Returns:
         str: the OCR'd word
@@ -36,15 +36,15 @@ def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
 
 def ocr_numpy(
     array: ArrayLike,
-    fill_pixel: Union[str, int, bool] = "#",
-    empty_pixel: Union[str, int, bool] = ".",
+    fill_pixel: str | int | bool = "#",
+    empty_pixel: str | int | bool = ".",
 ) -> str:
     """Convert an array of pixels into letters.
 
     Args:
         array (ArrayLike): the input array
-        fill_pixel (Union[str, int, bool], optional): the filled pixel. Defaults to "#".
-        empty_pixel (Union[str, int, bool], optional): the empty pixel. Defaults to ".".
+        fill_pixel (str | int | bool): the filled pixel. Defaults to "#".
+        empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
     Returns:
         str: the result
@@ -53,16 +53,16 @@ def ocr_numpy(
 
 
 def ocr_sequence(
-    array: Sequence[Sequence[Union[str, int, bool]]],
-    fill_pixel: Union[str, int, bool] = "#",
-    empty_pixel: Union[str, int, bool] = ".",
+    array: Sequence[Sequence[str | int | bool]],
+    fill_pixel: str | int | bool = "#",
+    empty_pixel: str | int | bool = ".",
 ) -> str:
     """Convert an array of pixels into letters.
 
     Args:
-        array (Sequence[Sequence[Union[str, int, bool]]]): the input array
-        fill_pixel (Union[str, int, bool], optional): the filled pixel. Defaults to "#".
-        empty_pixel (Union[str, int, bool], optional): the empty pixel. Defaults to ".".
+        array (Sequence[Sequence[str | int | bool]]): the input array
+        fill_pixel (str | int | bool): the filled pixel. Defaults to "#".
+        empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
     Raises:
         ValueError: Raised if the wrong number of rows are found

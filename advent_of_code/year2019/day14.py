@@ -9,7 +9,6 @@ from collections import defaultdict
 from math import ceil
 from pathlib import Path
 from sys import path
-from typing import DefaultDict, List, Set
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -30,11 +29,11 @@ class Solver(SolverInterface):
     DAY = 14
     TITLE = "Space Stoichiometry"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.reactions = {
             out: (
@@ -54,7 +53,7 @@ class Solver(SolverInterface):
                 ),
             )
         }
-        self.topo: List[str] = []
+        self.topo: list[str] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -95,13 +94,13 @@ class Solver(SolverInterface):
             return
 
         # work out all the dependencies in the reactions
-        dependancies: DefaultDict[str, Set[str]] = defaultdict(set)
+        dependancies: defaultdict[str, set[str]] = defaultdict(set)
         dependancies["ORE"]
         for chemical, (_, ingredients) in self.reactions.items():
             dependancies[chemical].update({x for _, x in ingredients})
 
         # perform a topological sorting algorithm
-        visited: Set[str] = set()
+        visited: set[str] = set()
         while len(visited) < len(dependancies):
             # find the chemicals with no dependancies
             zero_dependancies = {
@@ -126,7 +125,7 @@ class Solver(SolverInterface):
         Returns:
             int: ORE needed
         """
-        needs: DefaultDict[str, int] = defaultdict(int)
+        needs: defaultdict[str, int] = defaultdict(int)
         needs["FUEL"] = units_of_fuel
 
         # traverse the reactions in topological order, recording the total quanity

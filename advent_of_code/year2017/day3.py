@@ -8,7 +8,6 @@ https://adventofcode.com/2017/day/3
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "Spiral Memory"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"\d+", int_processor)
 
@@ -72,14 +71,14 @@ class Solver(SolverInterface):
 
         return result
 
-    def _locate(self, number: int) -> Tuple[int, int]:
+    def _locate(self, number: int) -> tuple[int, int]:
         """Find the x, y cooridinate of the input number in the sequence.
 
         Args:
             number (int): input number
 
         Returns:
-            Tuple[int, int]: (x, y) co-ordinates
+            tuple[int, int]: (x, y) co-ordinates
         """
         if number == 1:
             return 0, 0

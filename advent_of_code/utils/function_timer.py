@@ -1,6 +1,7 @@
 """Function for timing functions."""
+from collections.abc import Callable
 from time import perf_counter_ns
-from typing import Callable, ParamSpec, TypeVar
+from typing import ParamSpec, TypeVar
 
 T = TypeVar("T")
 P = ParamSpec("P")

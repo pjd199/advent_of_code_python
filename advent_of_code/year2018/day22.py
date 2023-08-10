@@ -9,7 +9,6 @@ from collections import deque
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -35,11 +34,11 @@ class Solver(SolverInterface):
     DAY = 22
     TITLE = "Mode Maze"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         parsed = parse_lines(
             puzzle_input,
@@ -49,8 +48,8 @@ class Solver(SolverInterface):
         self.depth = parsed[0][0]
         self.target_x, self.target_y = parsed[1]
 
-        self.terrain: List[List[Terrain]] = []
-        self.risk: List[List[int]] = []
+        self.terrain: list[list[Terrain]] = []
+        self.risk: list[list[int]] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -98,10 +97,10 @@ class Solver(SolverInterface):
             },
         }
 
-        queue: Deque[Tuple[int, int, Gear, int, int]] = deque(
+        queue: deque[tuple[int, int, Gear, int, int]] = deque(
             [(0, 0, Gear.TORCH, 0, 0)]
         )  # (x, y, tool, time, wait)
-        visited: Set[Tuple[int, int, Gear]] = set()
+        visited: set[tuple[int, int, Gear]] = set()
 
         result = -1
         while queue:

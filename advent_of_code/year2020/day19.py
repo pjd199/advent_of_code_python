@@ -9,7 +9,6 @@ from functools import lru_cache
 from pathlib import Path
 from re import fullmatch
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -31,11 +30,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Monster Messages"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=2)
         self.rules = {

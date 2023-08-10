@@ -5,9 +5,9 @@ A Regular Map
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/20
 """
+from collections.abc import Callable
 from pathlib import Path
 from sys import maxsize, path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,15 +24,15 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "A Regular Map"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"\^[NSEW|()]+\$", str_processor)
 
-        self.rooms: Dict[Tuple[int, int], int] = {(0, 0): 0}  # {(x, y) : doors}
+        self.rooms: dict[tuple[int, int], int] = {(0, 0): 0}  # {(x, y) : doors}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -58,7 +58,7 @@ class Solver(SolverInterface):
 
     def _solve(self) -> None:
         """Solve the puzzle."""
-        moves: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+        moves: dict[str, Callable[[int, int], tuple[int, int]]] = {
             "N": lambda x, y: (x, y - 2),
             "S": lambda x, y: (x, y + 2),
             "E": lambda x, y: (x + 2, y),

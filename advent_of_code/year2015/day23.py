@@ -8,7 +8,6 @@ https://adventofcode.com/2015/day/23
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -34,11 +33,11 @@ class Solver(SolverInterface):
         register: str = ""
         offset: int = 0
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the solver.
 
         Args:
-            puzzle_input (List[str]): the puzzle input
+            puzzle_input (list[str]): the puzzle input
         """
         self.program = parse_lines(
             puzzle_input,

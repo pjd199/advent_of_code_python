@@ -6,11 +6,11 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/8
 """
 from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Callable, DefaultDict, Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -59,11 +59,11 @@ class Solver(SolverInterface):
     DAY = 8
     TITLE = "I Heard You Like Registers"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -99,9 +99,9 @@ class Solver(SolverInterface):
 
     def _solve(self) -> None:
         """Solve the puzzle."""
-        reg: DefaultDict[str, int] = defaultdict(int)
+        reg: defaultdict[str, int] = defaultdict(int)
 
-        compare: Dict[_Comparator, Callable[[_Instruction], bool]] = {
+        compare: dict[_Comparator, Callable[[_Instruction], bool]] = {
             _Comparator.LT: lambda x: reg[x.left] < x.right,
             _Comparator.GT: lambda x: reg[x.left] > x.right,
             _Comparator.LTE: lambda x: reg[x.left] <= x.right,
@@ -110,7 +110,7 @@ class Solver(SolverInterface):
             _Comparator.NOT: lambda x: reg[x.left] != x.right,
         }
 
-        operate: Dict[_Operator, Callable[[_Instruction], int]] = {
+        operate: dict[_Operator, Callable[[_Instruction], int]] = {
             _Operator.INC: lambda x: reg[x.register] + x.value,
             _Operator.DEC: lambda x: reg[x.register] - x.value,
         }

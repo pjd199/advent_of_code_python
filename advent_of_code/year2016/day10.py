@@ -6,10 +6,11 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
 from abc import ABC
+from collections.abc import Callable
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple, cast
+from typing import cast
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -36,7 +37,7 @@ class Solver(SolverInterface):
                 identifier (str): The identifier string
             """
             self.identifier = identifier
-            self.chips: List[int] = []
+            self.chips: list[int] = []
 
         def add_chip(self, value: int) -> None:
             """Add a chip to the item.
@@ -104,16 +105,16 @@ class Solver(SolverInterface):
                 self.low_goes_to.add_chip(low)
                 self.high_goes_to.add_chip(high)
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the input
-        self.factory_floor: Dict[str, Solver._ChipPassingProtocol] = {}
-        self.log: Dict[str, Tuple[int, int]] = {}
-        self.setup: List[Tuple[str, int]] = []
+        self.factory_floor: dict[str, Solver._ChipPassingProtocol] = {}
+        self.log: dict[str, tuple[int, int]] = {}
+        self.setup: list[tuple[str, int]] = []
 
         def find(identifier: str) -> Solver._ChipPassingProtocol:
             if identifier not in self.factory_floor:

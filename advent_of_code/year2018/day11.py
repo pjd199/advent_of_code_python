@@ -7,7 +7,6 @@ https://adventofcode.com/2018/day/11
 """
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 import numpy as np
 
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Chronal Charge"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"\d+", int_processor)
         self.ready = False
@@ -76,14 +75,14 @@ class Solver(SolverInterface):
         )
         self.ready = True
 
-    def _find_largest(self, size: int) -> Tuple[int, int, int, int]:
+    def _find_largest(self, size: int) -> tuple[int, int, int, int]:
         """Find the largest power for the given sized square.
 
         Args:
             size (int): the size of the square
 
         Returns:
-            Tuple[int, int, int, int]: a tuple of (power, x, y, size)
+            tuple[int, int, int, int]: a tuple of (power, x, y, size)
         """
         largest, largest_x, largest_y = max(
             [

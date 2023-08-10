@@ -5,10 +5,10 @@ How About a Nice Game of Chess?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+from collections.abc import Generator
 from hashlib import md5
 from pathlib import Path
 from sys import path
-from typing import Dict, Generator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,17 +25,17 @@ class Solver(SolverInterface):
     DAY = 5
     TITLE = "How About a Nice Game of Chess?"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"(?P<id>[a-z]+)", str_processor)
 
         # setup the empty cache to help shortcut solving part two if called
         # after part one
-        self.cache: Dict[int, str] = {}
+        self.cache: dict[int, str] = {}
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.

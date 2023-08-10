@@ -1,11 +1,11 @@
 """Fixtures shared accross the test suite."""
 from enum import Enum, auto, unique
 from json import load
-from typing import Any, Dict, NewType, Union
+from typing import Any, NewType
 
 import pytest
 
-Expected = NewType("Expected", Dict[int, Dict[int, Dict[str, Union[int, str]]]])
+Expected = NewType("Expected", dict[int, dict[int, dict[str, int | str]]])
 
 Json = dict[str, Any] | list[Any] | str | int | float | bool | None
 

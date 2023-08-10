@@ -5,10 +5,10 @@ A Series of Tubes
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/19
 """
+from collections.abc import Callable
 from pathlib import Path
 from string import ascii_uppercase
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -30,11 +30,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "A Series of Tubes"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_grid(puzzle_input, r"[\|\-\+ A-Z]", str_processor)
         self.route = ""
@@ -62,7 +62,7 @@ class Solver(SolverInterface):
 
     def _solve(self) -> None:
         """Solve the route."""
-        moves: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+        moves: dict[str, Callable[[int, int], tuple[int, int]]] = {
             UP: lambda a, b: (a, b - 1),
             DOWN: lambda a, b: (a, b + 1),
             LEFT: lambda a, b: (a - 1, b),

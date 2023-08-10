@@ -5,9 +5,9 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/13
 """
 from collections import deque
+from collections.abc import Callable
 from pathlib import Path
 from sys import path
-from typing import Callable, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "A Maze of Twisty Little Cubicles"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.number = parse_single_line(puzzle_input, r"\d+", int_processor)
         self.has_run = False
@@ -70,7 +70,7 @@ class Solver(SolverInterface):
             return
         self.has_run = True
 
-        moves: List[Callable[[int, int], Tuple[int, int]]] = [
+        moves: list[Callable[[int, int], tuple[int, int]]] = [
             lambda x, y: (x, y - 1),
             lambda x, y: (x + 1, y),
             lambda x, y: (x, y + 1),

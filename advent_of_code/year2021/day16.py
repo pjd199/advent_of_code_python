@@ -5,12 +5,12 @@ Packet Decoder
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/16
 """
+from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import chain
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Callable
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))

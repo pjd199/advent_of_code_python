@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from itertools import cycle
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -37,11 +36,11 @@ class Solver(SolverInterface):
     DAY = 14
     TITLE = "Reindeer Olympics"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
 
         """
         self.herd = parse_lines(
@@ -76,7 +75,7 @@ class Solver(SolverInterface):
         return max(points)
 
     @cache_result
-    def _race(self) -> Tuple[List[int], List[int]]:
+    def _race(self) -> tuple[list[int], list[int]]:
         # positions will hold the current position of each reindeer
         # points will hold the current points of each reindeer
         # iterators will hold a iterator, which returns the current speed

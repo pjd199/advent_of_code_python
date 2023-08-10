@@ -7,7 +7,6 @@ https://adventofcode.com/2021/day/13
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 import numpy as np
 from numpy.typing import NDArray
@@ -28,11 +27,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "Transparent Origami"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input)
         self.marks = parse_lines(sections[0], (r"(\d+),(\d+)", int_tuple_processor))

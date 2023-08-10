@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from string import ascii_lowercase
 from sys import path
-from typing import DefaultDict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -33,11 +32,11 @@ class Solver(SolverInterface):
     DAY = 4
     TITLE = "Security Through Obscurity"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -48,7 +47,7 @@ class Solver(SolverInterface):
                 dataclass_processor(Solver._Room),
             ),
         )
-        self.real_rooms: List[Solver._Room] = []
+        self.real_rooms: list[Solver._Room] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -91,7 +90,7 @@ class Solver(SolverInterface):
         self.real_rooms = []
         for room in self.input:
             # count the frequency of letters
-            counter: DefaultDict[str, int] = defaultdict(int)
+            counter: defaultdict[str, int] = defaultdict(int)
             for c in room.encrypted_name:
                 if c != "-":
                     counter[str(c)] += 1

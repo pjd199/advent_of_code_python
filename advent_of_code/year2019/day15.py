@@ -10,7 +10,6 @@ from copy import deepcopy
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Deque, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -36,14 +35,14 @@ class Solver(SolverInterface):
     DAY = 15
     TITLE = "Oxygen System"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.computer = IntcodeComputer(puzzle_input)
-        self.grid: Dict[Tuple[int, int], GridValue] = {}
+        self.grid: dict[tuple[int, int], GridValue] = {}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -70,7 +69,7 @@ class Solver(SolverInterface):
 
         # use a breadth first search to create the grid
         x, y = (0, 0)
-        queue: Deque[Tuple[int, int, int, IntcodeComputer]] = deque(
+        queue: deque[tuple[int, int, int, IntcodeComputer]] = deque(
             [(x, y, 0, deepcopy(self.computer))]
         )
         self.grid = {(x, y): GridValue.space}
@@ -92,7 +91,7 @@ class Solver(SolverInterface):
             (x, y) for (x, y), v in self.grid.items() if v == GridValue.oxygen
         )
 
-    def next_moves(self, x: int, y: int) -> Tuple[Tuple[int, int, int], ...]:
+    def next_moves(self, x: int, y: int) -> tuple[tuple[int, int, int], ...]:
         """Return an iterator for the moves from (x,y).
 
         Args:
@@ -100,7 +99,7 @@ class Solver(SolverInterface):
             y (int): y co-ordinate
 
         Returns:
-            Tuple[Tuple[int, int, int], ...]: the moves
+            tuple[tuple[int, int, int], ...]: the moves
         """
         return (
             (x, y - 1, 1),
@@ -109,12 +108,12 @@ class Solver(SolverInterface):
             (x + 1, y, 4),
         )
 
-    def navigate(self, start: Tuple[int, int], finish: Tuple[int, int] | None) -> int:
+    def navigate(self, start: tuple[int, int], finish: tuple[int, int] | None) -> int:
         """Navigate the grid, from start to finish.
 
         Args:
-            start (Tuple[int, int]): starting co-ordinates. Defaults to (0, 0).
-            finish (Tuple[int, int] | None): finishing co-ordinates. Defaults to None.
+            start (tuple[int, int]): starting co-ordinates. Defaults to (0, 0).
+            finish (tuple[int, int] | None): finishing co-ordinates. Defaults to None.
 
         Returns:
             int: number of steps from start and finish
@@ -124,7 +123,7 @@ class Solver(SolverInterface):
 
         # perform a breadth first search to find the oxygen
         x, y = start
-        queue: Deque[Tuple[int, int, int]] = deque([(x, y, 0)])
+        queue: deque[tuple[int, int, int]] = deque([(x, y, 0)])
         visited = {(x, y)}
         steps = -1
         while queue:

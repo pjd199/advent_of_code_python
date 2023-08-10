@@ -5,10 +5,10 @@ Amphipod
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/23
 """
+from collections.abc import Generator
 from heapq import heapify, heappop, heappush
 from pathlib import Path
 from sys import path
-from typing import Generator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))

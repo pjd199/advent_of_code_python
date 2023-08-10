@@ -8,7 +8,6 @@ https://adventofcode.com/2017/day/24
 from collections import defaultdict
 from pathlib import Path
 from sys import path
-from typing import List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Electromagnetic Moat"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"(\d+)/(\d+)", int_tuple_processor))
 
@@ -64,12 +63,12 @@ class Solver(SolverInterface):
 
         return self.longest_strength
 
-    def _solve(self, a: int, bridge: Set[Tuple[int, int]]) -> None:
+    def _solve(self, a: int, bridge: set[tuple[int, int]]) -> None:
         """Recusively solve the puzzle.
 
         Args:
             a (int): the "a" connector
-            bridge (Set[Tuple[int, int]]): the bridge so far
+            bridge (set[tuple[int, int]]): the bridge so far
         """
         end = True
         for b in self.lookup[a]:

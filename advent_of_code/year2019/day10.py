@@ -10,7 +10,6 @@ from math import atan2, pi
 from operator import itemgetter
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 10
     TITLE = "Monitoring Station"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = {
             k
@@ -68,7 +67,7 @@ class Solver(SolverInterface):
 
         # calculate the atan2 for each asteroid, then sort by angle and distance.
         # then group by angle and list the points
-        asteroids: Dict[float, List[Tuple[int, int]]] = {
+        asteroids: dict[float, list[tuple[int, int]]] = {
             angle: [point for _, point in points]
             for angle, points in groupby(
                 sorted(

@@ -8,7 +8,6 @@ https://adventofcode.com/2015/day/18
 from copy import deepcopy
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 18
     TITLE = "Like a GIF For Your Yard"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
 
         """
         self.input = parse_grid(puzzle_input, r"[#\.]", str_processor)
@@ -70,11 +69,11 @@ class Solver(SolverInterface):
 
         return len([x for x in grid.values() if x == "#"])
 
-    def _next_state(self, grid: Dict[Tuple[int, int], str], x: int, y: int) -> str:
+    def _next_state(self, grid: dict[tuple[int, int], str], x: int, y: int) -> str:
         """Calculate the next state of the light at position (x, y).
 
         Args:
-            grid (Dict[Tuple[int, int], str]): the dictionary grid of lights
+            grid (dict[tuple[int, int], str]): the dictionary grid of lights
             x (int): x co-ordinate
             y (int): y co-ordinate
 

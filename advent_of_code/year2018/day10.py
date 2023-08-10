@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -37,11 +36,11 @@ class Solver(SolverInterface):
     DAY = 10
     TITLE = "The Stars Align"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         #         puzzle_input = """position=< 9,  1> velocity=< 0,  2>
         # position=< 7,  0> velocity=<-1,  0>

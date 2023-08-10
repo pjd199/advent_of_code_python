@@ -5,11 +5,11 @@ Some Assembly Required
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/7
 """
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -58,11 +58,11 @@ class Solver(SolverInterface):
     DAY = 7
     TITLE = "Some Assembly Required"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         parsed: list[_Expression] = parse_lines(
             puzzle_input,
@@ -83,7 +83,7 @@ class Solver(SolverInterface):
             ),
         )
 
-        self.wiring_diagram: Dict[str, _Expression] = {x.output: x for x in parsed}
+        self.wiring_diagram: dict[str, _Expression] = {x.output: x for x in parsed}
 
     @cache_result
     def solve_part_one(self) -> int:
@@ -108,7 +108,7 @@ class Solver(SolverInterface):
     def _resolve(
         self,
         wire: str,
-        cache: Dict[str, int],
+        cache: dict[str, int],
     ) -> int:
         """Recursively resolves the signal on the request wire.
 
@@ -118,7 +118,7 @@ class Solver(SolverInterface):
 
         Args:
             wire (str): the wire to resolve
-            cache (Dict[str, int]): a cache of resolved results
+            cache (dict[str, int]): a cache of resolved results
 
         Returns:
             int: the final value of the wire
@@ -138,7 +138,7 @@ class Solver(SolverInterface):
                 cache[wire] = self._resolve(expression.input_wire, cache)
 
             elif isinstance(expression, _Operation):
-                operations: Dict[_Operator, Callable[[str, str], int]] = {
+                operations: dict[_Operator, Callable[[str, str], int]] = {
                     _Operator.AND: lambda a, b: (
                         self._resolve(a, cache) & self._resolve(b, cache)
                     ),

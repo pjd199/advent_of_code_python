@@ -14,7 +14,6 @@ from operator import itemgetter
 from pathlib import Path
 from re import findall, search
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -50,7 +49,7 @@ class Group:
     attack: AttackType
     damage: int
     initiative: int
-    _impact_dict: Dict[AttackType, int] = field(default_factory=dict)
+    _impact_dict: dict[AttackType, int] = field(default_factory=dict)
 
     @property
     def effective(self) -> int:
@@ -62,11 +61,11 @@ class Group:
         return self.units * self.damage
 
     @property
-    def impact(self) -> Dict[AttackType, int]:
+    def impact(self) -> dict[AttackType, int]:
         """The impact for each attack, derived from the _impact_str.
 
         Returns:
-            Dict[AttackType, int]: the impact for each type
+            dict[AttackType, int]: the impact for each type
         """
         if not self._impact_dict:
             self._impact_dict = {x: 1 for x in AttackType}
@@ -88,11 +87,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Immune System Simulator 20XX"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=2)
         self.input = [
@@ -141,11 +140,11 @@ class Solver(SolverInterface):
                 break
         return result
 
-    def _battle(self, armies: List[List[Group]]) -> int:
+    def _battle(self, armies: list[list[Group]]) -> int:
         """Solve part one of the puzzle.
 
         Args:
-            armies (List[List[Group]]): the armies to battle
+            armies (list[list[Group]]): the armies to battle
 
         Returns:
             int: the answer

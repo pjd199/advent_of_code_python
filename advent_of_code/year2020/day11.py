@@ -8,7 +8,6 @@ https://adventofcode.com/2020/day/11
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Seating System"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_grid(puzzle_input, r"[.L]", str_processor)
 
@@ -79,7 +78,7 @@ class Solver(SolverInterface):
         (min_x, max_x), (min_y, max_y) = ((min(a), max(a)) for a in zip(*seats))
 
         finished = False
-        next_seats: Dict[Tuple[int, int], bool] = {}
+        next_seats: dict[tuple[int, int], bool] = {}
         while not finished:
             next_seats = {}
             for x, y in seats:

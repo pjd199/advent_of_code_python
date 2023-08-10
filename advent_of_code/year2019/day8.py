@@ -7,7 +7,6 @@ https://adventofcode.com/2019/day/8
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 import numpy as np
 
@@ -27,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 8
     TITLE = "Space Image Format"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(puzzle_input, (r"[012]", int_processor))
         self.width = 25

@@ -6,11 +6,12 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/20
 """
 from collections import deque
+from collections.abc import Callable
 from math import prod
 from pathlib import Path
 from re import finditer
 from sys import path
-from typing import Callable, Deque, Dict, List, Tuple, TypeVar
+from typing import TypeVar
 
 import numpy as np
 from numpy.typing import NDArray
@@ -38,11 +39,11 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "Jurassic Jigsaw"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = {
             parse_single_line(
@@ -128,18 +129,18 @@ class Solver(SolverInterface):
 
         # perform a breadth first search to arrange the tiles into the grid
         start = next(k for k in self.input)
-        queue: Deque[Tuple[int, int]] = deque([(0, 0)])
+        queue: deque[tuple[int, int]] = deque([(0, 0)])
 
-        grid: Dict[Tuple[int, int], NDArray[np.str_]] = {(0, 0): tiles[start][0]}
-        visited: Dict[Tuple[int, int], int] = {(0, 0): start}
+        grid: dict[tuple[int, int], NDArray[np.str_]] = {(0, 0): tiles[start][0]}
+        visited: dict[tuple[int, int], int] = {(0, 0): start}
         tiles_not_yet_placed = {t for t in self.input if t != start}
 
         while queue:
             x, y = queue.popleft()
 
-            moves: List[
-                Tuple[
-                    Tuple[int, int],
+            moves: list[
+                tuple[
+                    tuple[int, int],
                     Callable[[NDArray[np.str_], NDArray[np.str_]], bool],
                 ]
             ] = [
@@ -184,14 +185,14 @@ class Solver(SolverInterface):
         )
         self.ready = True
 
-    def _rotations_and_flips(self, array: NDArray[T]) -> List[NDArray[T]]:
+    def _rotations_and_flips(self, array: NDArray[T]) -> list[NDArray[T]]:
         """Create a list of rotated and flipped views of array.
 
         Args:
             array (NDArray[T]): the input array
 
         Returns:
-            List[NDArray[T]]: the output
+            list[NDArray[T]]: the output
         """
         return [
             array,

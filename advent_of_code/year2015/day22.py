@@ -8,7 +8,7 @@ https://adventofcode.com/2015/day/22
 from enum import Enum, auto, unique
 from pathlib import Path
 from sys import maxsize, path
-from typing import Any, Dict, List
+from typing import Any
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -104,7 +104,7 @@ class Game:
         self.spent = 0
         self.armor = 0
         self.depth = 0
-        self.effects: Dict[Spells, int] = {}
+        self.effects: dict[Spells, int] = {}
 
         # This is a reference to the min value, rather than storing directly
         # as an int, so that it is common to all sub games
@@ -227,11 +227,11 @@ class Solver(SolverInterface):
     DAY = 22
     TITLE = "Wizard Simulator 20XX"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         values = {
             k: int(v)

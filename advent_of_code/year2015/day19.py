@@ -7,7 +7,6 @@ https://adventofcode.com/2015/day/19
 """
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -31,11 +30,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Medicine for Rudolph"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=2)
 
@@ -80,19 +79,19 @@ class Solver(SolverInterface):
     def _replace(
         self,
         molecule: str,
-        replacement_list: List[Tuple[str, str]],
+        replacement_list: list[tuple[str, str]],
         reverse: bool = False,
-    ) -> List[str]:
+    ) -> list[str]:
         """Create a list of all the possible new molecules.
 
         Args:
             molecule (str): the input molecule
-            replacement_list (List[Tuple[str, str]]): list of replacements
+            replacement_list (list[tuple[str, str]]): list of replacements
             reverse (bool): if True, reverses the replacement_list.
                 Defaults to False.
 
         Returns:
-            List[str]: a list of all the possible replacements
+            list[str]: a list of all the possible replacements
         """
         results = set()
         for a, b in replacement_list:

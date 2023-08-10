@@ -7,7 +7,6 @@ https://adventofcode.com/2015/day/20
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 import numpy as np
 
@@ -27,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "Infinite Elves and Infinite Houses"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.target = parse_lines(puzzle_input, (r"[0-9]+", int_processor))
 

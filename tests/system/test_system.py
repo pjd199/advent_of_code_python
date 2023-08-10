@@ -2,7 +2,7 @@
 from json import load as load_json
 from os import environ
 from threading import Thread
-from typing import Any, Dict
+from typing import Any
 
 import pytest
 from boto3 import client
@@ -132,52 +132,52 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             metafunc.parametrize("test_case", cases, ids=ids)
 
 
-def test_main(sam_main_url: str, test_case: Dict["str", Any]) -> None:
+def test_main(sam_main_url: str, test_case: dict["str", Any]) -> None:
     """Test using the main branch Lambda Function URL.
 
     Args:
         sam_main_url (str): the url for testing
-        test_case (Dict["str", Any]): the test case
+        test_case (dict["str", Any]): the test case
     """
     call_lambda_function(sam_main_url, test_case)
 
 
-def test_cdn(cdn_url: str, test_case: Dict["str", Any]) -> None:
+def test_cdn(cdn_url: str, test_case: dict["str", Any]) -> None:
     """Test using the CDN URL.
 
     Args:
         cdn_url (str): the url for testing
-        test_case (Dict["str", Any]): the test case
+        test_case (dict["str", Any]): the test case
     """
     call_lambda_function(cdn_url, test_case)
 
 
-def test_dev(sam_dev_url: str, test_case: Dict["str", Any]) -> None:
+def test_dev(sam_dev_url: str, test_case: dict["str", Any]) -> None:
     """Test using the development branch Lambda Function URL.
 
     Args:
         sam_dev_url (str): the url for testing
-        test_case (Dict["str", Any]): the test case
+        test_case (dict["str", Any]): the test case
     """
     call_lambda_function(sam_dev_url, test_case)
 
 
-def test_local(localhost_url: str, test_case: Dict["str", Any]) -> None:
+def test_local(localhost_url: str, test_case: dict["str", Any]) -> None:
     """Test using the localhost URL.
 
     Args:
         localhost_url (str): the localhost URL
-        test_case (Dict["str", Any]): the test case
+        test_case (dict["str", Any]): the test case
     """
     call_lambda_function(localhost_url, test_case)
 
 
-def call_lambda_function(base_url: str, test_case_data: Dict[str, Any]) -> None:
+def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
     """System test.
 
     Args:
         base_url (str): the Funciton URL of the deployed AWS Lambda function
-        test_case_data (Dict[str, Any]): the test case data
+        test_case_data (dict[str, Any]): the test case data
     """
     verify = "127.0.0.1" not in base_url
 

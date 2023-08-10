@@ -5,10 +5,10 @@ Beacon Scanner
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/19
 """
+from collections.abc import Generator
 from itertools import permutations, product
 from pathlib import Path
 from sys import path
-from typing import Generator
 
 import numpy as np
 from numpy.typing import NDArray

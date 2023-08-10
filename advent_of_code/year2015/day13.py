@@ -8,7 +8,6 @@ https://adventofcode.com/2015/day/13
 from itertools import chain, permutations
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "Knights of the Dinner Table"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         tuples = parse_lines(
             puzzle_input,
@@ -76,12 +75,12 @@ class Solver(SolverInterface):
         # solve the puzzle
         return self._find_optimal(names_with_me, values_with_me)
 
-    def _find_optimal(self, names: Set[str], values: Dict[Tuple[str, str], int]) -> int:
+    def _find_optimal(self, names: set[str], values: dict[tuple[str, str], int]) -> int:
         """Find the optimal searing arrangement for these guests.
 
         Args:
-            names (Set[str]): The names of the guest
-            values (Dict[Tuple[str, str], int]): the happiness values
+            names (set[str]): The names of the guest
+            values (dict[tuple[str, str], int]): the happiness values
 
         Returns:
             int: the result

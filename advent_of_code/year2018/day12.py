@@ -7,7 +7,6 @@ https://adventofcode.com/2018/day/12
 """
 from pathlib import Path
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -30,11 +29,11 @@ class Solver(SolverInterface):
     DAY = 12
     TITLE = "Subterranean Sustainability"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse into sections
         state_section, rules_section = split_sections(puzzle_input, expected_sections=2)
@@ -45,7 +44,7 @@ class Solver(SolverInterface):
         )
 
         # parse the rules
-        self.rules: Dict[str, str] = {
+        self.rules: dict[str, str] = {
             key: value
             for key, value in parse_lines(
                 rules_section,

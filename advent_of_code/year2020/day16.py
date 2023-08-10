@@ -10,7 +10,6 @@ from itertools import chain
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import List, Set
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -35,7 +34,7 @@ class Rule:
     a_max: int
     b_min: int
     b_max: int
-    valid: Set[int] = field(default_factory=set)
+    valid: set[int] = field(default_factory=set)
 
 
 class Solver(SolverInterface):
@@ -45,11 +44,11 @@ class Solver(SolverInterface):
     DAY = 16
     TITLE = "Ticket Translation"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=3)
         self.rules = parse_lines(

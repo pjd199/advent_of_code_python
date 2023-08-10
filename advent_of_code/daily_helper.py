@@ -6,7 +6,7 @@ from json import dump, load
 from pathlib import Path
 from re import match
 from sys import path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from webbrowser import open as webbrowser_open
 
 import pytest
@@ -27,14 +27,14 @@ REPOSITORY = "https://github.com/pjd199/advent_of_code_python"
 CACHE_PATH = "./.aoc_website_cache"
 
 
-def sorted_with_numeric_key(d: Dict[str, Any]) -> Dict[str, Any]:
+def sorted_with_numeric_key(d: dict[str, Any]) -> dict[str, Any]:
     """Sort the dictionary using numeric string key.
 
     Args:
-        d (Dict[str, Any]): the input dictionary
+        d (dict[str, Any]): the input dictionary
 
     Returns:
-        Dict[str, Any]: a new, sorted dictionary
+        dict[str, Any]: a new, sorted dictionary
     """
     return dict(sorted(d.items(), key=lambda x: int(x[0])))
 
@@ -46,7 +46,7 @@ class DailyHelper:
         self,
         year: int,
         day: int,
-        session: Optional[str] = None,
+        session: str | None = None,
         flush: bool = False,
         verbose: bool = False,
         test: bool = False,
@@ -59,7 +59,7 @@ class DailyHelper:
         Args:
             year (int): the year for the puzzle
             day (int): the day for the puzzle
-            session (Optional[str]): the session cookie for the Advent of Code website
+            session (str | None): the session cookie for the Advent of Code website
             flush (bool): if True, ignores cached files. Default False
             verbose (bool): if True, enables logging. Default False
             test (bool): if True, enables testing. Default False
@@ -78,7 +78,7 @@ class DailyHelper:
         self.timing = timing
 
         self.title = ""
-        self.answers: List[str] = []
+        self.answers: list[str] = []
 
         self.html_path = Path(f"{CACHE_PATH}/year{year}/day{day}/index.html")
         self.part_one_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_one.md")
@@ -214,7 +214,7 @@ class DailyHelper:
     def _save(
         self,
         path: Path,
-        data: Union[str, Dict[str, Any]],
+        data: str | dict[str, Any],
         force: bool = False,
         ok_if_exists: bool = False,
     ) -> None:
@@ -222,7 +222,7 @@ class DailyHelper:
 
         Args:
             path (Path): the save path
-            data (Union[str, Dict[str, Any]]): the data to save
+            data (str | dict[str, Any]): the data to save
             force (bool): If True, overwrites existing file. Defaults to False.
             ok_if_exists (bool): If False, warn if already exists. Defaults to False.
         """

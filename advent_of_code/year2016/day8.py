@@ -9,7 +9,6 @@ from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import DefaultDict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -46,11 +45,11 @@ class Solver(SolverInterface):
     DAY = 8
     TITLE = "Two-Factor Authentication"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -67,7 +66,7 @@ class Solver(SolverInterface):
                 dataclass_processor(Solver._RotateColumn),
             ),
         )
-        self.grid: DefaultDict[Tuple[int, int], bool] = defaultdict(bool)
+        self.grid: defaultdict[tuple[int, int], bool] = defaultdict(bool)
         self.number_of_columns = 50
         self.number_of_rows = 6
 
@@ -96,11 +95,11 @@ class Solver(SolverInterface):
             ocr_coordinates({coordinate for coordinate, on in self.grid.items() if on})
         )
 
-    def _run(self) -> DefaultDict[Tuple[int, int], bool]:
+    def _run(self) -> defaultdict[tuple[int, int], bool]:
         """Run the simulation.
 
         Returns:
-            DefaultDict[Tuple[int, int], bool]: the results
+            defaultdict[tuple[int, int], bool]: the results
         """
         for instruction in self.input:
             if isinstance(instruction, Solver._Rect):
