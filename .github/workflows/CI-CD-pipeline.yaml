@@ -11,7 +11,7 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
-concurrency: 
+concurrency:
   group: CICD${{ github.ref }}
   cancel-in-progress: true
 
@@ -23,23 +23,25 @@ jobs:
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: "pip"
-      
+
       - name: Install dependencies
         run: pip install pre-commit
 
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit
-          key: pre-commit-${{ env.pythonLocation }}-${{ hashFiles('.pre-commit-config.yaml') }}
+          key:
+            pre-commit-${{ env.pythonLocation }}-${{
+            hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run pre-commit on all files
-        run: pre-commit run --all-files 
+        run: pre-commit run --all-files
 
   unit-test:
     name: Unit & Integration Test
@@ -51,21 +53,22 @@ jobs:
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: "pip"
-      
+
       - name: Install dependancies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_test.txt
-      
+        run: pip install -r requirements_CI_CD_test.txt
+
       - name: Run pytest
-        run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
-      
+        run:
+          pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{
+          matrix.group }} -n auto --suppress-no-test-exit-code
+          --splitting-algorithm=least_duration
+
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v3
         with:
@@ -74,82 +77,23 @@ jobs:
 
   coverage:
     name: Coverage Check
-    needs: unit-test 
+    needs: unit-test
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
           python-version: "3.11"
           cache: "pip"
-     
+
       - name: Install dependancies
-        run: |
-          python -m pip install --upgrade pip
-          pip install coverage
-      
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage1
-          path: ./coverage1
+        run: pip install coverage
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
-        with:
-          name: coverage2
-          path: ./coverage2
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage3
-          path: ./coverage3
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage4
-          path: ./coverage4
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage5
-          path: ./coverage5
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage6
-          path: ./coverage6
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage7
-          path: ./coverage7
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage8
-          path: ./coverage8
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage9
-          path: ./coverage9
-
-      - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: coverage10
-          path: ./coverage10
 
       - name: Combine coverage files
         run: coverage combine coverage*/.coverage*
@@ -161,85 +105,41 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-            
+
       - name: Check for 100% coverage
         run: coverage report --fail-under=100 --omit="*/test*"
 
-  aws-sam-build:
-    name: AWS SAM Build
-    runs-on: ubuntu-latest
-    steps:
-      -  name: Check out respository
-         uses: actions/checkout@v3
-
-      - name: Set variables for Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
-      
-      - name: Set variables for Development
-        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-
-      - name: Setup AWS SAM
-        uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
-      
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v2
-      
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v2
-
-      - name: SAM Validate
-        run: sam validate --lint
-
-      - name: SAM Build
-        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
-    
-      - name: Save build files
-        uses: actions/upload-artifact@v3
-        with:
-          name: sam-build
-          path: .aws-sam
-          retention-days: 1
-
-      - name: Save container image
-        uses: ishworkh/container-image-artifact-upload@v1.0.0
-        with:
-          image: adventofcodefunction:AdventOfCodeFunction
-          retention_days: 1
-
-  aws-sam-deploy:
+  build-and-deploy:
     name: Deploy to AWS Lambda
     needs: [unit-test, check, coverage, aws-sam-build]
     runs-on: ubuntu-latest
     steps:
-      -  name: Check out respository
-         uses: actions/checkout@v3
+      - name: Check out respository
+        uses: actions/checkout@v3
 
       - name: Set variables for Production
         if: github.ref == 'refs/heads/main'
         run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
-      
+
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
         run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-          
+
       - name: Setup AWS SAM
         uses: aws-actions/setup-sam@v2
         with:
           use-installer: true
 
-      - name: Restore build files
-        uses: actions/download-artifact@v3
-        with:
-          name: sam-build
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
 
-      - name: Restore container image
-        uses: ishworkh/container-image-artifact-download@v1.0.0
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Setup AWS SAM
+        uses: aws-actions/setup-sam@v2
         with:
-          image: adventofcodefunction:AdventOfCodeFunction
+          use-installer: true
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
@@ -247,18 +147,26 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: eu-west-2
-      
+
+      - name: SAM Validate
+        run: sam validate --lint
+
+      - name: SAM Build
+        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
+
       - name: SAM Deploy to AWS Lambda
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
+        run:
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+          --config-file ${{ env.SAM_CONFIG_FILE }}
 
   system-test:
     name: System Testing
-    needs: aws-sam-deploy
+    needs: build-and-deploy
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
@@ -276,7 +184,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements_CI_CD_test.txt
-      
+
       - name: Run pytest on main lambda function
         if: github.ref == 'refs/heads/main'
         run: pytest ./tests/system -k _main -n auto
@@ -289,10 +197,3 @@ jobs:
     name: Update Status Graphic
     needs: unit-test
     uses: ./.github/workflows/update_status_graphic.yaml
-
-  dump:
-    name: Dump Environment Variables
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump context
-        uses: crazy-max/ghaction-dump-context@v1
