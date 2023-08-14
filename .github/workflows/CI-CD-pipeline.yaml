@@ -95,54 +95,64 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: coverage1
+          path: ./coverage1
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage2
+          path: ./coverage2
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage3
+          path: ./coverage3
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage4
+          path: ./coverage4
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage5
+          path: ./coverage5
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage6
+          path: ./coverage6
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage7
+          path: ./coverage7
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage8
+          path: ./coverage8
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage9
+          path: ./coverage9
 
       - name: Download coverage artifacts
         uses: actions/download-artifact@v3
         with:
           name: coverage10
+          path: ./coverage10
 
       - name: Combine coverage files
-        run: coverage combine coverage*
+        run: coverage combine coverage*/.coverage*
 
       - name: Generate XML report
         run: coverage xml --omit="*/test*"
