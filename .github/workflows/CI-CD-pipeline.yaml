@@ -150,7 +150,7 @@ jobs:
       - name: Save working directory
         uses: actions/upload-artifact@v3
         with:
-          name: sam-build
+          name: cwd
           path: .
           retention-days: 1
 
