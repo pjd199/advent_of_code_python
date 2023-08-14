@@ -144,7 +144,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: sam-build
-          path: ./aws-sam
+          path: .aws-sam
           retention-days: 1
 
   aws-sam-deploy:
