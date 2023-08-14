@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   check:
-    name: Static Check
+    name: Enforce static checks through pre-commit 
     runs-on: ubuntu-latest
 
     steps:
@@ -31,22 +31,15 @@ jobs:
           cache: "pip"
       
       - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_check.txt
+        run: pip install pre-commit
 
-      - name: Lint with ruff
-        run: ruff check .
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pre-commit
+          key: ${{ env.pythonLocation }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
-      - name: Check import order
-        run: isort --check-only .
-
-      - name: Checking docstrings
-        run: pydoclint --config=pyproject.toml .
-
-      - name: Static type check with mypy
-        run: |
-          mypy --strict .
+      - name: Run pre-commit on all files
+        run: pre-commit --all-files 
 
   unit-test:
     name: Unit & Integration Test
