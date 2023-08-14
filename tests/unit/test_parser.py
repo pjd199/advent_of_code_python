@@ -10,6 +10,7 @@ from advent_of_code.utils.parser import (
     MissingDelimiterError,
     NoMatchFoundError,
     ParseError,
+    SectionError,
     _validate_input_and_header,
     dataclass_processor,
     enum_processor,
@@ -377,7 +378,7 @@ def test_split_sections() -> None:
     assert len(split_sections(["abc", "", "def"], expected_sections=2)) == 2
 
     # test for incorrect expected sections
-    with pytest.raises(LengthError):
+    with pytest.raises(SectionError):
         split_sections(["abc", "", "def"], expected_sections=3)
 
     # test for single section

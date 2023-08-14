@@ -468,6 +468,6 @@ def split_sections(
     output.append(section)
 
     if not output or (expected_sections < maxsize and len(output) != expected_sections):
-        raise LengthError
+        raise SectionError
 
     return output
