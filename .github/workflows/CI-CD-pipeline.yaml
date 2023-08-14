@@ -142,7 +142,7 @@ jobs:
           name: coverage10
 
       - name: Combine coverage files
-        run: coverage combine coverage*/.coverage*
+        run: coverage combine coverage*
 
       - name: Generate XML report
         run: coverage xml --omit="*/test*"
