@@ -91,11 +91,59 @@ jobs:
           python -m pip install --upgrade pip
           pip install coverage
       
-      - name: Download all artifacts
+      - name: Download coverage artifacts
         uses: actions/download-artifact@v3
-      
+        with:
+          name: coverage1
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage2
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage3
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage4
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage5
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage6
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage7
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage8
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage9
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage10
+
       - name: Combine coverage files
-        run: coverage combine coverage*/.coverage*
+        #run: coverage combine coverage*/.coverage*
+        run: coverage combine .coverage*
 
       - name: Generate XML report
         run: coverage xml --omit="*/test*"
@@ -147,13 +195,6 @@ jobs:
           path: .aws-sam
           retention-days: 1
 
-      - name: Save working directory
-        uses: actions/upload-artifact@v3
-        with:
-          name: cwd
-          path: .
-          retention-days: 1
-
       - name: Save container image
         uses: ishworkh/container-image-artifact-upload@v1.0.0
         with:
@@ -187,7 +228,7 @@ jobs:
           name: sam-build
 
       - name: Restore container image
-        uses: ishworkh/container-image-artifact-upload@v1.0.0
+        uses: ishworkh/container-image-artifact-download@v1.0.0
         with:
           image: adventofcodefunction:AdventOfCodeFunction
 
