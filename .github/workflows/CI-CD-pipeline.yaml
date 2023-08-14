@@ -154,11 +154,10 @@ jobs:
           path: .
           retention-days: 1
 
-
       - name: Save container image
         uses: ishworkh/container-image-artifact-upload@v1.0.0
         with:
-          image: AdventOfCodeFunction
+          image: adventofcodefunction:AdventOfCodeFunction
           retention_days: 1
 
   aws-sam-deploy:
