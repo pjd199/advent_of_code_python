@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   check:
-    name: Enforce static checks through pre-commit 
+    name: Static checks
     runs-on: ubuntu-latest
 
     steps:
@@ -39,7 +39,7 @@ jobs:
           key: ${{ env.pythonLocation }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run pre-commit on all files
-        run: pre-commit --all-files 
+        run: pre-commit run --all-files 
 
   unit-test:
     name: Unit & Integration Test
