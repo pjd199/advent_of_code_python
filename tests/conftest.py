@@ -1,6 +1,7 @@
 """Fixtures shared accross the test suite."""
 from enum import Enum, auto, unique
 from json import load
+from pathlib import Path
 from typing import Any, NewType
 
 import pytest
@@ -28,7 +29,7 @@ def expected() -> Expected:
     Returns:
         Expected: The test case data
     """
-    with open("./tests/expected.json") as file:
+    with Path("./tests/expected.json").open() as file:
         return Expected(
             {
                 int(year): {int(day): value for day, value in inner.items()}

@@ -39,7 +39,7 @@ class Solver(SolverInterface):
         """
         return self._priorities(
             [
-                list(set(x[: len(x) // 2]).intersection(set(x[len(x) // 2 :])))[0]
+                next(iter(set(x[: len(x) // 2]).intersection(set(x[len(x) // 2 :]))))
                 for x in self.input
             ]
         )
@@ -52,11 +52,13 @@ class Solver(SolverInterface):
         """
         return self._priorities(
             [
-                list(
-                    set(self.input[i])
-                    .intersection(set(self.input[i + 1]))
-                    .intersection(self.input[i + 2])
-                )[0]
+                next(
+                    iter(
+                        set(self.input[i])
+                        .intersection(set(self.input[i + 1]))
+                        .intersection(self.input[i + 2])
+                    )
+                )
                 for i in range(0, len(self.input), 3)
             ]
         )

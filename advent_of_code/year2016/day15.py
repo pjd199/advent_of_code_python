@@ -61,7 +61,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return self._run(self.discs + [Disc(11, 0)])
+        return self._run([*self.discs, Disc(11, 0)])
 
     def _run(self, discs: list[Disc]) -> int:
         """Run the simulation.

@@ -7,6 +7,7 @@ https://adventofcode.com/2020/day/10
 """
 from collections import Counter
 from functools import lru_cache
+from itertools import pairwise
 from pathlib import Path
 from sys import path
 
@@ -42,7 +43,7 @@ class Solver(SolverInterface):
         """
         self.prepare()
         ordered = sorted(self.adapters)
-        differences = Counter(b - a for a, b in zip(ordered, ordered[1:]))
+        differences = Counter(b - a for a, b in pairwise(ordered))
         return differences[1] * differences[3]
 
     def solve_part_two(self) -> int:
@@ -57,11 +58,10 @@ class Solver(SolverInterface):
         def possibilities(item: int) -> int:
             if item == 0:
                 return 1
-            else:
-                return sum(
-                    possibilities(x)
-                    for x in (a for a in range(item - 3, item) if a in self.adapters)
-                )
+            return sum(
+                possibilities(x)
+                for x in (a for a in range(item - 3, item) if a in self.adapters)
+            )
 
         return possibilities(max(self.adapters))
 

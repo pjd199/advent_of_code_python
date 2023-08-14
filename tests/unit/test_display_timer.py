@@ -3,7 +3,6 @@ from re import compile
 from time import sleep
 
 import pytest
-
 from advent_of_code.utils.display_timer import DisplayTimer
 
 

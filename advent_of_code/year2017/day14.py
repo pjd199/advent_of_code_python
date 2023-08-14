@@ -92,9 +92,11 @@ class Solver(SolverInterface):
         while queue:
             x, y = queue.popleft()
             group.add((x, y))
-            for move in [(x, y - 1), (x + 1, y), (x, y + 1), (x - 1, y)]:
-                if move in self.grid and move not in group:
-                    queue.append(move)
+            queue.extend(
+                move
+                for move in [(x, y - 1), (x + 1, y), (x, y + 1), (x - 1, y)]
+                if move in self.grid and move not in group
+            )
 
         return group
 

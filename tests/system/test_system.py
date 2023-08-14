@@ -1,16 +1,17 @@
 """System Tests."""
 from json import load as load_json
 from os import environ
+from pathlib import Path
 from threading import Thread
 from typing import Any
 
 import pytest
+from advent_of_code.app import app
+from advent_of_code.utils.solver_status import implementation_status
 from boto3 import client
 from requests import get, post
 from toml import load as load_toml
 
-from advent_of_code.app import app
-from advent_of_code.utils.solver_status import implementation_status
 from tests.conftest import check_json
 
 
@@ -122,7 +123,7 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
     Args:
         metafunc (pytest.Metafunc): the meta function
     """
-    with open("./tests/system/system_test.json") as file:
+    with Path("./tests/system/system_test.json").open() as file:
         if "test_case" in metafunc.fixturenames:
             cases = load_json(file)["tests"]
             ids = [
@@ -183,7 +184,9 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
 
     # make the request
     if test_case_data["request"]["method"] == "GET":
-        response = get(base_url + test_case_data["request"]["path"], verify=verify)
+        response = get(
+            base_url + test_case_data["request"]["path"], verify=verify, timeout=300
+        )
     elif (
         "body" in test_case_data["request"]
         and "content_type" in test_case_data["request"]
@@ -193,9 +196,12 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
             data=test_case_data["request"]["body"].encode(),
             headers={"Content-Type": test_case_data["request"]["content_type"]},
             verify=verify,
+            timeout=300,
         )
     else:
-        response = post(base_url + test_case_data["request"]["path"], verify=verify)
+        response = post(
+            base_url + test_case_data["request"]["path"], verify=verify, timeout=300
+        )
 
     # check the response code
     assert response.status_code == test_case_data["response"]["status"]

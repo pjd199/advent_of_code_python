@@ -99,7 +99,7 @@ class Solver(SolverInterface):
         op: dict[str, Callable[[int, int], int]] = {
             "*": lambda old, value: old * value,
             "+": lambda old, value: old + value,
-            "square": lambda old, value: old * old,
+            "square": lambda old, _: old * old,
         }
 
         # play the rounds
@@ -114,7 +114,7 @@ class Solver(SolverInterface):
                 monkey.items.clear()
 
         # find the product of the two top passing monkeys
-        return prod(sorted((x.inspections for x in monkeys))[-2:])
+        return prod(sorted(x.inspections for x in monkeys)[-2:])
 
 
 if __name__ == "__main__":  # pragma: no cover

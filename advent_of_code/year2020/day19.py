@@ -72,17 +72,16 @@ class Solver(SolverInterface):
             rule = rules[key]
             if rule == "a" or rule == "b":
                 return rule
-            elif key == "8" and modify_rules:
+            if key == "8" and modify_rules:
                 return f"({resolve('42')}+)"
-            elif key == "11" and modify_rules:
+            if key == "11" and modify_rules:
                 repititions = [
-                    f"{resolve('42')}{{{str(x)}}}{resolve('31')}{{{str(x)}}}"
+                    f"{resolve('42')}{{{x}}}{resolve('31')}{{{x}}}"
                     for x in range(1, 10)  # guestimate of 10 for max repititions
                 ]
                 return f"({'|'.join(repititions)})"
-            else:
-                content = ["|" if t == "|" else resolve(t) for t in rule.split(" ")]
-                return f"({''.join(content)})"
+            content = ["|" if t == "|" else resolve(t) for t in rule.split(" ")]
+            return f"({''.join(content)})"
 
         return sum(1 for message in self.messages if fullmatch(resolve("0"), message))
 

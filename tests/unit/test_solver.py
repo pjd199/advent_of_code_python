@@ -6,13 +6,14 @@ from re import compile
 from secrets import choice, randbelow
 from string import printable
 from subprocess import run
+from sys import executable
 
 import pytest
-
 from advent_of_code.utils.input_loader import load_file, load_puzzle_input_file
-from advent_of_code.utils.parser import ParseException
+from advent_of_code.utils.parser import LengthError, ParseError
 from advent_of_code.utils.solver_interface import SolverInterface
 from advent_of_code.utils.solver_status import implementation_status
+
 from tests.conftest import Expected, Part
 
 
@@ -52,9 +53,9 @@ def test_module_spec(puzzle: date, expected: Expected) -> None:
     assert issubclass(mod.Solver, SolverInterface)
 
     # check the metadata
-    assert mod.Solver.TITLE == expected[puzzle.year][puzzle.day]["title"]
-    assert mod.Solver.YEAR == expected[puzzle.year][puzzle.day]["year"]
-    assert mod.Solver.DAY == expected[puzzle.year][puzzle.day]["day"]
+    assert expected[puzzle.year][puzzle.day]["title"] == mod.Solver.TITLE
+    assert expected[puzzle.year][puzzle.day]["year"] == mod.Solver.YEAR
+    assert expected[puzzle.year][puzzle.day]["day"] == mod.Solver.DAY
 
 
 def test_load_test_file(puzzle: date) -> None:
@@ -68,9 +69,9 @@ def test_load_test_file(puzzle: date) -> None:
     puzzle_input = load_file(filename)
     assert puzzle_input is not None, f"Unable to load {filename}"
     assert len(puzzle_input) > 0, f"{filename} has no content"
-    assert puzzle_input[-1] != "", (
-        f"trailing blank lines should have been removed " f"from {filename} "
-    )
+    assert (
+        puzzle_input[-1] != ""
+    ), f"trailing blank lines should have been removed from {filename} "
 
 
 def test_init_solver(puzzle: date) -> None:
@@ -84,23 +85,23 @@ def test_init_solver(puzzle: date) -> None:
     mod.Solver(load_puzzle_input_file(puzzle.year, puzzle.day))
 
     # test with None input, which should cause a problem
-    with pytest.raises(ParseException):
+    with pytest.raises(LengthError):
         mod.Solver(None)
 
     # test with empty input, which should cause a problem
-    with pytest.raises(ParseException):
+    with pytest.raises(LengthError):
         mod.Solver([])
 
-    # test with single "" input, which should cause a problem
-    with pytest.raises(ParseException):
+    # # test with single "" input, which should cause a problem
+    with pytest.raises(ParseError):
         mod.Solver([""])
 
     # test with a single line of random input, which should cause a problem
-    with pytest.raises(ParseException):
+    with pytest.raises((ParseError, ValueError)):
         mod.Solver(["".join([choice(printable) for _ in range(randbelow(99) + 101)])])
 
     # test with multiple lines of random input, which should cause a problem
-    with pytest.raises(ParseException):
+    with pytest.raises((ParseError, ValueError)):
         mod.Solver(
             [
                 "".join([choice(printable) for _ in range(randbelow(99) + 101)])
@@ -151,7 +152,7 @@ def test_cli(puzzle: date, expected: Expected) -> None:
     """
     # simulate command line execution, expecting no errors
     result = run(
-        ["python", f"./advent_of_code/year{puzzle.year}/day{puzzle.day}.py"],
+        [executable, f"./advent_of_code/year{puzzle.year}/day{puzzle.day}.py"],
         capture_output=True,
         text=True,
     )

@@ -7,7 +7,7 @@ https://adventofcode.com/2016/day/24
 """
 from collections import deque
 from collections.abc import Callable
-from itertools import permutations
+from itertools import pairwise, permutations
 from pathlib import Path
 from sys import maxsize, path
 
@@ -72,7 +72,9 @@ class Solver(SolverInterface):
         # find distance between each node, using a breadth first search
         distances = {}
         for start in self.destinations:
-            queue = deque([(self.destinations[start], int(0))])
+            queue: deque[tuple[tuple[int, int], int]] = deque(
+                [(self.destinations[start], 0)]
+            )
             visited = {self.destinations[start]}
 
             while queue:
@@ -84,10 +86,8 @@ class Solver(SolverInterface):
                     distances[(start, char)] = steps
                     distances[(char, start)] = steps
                     if all(
-                        (
-                            (start, destination) in distances
-                            for destination in self.destinations
-                        )
+                        (start, destination) in distances
+                        for destination in self.destinations
                     ):
                         break
 
@@ -106,7 +106,7 @@ class Solver(SolverInterface):
         self.min_to_home = maxsize
         for route in permutations(self.destinations):
             if route[0] == "0":
-                path = sum(distances[(a, b)] for a, b in zip(route, route[1:]))
+                path = sum(distances[(a, b)] for a, b in pairwise(route))
                 self.min_to_end = min(self.min_to_end, path)
                 self.min_to_home = min(
                     self.min_to_home, path + distances[(route[-1], "0")]

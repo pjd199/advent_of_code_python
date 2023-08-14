@@ -1,6 +1,6 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
 from argparse import ArgumentParser
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from importlib import import_module
 from json import dump, load
 from pathlib import Path
@@ -53,7 +53,7 @@ class DailyHelper:
         open_webpage: bool = False,
         run_puzzle_cli: bool = False,
         timing: bool = False,
-    ):
+    ) -> None:
         """Initialise the helper for a specific day.
 
         Args:
@@ -112,7 +112,7 @@ class DailyHelper:
         self._download(page_url, self.html_path, ok_if_exists=True)
 
         # parse the html file
-        with open(self.html_path) as file:
+        with Path(self.html_path).open() as file:
             soup = BeautifulSoup(file, "html.parser")
 
         # find and save the part descriptions
@@ -138,9 +138,9 @@ class DailyHelper:
 
         # find and save the answers, if solved
         para = soup.find_all("p")
-        for x in para:
-            if x.text.startswith("Your puzzle answer was"):
-                self.answers.append(x.code.string)
+        self.answers = [
+            x.code.string for x in para if x.text.startswith("Your puzzle answer was")
+        ]
         self._save_response()
 
         # extract the excerpt
@@ -154,7 +154,7 @@ class DailyHelper:
         for d in desc:
             d.h2.extract()
 
-        with open(self.template_text_path) as file:
+        with Path(self.template_text_path).open() as file:
             template = "".join(file.readlines())
 
         self._save(
@@ -188,14 +188,14 @@ class DailyHelper:
 
         return 0
 
-    def _log(self, data: Any) -> None:
+    def _log(self, line: str) -> None:
         """Print line if in verbose mode.
 
         Args:
-            data (Any): the line to print
+            line (str): the line to print
         """
         if self.verbose:
-            print(str(data))
+            print(line)
 
     def _flush(self) -> None:
         """Flush cached files."""
@@ -231,7 +231,7 @@ class DailyHelper:
                 self._log(f"File {path} already exists")
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
-            with open(path, "w") as file:
+            with Path(path).open("w") as file:
                 if isinstance(data, str):
                     file.write(data)
                 else:
@@ -252,7 +252,7 @@ class DailyHelper:
                 data["part_two"] = self.answers[1]
 
         # open expected existing file
-        with open(self.expected_path) as file:
+        with Path(self.expected_path).open() as file:
             expected = load(file)
 
         if str(self.year) not in expected:
@@ -294,7 +294,7 @@ class DailyHelper:
         """Save metadata.json."""
         # open existing metadata file
         file_updated = False
-        with open(self.puzzle_metadata_path) as file:
+        with Path(self.puzzle_metadata_path).open() as file:
             metadata = load(file)
 
         if str(self.year) not in metadata:
@@ -332,9 +332,9 @@ class DailyHelper:
             len(self.answers) == 2 or (len(self.answers) == 1 and self.day == 25)
         ) and "completion_date" not in metadata[str(self.year)][str(self.day)]:
             self._log(f"Updating completion date {self.puzzle_metadata_path}")
-            metadata[str(self.year)][str(self.day)][
-                "completion_date"
-            ] = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ")
+            metadata[str(self.year)][str(self.day)]["completion_date"] = datetime.now(
+                tz=timezone.utc
+            ).strftime("%Y-%m-%dT%H:%M:%S%zZ")
             file_updated = True
 
         if self.timing:
@@ -397,7 +397,7 @@ class DailyHelper:
             if response.status_code == 200:
                 self._save(path, response.text)
             else:
-                raise RuntimeError(
+                raise RuntimeError(  # noqa: TRY003
                     f"Unable to download file: "
                     f"server status code {response.status_code}"
                 )
@@ -479,10 +479,10 @@ def main() -> int:
         session = args.session
     elif args.save_session:
         session = args.save_session
-        with open(session_path, "w") as file:
+        with Path(session_path).open("w") as file:
             file.write(session)
     elif session_path.is_file():
-        with open(session_path) as file:
+        with Path(session_path).open() as file:
             session = file.readline()
     else:
         session = None
@@ -500,9 +500,8 @@ def main() -> int:
             args.timing,
         ).run()
 
-    else:
-        print(f"Invalid date: year={args.year}, day={args.day}")
-        return 1
+    print(f"Invalid date: year={args.year}, day={args.day}")
+    return 1
 
 
 if __name__ == "__main__":

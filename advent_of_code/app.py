@@ -1,8 +1,8 @@
 """Flask Application for Advent of Code Solver RESTful API."""
-from datetime import datetime
+from datetime import datetime, timezone
+from functools import cache
 from importlib import import_module
 from json import dumps, load
-from os import environ
 from pathlib import Path
 from platform import (
     architecture,
@@ -12,20 +12,20 @@ from platform import (
     python_version,
 )
 from sys import path
-from threading import Thread
-from time import sleep
 from typing import Any
 
 from apig_wsgi import make_lambda_handler
 from flask import Flask, Response, make_response, request
-from requests import get
+from requests import RequestException, get
 from werkzeug.exceptions import HTTPException
 
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code.app_cli import app_cli
 from advent_of_code.utils.function_timer import function_timer
 from advent_of_code.utils.input_loader import load_multi_line_string
+from advent_of_code.utils.parser import ParseError
 from advent_of_code.utils.solver_status import (
     implementation_status,
     is_solver_implemented,
@@ -37,20 +37,36 @@ lambda_handler = make_lambda_handler(app)
 
 api_version = "2.0.0"
 
+Json = int | float | str | bool | dict[str, Any] | list[Any] | None
+
+Metadata = dict[str, dict[str, dict[str, int | str | bool | dict[str, int | str]]]]
+
+
+@cache
+def load_metadata_from_file() -> Metadata:
+    """Load JSON metadata from a file, caching the result.
+
+    Returns:
+        Metadata: the JSON
+    """
+    with Path("./puzzle_input/puzzle_metadata.json").open() as file:
+        result: Metadata = load(file)
+    return result
+
 
 def standard_response(
     description: str,
     status: int = 200,
-    results: Any = None,
-    links: Any = None,
+    results: Json = None,
+    links: Json = None,
 ) -> Response:
-    """Generates the standard body.
+    """Generate the standard body.
 
     Args:
         description (str): the descriptionn for this function
         status (int) : the HTTP status code, defaults to 200 (OK)
-        results (Any): the results of the api call
-        links (Any): the links associated with this api call
+        results (Json): the results of the api call
+        links (Json): the links associated with this api call
 
     Returns:
         Response: a response object
@@ -58,7 +74,9 @@ def standard_response(
     return make_response(
         dumps(
             {
-                "timestamp": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%S%zZ"),
+                "timestamp": datetime.now(tz=timezone.utc).strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ),
                 "self": request.base_url.strip("/"),
                 "api_version": api_version,
                 "description": description,
@@ -79,7 +97,7 @@ def standard_response(
 
 @app.route("/", methods=["GET"])
 def handle_root_path() -> Response:
-    """Handles the root path - / .
+    """Handle the root path - / .
 
     Returns:
         Response: the response object
@@ -131,7 +149,7 @@ def handle_root_path() -> Response:
 def handle_calendars_path(
     year_filter: int | None = None,
 ) -> Response:
-    """Handles the root path - /calendars .
+    """Handle the root path - /calendars .
 
     Args:
         year_filter (int | None): The year_filter element from the URL
@@ -177,7 +195,7 @@ def handle_calendars_path(
 def handle_puzzles_path(
     year_filter: (int | None) = None, day_filter: (int | None) = None
 ) -> Response:
-    """Handles the root path - /puzzles .
+    """Handle the root path - /puzzles .
 
     Args:
         year_filter (int | None): The year_filter element from the URL
@@ -186,8 +204,7 @@ def handle_puzzles_path(
     Returns:
         Response: the response object
     """
-    with open("./puzzle_input/puzzle_metadata.json") as file:
-        metadata = load(file)
+    metadata = load_metadata_from_file()
 
     results = [
         {
@@ -243,7 +260,7 @@ def handle_puzzles_path(
 @app.route("/answers/<int:year>/<int:day>", methods=["GET", "POST"])
 @app.route("/answers/<int:year>/<int:day>/", methods=["GET", "POST"])
 def handle_answers_path(year: int, day: int) -> Response:
-    """Handles the solve all parts path - eg /2015/1.
+    """Handle the solve all parts path - eg /2015/1.
 
     Args:
         year (int): the year from the path
@@ -268,38 +285,37 @@ def handle_answers_path(year: int, day: int) -> Response:
         )
 
     # load the input data
-    puzzle_input = []
-    try:
-        query_input = request.args.get("input")
-        if (
-            request.method == "POST"
-            and request.content_type == "text/plain"
-            and request.content_length
-            and request.content_length > 0
-        ):
-            puzzle_input = load_multi_line_string(request.get_data(as_text=True))
-        elif query_input is not None:
-            puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
-        else:
+    text = ""
+    if (
+        request.method == "POST"
+        and request.content_type == "text/plain"
+        and request.content_length
+        and 0 < request.content_length < 1048576
+    ):
+        text = request.get_data(as_text=True)
+    elif "input" in request.args:
+        try:
+            text = get(request.args["input"], timeout=60).text
+        except RequestException:
             return error_response(
-                "Unable to load the input data. Send fine as a text/plain POST, "
-                "or URL provided with the URL input paramerater.",
+                f"Unable to GET puzzle input from {request.args['input']}.",
             )
-    except Exception:
+    else:
         return error_response(
             "Unable to load the input data. Send fine as a text/plain POST, "
             "or URL provided with the URL input paramerater.",
         )
 
+    puzzle_input = load_multi_line_string(text)
     results: dict[str, Any] = {"year": year, "day": day}
     timing: dict[str, str | int] = {"units": "ms"}
 
-    # find the solver
+    # load the solver and parse
+    mod = import_module(f"advent_of_code.year{year}.day{day}")
     try:
-        mod = import_module(f"advent_of_code.year{year}.day{day}")
         solver, timing["parse"] = function_timer(mod.Solver, puzzle_input)
-    except Exception:
-        return error_response("Unable to parse puzzle input.")
+    except ParseError as e:
+        return error_response(f"{e}")
 
     # run the sovler to find the answers
     results["part_one"], timing["part_one"] = function_timer(
@@ -334,7 +350,7 @@ def handle_answers_path(year: int, day: int) -> Response:
 @app.route("/system", methods=["GET"])
 @app.route("/system/", methods=["GET"])
 def handle_system_path() -> Response:  # pragma: no cover
-    """Handles the system path - /system/ .
+    """Handle the system path - /system/ .
 
     Returns:
         Response: return system information
@@ -342,9 +358,6 @@ def handle_system_path() -> Response:  # pragma: no cover
     results = {
         "url": request.url,
         "host": request.host,
-        "headers": dict(request.headers.items()),
-        "query": request.args,
-        "method": request.environ["REQUEST_METHOD"],
         "platform": platform(),
         "machine": machine(),
         "architecture": architecture()[0],
@@ -353,24 +366,6 @@ def handle_system_path() -> Response:  # pragma: no cover
         "/main/license.md",
         "license": "MIT",
     }
-    try:
-        if "apig_wsgi.context" in request.environ:
-            results.update(
-                {
-                    "aws_function": request.environ["apig_wsgi.context"].function_name,
-                    "memory": request.environ["apig_wsgi.context"].memory_limit_in_mb,
-                }
-            )
-    except Exception as e:
-        results["apig_wsgi.context"] = str(e)
-    try:
-        if "apig_wsgi.full_event" in request.environ:
-            results["event"] = request.environ["apig_wsgi.full_event"]
-    except Exception as e:
-        results["apig_wsgi.full_event"] = str(e)
-
-    ##############################
-    # add total memory!!!
 
     return standard_response("System information.", 200, results)
 
@@ -392,83 +387,6 @@ def handle_exception(e: HTTPException) -> Response:
     )
 
 
-def main() -> None:  # pragma: no cover
-    """Called when run from the command line."""
-    # start the development server on the localhost
-    scheme = "https"
-    host = "127.0.0.1"
-    port = 5000
-    environ["FLASK_ENV"] = "development"
-    print(f"Starting {scheme} server on {host} at {port}")
-    flask_thread = Thread(
-        target=lambda: app.run(
-            host=host,
-            port=port,
-            use_reloader=False,
-            ssl_context="adhoc" if scheme == "https" else None,
-        )
-    )
-    flask_thread.daemon = True
-    flask_thread.start()
-
-    # allow the server time to start
-    sleep(1)
-
-    # print basic instructions
-    print("---")
-    print("Type 'exit' to shutdown server and exit")
-    print("---")
-    print("Available routes:")
-    print(" - /")
-    print(" - /calendars/{year}")
-    print(" - /puzzles/{year}")
-    print(" - /puzzles/{year}/{day}")
-    print(" - /answers/{year}/{day}?input={url_for_puzzle_input_file}")
-    print(" - /system")
-    print(" - /license")
-    print("eg - /answers/2015/25")
-    print("---")
-
-    # loop until Ctrl-C exits the loop
-    while True:
-        print()
-        url = input("Enter route path: ")
-        if url in ["exit", "quit", "exit()"]:
-            break
-
-        try:
-            print(f"Requesting {scheme}://{host}:{port}{url}")
-            # time the call to the development server
-            response, elapsed_time = function_timer(
-                get, f"{scheme}://{host}:{port}{url}", timeout=300, verify=False
-            )
-
-            # print the headers
-            print("Response Headers")
-            print("================")
-            print(dumps(dict(response.headers)))
-            print()
-
-            # pretty print the results
-            print("Response Body")
-            print("=============")
-            print(dumps(response.json(), indent=4))
-            print()
-
-            # print the elapsed time
-            print("Time")
-            print("====")
-            if elapsed_time == 0:
-                print("Round Trip Time: <1ms")
-            elif elapsed_time >= 1000:
-                print(f"Round Trip Time: {elapsed_time / 1000:.2f}s")
-            else:
-                print(f"Round Trip Time: {elapsed_time}ms")
-
-        except Exception as e:
-            print(e)
-
-
-if __name__ == "__main__":
+if __name__ == "__main__":  # pragma: no cover
     # run if file executed from the command line
-    main()  # pragma: no cover
+    app_cli()

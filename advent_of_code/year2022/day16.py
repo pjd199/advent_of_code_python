@@ -171,15 +171,14 @@ class Solver(SolverInterface):
             return max(
                 self._find_routes(
                     next_step,
-                    route + [next_step],
+                    [*route, next_step],
                     score,
                     time - self.distances[current][next_step],
                 )
                 for next_step in next_steps
             )
-        else:
-            self.paths[tuple(route)] = score
-            return score
+        self.paths[tuple(route)] = score
+        return score
 
 
 if __name__ == "__main__":  # pragma: no cover

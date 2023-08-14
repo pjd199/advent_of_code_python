@@ -5,6 +5,7 @@ Regolith Reservoir
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/14
 """
+from itertools import pairwise
 from pathlib import Path
 from sys import path
 
@@ -38,7 +39,7 @@ class Solver(SolverInterface):
         self.rocks = {
             (x, y)
             for line in self.input
-            for (x1, y1), (x2, y2) in zip(line, line[1:])
+            for (x1, y1), (x2, y2) in pairwise(line)
             for x in range(min(x1, x2), max(x1, x2) + 1)
             for y in range(min(y1, y2), max(y1, y2) + 1)
         }

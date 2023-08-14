@@ -10,10 +10,59 @@ from typing import TypeVar
 T = TypeVar("T")
 
 
-class ParseException(Exception):
+class ParseError(Exception):
     """Raised when there is a problem with parsing."""
 
-    pass
+    def __init__(
+        self, message: str, text: str | None = None, line: int | None = None
+    ) -> None:
+        """Error."""
+        super().__init__(
+            "Unable to parse"
+            + (f" '{text}'" if text is not None else "")
+            + (f" on line {line}" if line is not None else "")
+            + f": {message}"
+        )
+
+
+class LengthError(ParseError):
+    """Raised when there is a problem with parsing."""
+
+    def __init__(self) -> None:
+        """Error."""
+        super().__init__("Input length error")
+
+
+class SectionError(ParseError):
+    """Raised when there is a problem with parsing."""
+
+    def __init__(self) -> None:
+        """Error."""
+        super().__init__("Expected number of section does not number of sections found")
+
+
+class HeaderError(ParseError):
+    """Raised when there is a problem with parsing."""
+
+    def __init__(self, text: str, line: int) -> None:
+        """Error."""
+        super().__init__("Incorrect header", text, line)
+
+
+class NoMatchFoundError(ParseError):
+    """Raised when there is a problem with parsing."""
+
+    def __init__(self, text: str, line: int) -> None:
+        """Error."""
+        super().__init__("No match found", text, line)
+
+
+class MissingDelimiterError(ParseError):
+    """Raised when there is a problem with parsing."""
+
+    def __init__(self, text: str, line: int) -> None:
+        """Error."""
+        super().__init__("Missing delimiter", text, line)
 
 
 def int_processor(match: Match[str]) -> int:
@@ -88,6 +137,18 @@ def str_tuple_processor(match: Match[str]) -> tuple[str, ...]:
     return match.groups()
 
 
+def str_pair_processor(match: Match[str]) -> tuple[str, str]:
+    """Process match object as a str tuple.
+
+    Args:
+        match (Match[str]): the regular expression Match
+
+    Returns:
+        tuple[str, str]: the result
+    """
+    return (match[1], match[2])
+
+
 def dataclass_processor(
     cls: type[T],
 ) -> Callable[[Match[str]], T]:
@@ -102,17 +163,17 @@ def dataclass_processor(
     Raises:
         TypeError: if cls is not a DataClass (needed due to mypy typing bug)
     """
-    if is_dataclass(cls):
-        fields_dict = {f.name: f for f in fields(cls) if f.init}
-        return lambda m: cls(
-            **{
-                k: fields_dict[k].type(v)
-                for k, v in m.groupdict().items()
-                if k in fields_dict and v is not None
-            }
-        )
-    else:
-        raise TypeError("Unsupported type")  # pragma: no cover
+    if not is_dataclass(cls):
+        raise TypeError  # pragma: no cover
+
+    fields_dict = {f.name: f for f in fields(cls) if f.init}
+    return lambda m: cls(
+        **{
+            k: fields_dict[k].type(v)
+            for k, v in m.groupdict().items()
+            if k in fields_dict and v is not None
+        }
+    )
 
 
 def enum_processor(
@@ -131,8 +192,7 @@ def enum_processor(
     """
     if any(cls == Enum for cls in enum.__bases__):
         return lambda m: enum(m[0])  # type: ignore [call-arg]
-    else:
-        raise ValueError("argument must be subclass of Enum")
+    raise TypeError
 
 
 def enum_re(enumeration: type[Enum]) -> str:
@@ -164,22 +224,21 @@ def _validate_input_and_header(
         header (tuple[str, ...], optional): header to validate. Default ()
 
     Raises:
-        ParseException: raised on invalid puzzle_input
+        ParseError: raised on invalid puzzle_input
 
     Returns:
         int: the start line of the data, after the header
     """
     # validate puzzle_input
     if puzzle_input is None or not (min_length <= len(puzzle_input) <= max_length):
-        raise ParseException("Input is None or of incorrect length")
+        raise LengthError
 
     # validate the optional header
     start = 0
     while start < len(header):
         if not fullmatch(header[start], puzzle_input[start]):
-            raise ParseException(
-                f"Unable to parse '{puzzle_input[start]}' on line {start + 1}"
-            )
+            raise HeaderError(puzzle_input[start], start + 1)
+
         start += 1
 
     return start
@@ -202,7 +261,7 @@ def parse_lines(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseException: if the puzzle_input has the wrong length
+        ParseError: if the puzzle_input has the wrong length
 
     Returns:
         list[T]: the parsed output
@@ -212,18 +271,14 @@ def parse_lines(
     # parse the input
     output: list[T] = []
     for i, line in enumerate(puzzle_input[start:]):
-        try:
-            found = False
-            for pattern, match_processor in args:
-                if m := fullmatch(pattern, line):
-                    output.append(match_processor(m))
-                    found = True
-                    break
-            if not found:
-                raise ParseException("No match found")
-        except Exception as e:
-            raise ParseException(f"Unable to parse '{line}' on line {i + 1}: {e}")
-
+        found = False
+        for pattern, match_processor in args:
+            if m := fullmatch(pattern, line):
+                output.append(match_processor(m))
+                found = True
+                break
+        if not found:
+            raise NoMatchFoundError(line, i + 1)
     return output
 
 
@@ -271,7 +326,7 @@ def parse_tokens(
         header (tuple[str, ...]): header to validate. Defaults to ().
 
     Raises:
-        ParseException: if the input has an invalid pattern and delimiter combination
+        ParseError: if the input has an invalid pattern and delimiter combination
 
     Returns:
         list[list[T]]: the parsed output
@@ -283,10 +338,7 @@ def parse_tokens(
     for i, line in enumerate(puzzle_input[start:]):
         # check for at least one delimiter on the line
         if line == "" or (require_delimiter and not search(delimiter, line)):
-            raise ParseException(
-                f"Unable to parse '{line}' on line {i + 1}:"
-                f" Delimiter '{delimiter}' not found"
-            )
+            raise MissingDelimiterError(line, i + 1)
 
         # parse each token on the line
         output.append([])
@@ -295,18 +347,15 @@ def parse_tokens(
         else:
             tokens = [x for x in split(delimiter, line) if x != ""]
         for token in tokens:
-            try:
-                # search for a matching pattern
-                found = False
-                for pattern, match_processor in args:
-                    if m := fullmatch(pattern, token):
-                        output[-1].append(match_processor(m))
-                        found = True
-                        break
-                if not found:
-                    raise ParseException("No match found")
-            except Exception as e:
-                raise ParseException(f"Unable to parse '{line}' on line {i + 1}: {e}")
+            # search for a matching pattern
+            found = False
+            for pattern, match_processor in args:
+                if m := fullmatch(pattern, token):
+                    output[-1].append(match_processor(m))
+                    found = True
+                    break
+            if not found:
+                raise NoMatchFoundError(line, i + 1)
 
     return output
 
@@ -360,7 +409,7 @@ def parse_grid(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseException: if the puzzle_input has the wrong length
+        ParseError: if the puzzle_input has the wrong length
 
     Returns:
         dict[tuple[int, int], T]: the parsed output
@@ -370,20 +419,13 @@ def parse_grid(
     # parse the input
     output: dict[tuple[int, int], T] = {}
     for y, line in enumerate(puzzle_input[start:]):
-        if not line:
-            raise ParseException(f"Unable to parse '{line}' on line {y + 1}")
         for x, char in enumerate(line):
-            try:
-                if m := fullmatch(pattern, char):
-                    output[(x, y)] = match_processor(m)
-                else:
-                    raise ParseException(
-                        f"No match with {pattern} for "
-                        f"character '{char}' at position {x}"
-                    )
-            except Exception as e:
-                raise ParseException(f"Unable to parse '{line}' on line {y + 1}: {e}")
-
+            if m := fullmatch(pattern, char):
+                output[(x, y)] = match_processor(m)
+            else:
+                raise NoMatchFoundError(line, y + 1)
+    if not output:
+        raise NoMatchFoundError("", 1)
     return output
 
 
@@ -406,7 +448,7 @@ def split_sections(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseException: if the puzzle_input has incorrect length or number of sections
+        ParseError: if the puzzle_input has incorrect length or number of sections
 
     Returns:
         list[list[str]]: the parsed output
@@ -425,9 +467,7 @@ def split_sections(
             section.append(line)
     output.append(section)
 
-    if expected_sections < maxsize and len(output) != expected_sections:
-        raise ParseException(
-            f"Found {len(output)} sections, expected {expected_sections}"
-        )
+    if not output or (expected_sections < maxsize and len(output) != expected_sections):
+        raise LengthError
 
     return output

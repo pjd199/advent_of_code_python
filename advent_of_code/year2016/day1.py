@@ -17,19 +17,20 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass
+class _Instruction:
+    """Data class for the instructions."""
+
+    turn: str
+    distance: int
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
     YEAR = 2016
     DAY = 1
     TITLE = "No Time for a Taxicab"
-
-    @dataclass
-    class _Instruction:
-        """Data class for the instructions."""
-
-        turn: str
-        distance: int
 
     def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -41,7 +42,7 @@ class Solver(SolverInterface):
             puzzle_input,
             (
                 r"(?P<turn>[L|R])(?P<distance>[0-9]+)",
-                dataclass_processor(Solver._Instruction),
+                dataclass_processor(_Instruction),
             ),
             delimiter=", ",
         )
@@ -104,8 +105,7 @@ class Solver(SolverInterface):
                 if (x, y) in breadcrumbs:
                     i = maxsize
                     break
-                else:
-                    breadcrumbs.add((x, y))
+                breadcrumbs.add((x, y))
 
             i += 1
 

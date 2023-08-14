@@ -77,19 +77,18 @@ class Solver(SolverInterface):
                 + expression[end + 1 :],
                 addition_first,
             )
-        else:
-            tokens = expression.split(" ")
-            if addition_first:
-                while "+" in tokens:
-                    i = tokens.index("+")
-                    x = int(tokens[i - 1]) + int(tokens[i + 1])
-                    tokens = tokens[: i - 1] + [str(x)] + tokens[i + 2 :]
+        tokens = expression.split(" ")
+        if addition_first:
+            while "+" in tokens:
+                i = tokens.index("+")
+                x = int(tokens[i - 1]) + int(tokens[i + 1])
+                tokens = tokens[: i - 1] + [str(x)] + tokens[i + 2 :]
 
-            x = int(tokens[0])
-            for op, n in zip(tokens[1::2], tokens[2::2]):
-                f = add if op == "+" else mul
-                x = f(x, int(n))
-            return x
+        x = int(tokens[0])
+        for op, n in zip(tokens[1::2], tokens[2::2]):
+            f = add if op == "+" else mul
+            x = f(x, int(n))
+        return x
 
 
 if __name__ == "__main__":  # pragma: no cover

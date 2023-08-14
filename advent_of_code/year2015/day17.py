@@ -57,7 +57,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         # solve the puzzle
-        return [
+        return next(
             (k, len(list(g)))
             for k, g in groupby(
                 [
@@ -67,7 +67,7 @@ class Solver(SolverInterface):
                     if sum(c) == 150
                 ]
             )
-        ][0][1]
+        )[1]
 
 
 if __name__ == "__main__":  # pragma: no cover

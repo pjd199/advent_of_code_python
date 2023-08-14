@@ -71,7 +71,7 @@ class Solver(SolverInterface):
                 # python 3.9 introduced usedforsecurity=False for MD5 function,
                 # which raises a security issue for bandit - # nosec is used
                 # to ignore this, as there are no security issues here
-                md5((secret + str(i)).encode())  # nosec
+                md5((secret + str(i)).encode(), usedforsecurity=False)
                 .hexdigest()
                 .startswith(prefix)
             ):

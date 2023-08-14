@@ -77,7 +77,7 @@ def run(
     Returns:
         int: value of register after execution
     """
-    return list(run_iter(program, a, b, c, d))[0]
+    return next(iter(run_iter(program, a, b, c, d)))
 
 
 def run_iter(

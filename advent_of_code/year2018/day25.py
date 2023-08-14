@@ -8,6 +8,7 @@ https://adventofcode.com/2018/day/25
 from collections import deque
 from pathlib import Path
 from sys import path
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -62,16 +63,16 @@ class Solver(SolverInterface):
 
         return len(constellations)
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
 
         Returns:
-            int: but never can!
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -5,7 +5,7 @@ Knights of the Dinner Table
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/13
 """
-from itertools import chain, permutations
+from itertools import chain, pairwise, permutations
 from pathlib import Path
 from sys import path
 
@@ -100,7 +100,7 @@ class Solver(SolverInterface):
                 sum(
                     chain(
                         [pair_values[(perm[0], perm[-1])]],
-                        [pair_values[(x, y)] for x, y in zip(perm, perm[1:])],
+                        [pair_values[(x, y)] for x, y in pairwise(perm)],
                     )
                 )
                 for perm in permutations(names)

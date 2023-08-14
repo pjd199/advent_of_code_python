@@ -64,7 +64,7 @@ class Solver(SolverInterface):
     def _map_wires(self) -> None:
         """Prepare the wires."""
         if not self.wires_mapped:
-            self.wire_a, self.wire_b = [self._draw_wire(x) for x in self.input]
+            self.wire_a, self.wire_b = (self._draw_wire(x) for x in self.input)
             self.intersections = set(self.wire_a) & set(self.wire_b) - {(0, 0)}
             self.wires_mapped = True
 

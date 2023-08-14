@@ -95,29 +95,6 @@ class Solver(SolverInterface):
             + 1
         )
 
-    def _save(self) -> None:  # pragma: no cover
-        """Pretty print the node layout into a file (temp.txt)."""
-        nodes = {(node.x, node.y): node for node in self.input}
-        max_x = max((node.x for node in self.input))
-        max_y = max((node.y for node in self.input))
-
-        with open("temp.txt", "w") as file:
-            for y in range(max_y + 1):
-                line = []
-                for x in range(max_x + 1):
-                    if (x, y) == (max_x, 0):
-                        line.append(" G ")
-                    elif (x, y) == (0, 0):
-                        line.append("( )")
-                    elif nodes[(x, y)].used == 0:
-                        line.append(" _ ")
-                    elif nodes[(x, y)].size > 100:
-                        line.append(" # ")
-                    else:
-                        line.append(" . ")
-                line.append("\n")
-                file.write("".join(line))
-
 
 if __name__ == "__main__":  # pragma: no cover
     runner(Solver)

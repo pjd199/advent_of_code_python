@@ -55,14 +55,16 @@ class Solver(SolverInterface):
         # solve the puzzle
         return self._content_sum(self.content, ignore_red=True)
 
-    def _content_sum(self, obj: Any, ignore_red: bool) -> int:
+    def _content_sum(
+        self, obj: list[Any] | dict[str, Any] | int, ignore_red: bool
+    ) -> int:
         """Sum the content of obj.
 
         Resurcively add up all the number values in the arrays or dictionaries.
         If ignore_red is true, all dictionaries with a value "red" are ignored
 
         Args:
-            obj (Any): object to sum
+            obj (list[Any] | dict[str, Any] | int): object to sum
             ignore_red (bool): if True, ignore reds
 
         Returns:
@@ -70,14 +72,11 @@ class Solver(SolverInterface):
         """
         if isinstance(obj, int):
             return obj
-        elif isinstance(obj, list):
+        if isinstance(obj, list):
             return sum([self._content_sum(x, ignore_red) for x in obj])
-        elif isinstance(obj, dict) and (
-            (not ignore_red) or ("red" not in obj.values())
-        ):
+        if isinstance(obj, dict) and ((not ignore_red) or ("red" not in obj.values())):
             return sum([self._content_sum(x, ignore_red) for x in obj.values()])
-        else:
-            return 0
+        return 0
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -108,7 +108,7 @@ class Solver(SolverInterface):
             "borr": lambda r, i: r[i.a] | r[i.b],
             "bori": lambda r, i: r[i.a] | i.b,
             "setr": lambda r, i: r[i.a],
-            "seti": lambda r, i: i.a,
+            "seti": lambda _, i: i.a,
             "gtir": lambda r, i: 1 if i.a > r[i.b] else 0,
             "gtri": lambda r, i: 1 if r[i.a] > i.b else 0,
             "gtrr": lambda r, i: 1 if r[i.a] > r[i.b] else 0,

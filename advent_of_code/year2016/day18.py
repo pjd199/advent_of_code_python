@@ -63,7 +63,7 @@ class Solver(SolverInterface):
         for _ in range(rows):
             traps += row.count(True)
             row = [
-                left != right for left, right in zip([False] + row, row[1:] + [False])
+                left != right for left, right in zip([False, *row], row[1:] + [False])
             ]
         return (len(row) * rows) - traps
 

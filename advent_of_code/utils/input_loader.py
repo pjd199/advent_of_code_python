@@ -1,4 +1,5 @@
 """Load puzzle input form a file and strip the whitespace."""
+from pathlib import Path
 
 
 def load_puzzle_input_file(year: int | str, day: int | str) -> list[str]:
@@ -23,12 +24,11 @@ def load_file(filename: str) -> list[str]:
     Returns:
         list[str]: the lines of the file
     """
-    with open(filename) as file:
+    with Path(filename).open() as file:
         lines = file.readlines()
         while len(lines) and lines[-1].strip() == "":
             del lines[-1]
-        lines = [x.rstrip("\n") for x in lines]
-        return lines
+        return [x.rstrip("\n") for x in lines]
 
 
 def load_multi_line_string(content: str) -> list[str]:

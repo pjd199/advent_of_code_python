@@ -99,7 +99,7 @@ class Solver(SolverInterface):
         highest_frequency = -1
         highest_minute = -1
         guard = -1
-        for identifier in self.guards.keys():
+        for identifier in self.guards:
             minute, frequency = self.guards[identifier].most_common(1)[0]
             if frequency > highest_frequency:
                 highest_frequency = frequency

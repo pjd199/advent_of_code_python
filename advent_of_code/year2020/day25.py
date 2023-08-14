@@ -8,6 +8,7 @@ https://adventofcode.com/2020/day/25
 from collections.abc import Generator
 from pathlib import Path
 from sys import path
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -52,16 +53,16 @@ class Solver(SolverInterface):
         key = next(k for k in self.input if k != value)
         return next((v for i, v in enumerate(transform(key)) if i >= loop_size - 1))
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
 
         Returns:
-            int: but never does!
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

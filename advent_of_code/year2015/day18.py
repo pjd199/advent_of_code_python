@@ -93,8 +93,7 @@ class Solver(SolverInterface):
         total_on = len([n for n in neighbors if grid.get(n, ".") == "#"])
         if grid[(x, y)] == "#":
             return "#" if (total_on == 2) or (total_on == 3) else "."
-        else:
-            return "#" if total_on == 3 else "."
+        return "#" if total_on == 3 else "."
 
 
 if __name__ == "__main__":  # pragma: no cover

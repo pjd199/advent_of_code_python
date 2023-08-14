@@ -17,19 +17,20 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@unique
+class _Direction(Enum):
+    UP = "U"
+    DOWN = "D"
+    LEFT = "L"
+    RIGHT = "R"
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
     YEAR = 2016
     DAY = 2
     TITLE = "Bathroom Security"
-
-    @unique
-    class _Direction(Enum):
-        UP = "U"
-        DOWN = "D"
-        LEFT = "L"
-        RIGHT = "R"
 
     def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -39,7 +40,7 @@ class Solver(SolverInterface):
         """
         self.input = parse_tokens(
             puzzle_input,
-            (enum_re(Solver._Direction), enum_processor(Solver._Direction)),
+            (enum_re(_Direction), enum_processor(_Direction)),
         )
 
     def solve_part_one(self) -> str:
@@ -104,13 +105,13 @@ class Solver(SolverInterface):
         code = []
         for line in self.input:
             for direction in line:
-                if direction == Solver._Direction.UP and (x, y - 1) in grid:
+                if direction == _Direction.UP and (x, y - 1) in grid:
                     y -= 1
-                elif direction == Solver._Direction.DOWN and (x, y + 1) in grid:
+                elif direction == _Direction.DOWN and (x, y + 1) in grid:
                     y += 1
-                elif direction == Solver._Direction.LEFT and (x - 1, y) in grid:
+                elif direction == _Direction.LEFT and (x - 1, y) in grid:
                     x -= 1
-                elif direction == Solver._Direction.RIGHT and (x + 1, y) in grid:
+                elif direction == _Direction.RIGHT and (x + 1, y) in grid:
                     x += 1
             code.append(grid[(x, y)])
 

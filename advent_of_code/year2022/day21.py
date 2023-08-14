@@ -138,8 +138,8 @@ class Solver(SolverInterface):
             left = self._solve(exp.left, expressions)
             right = self._solve(exp.right, expressions)
             return operators[exp.operator](left, right)
-        else:
-            return int(exp)
+
+        return int(exp)
 
     def _route_to_human(self, current: str = "root") -> list[str]:
         """Itemise the route between root and humn.
@@ -153,12 +153,11 @@ class Solver(SolverInterface):
         exp = self.input[current]
         if current == "humn":
             return ["humn"]
-        elif isinstance(exp, Expression):
+        if isinstance(exp, Expression):
             left = self._route_to_human(exp.left)
             right = self._route_to_human(exp.right)
             return [current] + (left if "humn" in left else right)
-        else:
-            return []
+        return []
 
 
 if __name__ == "__main__":  # pragma: no cover

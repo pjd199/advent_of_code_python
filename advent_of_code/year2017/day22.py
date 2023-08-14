@@ -90,8 +90,8 @@ class Solver(SolverInterface):
 
         # place the current position in the centre of the grid (odd length sides)
         x, y = (
-            max(x1 for x1, _ in grid.keys()) // 2,
-            max(y1 for _, y1 in grid.keys()) // 2,
+            max(x1 for x1, _ in grid) // 2,
+            max(y1 for _, y1 in grid) // 2,
         )
 
         # run the simulation, counting the number of infections

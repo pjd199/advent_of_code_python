@@ -18,9 +18,9 @@ def runner(solver_class: type[SolverInterface]) -> None:
 
     with DisplayTimer("Solving part one: "):
         result, time = function_timer(solver.solve_part_one)
-    print(f"\rSolved part one: {result} " f"in {time / 1000:.2f}s")
+    print(f"\rSolved part one: {result} in {time / 1000:.2f}s")
 
     if solver_class.DAY != 25:
         with DisplayTimer("Solving part two: "):
             result, time = function_timer(solver.solve_part_two)
-        print(f"\rSolved part two: {result} " f"in {time / 1000:.2f}s")
+        print(f"\rSolved part two: {result} in {time / 1000:.2f}s")

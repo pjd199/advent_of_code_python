@@ -57,8 +57,7 @@ class Solver(SolverInterface):
         def sum_data(node: TreeNode) -> int:
             if node.children:
                 return sum(node.data) + sum(sum_data(x) for x in node.children)
-            else:
-                return sum(node.data)
+            return sum(node.data)
 
         return sum_data(self.root)
 
@@ -79,22 +78,17 @@ class Solver(SolverInterface):
                     for x in node.data
                     if 0 < x <= len(node.children)
                 )
-            else:
-                return sum(node.data)
+            return sum(node.data)
 
         return sum_data(self.root)
 
     def _read_node(self, itr: Iterator[int]) -> TreeNode:
-        node = TreeNode()
         children = next(itr)
         length = next(itr)
-        for _ in range(children):
-            node.children.append(self._read_node(itr))
-
-        for _ in range(length):
-            node.data.append(next(itr))
-
-        return node
+        return TreeNode(
+            [self._read_node(itr) for _ in range(children)],
+            [next(itr) for _ in range(length)],
+        )
 
 
 if __name__ == "__main__":  # pragma: no cover

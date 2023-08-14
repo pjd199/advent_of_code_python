@@ -17,8 +17,8 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     split_sections,
+    str_pair_processor,
     str_processor,
-    str_tuple_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -39,12 +39,9 @@ class Solver(SolverInterface):
         """
         sections = split_sections(puzzle_input, expected_sections=2)
         self.template = parse_single_line(sections[0], r"[A-Z]+", str_processor)
-        self.rules: dict[str, str] = {
-            k: v
-            for k, v in parse_lines(
-                sections[1], (r"([A-Z]+) -> ([A-Z]+)", str_tuple_processor)
-            )
-        }
+        self.rules: dict[str, str] = dict(
+            parse_lines(sections[1], (r"([A-Z]+) -> ([A-Z]+)", str_pair_processor))
+        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -87,7 +84,7 @@ class Solver(SolverInterface):
             counter.update(count(left, right))
 
         # return the result
-        most_common, *_, least_common = [i for _, i in counter.most_common()]
+        most_common, *_, least_common = (i for _, i in counter.most_common())
         return most_common - least_common
 
 

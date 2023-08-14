@@ -11,6 +11,7 @@ from itertools import combinations
 from pathlib import Path
 from re import findall, search
 from sys import path
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -89,7 +90,7 @@ class Solver(SolverInterface):
                 for door in doors:
                     next_robot = deepcopy(robot)
                     next_robot.input_ascii(f"{door}\n")
-                    queue.append((next_robot, path + [door]))
+                    queue.append((next_robot, [*path, door]))
                 # find the items to pick collect
                 match = search(r"Items here:\n(- .*\n)\n", response)
                 if match:
@@ -136,16 +137,16 @@ class Solver(SolverInterface):
 
         return result
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
 
         Returns:
-            int: but never does!
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -5,6 +5,7 @@ Sonar Sweep
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/1
 """
+from itertools import pairwise
 from pathlib import Path
 from sys import path
 
@@ -52,7 +53,7 @@ class Solver(SolverInterface):
             sum(self.input[i : i + window_size])
             for i in range(len(self.input) - window_size + 1)
         ]
-        return sum(1 for a, b in zip(windows, windows[1:]) if b > a)
+        return sum(1 for a, b in pairwise(windows) if b > a)
 
 
 if __name__ == "__main__":  # pragma: no cover

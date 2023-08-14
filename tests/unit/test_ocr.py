@@ -3,13 +3,14 @@
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 """
 from itertools import chain
+from re import escape
 
 import numpy as np
 import pytest
-
 from advent_of_code.utils.ocr import (
     ALPHABET_6,
     ALPHABET_10,
+    OcrError,
     ocr_coordinates,
     ocr_numpy,
     ocr_sequence,
@@ -84,6 +85,19 @@ def test_three_letters(test_input: str, expected: str) -> None:
         expected (str): the expected result
     """
     assert ocr_sequence(test_input.splitlines()) == expected
+
+
+def test_wrong_letters() -> None:
+    """Test that all the letters can be read."""
+    test_input = """foobar..foobar
+foobar..foobar
+foobar..foobar
+foobar..foobar
+foobar..foobar
+foobar..foobar"""
+
+    with pytest.raises(OcrError, match=escape(OcrError.INVALID)):
+        ocr_sequence(test_input.splitlines())
 
 
 @pytest.mark.parametrize(
@@ -445,9 +459,7 @@ def test_number_of_rows(rows: int) -> None:
     Args:
         rows (int): number of rows
     """
-    with pytest.raises(
-        ValueError, match=r"incorrect number of rows \(expected 6 or 10\)"
-    ):
+    with pytest.raises(OcrError, match=escape(OcrError.ROW)):
         ocr_sequence("\n".join("test" for _ in range(rows)))
 
 
@@ -462,9 +474,7 @@ def test_number_of_cols(rows: int, cols: int) -> None:
     array = [["." for _ in range(cols)] for row in range(rows)]
     array[-1].append(".")
 
-    with pytest.raises(
-        ValueError, match="all rows should have the same number of columns"
-    ):
+    with pytest.raises(OcrError, match=escape(OcrError.COL)):
         ocr_sequence(array)
 
 

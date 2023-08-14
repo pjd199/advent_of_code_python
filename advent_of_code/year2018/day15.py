@@ -92,7 +92,7 @@ class Solver(SolverInterface):
                 )
 
             # check for end of battle condition
-            if len({self.grid[y][x] for x, y in self.units.keys()}) == 1:
+            if len({self.grid[y][x] for x, y in self.units}) == 1:
                 break
 
             # select next unit
@@ -105,7 +105,7 @@ class Solver(SolverInterface):
             self._attack(x, y)
 
         # battle complete, return the vital stats
-        survivors = [self.grid[y][x] for x, y in self.units.keys()]
+        survivors = [self.grid[y][x] for x, y in self.units]
         return (
             completed_rounds * sum(self.units.values()),
             survivors[0],
@@ -132,7 +132,7 @@ class Solver(SolverInterface):
             paths = []
             squares_in_range = {
                 (adj_x, adj_y)
-                for x, y in self.units.keys()
+                for x, y in self.units
                 for adj_x, adj_y in _adjacent_values(x, y, ".", self.grid)
                 if self.grid[y][x] == enemy_type
             }
@@ -141,9 +141,9 @@ class Solver(SolverInterface):
                 for move_x, move_y in _adjacent_values(x, y, ".", self.grid):
                     if (move_x, move_y) not in visited:
                         visited.add((move_x, move_y))
-                        queue.append((move_x, move_y, path + [(move_x, move_y)]))
+                        queue.append((move_x, move_y, [*path, (move_x, move_y)]))
                         if (move_x, move_y) in squares_in_range:
-                            paths.append(path + [(move_x, move_y)])
+                            paths.append([*path, (move_x, move_y)])
                 if len(paths) > 2 and len(paths[0]) != len(paths[-1]):
                     # found shortest path with no tie break, so stop search early
                     break

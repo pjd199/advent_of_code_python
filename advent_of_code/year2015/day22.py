@@ -8,7 +8,6 @@ https://adventofcode.com/2015/day/22
 from enum import Enum, auto, unique
 from pathlib import Path
 from sys import maxsize, path
-from typing import Any
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -111,9 +110,14 @@ class Game:
         self.best_so_far = MinimumValue()
 
         self.turn = Turn.PLAYER
-        return self._next_turn()
+        return self.next_turn()
 
-    def _next_turn(self) -> int:
+    def next_turn(self) -> int:
+        """Take the turn.
+
+        Returns:
+            int: result fo this turn
+        """
         # have we already found a better result?
         if self.best_so_far.value <= self.spent:
             return maxsize
@@ -137,11 +141,10 @@ class Game:
 
         # take the turn
         if self.turn == Turn.PLAYER:
-            return self._player_turn()
-        else:
-            return self._boss_turn()
+            return self.player_turn()
+        return self.boss_turn()
 
-    def _player_turn(self) -> int:
+    def player_turn(self) -> int:
         """Player's turn to attack.
 
         Returns:
@@ -182,11 +185,11 @@ class Game:
             else:
                 child.depth += 1
                 child.turn = Turn.BOSS
-                least_spent = min(least_spent, child._next_turn())
+                least_spent = min(least_spent, child.next_turn())
         self.best_so_far.update(least_spent)
         return least_spent
 
-    def _boss_turn(self) -> int:
+    def boss_turn(self) -> int:
         """Boss's turn to attack.
 
         Returns:
@@ -197,13 +200,13 @@ class Game:
             return maxsize
         self.depth += 1
         self.turn = Turn.PLAYER
-        return self._next_turn()
+        return self.next_turn()
 
-    def spawn_child(self) -> Any:
+    def spawn_child(self) -> "Game":
         """Make a copy of the game.
 
         Returns:
-            Any: Return a copy of self
+            "Game": Return a copy of self
         """
         obj = type(self).__new__(self.__class__)
         obj.player_hp = self.player_hp

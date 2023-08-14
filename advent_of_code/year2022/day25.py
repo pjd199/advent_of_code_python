@@ -8,6 +8,7 @@ https://adventofcode.com/2022/day/25
 from itertools import count
 from pathlib import Path
 from sys import path
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -40,16 +41,16 @@ class Solver(SolverInterface):
         """
         return self._to_snafu(sum(self._to_decimal(x) for x in self.input))
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
 
         Returns:
-            int: But never does!
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
+        raise NotImplementedError
 
     def _to_decimal(self, snafu: str) -> int:
         """Convert a SNAFU string into a decimal int.
@@ -96,8 +97,7 @@ class Solver(SolverInterface):
             5: ("0", 1),
         }
         for digit in reversed(partial):
-            digit += carry
-            x, carry = encoder[digit]
+            x, carry = encoder[digit + carry]
             encoded.append(x)
 
         # handle the last carry

@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/21
 """
 from collections.abc import Generator
-from functools import lru_cache
+from functools import cache
 from itertools import cycle, product
 from pathlib import Path
 from sys import path
@@ -73,7 +73,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        @lru_cache(maxsize=None)
+        @cache
         def play(
             position1: int, score1: int, position2: int, score2: int
         ) -> tuple[int, int]:

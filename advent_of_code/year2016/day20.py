@@ -17,17 +17,18 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass(order=True)
+class _RangeData:
+    lower: int
+    upper: int
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
     YEAR = 2016
     DAY = 20
     TITLE = "Firewall Rules"
-
-    @dataclass(order=True)
-    class _RangeData:
-        lower: int
-        upper: int
 
     def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
@@ -37,7 +38,7 @@ class Solver(SolverInterface):
         """
         self.input = parse_lines(
             puzzle_input,
-            (r"(?P<lower>\d+)-(?P<upper>\d+)", dataclass_processor(Solver._RangeData)),
+            (r"(?P<lower>\d+)-(?P<upper>\d+)", dataclass_processor(_RangeData)),
         )
         self.blacklist: list[tuple[int, int]] = []
 

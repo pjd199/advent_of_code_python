@@ -105,7 +105,7 @@ class Solver(SolverInterface):
         ]
 
         # define location of the floor in the set of solid rock
-        solid = {(x, 0) for x in range(7)}
+        solid: set[tuple[int, int]] = {(x, 0) for x in range(7)}
 
         shape_index = 0
         wind_index = 0
@@ -135,10 +135,9 @@ class Solver(SolverInterface):
                     top = min(y for _, y in solid)
                     row = sum(1 << x for x in range(7) if (x, top) in solid)
                     values.append((shape_index, wind_index, row, top))
-
                     break
-                else:
-                    rock = moved_rock
+
+                rock = moved_rock
 
         return values
 

@@ -31,7 +31,7 @@ def stretch_digest(x: str) -> str:  # pragma: no cover
         str: the stretch digest
     """
     for _ in range(2017):
-        x = md5(x.encode()).hexdigest()  # nosec
+        x = md5(x.encode(), usedforsecurity=False).hexdigest()  # nosec
     return x
 
 
@@ -57,7 +57,8 @@ class Solver(SolverInterface):
             int: the answer
         """
         return self._find(
-            (md5(f"{self.input}{j}".encode()).hexdigest() for j in count()),  # nosec
+            md5(f"{self.input}{j}".encode(), usedforsecurity=False).hexdigest()
+            for j in count()
         )
 
     def solve_part_two(self) -> int:
@@ -67,7 +68,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         return self._find(
-            iter((stretch_digest(f"{self.input}{j}") for j in range(25000)))
+            iter(stretch_digest(f"{self.input}{j}") for j in range(25000))
         )
 
     def _find(self, iterator: Generator[str, None, None]) -> int:

@@ -87,10 +87,7 @@ class Solver(SolverInterface):
 
             if c == "+":
                 if direction in [UP, DOWN]:
-                    if self.input[moves[RIGHT](x, y)] == "-":
-                        direction = RIGHT
-                    else:
-                        direction = LEFT
+                    direction = RIGHT if self.input[moves[RIGHT](x, y)] == "-" else LEFT
                 elif self.input[moves[UP](x, y)] == "|":
                     direction = UP
                 else:

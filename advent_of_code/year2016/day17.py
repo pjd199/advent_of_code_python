@@ -58,7 +58,7 @@ class Solver(SolverInterface):
         if self.run:
             return
 
-        queue = deque([(int(0), int(0), str(""))])
+        queue = deque([(0, 0, "")])
 
         moves: dict[str, Callable[[int, int], tuple[int, int]]] = {
             "U": lambda x, y: (x, y - 1),
@@ -89,7 +89,9 @@ class Solver(SolverInterface):
                 if (
                     0 <= new_x < 4
                     and 0 <= new_y < 4
-                    and md5(f"{self.input}{path}".encode()).hexdigest()[i]  # nosec
+                    and md5(
+                        f"{self.input}{path}".encode(), usedforsecurity=False
+                    ).hexdigest()[i]
                     in "bcdef"
                 ):
                     queue.append((new_x, new_y, new_path))

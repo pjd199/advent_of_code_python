@@ -55,8 +55,7 @@ class Solver(SolverInterface):
             if total in seen:
                 result = total
                 break
-            else:
-                seen.add(total)
+            seen.add(total)
 
         return result
 

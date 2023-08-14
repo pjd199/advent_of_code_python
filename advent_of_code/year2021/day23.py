@@ -27,10 +27,6 @@ class Solver(SolverInterface):
     DAY = 23
     TITLE = "Amphipod"
 
-    room_map = {"A": 2, "B": 4, "C": 6, "D": 8}
-    room_indices = set(room_map.values())
-    move_costs = {"A": 1, "B": 10, "C": 100, "D": 1000}
-
     def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
@@ -43,6 +39,9 @@ class Solver(SolverInterface):
             r"[#. ABCD]",
             str_processor,
         )
+        self.room_map = {"A": 2, "B": 4, "C": 6, "D": 8}
+        self.room_indices = set(self.room_map.values())
+        self.move_costs = {"A": 1, "B": 10, "C": 100, "D": 1000}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -126,18 +125,10 @@ class Solver(SolverInterface):
                 else:
                     break
 
-    def _next_state(self, state: State) -> Generator[tuple[State, int], None, None]:
-        """Iterate over possible next spaces.
-
-        Args:
-            state (State): the initial state
-
-        Yields:
-            Generator[tuple[State, int], None, None]: Iterator of states
-        """
-        finished = False
+    def _room_to_room(self, state: State) -> list[tuple[State, int]]:
         # If we can move an item straight from one room to another,
         # this is the best possible next move
+        result = []
         for src_room, src_index in self.room_map.items():
             if self.amphipods_can_leave(state, src_room):
                 item = state[src_index][0]
@@ -155,44 +146,65 @@ class Solver(SolverInterface):
                     next_state = list(state)
                     next_state[src_index] = state[src_index][1:]
                     next_state[dest_index] = item + state[dest_index]
-                    yield tuple(next_state), cost
-                    finished = True
+                    result.append((tuple(next_state), cost))
+        return result
 
+    def _coridoor_to_room(self, state: State) -> list[tuple[State, int]]:
         # If we can move an from the coridoor into a room, then this
         # is the second best possible next move.
-        if not finished:
-            for src_index, item in enumerate(state):
-                if src_index not in self.room_indices and item in "ABCD":
-                    dest_index = self.room_map[item]
-                    if self.amphipods_can_enter(state, item) and self.route_is_clear(
-                        state, src_index, dest_index
-                    ):
-                        # move the item from the coridoor into the room
-                        cost = (
-                            abs(dest_index - src_index)  # across
-                            + (self.room_size - len(state[dest_index]))  # down
-                        ) * self.move_costs[item]
-                        next_state = list(state)
-                        next_state[src_index] = "."
-                        next_state[dest_index] = item + state[dest_index]
-                        yield tuple(next_state), cost
-                        finished = True
+        result = []
+        for src_index, item in enumerate(state):
+            if src_index not in self.room_indices and item in "ABCD":
+                dest_index = self.room_map[item]
+                if self.amphipods_can_enter(state, item) and self.route_is_clear(
+                    state, src_index, dest_index
+                ):
+                    # move the item from the coridoor into the room
+                    cost = (
+                        abs(dest_index - src_index)  # across
+                        + (self.room_size - len(state[dest_index]))  # down
+                    ) * self.move_costs[item]
+                    next_state = list(state)
+                    next_state[src_index] = "."
+                    next_state[dest_index] = item + state[dest_index]
+                    result.append((tuple(next_state), cost))
+        return result
 
+    def _other_moves(self, state: State) -> list[tuple[State, int]]:
         # If no other better move, yield the possible moves of items into
         # each different positions in the coridoor
-        if not finished:
-            for src_room, src_index in self.room_map.items():
-                if self.amphipods_can_leave(state, src_room):
-                    item = state[src_index][0]
-                    for dest_index in self.reachable_in_coridoor(state, src_index):
-                        cost = (
-                            (self.room_size - len(state[src_index]) + 1)  # up
-                            + abs(dest_index - src_index)  # across
-                        ) * self.move_costs[item]
-                        next_state = list(state)
-                        next_state[src_index] = state[src_index][1:]
-                        next_state[dest_index] = item
-                        yield tuple(next_state), cost
+        result = []
+        for src_room, src_index in self.room_map.items():
+            if self.amphipods_can_leave(state, src_room):
+                item = state[src_index][0]
+                for dest_index in self.reachable_in_coridoor(state, src_index):
+                    cost = (
+                        (self.room_size - len(state[src_index]) + 1)  # up
+                        + abs(dest_index - src_index)  # across
+                    ) * self.move_costs[item]
+                    next_state = list(state)
+                    next_state[src_index] = state[src_index][1:]
+                    next_state[dest_index] = item
+                    result.append((tuple(next_state), cost))
+
+        return result
+
+    def _next_state(self, state: State) -> list[tuple[State, int]]:
+        """Iterate over possible next spaces.
+
+        Args:
+            state (State): the initial state
+
+        Returns:
+            list[tuple[State, int]]: Iterator of states
+        """
+        if result := self._room_to_room(state):
+            return result
+
+        if result := self._coridoor_to_room(state):
+            return result
+
+        return self._other_moves(state)
 
     def _solve(self, input_grid: dict[tuple[int, int], str]) -> int:
         # create the inital state

@@ -44,14 +44,14 @@ class Item(ABC):
         """
 
 
-class Generator_Item(Item):
+class GeneratorItem(Item):
     """The generator item."""
 
-    def safe(self, others: list[Item]) -> bool:
+    def safe(self, _: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
         Args:
-            others (list[Item]): The other items
+            _ (list[Item]): The other items
 
         Returns:
             bool: True if safe, otherwise False
@@ -80,11 +80,8 @@ class Microchip(Item):
             bool: True if safe, otherwise False
         """
         return any(
-            [
-                isinstance(x, Generator_Item) and self.material == x.material
-                for x in others
-            ]
-        ) or all([isinstance(x, Microchip) for x in others])
+            isinstance(x, GeneratorItem) and self.material == x.material for x in others
+        ) or all(isinstance(x, Microchip) for x in others)
 
     def __repr__(self) -> str:
         """The string representation of this object.
@@ -95,7 +92,7 @@ class Microchip(Item):
         return f"{self.material}-compatible microchip"  # pragma: no cover
 
 
-class State(ABC):
+class State:
     """Represents a complete state in the simulation."""
 
     def __init__(self, elevator: int, floors: list[list[Item]], step: int) -> None:
@@ -165,7 +162,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (list[str]): The lines of the input file
         """
-        item_initializers = {"generator": Generator_Item, "microchip": Microchip}
+        item_initializers = {"generator": GeneratorItem, "microchip": Microchip}
         floors = parse_lines(
             puzzle_input,
             (
@@ -202,9 +199,9 @@ class Solver(SolverInterface):
         """
         floors = self.start_state.floors
         floors[0] += [
-            Generator_Item("elerium"),
+            GeneratorItem("elerium"),
             Microchip("elerium"),
-            Generator_Item("dilithium"),
+            GeneratorItem("dilithium"),
             Microchip("dilithium"),
         ]
 

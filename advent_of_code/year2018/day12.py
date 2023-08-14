@@ -15,8 +15,8 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     split_sections,
+    str_pair_processor,
     str_processor_group,
-    str_tuple_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -44,13 +44,12 @@ class Solver(SolverInterface):
         )
 
         # parse the rules
-        self.rules: dict[str, str] = {
-            key: value
-            for key, value in parse_lines(
+        self.rules: dict[str, str] = dict(
+            parse_lines(
                 rules_section,
-                (r"([\.#]+) => ([\.#])", str_tuple_processor),
+                (r"([\.#]+) => ([\.#])", str_pair_processor),
             )
-        }
+        )
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -93,10 +92,7 @@ class Solver(SolverInterface):
 
         if length <= limit:
             return sum(i - cycles for i, c in enumerate(current) if c == "#")
-        else:
-            return sum(
-                i + length - (2 * cycles) for i, c in enumerate(current) if c == "#"
-            )
+        return sum(i + length - (2 * cycles) for i, c in enumerate(current) if c == "#")
 
 
 if __name__ == "__main__":  # pragma: no cover

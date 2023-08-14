@@ -8,6 +8,7 @@ https://adventofcode.com/2021/day/25
 from copy import deepcopy
 from pathlib import Path
 from sys import path
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -72,15 +73,16 @@ class Solver(SolverInterface):
 
         return cycles
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
 
         Returns:
-            int: But can never do it!
+            NoReturn: This will never return normally
+
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

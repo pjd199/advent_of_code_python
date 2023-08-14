@@ -19,14 +19,15 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass
+class _Room:
+    encrypted_name: str
+    sector_id: int
+    checksum: str
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
-
-    @dataclass
-    class _Room:
-        encrypted_name: str
-        sector_id: int
-        checksum: str
 
     YEAR = 2016
     DAY = 4
@@ -44,10 +45,10 @@ class Solver(SolverInterface):
                 r"(?P<encrypted_name>[a-z\-]+)"
                 r"(?P<sector_id>[0-9]+)"
                 r"\[(?P<checksum>[a-z]{5})\]",
-                dataclass_processor(Solver._Room),
+                dataclass_processor(_Room),
             ),
         )
-        self.real_rooms: list[Solver._Room] = []
+        self.real_rooms: list[_Room] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

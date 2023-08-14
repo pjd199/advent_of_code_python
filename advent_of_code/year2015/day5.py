@@ -5,6 +5,7 @@ Doesn't He Have Intern-Elves For This?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/5
 """
+from itertools import pairwise
 from pathlib import Path
 from sys import path
 
@@ -45,7 +46,7 @@ class Solver(SolverInterface):
             vowels = len([1 for x in line if x in ("a", "e", "i", "o", "u")])
 
             # count the pairs
-            pairs = len([1 for x, y in zip(line, line[1:]) if x == y])
+            pairs = len([1 for x, y in pairwise(line) if x == y])
 
             # count the disallowed strings
             disallowed = len(
@@ -69,7 +70,7 @@ class Solver(SolverInterface):
         """
         count = 0
         for line in self.input:
-            pairs = len([1 for x, y in zip(line, line[1:]) if line.count(x + y) >= 2])
+            pairs = len([1 for x, y in pairwise(line) if line.count(x + y) >= 2])
             splits = len([1 for x, y in zip(line, line[2:]) if x == y])
             if pairs and splits:
                 count += 1

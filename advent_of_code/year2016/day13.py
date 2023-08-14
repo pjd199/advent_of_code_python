@@ -77,8 +77,8 @@ class Solver(SolverInterface):
             lambda x, y: (x - 1, y),
         ]
 
-        queue = deque([(int(1), int(1), int(0))])
-        visited = {(int(1), int(1))}
+        queue: deque[tuple[int, int, int]] = deque([(1, 1, 0)])
+        visited: set[tuple[int, int]] = {(1, 1)}
 
         self.within_50_steps = 0
         self.steps_to_target = 0

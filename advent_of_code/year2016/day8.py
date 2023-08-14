@@ -19,27 +19,31 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass
+class _Instruction:
+    """Abstract class for the instructions."""
+
+
+@dataclass
+class _Rect(_Instruction):
+    width: int
+    height: int
+
+
+@dataclass
+class _RotateRow(_Instruction):
+    row: int
+    right_shift: int
+
+
+@dataclass
+class _RotateColumn(_Instruction):
+    col: int
+    down_shift: int
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
-
-    @dataclass
-    class _Instruction:
-        """Abstract class for the instructions."""
-
-    @dataclass
-    class _Rect(_Instruction):
-        width: int
-        height: int
-
-    @dataclass
-    class _RotateRow(_Instruction):
-        row: int
-        right_shift: int
-
-    @dataclass
-    class _RotateColumn(_Instruction):
-        col: int
-        down_shift: int
 
     YEAR = 2016
     DAY = 8
@@ -51,19 +55,19 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (list[str]): The lines of the input file
         """
-        self.input = parse_lines(
+        self.input: list[_Instruction] = parse_lines(
             puzzle_input,
             (
                 r"rect (?P<width>\d+)x(?P<height>\d+)",
-                dataclass_processor(Solver._Rect),
+                dataclass_processor(_Rect),
             ),
             (
                 r"rotate row y=(?P<row>\d+) by (?P<right_shift>\d+)",
-                dataclass_processor(Solver._RotateRow),
+                dataclass_processor(_RotateRow),
             ),
             (
                 r"rotate column x=(?P<col>\d+) by (?P<down_shift>\d+)",
-                dataclass_processor(Solver._RotateColumn),
+                dataclass_processor(_RotateColumn),
             ),
         )
         self.grid: defaultdict[tuple[int, int], bool] = defaultdict(bool)
@@ -102,7 +106,7 @@ class Solver(SolverInterface):
             defaultdict[tuple[int, int], bool]: the results
         """
         for instruction in self.input:
-            if isinstance(instruction, Solver._Rect):
+            if isinstance(instruction, _Rect):
                 self.grid.update(
                     {
                         (x, y): True
@@ -110,7 +114,7 @@ class Solver(SolverInterface):
                         for y in range(instruction.height)
                     }
                 )
-            elif isinstance(instruction, Solver._RotateRow):
+            elif isinstance(instruction, _RotateRow):
                 self.grid.update(
                     {
                         (
@@ -120,7 +124,7 @@ class Solver(SolverInterface):
                         for x in range(self.number_of_columns)
                     }
                 )
-            elif isinstance(instruction, Solver._RotateColumn):
+            elif isinstance(instruction, _RotateColumn):
                 self.grid.update(
                     {
                         (

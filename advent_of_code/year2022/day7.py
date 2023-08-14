@@ -67,10 +67,10 @@ class Solver(SolverInterface):
         stack = [self.root]
         parse_lines(
             puzzle_input,
-            (r"\$ cd /", lambda m: None),
+            (r"\$ cd /", lambda _: None),
             (r"\$ cd ([a-z]+)", lambda m: stack.append(stack[-1].dirs[m[1]])),
-            (r"\$ cd \.\.", lambda m: stack.pop()),
-            (r"\$ ls", lambda m: None),
+            (r"\$ cd \.\.", lambda _: stack.pop()),
+            (r"\$ ls", lambda _: None),
             (r"dir ([a-z]+)", lambda m: stack[-1].dirs.update({m[1]: Dir()})),
             (r"(\d+) ([a-z\.]+)", lambda m: stack[-1].files.update({m[2]: int(m[1])})),
         )
@@ -83,7 +83,7 @@ class Solver(SolverInterface):
         """
         return sum(
             x.size()
-            for x in [self.root] + self.root.subdirectories()
+            for x in [self.root, *self.root.subdirectories()]
             if x.size() <= 100000
         )
 
@@ -98,7 +98,7 @@ class Solver(SolverInterface):
         return next(
             x.size()
             for x in sorted(
-                [self.root] + self.root.subdirectories(), key=lambda x: x.size()
+                [self.root, *self.root.subdirectories()], key=lambda x: x.size()
             )
             if x.size() > target
         )

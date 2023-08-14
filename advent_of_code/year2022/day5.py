@@ -82,8 +82,7 @@ class Solver(SolverInterface):
         stacks = deepcopy(self.stacks)
 
         for x in self.moves:
-            for _ in range(x.count):
-                stacks[x.move_to].append(stacks[x.move_from].pop())
+            stacks[x.move_to].extend(stacks[x.move_from].pop() for _ in range(x.count))
 
         return "".join([x[-1] for x in stacks.values()])
 

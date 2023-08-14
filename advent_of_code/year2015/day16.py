@@ -20,19 +20,6 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class Solver(SolverInterface):
     """Solver for the puzzle."""
 
-    UNKNOWN_SUE = {
-        "children": 3,
-        "cats": 7,
-        "samoyeds": 2,
-        "pomeranians": 3,
-        "akitas": 0,
-        "vizslas": 0,
-        "goldfish": 5,
-        "trees": 3,
-        "cars": 2,
-        "perfumes": 1,
-    }
-
     YEAR = 2015
     DAY = 16
     TITLE = "Aunt Sue"
@@ -61,6 +48,19 @@ class Solver(SolverInterface):
             )
         ]
 
+        self.unknown_sue = {
+            "children": 3,
+            "cats": 7,
+            "samoyeds": 2,
+            "pomeranians": 3,
+            "akitas": 0,
+            "vizslas": 0,
+            "goldfish": 5,
+            "trees": 3,
+            "cars": 2,
+            "perfumes": 1,
+        }
+
     @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -71,7 +71,7 @@ class Solver(SolverInterface):
         # solve part one
         result = -1
         for i, sue in enumerate(self.list_of_sues):
-            if all(int(v) == Solver.UNKNOWN_SUE[k] for k, v in sue.items()):
+            if all(int(v) == self.unknown_sue[k] for k, v in sue.items()):
                 result = i + 1
                 break
 
@@ -90,11 +90,11 @@ class Solver(SolverInterface):
             matches = []
             for k, v in sue.items():
                 if k == "cats" or k == "trees":
-                    matches.append(int(v) > Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) > self.unknown_sue[k])
                 elif k == "pomeranians" or k == "goldfish":
-                    matches.append(int(v) < Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) < self.unknown_sue[k])
                 else:
-                    matches.append(int(v) == Solver.UNKNOWN_SUE[k])
+                    matches.append(int(v) == self.unknown_sue[k])
             if all(matches):
                 result = i + 1
                 break

@@ -61,11 +61,9 @@ class Solver(SolverInterface):
 
         if self.number_of_elves < 3:
             return 1
-        else:
-            if self.number_of_elves > (2 * int(3**exponent)):
-                return (2 * self.number_of_elves) - int(3 ** (exponent + 1))
-            else:
-                return self.number_of_elves - int(3**exponent)
+        if self.number_of_elves > (2 * int(3**exponent)):
+            return (2 * self.number_of_elves) - int(3 ** (exponent + 1))
+        return self.number_of_elves - int(3**exponent)
 
 
 if __name__ == "__main__":  # pragma: no cover

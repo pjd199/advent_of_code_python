@@ -87,7 +87,7 @@ class Solver(SolverInterface):
                 if x == "end":
                     found += 1
                 else:
-                    queue.append(path + [x])
+                    queue.append([*path, x])
 
         return found
 

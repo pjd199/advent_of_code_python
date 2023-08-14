@@ -26,13 +26,13 @@ class _Point:
     y: int
     z: int
 
-    def __init__(self, text: str):
+    def __init__(self, text: str) -> None:
         """Initialise the Point from a string.
 
         Args:
             text (str): the comma delimiter string
         """
-        self.x, self.y, self.z = [int(a) for a in text.split(",")]
+        self.x, self.y, self.z = (int(a) for a in text.split(","))
 
     def dist(self) -> int:
         """Calculates 3D Manhattan distance from (0,0,0).

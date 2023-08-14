@@ -96,7 +96,7 @@ class Solver(SolverInterface):
             "borr": lambda r, i: r[i.a] | r[i.b],
             "bori": lambda r, i: r[i.a] | i.b,
             "setr": lambda r, i: r[i.a],
-            "seti": lambda r, i: i.a,
+            "seti": lambda _, i: i.a,
             "gtir": lambda r, i: 1 if i.a > r[i.b] else 0,
             "gtri": lambda r, i: 1 if r[i.a] > i.b else 0,
             "gtrr": lambda r, i: 1 if r[i.a] > r[i.b] else 0,
@@ -142,7 +142,7 @@ class Solver(SolverInterface):
             for k, v in self.possibilities.items():
                 if len(v) == 1:
                     search = True
-                    known[k] = list(v)[0]
+                    known[k] = next(iter(v))
                     for p in self.possibilities.values():
                         if known[k] in p:
                             p.remove(known[k])
@@ -159,7 +159,7 @@ class Solver(SolverInterface):
     def _find_possibilities(self) -> None:
         """Find all the possible mappings between opcode numbers and strings."""
         for sample in self.samples:
-            for opcode in self.actions.keys():
+            for opcode in self.actions:
                 outcome = list(sample.before)
                 outcome[sample.instruction.c] = self.actions[opcode](
                     sample.before, sample.instruction

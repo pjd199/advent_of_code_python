@@ -88,8 +88,7 @@ class Solver(SolverInterface):
                 self.loop_length = cycle - seen[tuple(banks)]
                 self.solved = True
                 break
-            else:
-                seen[tuple(banks)] = cycle
+            seen[tuple(banks)] = cycle
 
 
 if __name__ == "__main__":  # pragma: no cover

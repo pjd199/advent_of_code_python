@@ -85,7 +85,9 @@ class Solver(SolverInterface):
             # python 3.9 introduced usedforsecurity=False for MD5 function,
             # which raises a security issue for bandit - # nosec is used
             # to ignore this, as there are no security issues here
-            digest = md5((self.input + str(i)).encode()).hexdigest()  # nosec
+            digest = md5(
+                (self.input + str(i)).encode(), usedforsecurity=False
+            ).hexdigest()
 
             if digest.startswith("00000"):
                 self.cache[i] = digest

@@ -31,7 +31,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (list[str]): The lines of the input file
         """
-        self.input = parse_lines(puzzle_input, (r".*", int_processor))
+        self.input = parse_lines(puzzle_input, (r"[0-9]+", int_processor))
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

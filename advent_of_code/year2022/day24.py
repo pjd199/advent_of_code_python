@@ -7,6 +7,7 @@ https://adventofcode.com/2022/day/24
 """
 from collections import deque
 from collections.abc import Generator
+from itertools import pairwise
 from pathlib import Path
 from sys import path
 
@@ -94,7 +95,7 @@ class Solver(SolverInterface):
         states: list[frozenset[tuple[int, int]]] = []
 
         result = 0
-        for (x1, y1), (x2, y2) in zip(route, route[1:]):
+        for (x1, y1), (x2, y2) in pairwise(route):
             # perform a breadth first search from between the two points
             queue = deque([(x1, y1, result)])
             visited = set(queue)

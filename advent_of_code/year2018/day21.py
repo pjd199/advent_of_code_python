@@ -106,7 +106,7 @@ class Solver(SolverInterface):
                 r[3] &= 16777215
                 r[3] *= 65899
                 r[3] &= 16777215
-                if 256 > r[2]:
+                if r[2] < 256:
                     if part_one:
                         result = r[3]
                         complete = True

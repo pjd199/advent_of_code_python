@@ -84,9 +84,7 @@ class Solver(SolverInterface):
         while queue:
             next_number = queue.popleft()
             group.add(next_number)
-            for x in self.input[next_number]:
-                if x not in group:
-                    queue.append(x)
+            queue.extend(x for x in self.input[next_number] if x not in group)
 
         return group
 

@@ -82,8 +82,8 @@ class Solver(SolverInterface):
         grid = deepcopy(self.input)
         grid[spring] = "+"
 
-        min_y = min(y for x, y in grid.keys() if grid[(x, y)] == "#")
-        max_y = max(y for x, y in grid.keys() if grid[(x, y)] == "#")
+        min_y = min(y for x, y in grid if grid[(x, y)] == "#")
+        max_y = max(y for x, y in grid if grid[(x, y)] == "#")
 
         # expand the flow of water, breadth first search style
         flows: deque[tuple[int, int]] = deque()
