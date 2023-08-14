@@ -146,7 +146,15 @@ jobs:
           name: sam-build
           path: .aws-sam
           retention-days: 1
-  
+
+      - name: Save working directory
+        uses: actions/upload-artifact@v3
+        with:
+          name: sam-build
+          path: .
+          retention-days: 1
+
+
       - name: Save container image
         uses: ishworkh/container-image-artifact-upload@v1.0.0
         with:
