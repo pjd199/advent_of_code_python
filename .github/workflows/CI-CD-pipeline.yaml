@@ -189,7 +189,7 @@ jobs:
       - name: Restore container image
         uses: ishworkh/container-image-artifact-upload@v1.0.0
         with:
-          image: AdventOfCodeFunction
+          image: adventofcodefunction:AdventOfCodeFunction
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v2
