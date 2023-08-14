@@ -20,6 +20,7 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     parse_tokens,
+    split_sections,
     str_processor,
     str_processor_group,
     str_tuple_processor,
@@ -359,3 +360,29 @@ def test_parse_grid() -> None:
     # test with too long
     with pytest.raises(ParseError):
         parse_grid(puzzle_input, r"[0-9]", int_processor, max_length=1)
+
+
+def test_split_sections() -> None:
+    """Unit test for parse_lines."""
+    # test with simple input
+    assert len(split_sections(["abc", "", "def"])) == 2
+
+    # test with different section break
+    assert (
+        len(split_sections(["abc", "1", "def", "2", "ghi"], section_break=r"[0-9]"))
+        == 3
+    )
+
+    # test for correct expected sections
+    assert len(split_sections(["abc", "", "def"], expected_sections=2)) == 2
+
+    # test for incorrect expected sections
+    with pytest.raises(LengthError):
+        split_sections(["abc", "", "def"], expected_sections=3)
+
+    # test for single section
+    assert len(split_sections(["abc", "def"])) == 1
+
+    # test with empty input
+    with pytest.raises(LengthError):
+        split_sections([])
