@@ -111,7 +111,7 @@ jobs:
 
   build-and-deploy:
     name: Deploy to AWS Lambda
-    needs: [unit-test, check, coverage, aws-sam-build]
+    needs: [unit-test, check]
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
