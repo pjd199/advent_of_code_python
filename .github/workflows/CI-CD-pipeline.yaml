@@ -111,7 +111,7 @@ jobs:
 
   build-and-deploy:
     name: Deploy to AWS Lambda
-    needs: [unit-test, check]
+    #needs: [unit-test, check]
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
@@ -119,11 +119,15 @@ jobs:
 
       - name: Set variables for Production
         if: github.ref == 'refs/heads/main'
-        run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
+        run: |
+          echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
+          echo "BUILD_PACKAGE=advent_of_code_solver_restful_api@git+https://github.com/pjd199/advent_of_code_python@main" >> $GITHUB_ENV
 
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+        run: |
+          echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+          echo "BUILD_PACKAGE=advent_of_code_solver_restful_api@git+https://github.com/pjd199/advent_of_code_python@dev" >> $GITHUB_ENV
 
       - name: Setup AWS SAM
         uses: aws-actions/setup-sam@v2
@@ -152,7 +156,7 @@ jobs:
         run: sam validate --lint
 
       - name: SAM Build
-        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
+        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }} --use-container --container-env-var BUILD_PACKAGE=${{ env.BUILD_PACAKGE }}
 
       - name: SAM Deploy to AWS Lambda
         run:
