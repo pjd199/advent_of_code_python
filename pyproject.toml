@@ -3,7 +3,9 @@ name = "advent_of_code_solver_restful_api"
 version = "2.0.0"
 authors = [{ name = "Pete Dibdin" }]
 description = "Advent of Code Solver RESTful API"
+keywords = ["Advent of Code", "Advent", "REST", "API", "Python", "Advent", "AWS", "Lambda"]
 readme = "README.md"
+license = { file = "license.md" }
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -27,8 +29,11 @@ dependencies = [
 "Homepage" = "https://github.com/pjd199/advent_of_code_python"
 
 [build-system]
-requires = ["setuptools>=61.0"]
+requires = ["setuptools","setuptools-scm"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["advent_of_code"]
 
 [tool.ruff]
 select = [
