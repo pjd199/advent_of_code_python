@@ -21,8 +21,7 @@ RUN apt-get update && \
 
 # Install awslambdaric and the project
 ARG BUILD_PACKAGE
-RUN pip install --target ${FUNCTION_DIR} awslambdaric
-RUN pip install -e --target ${FUNCTION_DIR} ${BUILD_PACKAGE}
+RUN pip install --target ${FUNCTION_DIR} awslambdaric ${BUILD_PACKAGE}
 
 # Add the project files and install dependancies
 #COPY . ${FUNCTION_DIR}
@@ -39,7 +38,7 @@ ARG FUNCTION_DIR
 WORKDIR ${FUNCTION_DIR}
 
 # Copy in the built dependencies
-# COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
+COPY --from=build-image ${FUNCTION_DIR} ${FUNCTION_DIR}
 
 # Set entry point and lambda handler
 ENTRYPOINT [ "/usr/local/bin/python", "-m", "awslambdaric" ]
