@@ -22,7 +22,6 @@ from werkzeug.exceptions import HTTPException
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
-from advent_of_code.app_cli import app_cli
 from advent_of_code.utils.function_timer import function_timer
 from advent_of_code.utils.input_loader import load_multi_line_string
 from advent_of_code.utils.parser import ParseError
@@ -385,8 +384,3 @@ def handle_exception(e: HTTPException) -> Response:
         e.code if e.code is not None else 500,
         f"{e.name}",
     )
-
-
-if __name__ == "__main__":  # pragma: no cover
-    # run if file executed from the command line
-    app_cli()

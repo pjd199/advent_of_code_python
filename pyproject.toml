@@ -1,9 +1,18 @@
 [project]
 name = "advent_of_code_solver_restful_api"
-version = "2.0.0"
+#version = "2.0.0"
 authors = [{ name = "Pete Dibdin" }]
 description = "Advent of Code Solver RESTful API"
-keywords = ["Advent of Code", "Advent", "REST", "API", "Python", "Advent", "AWS", "Lambda"]
+keywords = [
+    "Advent of Code",
+    "Advent",
+    "REST",
+    "API",
+    "Python",
+    "Advent",
+    "AWS",
+    "Lambda",
+]
 readme = "README.md"
 license = { file = "license.md" }
 requires-python = ">=3.10"
@@ -24,16 +33,19 @@ dependencies = [
     "numpy==1.25.1",
     "requests==2.31.0",
 ]
+dynamic = ["version"]
 
 [project.urls]
 "Homepage" = "https://github.com/pjd199/advent_of_code_python"
 
 [build-system]
-requires = ["setuptools","setuptools-scm"]
+requires = ["setuptools", "setuptools-scm"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["advent_of_code"]
+
+[tool.setuptools_scm]
 
 [tool.ruff]
 select = [
@@ -76,7 +88,6 @@ ignore = [
     "B905",   # `zip()` without an explicit `strict=` parameter
     "ANN101", # Missing type annotation for `self` in method
 ]
-
 fixable = ["ALL"]
 src = ["advent_of_code", "tests"]
 
@@ -94,10 +105,9 @@ src = ["advent_of_code", "tests"]
 "display_timer.py" = [
     "T201", # print found
 ]
-"app_cli.py" = [
+"development_server.py" = [
     "T201", # print found
 ]
-
 
 [tool.ruff.pydocstyle]
 convention = "google"

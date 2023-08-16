@@ -15,7 +15,7 @@ from advent_of_code import app
 from advent_of_code.utils.function_timer import function_timer
 
 
-def app_cli() -> None:  # pragma: no cover
+def main() -> None:  # pragma: no cover
     """Run the command line interface."""
     # start the development server on the localhost
     scheme = "https"
@@ -94,4 +94,4 @@ def app_cli() -> None:  # pragma: no cover
 
 if __name__ == "__main__":
     # run if file executed from the command line
-    app_cli()  # pragma: no cover
+    main()  # pragma: no cover
