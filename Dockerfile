@@ -21,7 +21,8 @@ RUN apt-get update && \
 
 # Install awslambdaric and the project
 ARG BUILD_PACKAGE
-RUN pip install --target ${FUNCTION_DIR} awslambdaric ${BUILD_PACKAGE}
+RUN pip install --target ${FUNCTION_DIR} awslambdaric
+RUN pip install --target ${FUNCTION_DIR} ${BUILD_PACKAGE}
 
 # Add the project files and install dependancies
 #COPY . ${FUNCTION_DIR}
