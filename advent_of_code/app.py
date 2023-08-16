@@ -48,7 +48,7 @@ def load_metadata_from_file() -> Metadata:
     Returns:
         Metadata: the JSON
     """
-    with Path("./puzzle_input/puzzle_metadata.json").open() as file:
+    with Path("./advent_of_code/puzzle_metadata.json").open() as file:
         result: Metadata = load(file)
     return result
 
