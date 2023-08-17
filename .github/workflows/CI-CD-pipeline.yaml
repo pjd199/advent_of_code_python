@@ -111,7 +111,7 @@ jobs:
 
   build-and-deploy:
     name: Deploy to AWS Lambda
-    #needs: [unit-test, check]
+    needs: [unit-test, check]
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
@@ -121,13 +121,13 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: |
           echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
-          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver_restful_api@git+https://github.com/pjd199/advent_of_code_python@main\n$(cat Dockerfile)" > Dockerfile
+          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver@git+https://github.com/pjd199/advent_of_code_python@main\n$(cat Dockerfile)" > Dockerfile
 
       - name: Set variables for Development
         if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
         run: |
           echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver_restful_api@git+https://github.com/pjd199/advent_of_code_python@dev\n$(cat Dockerfile)" > Dockerfile
+          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver@git+https://github.com/pjd199/advent_of_code_python@dev\n$(cat Dockerfile)" > Dockerfile
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
