@@ -17,11 +17,12 @@ concurrency:
 
 env:
   PYTHON_VERSION: 3.11
+  RUNS_ON: ubuntu-latest
 
 jobs:
   check:
     name: Static checks
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
 
     steps:
       - name: Check out Respository
@@ -47,7 +48,7 @@ jobs:
 
   unit-test:
     name: Unit & Integration Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     strategy:
       fail-fast: false
       matrix:
@@ -80,7 +81,7 @@ jobs:
   coverage:
     name: Coverage Check
     needs: unit-test
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -114,7 +115,7 @@ jobs:
   build-and-deploy:
     name: Deploy to AWS Lambda
     needs: [unit-test, check]
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -147,7 +148,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: SAM Validate
         run: sam validate --lint
@@ -163,7 +164,7 @@ jobs:
   system-test:
     name: System Testing
     needs: build-and-deploy
-    runs-on: ubuntu-latest
+    runs-on: ${{ env.RUNS_ON }}
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -179,7 +180,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Install dependancies
         run: |

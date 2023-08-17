@@ -35,7 +35,7 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - name: Install dependencies
         run: |
@@ -43,7 +43,7 @@ jobs:
           pip install -r requirements_CI_CD_test.txt
 
       - name: Run pytest
-        run: pytest -k "not test_local and not test_main" --cov --clean-durations --store-durations -n auto
+        run: pytest ./tests/unit ./tests/integration --cov --clean-durations --store-durations -n auto
 
       - name: Commit .test_duration file to respository      
         uses: stefanzweifel/git-auto-commit-action@v4
