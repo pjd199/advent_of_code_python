@@ -85,7 +85,7 @@ class DailyHelper:
         self.part_two_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_two.md")
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
         self.expected_path = Path("./tests/expected.json")
-        self.puzzle_metadata_path = Path("./puzzle_input/puzzle_metadata.json")
+        self.puzzle_metadata_path = Path("./advent_of_code/puzzle_metadata.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
         self.solver_module_path = Path(f"./advent_of_code/year{year}/day{day}.py")
         self.solver_init_path = Path(f"./advent_of_code/year{year}/__init__.py")
