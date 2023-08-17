@@ -41,7 +41,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        return len(self.part_one_seq)
+        return len(self._run(self.puzzle_input, 40))
 
     @cache_result
     def solve_part_two(self) -> int:
