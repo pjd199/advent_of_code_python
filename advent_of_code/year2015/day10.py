@@ -34,8 +34,6 @@ class Solver(SolverInterface):
         """
         self.puzzle_input = parse_single_line(puzzle_input, r"\d+", str_processor)
 
-        self.part_one_seq = ""
-
     @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -43,7 +41,6 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        self.part_one_seq = self._run(self.puzzle_input, 40)
         return len(self.part_one_seq)
 
     @cache_result
@@ -53,9 +50,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        self.solve_part_one()
-
-        return len(self._run(self.part_one_seq, 10))
+        return len(self._run(self._run(self.puzzle_input, 40), 10))
 
     def _run(self, seq: str, cycles: int) -> str:
         """Run the solution.
