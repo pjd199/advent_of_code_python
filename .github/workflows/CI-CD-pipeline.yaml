@@ -15,6 +15,9 @@ concurrency:
   group: CICD${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: "3.11"
+
 jobs:
   check:
     name: Static checks
@@ -27,7 +30,7 @@ jobs:
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: $PYTHON_VERSION
           cache: "pip"
 
       - name: Install dependencies
@@ -37,8 +40,7 @@ jobs:
         with:
           path: ~/.cache/pre-commit
           key:
-            pre-commit-${{ env.pythonLocation }}-${{
-            hashFiles('.pre-commit-config.yaml') }}
+            pre-commit-${{ env.pythonLocation }}-$PYTHON_VERSION-${{hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run pre-commit on all files
         run: pre-commit run --all-files
@@ -57,7 +59,7 @@ jobs:
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: $PYTHON_VERSION
           cache: "pip"
 
       - name: Install dependancies
@@ -86,7 +88,7 @@ jobs:
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: $PYTHON_VERSION
           cache: "pip"
 
       - name: Install dependancies
@@ -169,7 +171,7 @@ jobs:
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.11"
+          python-version: $PYTHON_VERSION
           cache: "pip"
 
       - name: Configure AWS credentials
