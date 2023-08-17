@@ -17,12 +17,11 @@ concurrency:
 
 env:
   PYTHON_VERSION: 3.11
-  RUNS_ON: ubuntu-latest
 
 jobs:
   check:
     name: Static checks
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: ubuntu-latest
 
     steps:
       - name: Check out Respository
@@ -48,7 +47,7 @@ jobs:
 
   unit-test:
     name: Unit & Integration Test
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -81,7 +80,7 @@ jobs:
   coverage:
     name: Coverage Check
     needs: unit-test
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -115,7 +114,7 @@ jobs:
   build-and-deploy:
     name: Deploy to AWS Lambda
     needs: [unit-test, check]
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
@@ -164,7 +163,7 @@ jobs:
   system-test:
     name: System Testing
     needs: build-and-deploy
-    runs-on: ${{ env.RUNS_ON }}
+    runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
