@@ -129,11 +129,6 @@ jobs:
           echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
           echo -e "ARG BUILD_PACKAGE=advent_of_code_solver_restful_api@git+https://github.com/pjd199/advent_of_code_python@dev\n$(cat Dockerfile)" > Dockerfile
 
-      - name: Setup AWS SAM
-        uses: aws-actions/setup-sam@v2
-        with:
-          use-installer: true
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
 

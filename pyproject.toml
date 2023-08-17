@@ -6,7 +6,9 @@ description = "Advent of Code Solver RESTful API"
 keywords = [
     "Advent of Code",
     "Advent",
+    "Solver",
     "REST",
+    "RESTful",
     "API",
     "Python",
     "Advent",
