@@ -24,6 +24,8 @@ def sam_url_lookup(stack_name: str, region_name: str) -> str:
     Returns:
         str: the discovered url
     """
+    base_url = ""
+
     cf_client = client("cloudformation", region_name=region_name)
     stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
 
