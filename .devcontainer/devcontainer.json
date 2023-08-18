@@ -9,7 +9,10 @@
 		"ghcr.io/customink/codespaces-features/sam-cli:1": {},
 		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
 	},
-	"postCreateCommand": "pip3 install --user -r requirements_dev.txt",
+	"postCreateCommand": {
+		"pip": "pip3 install --user -r requirements_dev.txt",
+		"pre-commit": "pre-commit install"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
