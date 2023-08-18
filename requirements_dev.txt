@@ -4,8 +4,8 @@
 # Testing
 boto3==1.28.5
 freezegun==1.2.2
+tomli==2.0.1 ; python_version < '3.11'
 pytest==7.4.0
-toml==0.10.2
 pyopenssl==23.2.0
 
 # Daily Helper

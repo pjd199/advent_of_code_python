@@ -10,7 +10,11 @@ from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
 from boto3 import client
 from requests import get, post
-from toml import load as load_toml
+
+try: # pragma: no cover
+    from tomllib import load as load_toml
+except ModuleNotFoundError:
+    from tomli import load as load_toml
 
 from tests.conftest import check_json
 
@@ -26,7 +30,8 @@ def sam_url_lookup(filename: str) -> str:
     """
     base_url = ""
 
-    sam_config = load_toml(filename)
+    with Path(filename).open() as file:
+        sam_config = load_toml(file)
     stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
     region_name = sam_config["default"]["deploy"]["parameters"]["region"]
 
@@ -234,13 +239,13 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
             "results": results,
             "self": f"{base_url}/calendars",
         }
-        check_json(response.json(), body, ["timestamp"], None)
+        check_json(response.json(), body, ["timestamp", "version"], None)
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
         check_json(
             response.json(),
             test_case_data["response"]["body"],
-            ["timings", "timestamp"],
+            ["timings", "timestamp", "version"],
             [("{base_url}", base_url)],
         )
