@@ -232,7 +232,7 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
         ]
 
         body = {
-            "api_version": "2.0.0",
+            "api_version": "v2.0.0",
             "description": "List of available puzzles, filtered using "
             "/calendars/{year}",
             "links": [],

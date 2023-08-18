@@ -9,7 +9,7 @@
       "response": {
         "status": 200,
         "body": {
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Discover resourses available through this API.",
           "links": [
             {
@@ -53,7 +53,7 @@
       "response": {
         "status": 200,
         "body": {
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "List of available puzzles, filtered using /calendars/{year}",
           "links": [],
           "results": [
@@ -101,7 +101,7 @@
         "body": {
           "timestamp": "2015-12-10T10:30:12Z",
           "self": "http://localhost:5000/calendars/2015",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "List of available puzzles, filtered using /calendars/{year}",
           "results": [
             {
@@ -132,7 +132,7 @@
         "body": {
           "timestamp": "2023-08-03T16:56:21Z",
           "self": "http://localhost:5000/puzzles/2015/1",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
           "results": [
             {
@@ -193,7 +193,7 @@
       "response": {
         "status": 200,
         "body": {
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "links": [
             {
@@ -231,7 +231,7 @@
         "body": {
           "timestamp": "2023-07-31T10:31:18Z",
           "self": "http://localhost:5000/answers/2015/1",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "results": "Unable to GET puzzle input from ThisIsNotValidForUrls.",
           "links": []
@@ -249,7 +249,7 @@
         "body": {
           "timestamp": "2023-08-05T10:57:39Z",
           "self": "http://localhost:5000/2014/14",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "The requested URL was not found on the server. If you entered the URL manually please check your spelling and try again.",
           "results": "Not Found",
           "links": []
@@ -276,7 +276,7 @@
         "body": {
           "timestamp": "2023-08-05T11:00:33Z",
           "self": "http://localhost:5000/answers/2014/1",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "results": "year 2014 day 1 is invalid. Please call http://localhost:5000/calendars for valid values.",
           "links": []
@@ -305,7 +305,7 @@
         "body": {
           "timestamp": "2023-07-31T10:32:54Z",
           "self": "http://localhost:5000/answers/2015/2",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "results": {
             "year": 2015,
@@ -343,7 +343,7 @@
         "body": {
           "timestamp": "2023-08-05T11:13:55Z",
           "self": "http://localhost:5000/answers/2015/17",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "results": "Unable to parse '4x23x21' on line 1: No match found",
           "links": []
@@ -361,7 +361,7 @@
         "body": {
           "timestamp": "2023-08-05T11:20:17Z",
           "self": "http://localhost:5000/answers/2015/18",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "Get the answer to the puzzle, with input file provide as POST, or URL provided as input paramerater.",
           "results": "Unable to load the input data. Send fine as a text/plain POST, or URL provided with the URL input paramerater.",
           "links": []
@@ -379,7 +379,7 @@
         "body": {
           "timestamp": "2023-08-05T11:20:17Z",
           "self": "http://localhost:5000/system",
-          "api_version": "2.0.0",
+          "api_version": "v2.0.0",
           "description": "System information.",
           "results": "!!!dynamic!!!",
           "links": []
