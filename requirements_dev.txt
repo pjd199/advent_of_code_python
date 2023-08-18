@@ -14,3 +14,6 @@ markdownify==0.11.6
 
 # Status Graphic
 pillow==10.0.0
+
+# Pre Commit
+pre-commit==3.3.3

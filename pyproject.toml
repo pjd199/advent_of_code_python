@@ -49,12 +49,7 @@ dev = [
     "beautifulsoup4==4.12.2",
     "markdownify==0.11.6",
     "pillow==10.0.0",
-]
-lint = [
-    "black==23.7.0",
-    "isort==5.12.0",
-    "ruff==0.0.284",
-    "pydoclint==0.1.5"
+    "pre-commit==3.3.3"
 ]
 
 [build-system]
