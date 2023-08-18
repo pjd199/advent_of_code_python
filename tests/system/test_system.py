@@ -11,10 +11,10 @@ from advent_of_code.utils.solver_status import implementation_status
 from boto3 import client
 from requests import get, post
 
-try: # pragma: no cover
+try:  # pragma: no cover
     from tomllib import load as load_toml
 except ModuleNotFoundError:
-    from tomli import load as load_toml
+    from tomli import load as load_toml  # type: ignore[assignment]
 
 from tests.conftest import check_json
 
@@ -30,7 +30,7 @@ def sam_url_lookup(filename: str) -> str:
     """
     base_url = ""
 
-    with Path(filename).open() as file:
+    with Path(filename).open("rb") as file:
         sam_config = load_toml(file)
     stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
     region_name = sam_config["default"]["deploy"]["parameters"]["region"]
