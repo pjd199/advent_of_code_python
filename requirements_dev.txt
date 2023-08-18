@@ -7,6 +7,11 @@ freezegun==1.2.2
 tomli==2.0.1 ; python_version < '3.11'
 pytest==7.4.0
 pyopenssl==23.2.0
+coverage==7.2.7
+pytest-cov==4.1.0
+pytest-custom_exit_code==0.3.0
+pytest-split==0.8.1
+pytest-xdist==3.3.1
 
 # Daily Helper
 beautifulsoup4==4.12.2

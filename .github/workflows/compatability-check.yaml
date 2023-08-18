@@ -39,7 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_test.txt
+          pip install -r requirements_dev.txt
 
       - uses: actions/cache@v3
         with:
