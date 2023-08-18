@@ -11,30 +11,19 @@ from advent_of_code.utils.solver_status import implementation_status
 from boto3 import client
 from requests import get, post
 
-try:  # pragma: no cover
-    from tomllib import load as load_toml
-except ModuleNotFoundError:
-    from tomli import load as load_toml  # type: ignore[assignment]
-
 from tests.conftest import check_json
 
 
-def sam_url_lookup(filename: str) -> str:
+def sam_url_lookup(stack_name: str, region_name: str) -> str:
     """Open the SAM config file, and use the stack name to find the Fucntion URL.
 
     Args:
-        filename (str): the name of the file to scan
+        stack_name (str): the name of the AWS stack
+        region_name (str): the name of the AWS region
 
     Returns:
         str: the discovered url
     """
-    base_url = ""
-
-    with Path(filename).open("rb") as file:
-        sam_config = load_toml(file)
-    stack_name = sam_config["default"]["deploy"]["parameters"]["stack_name"]
-    region_name = sam_config["default"]["deploy"]["parameters"]["region"]
-
     cf_client = client("cloudformation", region_name=region_name)
     stack_descriptions = cf_client.describe_stacks(StackName=stack_name)
 
@@ -84,7 +73,7 @@ def sam_dev_url() -> str:
     Returns:
         str: The SAM development URL.
     """
-    return sam_url_lookup("./samconfig_dev.toml")
+    return sam_url_lookup("advent-of-code-python-dev2", "eu-west-2")
 
 
 @pytest.fixture(scope="module")
@@ -94,7 +83,7 @@ def sam_main_url() -> str:
     Returns:
         str: The SAM development URL.
     """
-    return sam_url_lookup("./samconfig.toml")
+    return sam_url_lookup("advent-of-code-python2", "eu-west-2")
 
 
 @pytest.fixture(scope="module")

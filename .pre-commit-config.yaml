@@ -35,7 +35,6 @@ repos:
                     types-urllib3==1.26.25.13,
                     typing_extensions==4.7.1,
                     types-boto3===1.0.2,
-                    types-toml==0.10.8.6,
                     types-pillow==9.3.0.2,
                     boto3==1.28.5,
                     freezegun==1.2.2,
@@ -44,6 +43,5 @@ repos:
                     Flask==2.3.2,
                     apig-wsgi==2.18.0,
                     numpy==1.25.1,
-                    requests==2.31.0,
-                    tomli==2.0.1
+                    requests==2.31.0
                 ]
