@@ -18,7 +18,7 @@ repos:
           - id: black
 
     - repo: https://github.com/jsh9/pydoclint
-      rev: 0.1.4
+      rev: 0.1.9
       hooks:
         - id: pydoclint
           args: [--config=pyproject.toml, -q]
@@ -44,6 +44,5 @@ repos:
                     Flask==2.3.2,
                     apig-wsgi==2.18.0,
                     numpy==1.25.1,
-                    requests==2.31.0,
-                    lambda-multiprocessing==0.3
+                    requests==2.31.0
                 ]
