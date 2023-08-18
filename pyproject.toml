@@ -1,5 +1,6 @@
 [project]
 name = "advent_of_code_solver"
+version = "2.0.0"
 authors = [{ name = "Pete Dibdin" }]
 description = "Advent of Code Solver RESTful API"
 keywords = [
@@ -16,7 +17,7 @@ keywords = [
 ]
 readme = "README.md"
 license = { file = "license.md" }
-dynamic = ["version"]
+#dynamic = ["version"]
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -62,8 +63,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools]
 packages = ["advent_of_code"]
 
-[tool.setuptools.dynamic]
-version = { attr = "advent_of_code.__version__" }
+#]tool.setuptools.dynamic]
+#version = { attr = "advent_of_code.__version__" }
 
 [tool.ruff]
 select = [
