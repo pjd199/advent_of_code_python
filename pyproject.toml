@@ -1,6 +1,5 @@
 [project]
 name = "advent_of_code_solver"
-#version = "2.0.0"
 authors = [{ name = "Pete Dibdin" }]
 description = "Advent of Code Solver RESTful API"
 keywords = [
@@ -17,6 +16,7 @@ keywords = [
 ]
 readme = "README.md"
 license = { file = "license.md" }
+dynamic = ["version"]
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -35,7 +35,6 @@ dependencies = [
     "numpy==1.25.1",
     "requests==2.31.0",
 ]
-dynamic = ["version"]
 
 [project.urls]
 "Homepage" = "https://github.com/pjd199/advent_of_code_python"
@@ -45,7 +44,12 @@ dev = [
     "boto3==1.28.5",
     "freezegun==1.2.2",
     "pytest==7.4.0",
-    "toml==0.10.2",
+    "coverage==7.2.7",
+    "pytest-cov==4.1.0",
+    "pytest-custom_exit_code==0.3.0",
+    "pytest-split==0.8.1",
+    "pytest-xdist==3.3.1",
+    "tomli==2.0.1 ; python_version < '3.11'",
     "beautifulsoup4==4.12.2",
     "markdownify==0.11.6",
     "pillow==10.0.0",
@@ -53,13 +57,14 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools", "setuptools-scm"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 packages = ["advent_of_code"]
 
-[tool.setuptools_scm]
+[tool.setuptools.dynamic]
+version = { attr = "advent_of_code.__version__" }
 
 [tool.ruff]
 select = [
