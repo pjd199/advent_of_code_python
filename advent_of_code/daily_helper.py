@@ -17,6 +17,7 @@ from requests import get
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code import __version__
 from advent_of_code.utils.function_timer import function_timer
 from advent_of_code.utils.input_loader import load_puzzle_input_file
 from advent_of_code.utils.runner import runner
@@ -470,8 +471,14 @@ def main() -> int:
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
     parser.add_argument("--run", "-r", help="run the puzzle file", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
+    parser.add_argument(
+        "--version", help="print version information", action="store_true"
+    )
 
     args = parser.parse_args()
+
+    if args.version:
+        print(f"Advent of Code Daily Helper {__version__}")
 
     # handle the session cookie loading and saving
     session_path = Path(f"{CACHE_PATH}/.session")

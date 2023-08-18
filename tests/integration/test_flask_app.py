@@ -95,7 +95,9 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
 
     if "body" in test_case["response"]:
         # check the body, ignoring the timing value
-        check_json(response.get_json(), test_case["response"]["body"], ["timings"])
+        check_json(
+            response.get_json(), test_case["response"]["body"], ["timings", "version"]
+        )
         # check timings structure, but not values as they are variable
         if "results" in test_case["response"]["body"]:
             if "part_one" in test_case["response"]["body"]["results"]:
