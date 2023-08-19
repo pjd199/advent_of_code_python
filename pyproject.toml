@@ -17,7 +17,6 @@ keywords = [
 ]
 readme = "README.md"
 license = { file = "license.md" }
-#dynamic = ["version"]
 requires-python = ">=3.10"
 classifiers = [
     "Programming Language :: Python :: 3",
