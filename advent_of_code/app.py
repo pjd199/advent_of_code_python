@@ -75,7 +75,7 @@ def standard_response(
                     "%Y-%m-%dT%H:%M:%SZ"
                 ),
                 "self": request.base_url.strip("/"),
-                "api_version": "2.0.0",  # __version__,
+                "api_version": "2.0.0",
                 "description": description,
                 "results": results if results else [],
                 "links": links if links else [],

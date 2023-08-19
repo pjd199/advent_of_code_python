@@ -470,13 +470,8 @@ def main() -> int:
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
     parser.add_argument("--run", "-r", help="run the puzzle file", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
-    parser.add_argument(
-        "--version", help="print version information", action="store_true"
-    )
 
     args = parser.parse_args()
-
-    # if args.version:
 
     # handle the session cookie loading and saving
     session_path = Path(f"{CACHE_PATH}/.session")
