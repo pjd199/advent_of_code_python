@@ -56,11 +56,11 @@ dev = [
 ]
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools==68.1.0"]
 build-backend = "setuptools.build_meta"
 
-[tool.setuptools]
-packages = ["advent_of_code"]
+# [tool.setuptools]
+# packages = ["advent_of_code"]
 
 [tool.ruff]
 select = [
