@@ -15,7 +15,7 @@ keywords = [
     "AWS",
     "Lambda",
 ]
-readme = "README.md"
+readme = "readme.md"
 license = { file = "license.md" }
 requires-python = ">=3.10"
 classifiers = [
@@ -36,6 +36,10 @@ dependencies = [
     "requests==2.31.0",
 ]
 
+[project.scripts]
+daily_helper = "advent_of_code.daily_helper:main"
+development_server = "advent_of_code.development_server:main"
+
 [project.urls]
 "Homepage" = "https://github.com/pjd199/advent_of_code_python"
 
@@ -52,15 +56,20 @@ dev = [
     "beautifulsoup4==4.12.2",
     "markdownify==0.11.6",
     "pillow==10.0.0",
-    "pre-commit==3.3.3"
+    "pre-commit==3.3.3",
 ]
 
 [build-system]
-requires = ["setuptools == 68.0.0"]
+requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
-# [tool.setuptools]
-# packages = ["advent_of_code"]
+[tool.setuptools.packages.find]
+include = ["advent_of_code*"]
+
+[tool.pytest.ini_options]
+addopts = [
+    "--import-mode=importlib",
+]
 
 [tool.ruff]
 select = [
