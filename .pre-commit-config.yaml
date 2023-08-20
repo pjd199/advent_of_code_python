@@ -27,7 +27,7 @@ repos:
         rev: "v1.4.1"
         hooks:
         -   id: mypy
-            args: [--strict]
+            args: [--strict, --no-namespace-packages]
             additional_dependencies: 
                 [
                     types-beautifulsoup4==4.12.0.5,
