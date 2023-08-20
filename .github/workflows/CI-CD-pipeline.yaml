@@ -34,7 +34,7 @@ jobs:
           cache: "pip"
 
       - name: Install dependencies
-        run: pip install pre-commit
+        run: pip install -r requirements_dev.txt
 
       - uses: actions/cache@v3
         with:
