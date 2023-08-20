@@ -27,7 +27,8 @@ repos:
         rev: "v1.4.1"
         hooks:
         -   id: mypy
-            args: ["--strict", "--exclude conftest.py"]
+            pass-files: false
+            args: ["--strict", "advent_of_code", "tests"]
             additional_dependencies: 
                 [
                     types-beautifulsoup4==4.12.0.5,
