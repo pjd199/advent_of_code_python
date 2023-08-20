@@ -31,7 +31,7 @@ jobs:
           pip install -r requirements_dev.txt
 
       - name: Install editable package
-        run: pip install --editable .[dev]
+        run: pip install --editable .
 
       - name: Update timings
         run: |

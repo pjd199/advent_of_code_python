@@ -34,7 +34,7 @@ jobs:
           pip install -r requirements_dev.txt
 
       - name: Install editable package
-        run: pip install --editable .[dev]
+        run: pip install --editable .
 
       - name: Generate status graphic
         run: python ./advent_of_code/utils/status_graphic.py

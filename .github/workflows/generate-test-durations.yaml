@@ -35,7 +35,7 @@ jobs:
           pip install -r requirements_dev.txt
 
       - name: Install editable package
-        run: pip install --editable .[dev]
+        run: pip install --editable .
 
       - name: Run pytest
         run: pytest ./tests/unit ./tests/integration --cov --clean-durations --store-durations -n auto
