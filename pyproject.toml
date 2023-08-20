@@ -137,3 +137,7 @@ convention = "google"
 [tool.pydoclint]
 style = "google"
 allow-init-docstring = true
+
+[tool.mypy]
+strict = true
+exclude = "conftest.py"
