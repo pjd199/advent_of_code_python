@@ -27,7 +27,7 @@ repos:
         rev: "v1.4.1"
         hooks:
         -   id: mypy
-            pass-files: false
+            pass_filenames: false
             args: ["--strict", "advent_of_code", "tests"]
             additional_dependencies: 
                 [
