@@ -6,12 +6,11 @@ from threading import Thread
 from typing import Any
 
 import pytest
+from advent_of_code import __version__
 from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
 from boto3 import client
 from requests import get, post
-
-from tests.conftest import check_json
 
 
 def sam_url_lookup(stack_name: str, region_name: str) -> str:
@@ -223,20 +222,25 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
         ]
 
         body = {
-            "api_version": "v2.0.0",
+            "api_version": "{version}",
             "description": "List of available puzzles, filtered using "
             "/calendars/{year}",
             "links": [],
             "results": results,
             "self": f"{base_url}/calendars",
         }
-        check_json(response.json(), body, ["timestamp", "version"], None)
+        pytest.check_json(  # type: ignore[operator]
+            response.json(),
+            body,
+            ["timestamp", "version"],
+            [("{version}", __version__)],
+        )
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
-        check_json(
+        pytest.check_json(  # type: ignore[operator]
             response.json(),
             test_case_data["response"]["body"],
             ["timings", "timestamp", "version"],
-            [("{base_url}", base_url)],
+            [("{base_url}", base_url), ("{version}", __version__)],
         )

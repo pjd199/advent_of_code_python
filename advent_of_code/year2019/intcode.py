@@ -64,7 +64,7 @@ class IntcodeComputer:
         """Iterate over the output.
 
         Yields:
-            int: the next value in the output buffer
+            Generator[int, None, None]: the next value in the output buffer
         """
         while self._output_buffer:
             yield self._output_buffer.popleft()

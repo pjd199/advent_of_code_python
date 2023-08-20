@@ -10,7 +10,7 @@
 		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
 	},
 	"postCreateCommand": {
-		"pip": "pip3 install --user -r requirements_dev.txt",
+		"install package": "pip install -e .[dev]",
 		"pre-commit": "pre-commit install"
 	},
 	"customizations": {
@@ -18,7 +18,8 @@
 			"extensions": [
 				"ms-python.black-formatter",
 				"charliermarsh.ruff",
-				"tamasfe.even-better-toml"
+				"tamasfe.even-better-toml",
+				"njpwerner.autodocstring"
 			]
 		}
 	}

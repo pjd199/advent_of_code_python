@@ -5,6 +5,8 @@ Radioisotope Thermoelectric Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/11
 """
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
 from collections.abc import Generator
@@ -33,7 +35,7 @@ class Item(ABC):
         self.material = material
 
     @abstractmethod
-    def safe(self, others: list["Item"]) -> bool:
+    def safe(self, others: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
         Args:
@@ -107,11 +109,11 @@ class State:
         self.floors = floors
         self.step = step
 
-    def next_state(self) -> Generator["State", None, None]:
+    def next_state(self) -> Generator[State, None, None]:
         """Iterator for all the safe moves from here.
 
         Yields:
-            Generator["State", None, None]: the next safe state
+            Generator[State, None, None]: the next safe state
         """
         for items_in_elevator in [2, 1]:
             for items in combinations(self.floors[self.elevator], items_in_elevator):

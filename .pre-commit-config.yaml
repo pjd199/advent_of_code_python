@@ -18,7 +18,7 @@ repos:
           - id: black
 
     - repo: https://github.com/jsh9/pydoclint
-      rev: 0.1.9
+      rev: 0.2.0
       hooks:
         - id: pydoclint
           args: [--config=pyproject.toml, -q]
@@ -35,7 +35,6 @@ repos:
                     types-urllib3==1.26.25.13,
                     typing_extensions==4.7.1,
                     types-boto3===1.0.2,
-                    types-pillow==9.3.0.2,
                     boto3==1.28.5,
                     freezegun==1.2.2,
                     pytest==7.4.0,

@@ -1,5 +1,4 @@
 """Unit tests for the lambda_handler function."""
-from datetime import date
 from json import load
 from pathlib import Path
 from platform import (
@@ -12,12 +11,11 @@ from platform import (
 from typing import Any
 
 import pytest
+from advent_of_code import __version__
 from advent_of_code.app import app
 from advent_of_code.utils.solver_status import implementation_status
 from freezegun import freeze_time
 from werkzeug.test import TestResponse
-
-from tests.conftest import Expected, check_json
 
 
 def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
@@ -35,12 +33,22 @@ def pytest_generate_tests(metafunc: pytest.Metafunc) -> None:
             ]
             metafunc.parametrize("test_case", cases, ids=ids)
 
-    all_dates = implementation_status().keys()
-    if "puzzle" in metafunc.fixturenames:
+    if (
+        "year" in metafunc.fixturenames
+        and "day" in metafunc.fixturenames
+        and "expected" in metafunc.fixturenames
+    ):
+        with Path("./tests/expected.json").open() as file:
+            test_data = load(file)
+
+        implemented = [
+            puzzle for puzzle, status in implementation_status().items() if status
+        ]
+
         metafunc.parametrize(
-            "puzzle",
-            all_dates,
-            ids=[f"{d.year:04}-{d.day:02}" for d in all_dates],
+            ("year", "day", "expected"),
+            [(d.year, d.day, test_data[str(d.year)][str(d.day)]) for d in implemented],
+            ids=[f"{d.year:04}-{d.day:02}" for d in implemented],
         )
 
 
@@ -95,8 +103,11 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
 
     if "body" in test_case["response"]:
         # check the body, ignoring the timing value
-        check_json(
-            response.get_json(), test_case["response"]["body"], ["timings", "version"]
+        pytest.check_json(  # type: ignore[operator]
+            response.get_json(),
+            test_case["response"]["body"],
+            ["timings", "version"],
+            [("{version}", __version__)],
         )
         # check timings structure, but not values as they are variable
         if "results" in test_case["response"]["body"]:
@@ -117,37 +128,33 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
                 )
 
 
-def test_all_solver_routes(puzzle: date, expected: Expected) -> None:
+def test_all_solver_routes(year: int, day: int, expected: dict[str, int | str]) -> None:
     """Test all expected routes - implemented or not.
 
     Args:
-        puzzle (date): the year and day to test
-        expected (Expected): the expected results file
+        year (int): year for the puzzle
+        day (int): day for the puzzle
+        expected (dict[str,int|str]): the expected results
+
     """
     with app.test_client() as client:
-        with Path(
-            f"./puzzle_input/year{puzzle.year}/day{puzzle.day}.txt"
-        ).open() as file:
+        with Path(f"./puzzle_input/year{year}/day{day}.txt").open() as file:
             input_file = file.read()
         response = client.post(
-            f"/answers/{puzzle.year}/{puzzle.day}",
+            f"/answers/{year}/{day}",
             data=input_file,
             headers={"Content-Type": "text/plain"},
             follow_redirects=True,
         )
 
     assert response.status_code == 200
-    assert puzzle.year in expected
-    assert puzzle.day in expected[puzzle.year]
     body = response.get_json()
     assert body is not None
     assert "results" in body
-    assert body["results"]["year"] == puzzle.year
-    assert body["results"]["day"] == puzzle.day
+    assert body["results"]["year"] == year
+    assert body["results"]["day"] == day
     assert "part_one" in body["results"]
-    assert body["results"]["part_one"] == expected[puzzle.year][puzzle.day]["part_one"]
-    if puzzle.day != 25:
+    assert body["results"]["part_one"] == expected["part_one"]
+    if day != 25:
         assert "part_two" in body["results"]
-        assert (
-            body["results"]["part_two"] == expected[puzzle.year][puzzle.day]["part_two"]
-        )
+        assert body["results"]["part_two"] == expected["part_two"]

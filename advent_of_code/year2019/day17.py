@@ -151,7 +151,7 @@ class Solver(SolverInterface):
             route (str): the starting route
 
         Yields:
-            tuple[str]: the substrings
+            Generator[str, None, None]: the substrings
         """
         comma_locations = (i for i, v in enumerate(route[:20]) if v == ",")
         yield from (route[: i + 1] for i in islice(comma_locations, 1, None, 2))

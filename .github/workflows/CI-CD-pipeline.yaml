@@ -65,6 +65,9 @@ jobs:
       - name: Install dependancies
         run: pip install -r requirements_dev.txt
 
+      - name: Install editable package
+        run: pip install --editable .[dev]
+
       - name: Run pytest
         run:
           pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{
@@ -183,9 +186,11 @@ jobs:
 
       - name: Install dependancies
         run: |
-          python -m pip install --upgrade pip
           pip install -r requirements_dev.txt
 
+      - name: Install editable package
+        run: pip install --editable .[dev]
+        
       - name: Run pytest on main lambda function
         if: github.ref == 'refs/heads/main'
         run: pytest ./tests/system -k _main -n auto

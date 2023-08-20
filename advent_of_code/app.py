@@ -2,7 +2,8 @@
 from datetime import datetime, timezone
 from functools import cache
 from importlib import import_module
-from json import dumps, load
+from importlib.resources import files
+from json import dumps, loads
 from pathlib import Path
 from platform import (
     architecture,
@@ -22,6 +23,7 @@ from werkzeug.exceptions import HTTPException
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code import __version__
 from advent_of_code.utils.function_timer import function_timer
 from advent_of_code.utils.input_loader import load_multi_line_string
 from advent_of_code.utils.parser import ParseError
@@ -46,8 +48,9 @@ def load_metadata_from_file() -> Metadata:
     Returns:
         Metadata: the JSON
     """
-    with Path("./advent_of_code/puzzle_metadata.json").open() as file:
-        result: Metadata = load(file)
+    result: Metadata = loads(
+        files("advent_of_code").joinpath("puzzle_metadata.json").read_text()
+    )
     return result
 
 
@@ -75,7 +78,7 @@ def standard_response(
                     "%Y-%m-%dT%H:%M:%SZ"
                 ),
                 "self": request.base_url.strip("/"),
-                "api_version": "2.0.0",
+                "api_version": __version__,
                 "description": description,
                 "results": results if results else [],
                 "links": links if links else [],
