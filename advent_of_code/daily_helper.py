@@ -11,7 +11,7 @@ from webbrowser import open as webbrowser_open
 
 import pytest
 from bs4 import BeautifulSoup
-from markdownify import ATX, markdownify
+from markdownify import ATX, markdownify  # type: ignore[import]
 from requests import get
 
 if __name__ == "__main__":
