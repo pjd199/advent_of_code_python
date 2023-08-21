@@ -140,4 +140,3 @@ allow-init-docstring = true
 
 [tool.mypy]
 strict = true
-exclude = "conftest.py"

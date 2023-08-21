@@ -33,9 +33,6 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Install dependencies
-        run: pip install -r requirements_dev.txt
-
       - uses: actions/cache@v3
         with:
           path: ~/.cache/pre-commit

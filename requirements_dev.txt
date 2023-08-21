@@ -21,3 +21,9 @@ pillow==10.0.0
 
 # Pre Commit
 pre-commit==3.3.3
+
+# Stub packages for typing
+types-beautifulsoup4==4.12.0.5
+types-requests==2.31.0.2
+types-Pillow==10.0.0.2
+types-boto3===1.0.2
