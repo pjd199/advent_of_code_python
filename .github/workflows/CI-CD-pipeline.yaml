@@ -34,7 +34,7 @@ jobs:
           cache: "pip"
 
       - name: Setup pre-commit and mpy
-        run: pip install pre-commit mypy
+        run: pip install mypy -r requirements_dev.txt
 
       - uses: actions/cache@v3
         with:
