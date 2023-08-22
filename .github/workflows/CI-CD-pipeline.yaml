@@ -37,6 +37,7 @@ jobs:
         run: pip install pre-commit
 
       - uses: actions/cache@v3
+        name: Load dependancy cache
         with:
           path: ~/.cache/pre-commit
           key:
@@ -46,7 +47,7 @@ jobs:
         run: pre-commit run --all-files
 
   unit-test:
-    name: Unit & Integration Test
+    name: Testing
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -63,6 +64,7 @@ jobs:
           cache: "pip"
 
       - uses: actions/cache@v3
+        name: Load dependancy cache
         id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
@@ -167,13 +169,12 @@ jobs:
       - name: SAM Build
         run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
 
-      - name: Wait for testing phase to complete
-        uses: lewagon/wait-on-check-action@v1.3.1
+      - uses: yogeshlonkar/wait-for-jobs@v0
+        name: Wait for testing to complete
         with:
-          ref: ${{ github.ref }}
-          check-name: 'Coverage Check'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          jobs: 'Testing (1),Testing (2),Testing (3),Testing (4),Testing (5),Testing (6),Testing (7),Testing (8),Testing (9),Testing (10),'
+          ttl: '10'
 
       - name: SAM Deploy to AWS Lambda
         run:
@@ -202,6 +203,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - uses: actions/cache@v3
+        name: Load dependancy cache
         id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
