@@ -32,10 +32,23 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
+      
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
-      - name: Install pre-commit
-        run: pip install pre-commit
+      - name: Install dependancies
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
 
+      - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .
+        
       - uses: actions/cache@v3
         name: Load dependancy cache
         with:
@@ -175,6 +188,7 @@ jobs:
           gh-token: ${{ secrets.GITHUB_TOKEN }}
           jobs: 'Testing (1),Testing (2),Testing (3),Testing (4),Testing (5),Testing (6),Testing (7),Testing (8),Testing (9),Testing (10),'
           ttl: '10'
+          interval: '5000'
 
       - name: SAM Deploy to AWS Lambda
         run:

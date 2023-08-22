@@ -36,21 +36,32 @@ jobs:
       - name: Display python version
         run: python --version
 
-      - name: Install dependencies
-        run: |
-          pip install -r requirements_dev.txt
-
-      - name: Install editable package
-        run: pip install --editable .
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
         with:
           path: ~/.cache/pre-commit
           key:
             pre-commit-${{ env.pythonLocation }}-${{ matrix.python-version }}-${{ hashFiles('.pre-commit-config.yaml') }}
 
+      - name: Install dependencies
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
+
+      - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .
+
       - name: Run pre-commit on all files
-        run: pre-commit run --all-files
+        run: | 
+          pip install pre-commit
+          pre-commit run --all-files
 
       - name: Testing with pytest
         if: ${{ always() }}

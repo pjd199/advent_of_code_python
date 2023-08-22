@@ -29,11 +29,20 @@ jobs:
           python-version: "3.11"
           cache: "pip"
       
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+
       - name: Install dependencies
-        run: |
-          pip install -r requirements_dev.txt
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
 
       - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
         run: pip install --editable .
 
       - name: Generate status graphic
