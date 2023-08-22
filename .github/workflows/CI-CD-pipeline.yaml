@@ -63,15 +63,18 @@ jobs:
           cache: "pip"
 
       - uses: actions/cache@v3
+        id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
           key:
             requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
         run: pip install -r requirements_dev.txt
 
       - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
         run: pip install --editable .
 
       - name: Run pytest
@@ -164,11 +167,13 @@ jobs:
       - name: SAM Build
         run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
 
-      - name: Wait for testing to complete 
-        uses: NathanFirmo/wait-for-other-job@v1.1.1
+      - name: Wait for testing phase to complete
+        uses: lewagon/wait-on-check-action@v1.3.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          job: 'Coverage Check'
+          ref: ${{ github.ref }}
+          check-name: 'Coverage Check'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
 
       - name: SAM Deploy to AWS Lambda
         run:
@@ -197,6 +202,7 @@ jobs:
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
       - uses: actions/cache@v3
+        id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
           key:
