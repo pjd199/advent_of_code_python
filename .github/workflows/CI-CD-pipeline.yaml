@@ -164,13 +164,11 @@ jobs:
       - name: SAM Build
         run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
 
-      - name: Wait for tests to succeed
-        uses: lewagon/wait-on-check-action@v1.3.1
+      - name: Wait for testing to complete 
+        uses: NathanFirmo/wait-for-other-job@v1.1.1
         with:
-          ref: ${{ github.ref }}
-          check-name: 'Unit & Integration Test'
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 10
+          token: ${{ secrets.GITHUB_TOKEN }}
+          job: 'Coverage Check'
 
       - name: SAM Deploy to AWS Lambda
         run:
