@@ -33,8 +33,8 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Setup pre-commit and mpy
-        run: pip install mypy -r requirements_dev.txt
+      - name: Install pre-commit
+        run: pip install pre-commit
 
       - uses: actions/cache@v3
         with:
@@ -61,6 +61,12 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
+
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
         run: pip install -r requirements_dev.txt
@@ -158,6 +164,14 @@ jobs:
       - name: SAM Build
         run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
 
+      - name: Wait for tests to succeed
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ github.ref }}
+          check-name: 'Unit & Integration Test'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
+
       - name: SAM Deploy to AWS Lambda
         run:
           sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
@@ -184,9 +198,14 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
+      - uses: actions/cache@v3
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+
       - name: Install dependancies
-        run: |
-          pip install -r requirements_dev.txt
+        run: pip install -r requirements_dev.txt
 
       - name: Install editable package
         run: pip install --editable .
