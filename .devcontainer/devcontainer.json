@@ -4,9 +4,6 @@
 	"features": {
 		"ghcr.io/devcontainers-contrib/features/black:2": {},
 		"ghcr.io/devcontainers-contrib/features/ruff:1": {},
-		"ghcr.io/devcontainers/features/aws-cli:1": {},
-		"ghcr.io/devcontainers/features/docker-in-docker:2": {},
-		"ghcr.io/customink/codespaces-features/sam-cli:1": {},
 		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
 	},
 	"postCreateCommand": {
