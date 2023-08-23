@@ -106,7 +106,7 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
         pytest.check_json(  # type: ignore[operator]
             response.get_json(),
             test_case["response"]["body"],
-            ["timings", "version"],
+            ["timings", "version", "event"],
             [("{version}", __version__)],
         )
         # check timings structure, but not values as they are variable

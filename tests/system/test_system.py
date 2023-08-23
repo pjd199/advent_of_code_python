@@ -241,6 +241,6 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
         pytest.check_json(  # type: ignore[operator]
             response.json(),
             test_case_data["response"]["body"],
-            ["timings", "timestamp", "version"],
+            ["timings", "timestamp", "version", "event"],
             [("{base_url}", base_url), ("{version}", __version__)],
         )
