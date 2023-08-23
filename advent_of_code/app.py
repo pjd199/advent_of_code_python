@@ -77,7 +77,11 @@ def standard_response(
                 "timestamp": datetime.now(tz=timezone.utc).strftime(
                     "%Y-%m-%dT%H:%M:%SZ"
                 ),
-                "self": request.base_url.strip("/"),
+                "self": (
+                    request.headers["cdn-base-url"].strip("/")
+                    if "cdn-base-url" in request.headers
+                    else request.base_url.strip("/")
+                ),
                 "api_version": __version__,
                 "description": description,
                 "results": results if results else [],
