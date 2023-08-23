@@ -365,6 +365,9 @@ def handle_system_path() -> Response:  # pragma: no cover
         "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
         "/main/license.md",
         "license": "MIT",
+        "event": request.environ["apig_wsgi.full_event"]
+        if "apig_wsgi.full_event" in request.environ
+        else {},
     }
 
     return standard_response("System information.", 200, results)
