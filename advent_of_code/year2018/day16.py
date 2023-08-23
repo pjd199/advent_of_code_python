@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/16
 """
 from collections import defaultdict
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -38,9 +38,9 @@ class Instruction:
 class Sample:
     """A sample read from the input."""
 
-    before: Tuple[int, ...]
+    before: tuple[int, ...]
     instruction: Instruction
-    after: Tuple[int, ...]
+    after: tuple[int, ...]
 
 
 class Solver(SolverInterface):
@@ -50,13 +50,13 @@ class Solver(SolverInterface):
     DAY = 16
     TITLE = "Chronal Classification"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
-        self.samples: List[Sample] = []
+        self.samples: list[Sample] = []
 
         # parse the input into sections
         sections = split_sections(puzzle_input, "", min_length=7)
@@ -86,7 +86,7 @@ class Solver(SolverInterface):
         )
 
         # define the actions
-        self.actions: Dict[str, Callable[[Tuple[int, ...], Instruction], int]] = {
+        self.actions: dict[str, Callable[[tuple[int, ...], Instruction], int]] = {
             "addr": lambda r, i: r[i.a] + r[i.b],
             "addi": lambda r, i: r[i.a] + i.b,
             "mulr": lambda r, i: r[i.a] * r[i.b],
@@ -96,7 +96,7 @@ class Solver(SolverInterface):
             "borr": lambda r, i: r[i.a] | r[i.b],
             "bori": lambda r, i: r[i.a] | i.b,
             "setr": lambda r, i: r[i.a],
-            "seti": lambda r, i: i.a,
+            "seti": lambda _, i: i.a,
             "gtir": lambda r, i: 1 if i.a > r[i.b] else 0,
             "gtri": lambda r, i: 1 if r[i.a] > i.b else 0,
             "gtrr": lambda r, i: 1 if r[i.a] > r[i.b] else 0,
@@ -105,7 +105,7 @@ class Solver(SolverInterface):
             "eqrr": lambda r, i: 1 if r[i.a] == r[i.b] else 0,
         }
 
-        self.possibilities: Dict[int, Set[str]] = defaultdict(set)
+        self.possibilities: dict[int, set[str]] = defaultdict(set)
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -135,14 +135,14 @@ class Solver(SolverInterface):
             self._find_possibilities()
 
         # narrow down the possibilities into known mappings
-        known: Dict[int, str] = {}
+        known: dict[int, str] = {}
         search = True
         while search:
             search = False
             for k, v in self.possibilities.items():
                 if len(v) == 1:
                     search = True
-                    known[k] = list(v)[0]
+                    known[k] = next(iter(v))
                     for p in self.possibilities.values():
                         if known[k] in p:
                             p.remove(known[k])
@@ -159,7 +159,7 @@ class Solver(SolverInterface):
     def _find_possibilities(self) -> None:
         """Find all the possible mappings between opcode numbers and strings."""
         for sample in self.samples:
-            for opcode in self.actions.keys():
+            for opcode in self.actions:
                 outcome = list(sample.before)
                 outcome[sample.instruction.c] = self.actions[opcode](
                     sample.before, sample.instruction

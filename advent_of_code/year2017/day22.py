@@ -5,10 +5,10 @@ Sporifica Virus
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/22
 """
+from collections.abc import Callable
 from copy import deepcopy
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 22
     TITLE = "Sporifica Virus"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_grid(puzzle_input, r"[.#]", str_processor)
 
@@ -64,13 +64,13 @@ class Solver(SolverInterface):
         )
 
     def _solve(
-        self, cycles: int, actions: Dict[str, Callable[[int], Tuple[int, str]]]
+        self, cycles: int, actions: dict[str, Callable[[int], tuple[int, str]]]
     ) -> int:
         """Run the simulation.
 
         Args:
             cycles (int): number of cycles fo run
-            actions (Dict[str, Callable[[int], Tuple[int, str]]]): the action
+            actions (dict[str, Callable[[int], tuple[int, str]]]): the action
                 to perform on each cycle
 
         Returns:
@@ -80,7 +80,7 @@ class Solver(SolverInterface):
         grid = deepcopy(self.input)
 
         # setup the move functions
-        moves: Dict[int, Callable[[int, int], Tuple[int, int]]] = {
+        moves: dict[int, Callable[[int, int], tuple[int, int]]] = {
             0: lambda x, y: (x, y - 1),  # up
             1: lambda x, y: (x + 1, y),  # left
             2: lambda x, y: (x, y + 1),  # down
@@ -90,8 +90,8 @@ class Solver(SolverInterface):
 
         # place the current position in the centre of the grid (odd length sides)
         x, y = (
-            max(x1 for x1, _ in grid.keys()) // 2,
-            max(y1 for _, y1 in grid.keys()) // 2,
+            max(x1 for x1, _ in grid) // 2,
+            max(y1 for _, y1 in grid) // 2,
         )
 
         # run the simulation, counting the number of infections

@@ -9,8 +9,6 @@ from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import Counter as CounterType
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -38,11 +36,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "No Matter How You Slice It"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -53,7 +51,7 @@ class Solver(SolverInterface):
                 dataclass_processor(Claim),
             ),
         )
-        self.fabric: CounterType[Tuple[int, int]] = Counter()
+        self.fabric: Counter[tuple[int, int]] = Counter()
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

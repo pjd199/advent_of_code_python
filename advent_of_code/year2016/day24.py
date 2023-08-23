@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/24
 """
 from collections import deque
-from itertools import permutations
+from collections.abc import Callable
+from itertools import pairwise, permutations
 from pathlib import Path
 from sys import maxsize, path
-from typing import Callable, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Air Duct Spelunking"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.grid = parse_grid(puzzle_input, r"[.#0-9]", str_processor)
         self.destinations = {v: k for k, v in self.grid.items() if v.isnumeric()}
@@ -62,7 +62,7 @@ class Solver(SolverInterface):
         self.run_once = True
 
         # functions for the moves
-        moves: List[Callable[[int, int], Tuple[int, int]]] = [
+        moves: list[Callable[[int, int], tuple[int, int]]] = [
             lambda x, y: (x, y - 1),
             lambda x, y: (x + 1, y),
             lambda x, y: (x, y + 1),
@@ -72,7 +72,9 @@ class Solver(SolverInterface):
         # find distance between each node, using a breadth first search
         distances = {}
         for start in self.destinations:
-            queue = deque([(self.destinations[start], int(0))])
+            queue: deque[tuple[tuple[int, int], int]] = deque(
+                [(self.destinations[start], 0)]
+            )
             visited = {self.destinations[start]}
 
             while queue:
@@ -84,10 +86,8 @@ class Solver(SolverInterface):
                     distances[(start, char)] = steps
                     distances[(char, start)] = steps
                     if all(
-                        (
-                            (start, destination) in distances
-                            for destination in self.destinations
-                        )
+                        (start, destination) in distances
+                        for destination in self.destinations
                     ):
                         break
 
@@ -106,7 +106,7 @@ class Solver(SolverInterface):
         self.min_to_home = maxsize
         for route in permutations(self.destinations):
             if route[0] == "0":
-                path = sum(distances[(a, b)] for a, b in zip(route, route[1:]))
+                path = sum(distances[(a, b)] for a, b in pairwise(route))
                 self.min_to_end = min(self.min_to_end, path)
                 self.min_to_home = min(
                     self.min_to_home, path + distances[(route[-1], "0")]

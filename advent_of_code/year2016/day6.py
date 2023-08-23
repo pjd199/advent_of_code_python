@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/10
 from collections import defaultdict
 from pathlib import Path
 from sys import path
-from typing import DefaultDict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 6
     TITLE = "Signals and Noise"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"(?P<message>[a-z]+)", str_processor))
 
@@ -59,7 +58,7 @@ class Solver(SolverInterface):
             str: the decoded message
         """
         # count the occurances
-        counters: DefaultDict[int, DefaultDict[str, int]] = defaultdict(
+        counters: defaultdict[int, defaultdict[str, int]] = defaultdict(
             lambda: defaultdict(int)
         )
         for line in self.input:

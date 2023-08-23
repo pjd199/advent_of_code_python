@@ -9,7 +9,6 @@ from functools import lru_cache
 from pathlib import Path
 from re import fullmatch
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -31,11 +30,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Monster Messages"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=2)
         self.rules = {
@@ -73,17 +72,16 @@ class Solver(SolverInterface):
             rule = rules[key]
             if rule == "a" or rule == "b":
                 return rule
-            elif key == "8" and modify_rules:
+            if key == "8" and modify_rules:
                 return f"({resolve('42')}+)"
-            elif key == "11" and modify_rules:
+            if key == "11" and modify_rules:
                 repititions = [
-                    f"{resolve('42')}{{{str(x)}}}{resolve('31')}{{{str(x)}}}"
+                    f"{resolve('42')}{{{x}}}{resolve('31')}{{{x}}}"
                     for x in range(1, 10)  # guestimate of 10 for max repititions
                 ]
                 return f"({'|'.join(repititions)})"
-            else:
-                content = ["|" if t == "|" else resolve(t) for t in rule.split(" ")]
-                return f"({''.join(content)})"
+            content = ["|" if t == "|" else resolve(t) for t in rule.split(" ")]
+            return f"({''.join(content)})"
 
         return sum(1 for message in self.messages if fullmatch(resolve("0"), message))
 

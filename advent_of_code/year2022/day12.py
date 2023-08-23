@@ -9,7 +9,6 @@ from collections import deque
 from copy import deepcopy
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 12
     TITLE = "Hill Climbing Algorithm"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r"[a-zSE]", str_processor))
 
@@ -99,7 +98,7 @@ class Solver(SolverInterface):
             start = self.start
 
         # perform a breadth first search to find the shortest path from start to end
-        queue: Deque[Tuple[int, int, int]] = deque([(*start, 0)])
+        queue: deque[tuple[int, int, int]] = deque([(*start, 0)])
         visited = {start}
         result = -1
 

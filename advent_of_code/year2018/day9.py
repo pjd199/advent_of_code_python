@@ -8,7 +8,6 @@ https://adventofcode.com/2018/day/9
 from collections import defaultdict, deque
 from pathlib import Path
 from sys import path
-from typing import DefaultDict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 9
     TITLE = "Marble Mania"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.players, self.last = parse_single_line(
             puzzle_input,
@@ -67,7 +66,7 @@ class Solver(SolverInterface):
         # hand element being the current marble
         marbles = deque([0])
 
-        scores: DefaultDict[int, int] = defaultdict(int)
+        scores: defaultdict[int, int] = defaultdict(int)
         current_player = 1
 
         for i in range(1, last_marble + 1):

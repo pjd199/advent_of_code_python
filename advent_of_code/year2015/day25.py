@@ -7,13 +7,14 @@ https://adventofcode.com/2015/day/25
 """
 from pathlib import Path
 from sys import path
-from typing import List
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -24,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 25
     TITLE = "Let It Snow"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the solver.
 
         Args:
-            puzzle_input (List[str]): the puzzle input
+            puzzle_input (list[str]): the puzzle input
         """
         self.row, self.col = parse_single_line(
             puzzle_input,
@@ -38,6 +39,7 @@ class Solver(SolverInterface):
             int_tuple_processor,
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -65,21 +67,16 @@ class Solver(SolverInterface):
         # find the answers and return
         return code
 
-    def solve_part_two(self) -> int:
-        """There is no part two on Christmas Day.
-
-        Raises:
-            NotImplementedError: Always.
-        """
-        raise NotImplementedError("No part two on Christmas Day!!!")
-
-    def solve_all(self) -> List[int]:
-        """Solve the one and only part to this puzzle.
+    def solve_part_two(self) -> NoReturn:
+        """Solve part two of the puzzle.
 
         Returns:
-            List[int]: the result
+            NoReturn: This will never return normally
+
+        Raises:
+            NotImplementedError: always!
         """
-        return [self.solve_part_one()]
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

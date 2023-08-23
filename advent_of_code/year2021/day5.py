@@ -28,7 +28,7 @@ class Solver(SolverInterface):
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input, (r"(\d+),(\d+) -> (\d+),(\d+)", int_tuple_processor)

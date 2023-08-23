@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/17
 """
 from collections import deque
+from collections.abc import Callable
 from hashlib import md5
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 17
     TITLE = "Two Steps Forward"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"[a-z]+", str_processor)
         self.run = False
@@ -58,9 +58,9 @@ class Solver(SolverInterface):
         if self.run:
             return
 
-        queue = deque([(int(0), int(0), str(""))])
+        queue = deque([(0, 0, "")])
 
-        moves: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+        moves: dict[str, Callable[[int, int], tuple[int, int]]] = {
             "U": lambda x, y: (x, y - 1),
             "D": lambda x, y: (x, y + 1),
             "L": lambda x, y: (x - 1, y),
@@ -89,7 +89,9 @@ class Solver(SolverInterface):
                 if (
                     0 <= new_x < 4
                     and 0 <= new_y < 4
-                    and md5(f"{self.input}{path}".encode()).hexdigest()[i]  # nosec
+                    and md5(
+                        f"{self.input}{path}".encode(), usedforsecurity=False
+                    ).hexdigest()[i]
                     in "bcdef"
                 ):
                     queue.append((new_x, new_y, new_path))

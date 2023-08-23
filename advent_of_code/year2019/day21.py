@@ -68,7 +68,7 @@ class Solver(SolverInterface):
         """Solve the puzzle.
 
         Args:
-            script (str): the script to run
+            *script (str): the script to run
 
         Returns:
             int: the result

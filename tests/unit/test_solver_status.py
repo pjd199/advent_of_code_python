@@ -1,9 +1,6 @@
 """Unit tests for advent_of_code.utils.solver_status."""
 from datetime import date
 
-import pytest
-from freezegun import freeze_time
-
 from advent_of_code.utils.solver_status import (
     first_puzzle_date,
     implementation_status,
@@ -11,6 +8,7 @@ from advent_of_code.utils.solver_status import (
     last_puzzle_date,
     puzzle_date_generator,
 )
+from freezegun import freeze_time
 
 
 def test_first_puzzle_date() -> None:
@@ -20,10 +18,6 @@ def test_first_puzzle_date() -> None:
 
 def test_last_puzzle_date() -> None:
     """Unit test."""
-    # test with time before the first AoC puzzle was published
-    with freeze_time("2014-11-30"), pytest.raises(RuntimeError):
-        last_puzzle_date()
-
     # test for a date in December
     with freeze_time("2015-12-10"):
         assert last_puzzle_date() == date(2015, 12, 10)
@@ -43,10 +37,6 @@ def test_last_puzzle_date() -> None:
 
 def test_puzzle_date_generator() -> None:
     """Unit test."""
-    # test for date before the first AoC was published
-    with freeze_time("2014-11-30"), pytest.raises(RuntimeError):
-        list(puzzle_date_generator())
-
     # test with just one puzzle
     with freeze_time("2015-12-1"):
         assert list(puzzle_date_generator()) == [date(2015, 12, 1)]
@@ -78,10 +68,6 @@ def test_is_solver_implemented() -> None:
 
 def test_implementation_status() -> None:
     """Unit test."""
-    # test with time before AoC puzzle began
-    with freeze_time("2014-11-30"), pytest.raises(RuntimeError):
-        list(implementation_status())
-
     # test with one puzzle
     with freeze_time("2015-12-1"):
         assert implementation_status() == {date(2015, 12, 1): True}

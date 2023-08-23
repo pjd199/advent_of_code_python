@@ -1,6 +1,8 @@
 name: CI-CD-Pipeline
 
 on:
+  workflow_dispatch:
+
   push:
     branches:
       - main
@@ -9,95 +11,119 @@ on:
   pull_request:
     types: [opened, edited, reopened]
 
-concurrency: 
+concurrency:
   group: CICD${{ github.ref }}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: 3.11
+
 jobs:
   check:
-    name: Static Check
+    name: Static checks
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out Respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
       
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_check.txt
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
-      - name: Lint with flake8
-        run: |
-          flake8 . --select=E9,F63,F7,F82 --show-source --statistics
-          flake8 . --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+      - name: Install dependancies
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
 
-      - name: Static type check with mypy
-        run: |
-          mypy --strict .
+      - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .
+        
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        with:
+          path: ~/.cache/pre-commit
+          key:
+            pre-commit-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('.pre-commit-config.yaml') }}
 
-      - name: Security check with bandit
-        run: |
-          bandit -r advent_of_code
+      - name: Run pre-commit on all files
+        run: pre-commit run --all-files
 
   unit-test:
-    name: Unit & Integration Test
+    name: Testing
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         group: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-      
+
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+
       - name: Install dependancies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_test.txt
-      
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
+
+      - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .
+
       - name: Run pytest
-        run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{ matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
-      
+        run:
+          pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{
+          matrix.group }} -n auto --suppress-no-test-exit-code
+          --splitting-algorithm=least_duration
+
       - name: Uploading coverage file artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: coverage${{ matrix.group }}
           path: .coverage
 
   coverage:
     name: Coverage Check
-    needs: unit-test 
+    needs: unit-test
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
+
       - name: Setup up python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.9"
+          python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-     
+
       - name: Install dependancies
-        run: |
-          python -m pip install --upgrade pip
-          pip install coverage
-      
-      - name: Download all artifacts
-        uses: actions/download-artifact@v2
-      
+        run: pip install coverage
+
+      - name: Download coverage artifacts
+        uses: actions/download-artifact@v3
+
       - name: Combine coverage files
         run: coverage combine coverage*/.coverage*
 
@@ -108,82 +134,102 @@ jobs:
         uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
-            
+
       - name: Check for 100% coverage
         run: coverage report --fail-under=100 --omit="*/test*"
 
-  deploy-to-aws-lambda:
-    name: Deploy to AWS Lambda 
-    needs: [check, unit-test, coverage]
-    runs-on: ubuntu-latest
-    steps:
-      -  name: Check out respository
-         uses: actions/checkout@v3
-
-      - name: Set variables for Production
-        if: github.ref == 'refs/heads/main'
-        run: echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
-      
-      - name: Set variables for Development
-        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
-        run: echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
-
-      - name: Setup up python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.9"
-          cache: "pip"
-
-      - name: Setup AWS SAM
-        uses: aws-actions/setup-sam@v1
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-
-      - name: Install project dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: SAM Validate
-        run: sam validate
-
-      - name: SAM Build
-        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
-    
-      - name: SAM Deploy to AWS Lambda
-        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --config-file ${{ env.SAM_CONFIG_FILE }}
-
-  system-test:
-    name: System Testing
-    needs: deploy-to-aws-lambda
+  build-and-deploy:
+    name: Deploy to AWS Lambda
+    #needs: [unit-test, check]
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
         uses: actions/checkout@v3
-      
-      - name: Setup up python
-        uses: actions/setup-python@v4
+
+      - name: Set variables for Production
+        if: github.ref == 'refs/heads/main'
+        run: |
+          echo "SAM_CONFIG_FILE=samconfig.toml" >> $GITHUB_ENV
+          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver@git+https://github.com/pjd199/advent_of_code_python@main\n$(cat Dockerfile)" > Dockerfile
+
+      - name: Set variables for Development
+        if: github.ref == 'refs/heads/dev' || github.head_ref == 'dev'
+        run: |
+          echo "SAM_CONFIG_FILE=samconfig_dev.toml" >> $GITHUB_ENV
+          echo -e "ARG BUILD_PACKAGE=advent_of_code_solver@git+https://github.com/pjd199/advent_of_code_python@dev\n$(cat Dockerfile)" > Dockerfile
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Setup AWS SAM
+        uses: aws-actions/setup-sam@v2
         with:
-          python-version: "3.9"
-          cache: "pip"
+          use-installer: true
 
       - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v2
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: SAM Validate
+        run: sam validate --lint
+
+      - name: SAM Build
+        run: sam build --config-file ${{ env.SAM_CONFIG_FILE }}
+
+      - uses: yogeshlonkar/wait-for-jobs@v0
+        name: Wait for testing to complete
+        with:
+          gh-token: ${{ secrets.GITHUB_TOKEN }}
+          jobs: 'Testing (1),Testing (2),Testing (3),Testing (4),Testing (5),Testing (6),Testing (7),Testing (8),Testing (9),Testing (10),'
+          ttl: '10'
+          interval: '5000'
+
+      - name: SAM Deploy to AWS Lambda
+        run:
+          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+          --config-file ${{ env.SAM_CONFIG_FILE }}
+
+  system-test:
+    name: System Testing
+    needs: build-and-deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out respository
+        uses: actions/checkout@v3
+
+      - name: Setup up python
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: "pip"
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements_CI_CD_test.txt
-      
+        run: pip install -r requirements_dev.txt
+
+      - name: Install editable package
+        run: pip install --editable .
+        
       - name: Run pytest on main lambda function
         if: github.ref == 'refs/heads/main'
         run: pytest ./tests/system -k _main -n auto
@@ -194,12 +240,5 @@ jobs:
 
   update_status_graphic:
     name: Update Status Graphic
-    needs: system-test
+    needs: unit-test
     uses: ./.github/workflows/update_status_graphic.yaml
-
-  dump:
-    name: Dump Environment Variables
-    runs-on: ubuntu-latest
-    steps:
-      - name: Dump context
-        uses: crazy-max/ghaction-dump-context@v1

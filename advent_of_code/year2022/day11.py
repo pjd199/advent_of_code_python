@@ -5,12 +5,12 @@ Monkey in the Middle
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/11
 """
+from collections.abc import Callable
 from copy import deepcopy
 from dataclasses import dataclass, field
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class _Monkey:
     """A Monkey from the puzzle input."""
 
-    items: List[int]
+    items: list[int]
     operator: str
     op_value: int
     test: int
-    throw: Dict[bool, int]
+    throw: dict[bool, int]
     inspections: int = field(default=0)
 
 
@@ -39,13 +39,13 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Monkey in the Middle"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
-        self.monkeys: List[_Monkey] = []
+        self.monkeys: list[_Monkey] = []
         for section in split_sections(puzzle_input):
             lines = parse_lines(
                 section,
@@ -96,10 +96,10 @@ class Solver(SolverInterface):
         """
         monkeys = deepcopy(self.monkeys)
 
-        op: Dict[str, Callable[[int, int], int]] = {
+        op: dict[str, Callable[[int, int], int]] = {
             "*": lambda old, value: old * value,
             "+": lambda old, value: old + value,
-            "square": lambda old, value: old * old,
+            "square": lambda old, _: old * old,
         }
 
         # play the rounds
@@ -114,7 +114,7 @@ class Solver(SolverInterface):
                 monkey.items.clear()
 
         # find the product of the two top passing monkeys
-        return prod(sorted((x.inspections for x in monkeys))[-2:])
+        return prod(sorted(x.inspections for x in monkeys)[-2:])
 
 
 if __name__ == "__main__":  # pragma: no cover

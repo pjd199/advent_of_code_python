@@ -7,7 +7,6 @@ https://adventofcode.com/2016/day/19
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +23,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "An Elephant Named Joseph"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.number_of_elves = parse_single_line(puzzle_input, r"\d+", int_processor)
 
@@ -62,11 +61,9 @@ class Solver(SolverInterface):
 
         if self.number_of_elves < 3:
             return 1
-        else:
-            if self.number_of_elves > (2 * int(3**exponent)):
-                return (2 * self.number_of_elves) - int(3 ** (exponent + 1))
-            else:
-                return self.number_of_elves - int(3**exponent)
+        if self.number_of_elves > (2 * int(3**exponent)):
+            return (2 * self.number_of_elves) - int(3 ** (exponent + 1))
+        return self.number_of_elves - int(3**exponent)
 
 
 if __name__ == "__main__":  # pragma: no cover

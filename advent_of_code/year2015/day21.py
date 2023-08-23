@@ -9,13 +9,13 @@ from collections import namedtuple
 from itertools import combinations
 from pathlib import Path
 from sys import maxsize, path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 21
     TITLE = "RPG Simulator 20XX"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         values = {
             k: int(v)
@@ -64,19 +64,12 @@ class Solver(SolverInterface):
         _, most_to_lose = self._battle()
         return most_to_lose
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts.
-
-        Returns:
-            List[int]: the results
-        """
-        return list(self._battle())
-
-    def _battle(self) -> Tuple[int, int]:
+    @cache_result
+    def _battle(self) -> tuple[int, int]:
         """Fight.
 
         Returns:
-            Tuple[int, int]: results of the two parts
+            tuple[int, int]: results of the two parts
         """
         Item = namedtuple("Item", ["cost", "damage", "armor"])
 

@@ -8,13 +8,13 @@ https://adventofcode.com/2015/day/22
 from enum import Enum, auto, unique
 from pathlib import Path
 from sys import maxsize, path
-from typing import Any, Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -103,16 +103,21 @@ class Game:
         self.spent = 0
         self.armor = 0
         self.depth = 0
-        self.effects: Dict[Spells, int] = {}
+        self.effects: dict[Spells, int] = {}
 
         # This is a reference to the min value, rather than storing directly
         # as an int, so that it is common to all sub games
         self.best_so_far = MinimumValue()
 
         self.turn = Turn.PLAYER
-        return self._next_turn()
+        return self.next_turn()
 
-    def _next_turn(self) -> int:
+    def next_turn(self) -> int:
+        """Take the turn.
+
+        Returns:
+            int: result fo this turn
+        """
         # have we already found a better result?
         if self.best_so_far.value <= self.spent:
             return maxsize
@@ -136,11 +141,10 @@ class Game:
 
         # take the turn
         if self.turn == Turn.PLAYER:
-            return self._player_turn()
-        else:
-            return self._boss_turn()
+            return self.player_turn()
+        return self.boss_turn()
 
-    def _player_turn(self) -> int:
+    def player_turn(self) -> int:
         """Player's turn to attack.
 
         Returns:
@@ -181,11 +185,11 @@ class Game:
             else:
                 child.depth += 1
                 child.turn = Turn.BOSS
-                least_spent = min(least_spent, child._next_turn())
+                least_spent = min(least_spent, child.next_turn())
         self.best_so_far.update(least_spent)
         return least_spent
 
-    def _boss_turn(self) -> int:
+    def boss_turn(self) -> int:
         """Boss's turn to attack.
 
         Returns:
@@ -196,13 +200,13 @@ class Game:
             return maxsize
         self.depth += 1
         self.turn = Turn.PLAYER
-        return self._next_turn()
+        return self.next_turn()
 
-    def spawn_child(self) -> Any:
+    def spawn_child(self) -> "Game":
         """Make a copy of the game.
 
         Returns:
-            Any: Return a copy of self
+            "Game": Return a copy of self
         """
         obj = type(self).__new__(self.__class__)
         obj.player_hp = self.player_hp
@@ -226,11 +230,11 @@ class Solver(SolverInterface):
     DAY = 22
     TITLE = "Wizard Simulator 20XX"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         values = {
             k: int(v)
@@ -245,6 +249,7 @@ class Solver(SolverInterface):
         self.boss_hp = values["Hit Points"]
         self.boss_damage = values["Damage"]
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -259,6 +264,7 @@ class Solver(SolverInterface):
             hard_mode=False,
         ).battle()
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 

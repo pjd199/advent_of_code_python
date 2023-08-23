@@ -6,10 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/13
 """
 from collections import deque
+from collections.abc import Callable
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import Callable, Deque, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -36,11 +36,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "Mine Cart Madness"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"[\|\-/\\\+<>^v ]+", str_processor))
 
@@ -63,11 +63,11 @@ class Solver(SolverInterface):
         _, result = self._solve()
         return result
 
-    def _solve(self) -> Tuple[str, str]:
+    def _solve(self) -> tuple[str, str]:
         """Solve the puzzle.
 
         Returns:
-            Tuple[str,str]: the answer (part one, part two)
+            tuple[str, str]: the answer (part one, part two)
         """
         first_crash_location = ""
 
@@ -85,7 +85,7 @@ class Solver(SolverInterface):
         tracks = [[track_map[v] for v in row] for row in self.input]
 
         # create the mappings to progress state on each tick
-        corner_moves: Dict[Tuple[str, str], str] = {
+        corner_moves: dict[tuple[str, str], str] = {
             ("/", "^"): ">",
             ("/", ">"): "^",
             ("/", "v"): "<",
@@ -95,7 +95,7 @@ class Solver(SolverInterface):
             ("\\", "v"): ">",
             ("\\", "<"): "^",
         }
-        move_coordinates: Dict[str, Callable[[int, int], Tuple[int, int]]] = {
+        move_coordinates: dict[str, Callable[[int, int], tuple[int, int]]] = {
             "^": lambda x, y: (x, y - 1),
             ">": lambda x, y: (x + 1, y),
             "v": lambda x, y: (x, y + 1),
@@ -104,7 +104,7 @@ class Solver(SolverInterface):
         directions = "^>v<"
 
         # move all the carts, using a queue to manage the order in a single tick
-        queue: Deque[Cart] = deque()
+        queue: deque[Cart] = deque()
         while len(carts) > 1 or queue:
             if not queue:
                 # get carts in order for next round

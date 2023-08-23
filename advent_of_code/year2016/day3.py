@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/10
 from itertools import chain
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "Squares With Three Sides"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(
             puzzle_input, (r"[0-9]+", int_processor), delimiter=r"\s+"
@@ -66,14 +65,14 @@ class Solver(SolverInterface):
             )
         )
 
-    def _count_possbile_triangles(self, itr: List[List[int]]) -> int:
+    def _count_possbile_triangles(self, itr: list[list[int]]) -> int:
         """Count the number of possible trianges.
 
             For possible triangles, the sum of two sides is greater than
             the length of the third side
 
         Args:
-            itr (Iterable[List[List[int]]]): the input
+            itr (list[list[int]]): the input
 
         Returns:
             int: the count

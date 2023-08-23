@@ -5,11 +5,11 @@ Dive!
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/2
 """
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -39,11 +39,11 @@ class Solver(SolverInterface):
     DAY = 2
     TITLE = "Dive!"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -60,7 +60,7 @@ class Solver(SolverInterface):
             int: the answer
         """
         x, y = 0, 0
-        moves: Dict[_Direction, Callable[[int], Tuple[int, int]]] = {
+        moves: dict[_Direction, Callable[[int], tuple[int, int]]] = {
             _Direction.forward: lambda v: (x + v, y),
             _Direction.down: lambda v: (x, y + v),
             _Direction.up: lambda v: (x, y - v),
@@ -77,7 +77,7 @@ class Solver(SolverInterface):
         """
         x, y = 0, 0
         aim = 0
-        moves: Dict[_Direction, Callable[[int], Tuple[int, int, int]]] = {
+        moves: dict[_Direction, Callable[[int], tuple[int, int, int]]] = {
             _Direction.forward: lambda v: (x + v, y + (aim * v), aim),
             _Direction.down: lambda v: (x, y, aim + v),
             _Direction.up: lambda v: (x, y, aim - v),

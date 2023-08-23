@@ -6,9 +6,9 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/7
 """
 from dataclasses import dataclass, field
+from itertools import pairwise
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -18,6 +18,17 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass
+class _Program:
+    name: str
+    weight: int
+    contents: str = ""
+    disc: list["_Program"] = field(default_factory=list)
+
+    def total_weight(self) -> int:
+        return self.weight + sum(x.total_weight() for x in self.disc)
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
@@ -25,21 +36,11 @@ class Solver(SolverInterface):
     DAY = 7
     TITLE = "Recursive Circus"
 
-    @dataclass
-    class _Program:
-        name: str
-        weight: int
-        contents: str = ""
-        disc: List["Solver._Program"] = field(default_factory=list)
-
-        def total_weight(self) -> int:
-            return self.weight + sum(x.total_weight() for x in self.disc)
-
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = {
             x.name: x
@@ -48,7 +49,7 @@ class Solver(SolverInterface):
                 (
                     r"(?P<name>\w+) \((?P<weight>\d+)\)"
                     r"( -> (?P<contents>(\w+(, )?)+))?",
-                    dataclass_processor(Solver._Program),
+                    dataclass_processor(_Program),
                 ),
             )
         }
@@ -70,7 +71,7 @@ class Solver(SolverInterface):
             for x in program.disc
             if program.disc
         }
-        self.root = list(possible.difference(held))[0]
+        self.root = next(iter(possible.difference(held)))
         return self.root
 
     def solve_part_two(self) -> int:
@@ -87,13 +88,10 @@ class Solver(SolverInterface):
         path = [program]
         while program.disc:
             weights = [x.total_weight() for x in program.disc]
-            if all(x == y for x, y in zip(weights, weights[1:])):
+            if all(x == y for x, y in pairwise(weights)):
                 break
-            else:
-                program = program.disc[
-                    weights.index(min(set(weights), key=weights.count))
-                ]
-                path.append(program)
+            program = program.disc[weights.index(min(set(weights), key=weights.count))]
+            path.append(program)
 
         # find the correct weight
         weights = [x.total_weight() for x in path[-2].disc]

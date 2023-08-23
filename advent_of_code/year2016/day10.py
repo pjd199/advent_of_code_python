@@ -5,11 +5,11 @@ Balance Bots
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
-from abc import ABC
+from collections.abc import Callable
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple, cast
+from typing import cast
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -19,6 +19,87 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+class _ChipPassingProtocol:
+    """Parent of _OutputBin and _Robot classes."""
+
+    def __init__(self, identifier: str) -> None:
+        """Initialise the item.
+
+        Args:
+            identifier (str): The identifier string
+        """
+        self.identifier = identifier
+        self.chips: list[int] = []
+
+    def add_chip(self, value: int) -> None:
+        """Add a chip to the item.
+
+        Args:
+            value (int): the chip's value
+        """
+        self.chips.append(value)
+        self.chips.sort()
+
+    def __str__(self) -> str:
+        """The identifier for the object.
+
+        Returns:
+            str: the identifier of the item
+        """
+        return self.identifier
+
+
+class _OutputBin(_ChipPassingProtocol):
+    """An Output Bin."""
+
+
+class _Robot(_ChipPassingProtocol):
+    """A Robot."""
+
+    def __init__(
+        self,
+        identifier: str,
+        giving_callback: Callable[["_Robot"], None],
+    ) -> None:
+        """Initialise the Robot with an indentifier and logger.
+
+        Args:
+            identifier (str): The robot's identifier
+            giving_callback (Callable[["_Robot"], None]): called
+                when values are given away
+        """
+        super().__init__(identifier)
+        self.giving_callback = giving_callback
+
+    def instruction(
+        self,
+        low_goes_to: "_ChipPassingProtocol",
+        high_goes_to: "_ChipPassingProtocol",
+    ) -> None:
+        """Add the instruction to the Robot.
+
+        Args:
+            low_goes_to (_ChipPassingProtocol): low value receiver
+            high_goes_to (_ChipPassingProtocol): high value receiver
+        """
+        self.low_goes_to = low_goes_to
+        self.high_goes_to = high_goes_to
+
+    def add_chip(self, value: int) -> None:
+        """Add a chip to the robot, and execute instruction if have two chips.
+
+        Args:
+            value (int): the value to add
+        """
+        super().add_chip(value)
+        if len(self.chips) == 2:
+            self.giving_callback(self)
+            low, high = self.chips
+            self.chips.clear()
+            self.low_goes_to.add_chip(low)
+            self.high_goes_to.add_chip(high)
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
@@ -26,103 +107,23 @@ class Solver(SolverInterface):
     DAY = 10
     TITLE = "Balance Bots"
 
-    class _ChipPassingProtocol(ABC):
-        """Parent of _OutputBin and _Robot classes."""
-
-        def __init__(self, identifier: str) -> None:
-            """Initialise the item.
-
-            Args:
-                identifier (str): The identifier string
-            """
-            self.identifier = identifier
-            self.chips: List[int] = []
-
-        def add_chip(self, value: int) -> None:
-            """Add a chip to the item.
-
-            Args:
-                value (int): the chip's value
-            """
-            self.chips.append(value)
-            self.chips.sort()
-
-        def __str__(self) -> str:
-            """The identifier for the object.
-
-            Returns:
-                str: the identifier of the item
-            """
-            return self.identifier
-
-    class _OutputBin(_ChipPassingProtocol):
-        """An Output Bin."""
-
-    class _Robot(_ChipPassingProtocol):
-        """A Robot."""
-
-        def __init__(
-            self,
-            identifier: str,
-            giving_callback: Callable[["Solver._Robot"], None],
-        ) -> None:
-            """Initialise the Robot with an indentifier and logger.
-
-            Args:
-                identifier (str): The robot's identifier
-                giving_callback (Callable[[&quot;Solver._Robot&quot;], None]): called
-                    when values are given away
-            """
-            super().__init__(identifier)
-            self.giving_callback = giving_callback
-
-        def instruction(
-            self,
-            low_goes_to: "Solver._ChipPassingProtocol",
-            high_goes_to: "Solver._ChipPassingProtocol",
-        ) -> None:
-            """Add the instruction to the Robot.
-
-            Args:
-                low_goes_to (Solver._ChipPassingProtocol): low value receiver
-                high_goes_to (Solver._ChipPassingProtocol): high value receiver
-            """
-            self.low_goes_to = low_goes_to
-            self.high_goes_to = high_goes_to
-
-        def add_chip(self, value: int) -> None:
-            """Add a chip to the robot, and execute instruction if have two chips.
-
-            Args:
-                value (int): the value to add
-            """
-            super().add_chip(value)
-            if len(self.chips) == 2:
-                self.giving_callback(self)
-                low, high = self.chips
-                self.chips.clear()
-                self.low_goes_to.add_chip(low)
-                self.high_goes_to.add_chip(high)
-
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the input
-        self.factory_floor: Dict[str, Solver._ChipPassingProtocol] = {}
-        self.log: Dict[str, Tuple[int, int]] = {}
-        self.setup: List[Tuple[str, int]] = []
+        self.factory_floor: dict[str, _ChipPassingProtocol] = {}
+        self.log: dict[str, tuple[int, int]] = {}
+        self.setup: list[tuple[str, int]] = []
 
-        def find(identifier: str) -> Solver._ChipPassingProtocol:
+        def find(identifier: str) -> _ChipPassingProtocol:
             if identifier not in self.factory_floor:
                 if identifier.startswith("bot"):
-                    self.factory_floor[identifier] = Solver._Robot(
-                        identifier, self.callback
-                    )
+                    self.factory_floor[identifier] = _Robot(identifier, self.callback)
                 if identifier.startswith("output"):
-                    self.factory_floor[identifier] = Solver._OutputBin(identifier)
+                    self.factory_floor[identifier] = _OutputBin(identifier)
             return self.factory_floor[identifier]
 
         parse_lines(
@@ -130,7 +131,7 @@ class Solver(SolverInterface):
             (
                 r"(?P<id>bot \d+) gives low to (?P<low_id>(?:bot|output) \d+) "
                 r"and high to (?P<high_id>(?:bot|output) \d+)",
-                lambda m: cast(Solver._Robot, find(m["id"])).instruction(
+                lambda m: cast(_Robot, find(m["id"])).instruction(
                     find(m["low_id"]),
                     find(m["high_id"]),
                 ),

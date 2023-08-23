@@ -9,7 +9,6 @@ from itertools import takewhile
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 8
     TITLE = "Treetop Tree House"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r"\d", int_processor))
 
@@ -58,7 +57,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def view_length(view: List[int], height: int) -> int:
+        def view_length(view: list[int], height: int) -> int:
             count = len(list(takewhile(lambda a: a < height, view)))
             return count + (1 if count < len(view) else 0)
 
@@ -68,7 +67,7 @@ class Solver(SolverInterface):
             for x in range(len(self.input[y]))
         )
 
-    def views(self, x: int, y: int) -> List[List[int]]:
+    def views(self, x: int, y: int) -> list[list[int]]:
         """Return all the trees in each direction [up, down, left, right].
 
         Args:
@@ -76,7 +75,7 @@ class Solver(SolverInterface):
             y (int): the starting y coordinate
 
         Returns:
-            List[List[int]]: the result
+            list[list[int]]: the result
         """
         return [
             [self.input[y1][x] for y1 in range(y - 1, -1, -1)],  # up

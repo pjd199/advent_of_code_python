@@ -8,7 +8,7 @@ https://adventofcode.com/2022/day/25
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import List
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 25
     TITLE = "Full of Hot Air"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"[0-9=-]+", str_processor))
 
@@ -41,21 +41,16 @@ class Solver(SolverInterface):
         """
         return self._to_snafu(sum(self._to_decimal(x) for x in self.input))
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
+
+        Returns:
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
-
-    def solve_all(self) -> List[str]:
-        """Solve the one and only part to this puzzle.
-
-        Returns:
-            List[int]: the result
-        """
-        return [self.solve_part_one()]
+        raise NotImplementedError
 
     def _to_decimal(self, snafu: str) -> int:
         """Convert a SNAFU string into a decimal int.
@@ -84,7 +79,7 @@ class Solver(SolverInterface):
         length = next(i for i in count() if decimal < (5**i)) - 1
 
         # find the partial result, before using the - and = digits
-        partial: List[int] = []
+        partial: list[int] = []
         for i in range(length, -1, -1):
             x = decimal // (5**i) if decimal >= (5**i) else 0
             decimal -= x * (5**i)
@@ -102,8 +97,7 @@ class Solver(SolverInterface):
             5: ("0", 1),
         }
         for digit in reversed(partial):
-            digit += carry
-            x, carry = encoder[digit]
+            x, carry = encoder[digit + carry]
             encoded.append(x)
 
         # handle the last carry

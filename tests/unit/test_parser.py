@@ -4,8 +4,13 @@ from enum import Enum
 from re import fullmatch
 
 import pytest
-
 from advent_of_code.utils.parser import (
+    HeaderError,
+    LengthError,
+    MissingDelimiterError,
+    NoMatchFoundError,
+    ParseError,
+    SectionError,
     _validate_input_and_header,
     dataclass_processor,
     enum_processor,
@@ -16,6 +21,7 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     parse_tokens,
+    split_sections,
     str_processor,
     str_processor_group,
     str_tuple_processor,
@@ -154,7 +160,7 @@ def test_enum_processor() -> None:
         C = "C"
 
     processor = enum_processor(TestEnum)
-    with pytest.raises(ValueError, match=r"argument must be subclass of Enum"):
+    with pytest.raises(TypeError):
         enum_processor(str)
 
     m = fullmatch(r".*", "B")
@@ -174,11 +180,11 @@ def test_validate_input_and_header() -> None:
     puzzle_input = ["abc", "def", "ghi", "hkl"]
 
     # test with input too short
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         _validate_input_and_header([], 1, 4, ())
 
     # test with input too long
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         _validate_input_and_header(puzzle_input, 1, 1, ())
 
     # test without header
@@ -188,7 +194,7 @@ def test_validate_input_and_header() -> None:
     assert _validate_input_and_header(puzzle_input, 1, 4, header=("abc", "def")) == 2
 
     # test removing wrong header
-    with pytest.raises(RuntimeError):
+    with pytest.raises(HeaderError):
         _validate_input_and_header(puzzle_input, 1, 4, header=("xyz",))
 
 
@@ -225,19 +231,21 @@ def test_parse_lines() -> None:
     ]
 
     # test with too short input
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_lines(puzzle_input, (r".*", str_processor), min_length=10)
 
     # test with too long input
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_lines(puzzle_input, (r".*", str_processor), max_length=1)
 
     # test with wrong type
-    with pytest.raises(RuntimeError):
+    with pytest.raises(
+        ValueError, match=r"invalid literal for int\(\) with base 10: 'abc'"
+    ):
         parse_lines(puzzle_input, (r".*", int_processor))
 
     # test with no match
-    with pytest.raises(RuntimeError):
+    with pytest.raises(NoMatchFoundError):
         parse_lines(puzzle_input, (r"xyz", str_processor))
 
 
@@ -247,15 +255,17 @@ def test_parse_single_lines() -> None:
     assert parse_single_line(["abc"], r".*", str_processor) == "abc"
 
     # test with too short input
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_single_line([], r".*", str_processor)
 
     # test with too long input
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_single_line(["abc", "def"], r".*", str_processor)
 
     # test with wrong type
-    with pytest.raises(RuntimeError):
+    with pytest.raises(
+        ValueError, match=r"invalid literal for int\(\) with base 10: 'abc'"
+    ):
         parse_single_line(["abc"], r".*", int_processor)
 
 
@@ -289,26 +299,28 @@ def test_parse_tokens() -> None:
         puzzle_input, (r"\d", int_processor), delimiter=" ", header=("a b c",)
     ) == [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
 
-    # test with wrong delimiter
-    with pytest.raises(RuntimeError):
+    # # test with wrong delimiter
+    with pytest.raises(MissingDelimiterError):
         parse_tokens(puzzle_input, (r"[a-z0-9]", str_processor), delimiter=",")
 
     # test with wrong reg ex
-    with pytest.raises(RuntimeError):
+    with pytest.raises(NoMatchFoundError):
         parse_tokens(puzzle_input, (r"\d", str_processor), delimiter=" ")
 
     # test wrong type
-    with pytest.raises(RuntimeError):
+    with pytest.raises(
+        ValueError, match=r"invalid literal for int\(\) with base 10: 'a"
+    ):
         parse_tokens(puzzle_input, (r"[a-z0-9]", int_processor), delimiter=" ")
 
     # test with too short
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_tokens(
             puzzle_input, (r"[a-z0-9]+", str_processor), min_length=10, delimiter=" "
         )
 
     # test with too long
-    with pytest.raises(RuntimeError):
+    with pytest.raises(LengthError):
         parse_tokens(
             puzzle_input, (r"[a-z0-9]+", str_processor), max_length=1, delimiter=" "
         )
@@ -339,13 +351,39 @@ def test_parse_grid() -> None:
     )
 
     # test with wrong reg ex
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseError):
         parse_grid(puzzle_input, r"xyz", int_processor)
 
     # test with too short
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseError):
         parse_grid(puzzle_input, r"[0-9]", int_processor, min_length=10)
 
     # test with too long
-    with pytest.raises(RuntimeError):
+    with pytest.raises(ParseError):
         parse_grid(puzzle_input, r"[0-9]", int_processor, max_length=1)
+
+
+def test_split_sections() -> None:
+    """Unit test for parse_lines."""
+    # test with simple input
+    assert len(split_sections(["abc", "", "def"])) == 2
+
+    # test with different section break
+    assert (
+        len(split_sections(["abc", "1", "def", "2", "ghi"], section_break=r"[0-9]"))
+        == 3
+    )
+
+    # test for correct expected sections
+    assert len(split_sections(["abc", "", "def"], expected_sections=2)) == 2
+
+    # test for incorrect expected sections
+    with pytest.raises(SectionError):
+        split_sections(["abc", "", "def"], expected_sections=3)
+
+    # test for single section
+    assert len(split_sections(["abc", "def"])) == 1
+
+    # test with empty input
+    with pytest.raises(LengthError):
+        split_sections([])

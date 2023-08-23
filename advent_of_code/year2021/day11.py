@@ -5,9 +5,9 @@ Dumbo Octopus
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/11
 """
+from collections.abc import Generator
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
 
 import numpy as np
 
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Dumbo Octopus"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r"\d+", int_processor))
         self.cache: list[int] = []
@@ -55,7 +55,7 @@ class Solver(SolverInterface):
             i + 1 for i, flashes in enumerate(self._solve()) if flashes == target
         )
 
-    def _solve(self) -> Iterator[int]:
+    def _solve(self) -> Generator[int, None, None]:
         # using caching to improve speed
         if self.cache:
             yield from self.cache

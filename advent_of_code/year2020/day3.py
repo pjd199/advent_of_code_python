@@ -9,7 +9,6 @@ from itertools import count
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "Toboggan Trajectory"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r"[#.]", str_processor))
 
@@ -50,11 +49,11 @@ class Solver(SolverInterface):
         """
         return self._solve([(1, 1), (3, 1), (5, 1), (7, 1), (1, 2)])
 
-    def _solve(self, slopes: List[Tuple[int, int]]) -> int:
+    def _solve(self, slopes: list[tuple[int, int]]) -> int:
         """Solve the puzzle.
 
         Args:
-            slopes (List[Tuple[int, int]]): the slopes to descend
+            slopes (list[tuple[int, int]]): the slopes to descend
 
         Returns:
             int: the result

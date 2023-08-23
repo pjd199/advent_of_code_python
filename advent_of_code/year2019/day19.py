@@ -5,10 +5,10 @@ Tractor Beam
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/19
 """
+from collections.abc import Generator
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import Iterator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -74,11 +74,11 @@ class Solver(SolverInterface):
         self.computer.execute()
         return self.computer.read_output() == 1
 
-    def _lower_edge(self) -> Iterator[tuple[int, int]]:
+    def _lower_edge(self) -> Generator[tuple[int, int], None, None]:
         """Iterator for the lower edge of the tractor beam.
 
         Yields:
-            Iterator[tuple[int, int]]: Iterator of (x,y) co-ordinates
+            Generator[tuple[int, int], None, None]: Iterator of (x,y) co-ordinates
         """
         x = 0
         for y in count():
@@ -88,11 +88,11 @@ class Solver(SolverInterface):
                     yield y, x
                     break
 
-    def _upper_edge(self) -> Iterator[tuple[int, int]]:
+    def _upper_edge(self) -> Generator[tuple[int, int], None, None]:
         """Iterator for the upper edge of the tractor beam.
 
         Yields:
-            Iterator[tuple[int, int]]: Iterator of (x,y) co-ordinates
+            Generator[tuple[int, int], None, None]: Iterator of (x,y) co-ordinates
         """
         x = 0
         for y in count():

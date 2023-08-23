@@ -1,8 +1,8 @@
 """assembunny definitions and functions required for days 12, 23 & 25."""
+from collections.abc import Generator
 from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum, unique
-from typing import Iterator, List, Tuple
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 
@@ -29,23 +29,23 @@ class Instruction:
     first: str
     second: str = ""
 
-    def astuple(self) -> Tuple[Action, str, str]:
+    def astuple(self) -> tuple[Action, str, str]:
         """Convert the Instruction into a Tuple.
 
         Returns:
-            Tuple[Action, str, str]: the Instruction as a Tuple
+            tuple[Action, str, str]: the Instruction as a Tuple
         """
         return (self.action, self.first, self.second)
 
 
-def load(puzzle_input: List[str]) -> List[Instruction]:
+def load(puzzle_input: list[str]) -> list[Instruction]:
     """Load assumbunny from the puzzle input.
 
     Args:
-        puzzle_input (List[str]): the input
+        puzzle_input (list[str]): the input
 
     Returns:
-        List[Instruction]: the loaded program
+        list[Instruction]: the loaded program
     """
     return parse_lines(
         puzzle_input,
@@ -59,7 +59,7 @@ def load(puzzle_input: List[str]) -> List[Instruction]:
 
 
 def run(
-    program: List[Instruction],
+    program: list[Instruction],
     a: int = 0,
     b: int = 0,
     c: int = 0,
@@ -68,7 +68,7 @@ def run(
     """Run the simulation.
 
     Args:
-        program (List[Instruction]): the program to run
+        program (list[Instruction]): the program to run
         a (int): initial value for register a. Default 0.
         b (int): initial value for register b. Default 0.
         c (int): initial value for register c. Default 0.
@@ -77,27 +77,27 @@ def run(
     Returns:
         int: value of register after execution
     """
-    return list(run_iter(program, a, b, c, d))[0]
+    return next(iter(run_iter(program, a, b, c, d)))
 
 
 def run_iter(
-    program: List[Instruction],
+    program: list[Instruction],
     a: int = 0,
     b: int = 0,
     c: int = 0,
     d: int = 0,
-) -> Iterator[int]:
+) -> Generator[int, None, None]:
     """Run the simulation.
 
     Args:
-        program (List[Instruction]): the program to run
+        program (list[Instruction]): the program to run
         a (int): initial value for register a. Default 0.
         b (int): initial value for register b. Default 0.
         c (int): initial value for register c. Default 0.
         d (int): initial value for register d. Default 0.
 
     Yields:
-        Iterator[int]: the output from the out instruction
+        Generator[int, None, None]: the output from the out instruction
     """
     # create a copy to preserve the original
     program = deepcopy(program)

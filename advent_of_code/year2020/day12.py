@@ -5,9 +5,9 @@ Rain Risk
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/12
 """
+from collections.abc import Callable
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 12
     TITLE = "Rain Risk"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         #         puzzle_input = """F10
         # N3
@@ -76,7 +76,7 @@ class Solver(SolverInterface):
         ship_x, ship_y = 0, 0
         waypoint_x, waypoint_y = 10, -1
 
-        rotate: Dict[str, Dict[int, Callable[[int, int], Tuple[int, int]]]] = {
+        rotate: dict[str, dict[int, Callable[[int, int], tuple[int, int]]]] = {
             "L": {
                 90: lambda x, y: (y, -x),
                 180: lambda x, y: (-x, -y),
@@ -89,7 +89,7 @@ class Solver(SolverInterface):
             },
         }
 
-        move: Dict[str, Callable[[int, int, int], Tuple[int, int]]] = {
+        move: dict[str, Callable[[int, int, int], tuple[int, int]]] = {
             "N": lambda x, y, v: (x, y - v),
             "E": lambda x, y, v: (x + v, y),
             "S": lambda x, y, v: (x, y + v),

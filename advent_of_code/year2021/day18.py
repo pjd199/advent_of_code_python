@@ -87,7 +87,7 @@ class Solver(SolverInterface):
         Returns:
             list[int]: the reduced result
         """
-        number = [OPEN] + a + b + [CLOSE]
+        number = [OPEN, *a, *b, CLOSE]
         action = True
         while action:
             while action := self._explode(number):

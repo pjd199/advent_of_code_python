@@ -9,7 +9,7 @@ from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path
 from sys import path
-from typing import DefaultDict, Dict, List
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -28,7 +28,7 @@ class _Action:
 
 @dataclass
 class _State:
-    actions: List[_Action] = field(default_factory=list)
+    actions: list[_Action] = field(default_factory=list)
 
 
 class Solver(SolverInterface):
@@ -38,11 +38,11 @@ class Solver(SolverInterface):
     DAY = 25
     TITLE = "The Halting Problem"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # split the sections for parsing
         sections = split_sections(puzzle_input)
@@ -61,7 +61,7 @@ class Solver(SolverInterface):
         self.stop = int(stop)
 
         # parse the state transitions
-        self.input: Dict[str, _State] = {}
+        self.input: dict[str, _State] = {}
         for section in sections[1:]:
             tokens = parse_lines(
                 section,
@@ -92,7 +92,7 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        tape: DefaultDict[int, int] = defaultdict(int)
+        tape: defaultdict[int, int] = defaultdict(int)
         cursor = 0
         state = self.start_state
 
@@ -105,21 +105,16 @@ class Solver(SolverInterface):
 
         return sum(tape.values())
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
+
+        Returns:
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
-
-    def solve_all(self) -> List[int]:
-        """Solve the one and only part to this puzzle.
-
-        Returns:
-            List[int]: the result
-        """
-        return [self.solve_part_one()]
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

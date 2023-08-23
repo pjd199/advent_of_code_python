@@ -1,0 +1,3410 @@
+{
+    "2015": {
+        "1": {
+            "year": 2015,
+            "day": 1,
+            "title": "Not Quite Lisp",
+            "excerpt": "Santa was hoping for a white Christmas, but his weather machine's \"snow\" function is powered by stars, and he's fresh out!  To save Christmas, he needs you to collect fifty stars by December 25th.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 23,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "2": {
+            "year": 2015,
+            "day": 2,
+            "title": "I Was Told There Would Be No Math",
+            "excerpt": "The elves are running low on wrapping paper, and so they need to submit an order for more.  They have a list of the dimensions (length l, width w, and height h) of each present, and only want to order exactly as much as they need.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 6,
+                "part_one": 1,
+                "part_two": 0
+            }
+        },
+        "3": {
+            "year": 2015,
+            "day": 3,
+            "title": "Perfectly Spherical Houses in a Vacuum",
+            "excerpt": "Santa is delivering presents to an infinite two-dimensional grid of houses.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 9,
+                "part_one": 8,
+                "part_two": 15
+            }
+        },
+        "4": {
+            "year": 2015,
+            "day": 4,
+            "title": "The Ideal Stocking Stuffer",
+            "excerpt": "Santa needs help mining some AdventCoins (very similar to bitcoins) to use as gifts for all the economically forward-thinking little girls and boys.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1946,
+                "part_two": 52788
+            }
+        },
+        "5": {
+            "year": 2015,
+            "day": 5,
+            "title": "Doesn't He Have Intern-Elves For This?",
+            "excerpt": "Santa needs help figuring out which strings in his text file are naughty or nice.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 8,
+                "part_two": 12
+            }
+        },
+        "6": {
+            "year": 2015,
+            "day": 6,
+            "title": "Probably a Fire Hazard",
+            "excerpt": "Because your neighbors keep defeating you in the holiday house decorating contest year after year, you've decided to deploy one million lights in a 1000x1000 grid.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 28,
+                "part_two": 149
+            }
+        },
+        "7": {
+            "year": 2015,
+            "day": 7,
+            "title": "Some Assembly Required",
+            "excerpt": "This year, Santa brought little Bobby Tables a set of wires and bitwise logic gates!  Unfortunately, little Bobby is a little under the recommended age range, and he needs help assembling the circuit.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 3,
+                "part_two": 5
+            }
+        },
+        "8": {
+            "year": 2015,
+            "day": 8,
+            "title": "Matchsticks",
+            "excerpt": "Space on the sleigh is limited this year, and so Santa will be bringing his list as a digital copy. He needs to know how much space it will take up when stored.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2,
+                "part_two": 2
+            }
+        },
+        "9": {
+            "year": 2015,
+            "day": 9,
+            "title": "All in a Single Night",
+            "excerpt": "Every year, Santa manages to deliver all of his presents in a single night.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 97,
+                "part_two": 0
+            }
+        },
+        "10": {
+            "year": 2015,
+            "day": 10,
+            "title": "Elves Look, Elves Say",
+            "excerpt": "Today, the Elves are playing a game called look-and-say.  They take turns making sequences by reading aloud the previous sequence and using that reading as the next sequence.  For example, 211 is read as \"one two, two ones\", which becomes 1221 (1 2, 2 1s).",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 369,
+                "part_two": 4695
+            }
+        },
+        "11": {
+            "year": 2015,
+            "day": 11,
+            "title": "Corporate Policy",
+            "excerpt": "Santa's previous password expired, and he needs help choosing a new one.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 594,
+                "part_two": 1705
+            }
+        },
+        "12": {
+            "year": 2015,
+            "day": 12,
+            "title": "JSAbacusFramework.io",
+            "excerpt": "Santa's Accounting-Elves need help balancing the books after a recent order.  Unfortunately, their accounting software uses a peculiar storage format.  That's where you come in.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 2,
+                "part_two": 1
+            }
+        },
+        "13": {
+            "year": 2015,
+            "day": 13,
+            "title": "Knights of the Dinner Table",
+            "excerpt": "In years past, the holiday feast with your family hasn't gone so well.  Not everyone gets along!  This year, you resolve, will be different.  You're going to find the optimal seating arrangement and avoid all those awkward conversations.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 97,
+                "part_two": 867
+            }
+        },
+        "14": {
+            "year": 2015,
+            "day": 14,
+            "title": "Reindeer Olympics",
+            "excerpt": "This year is the Reindeer Olympics!  Reindeer can fly at high speeds, but must rest occasionally to recover their energy.  Santa would like to know which of his reindeer is fastest, and so he has them race.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 14,
+                "part_two": 0
+            }
+        },
+        "15": {
+            "year": 2015,
+            "day": 15,
+            "title": "Science for Hungry People",
+            "excerpt": "Today, you set out on the task of perfecting your milk-dunking cookie recipe.  All you have to do is find the right balance of ingredients.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1832,
+                "part_two": 0
+            }
+        },
+        "16": {
+            "year": 2015,
+            "day": 16,
+            "title": "Aunt Sue",
+            "excerpt": "Your Aunt Sue has given you a wonderful gift, and you'd like to send her a thank you card.  However, there's a small problem: she signed it \"From, Aunt Sue\".",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "17": {
+            "year": 2015,
+            "day": 17,
+            "title": "No Such Thing as Too Much",
+            "excerpt": "The elves bought too much eggnog again - 150 liters this time.  To fit it all into your refrigerator, you'll need to move it into smaller containers.  You take an inventory of the capacities of the available containers.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 230,
+                "part_two": 233
+            }
+        },
+        "18": {
+            "year": 2015,
+            "day": 18,
+            "title": "Like a GIF For Your Yard",
+            "excerpt": "After the million lights incident, the fire code has gotten stricter: now, at most ten thousand lights are allowed.  You arrange them in a 100x100 grid.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 18,
+                "part_one": 2756,
+                "part_two": 2531
+            }
+        },
+        "19": {
+            "year": 2015,
+            "day": 19,
+            "title": "Medicine for Rudolph",
+            "excerpt": "Rudolph the Red-Nosed Reindeer is sick!  His nose isn't shining very brightly, and he needs medicine.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 6,
+                "part_two": 377
+            }
+        },
+        "20": {
+            "year": 2015,
+            "day": 20,
+            "title": "Infinite Elves and Infinite Houses",
+            "excerpt": "To keep the Elves busy, Santa has them deliver some presents by hand, door-to-door.  He sends them down a street with infinite houses numbered sequentially: 1, 2, 3, 4, 5, and so on.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 5088,
+                "part_two": 5213
+            }
+        },
+        "21": {
+            "year": 2015,
+            "day": 21,
+            "title": "RPG Simulator 20XX",
+            "excerpt": "Little Henry Case got a new video game for Christmas.  It's an RPG, and he's stuck on a boss.  He needs to know what equipment to buy at the shop.  He hands you the controller.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 11,
+                "part_two": 0
+            }
+        },
+        "22": {
+            "year": 2015,
+            "day": 22,
+            "title": "Wizard Simulator 20XX",
+            "excerpt": "Little Henry Case decides that defeating bosses with swords and stuff is boring.  Now he's playing the game with a wizard.  Of course, he gets stuck on another boss and needs your help again.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 11923,
+                "part_two": 705
+            }
+        },
+        "23": {
+            "year": 2015,
+            "day": 23,
+            "title": "Opening the Turing Lock",
+            "excerpt": "Little Jane Marie just got her very first computer for Christmas from some unknown benefactor.  It comes with instructions and an example program, but the computer itself seems to be malfunctioning.  She's curious what the program does, and would like you to help her run it.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 2
+            }
+        },
+        "24": {
+            "year": 2015,
+            "day": 24,
+            "title": "It Hangs in the Balance",
+            "excerpt": "It's Christmas Eve, and Santa is loading up the sleigh for this year's deliveries.  However, there's one small problem: he can't get the sleigh to balance.  If it isn't balanced, he can't defy physics, and nobody gets presents this year.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 324,
+                "part_two": 45
+            }
+        },
+        "25": {
+            "year": 2015,
+            "day": 25,
+            "title": "Let It Snow",
+            "excerpt": "Merry Christmas!  Santa is booting up his weather machine; looks like you might get a white Christmas after all.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2022-07-09T19:08:56+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2623
+            }
+        }
+    },
+    "2016": {
+        "1": {
+            "year": 2016,
+            "day": 1,
+            "title": "No Time for a Taxicab",
+            "excerpt": "Santa's sleigh uses a very high-precision clock to guide its movements, and the clock's oscillator is regulated by stars. Unfortunately, the stars have been stolen... by the Easter Bunny.  To save Christmas, Santa needs you to retrieve all fifty stars by December 25th.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-09T21:28:40+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "2": {
+            "year": 2016,
+            "day": 2,
+            "title": "Bathroom Security",
+            "excerpt": "You arrive at Easter Bunny Headquarters under cover of darkness. However, you left in such a rush that you forgot to use the bathroom! Fancy office buildings like this one usually have keypad locks on their bathrooms, so you search the front desk for the code.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-13T15:43:52+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 6,
+                "part_one": 2,
+                "part_two": 1
+            }
+        },
+        "3": {
+            "year": 2016,
+            "day": 3,
+            "title": "Squares With Three Sides",
+            "excerpt": "Now that you can think clearly, you move deeper into the labyrinth of hallways and office furniture that makes up this part of Easter Bunny HQ. This must be a graphic design department; the walls are covered in specifications for triangles.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-18T11:02:03+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 21,
+                "part_one": 1,
+                "part_two": 2
+            }
+        },
+        "4": {
+            "year": 2016,
+            "day": 4,
+            "title": "Security Through Obscurity",
+            "excerpt": "Finally, you come across an information kiosk with a list of rooms.  Of course, the list is encrypted and full of decoy data, but the instructions to decode the list are barely hidden nearby.  Better remove the decoy data first.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-18T11:02:03+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 25,
+                "part_two": 5
+            }
+        },
+        "5": {
+            "year": 2016,
+            "day": 5,
+            "title": "How About a Nice Game of Chess?",
+            "excerpt": "You are faced with a security door designed by Easter Bunny engineers that seem to have acquired most of their security knowledge by watching hacking movies.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-19T07:49:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 38371,
+                "part_two": 95592
+            }
+        },
+        "6": {
+            "year": 2016,
+            "day": 6,
+            "title": "Signals and Noise",
+            "excerpt": "Something is jamming your communications with Santa. Fortunately, your signal is only partially jammed, and protocol in situations like this is to switch to a simple repetition code to get the message through.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-19T17:07:38+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 1
+            }
+        },
+        "7": {
+            "year": 2016,
+            "day": 7,
+            "title": "Internet Protocol Version 7",
+            "excerpt": "While snooping around the local network of EBHQ, you compile a list of IP addresses (they're IPv7, of course; IPv6 is much too limited). You'd like to figure out which IPs support TLS (transport-layer snooping).",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-20T09:45:18+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 11,
+                "part_one": 73,
+                "part_two": 70
+            }
+        },
+        "8": {
+            "year": 2016,
+            "day": 8,
+            "title": "Two-Factor Authentication",
+            "excerpt": "You come across a door implementing what you can only assume is an implementation of two-factor authentication after a long game of requirements telephone.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-22T09:34:33+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 4,
+                "part_two": 1
+            }
+        },
+        "9": {
+            "year": 2016,
+            "day": 9,
+            "title": "Explosives in Cyberspace",
+            "excerpt": "Wandering around a secure area, you come across a datalink port to a new part of the network. After briefly scanning it for interesting files, you find one file in particular that catches your attention. It's compressed with an experimental format, but fortunately, the documentation for the format is nearby.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-23T16:41:36+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 0,
+                "part_two": 8
+            }
+        },
+        "10": {
+            "year": 2016,
+            "day": 10,
+            "title": "Balance Bots",
+            "excerpt": "You come upon a factory in which many robots are zooming around handing small microchips to each other.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-24T18:26:07+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "11": {
+            "year": 2016,
+            "day": 11,
+            "title": "Radioisotope Thermoelectric Generators",
+            "excerpt": "You come upon a column of four floors that have been entirely sealed off from the rest of the building except for a small dedicated lobby.  There are some radiation warnings and a big sign which reads \"Radioisotope Testing Facility\".",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-27T17:28:33+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 751,
+                "part_two": 5584
+            }
+        },
+        "12": {
+            "year": 2016,
+            "day": 12,
+            "title": "Leonardo's Monorail",
+            "excerpt": "You finally reach the top floor of this building: a garden with a slanted glass ceiling. Looks like there are no more stars to be had.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-07-28T09:58:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1119,
+                "part_two": 31792
+            }
+        },
+        "13": {
+            "year": 2016,
+            "day": 13,
+            "title": "A Maze of Twisty Little Cubicles",
+            "excerpt": "You arrive at the first floor of this new building to discover a much less welcoming environment than the shiny atrium of the last one.  Instead, you are in a maze of twisty little cubicles, all alike.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-02T14:47:52+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 0
+            }
+        },
+        "14": {
+            "year": 2016,
+            "day": 14,
+            "title": "One-Time Pad",
+            "excerpt": "In order to communicate securely with Santa while you're on this mission, you've been using a one-time pad that you generate using a pre-agreed algorithm. Unfortunately, you've run out of keys in your one-time pad, and so you need to generate some more.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-03T09:09:00+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 269,
+                "part_two": 234974
+            }
+        },
+        "15": {
+            "year": 2016,
+            "day": 15,
+            "title": "Timing is Everything",
+            "excerpt": "The halls open into an interior plaza containing a large kinetic sculpture. The sculpture is in a sealed enclosure and seems to involve a set of identical spherical capsules that are carried to the top and allowed to bounce through the maze of spinning pieces.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-05T07:01:13+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 330,
+                "part_two": 2910
+            }
+        },
+        "16": {
+            "year": 2016,
+            "day": 16,
+            "title": "Dragon Checksum",
+            "excerpt": "You're done scanning this part of the network, but you've left traces of your presence. You need to overwrite some disks with random-looking data to cover your tracks and update the local security system with a new checksum for those disks.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-05T07:59:39+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 9514
+            }
+        },
+        "17": {
+            "year": 2016,
+            "day": 17,
+            "title": "Two Steps Forward",
+            "excerpt": "You're trying to access a secure vault protected by a 4x4 grid of small rooms connected by doors. You start in the top-left room (marked S), and you can access the vault (marked V) once you reach the bottom-right room:",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-05T20:14:41+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 328,
+                "part_two": 0
+            }
+        },
+        "18": {
+            "year": 2016,
+            "day": 18,
+            "title": "Like a Rogue",
+            "excerpt": "As you enter this room, you hear a loud click! Some of the tiles in the floor here seem to be pressure plates for traps, and the trap you just triggered has run out of... whatever it tried to do to you. You doubt you'll be so lucky next time.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-07T15:55:10+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 4094
+            }
+        },
+        "19": {
+            "year": 2016,
+            "day": 19,
+            "title": "An Elephant Named Joseph",
+            "excerpt": "The Elves contact you over a highly secure emergency channel. Back at the North Pole, the Elves are busy misunderstanding White Elephant parties.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-07T20:44:43+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "20": {
+            "year": 2016,
+            "day": 20,
+            "title": "Firewall Rules",
+            "excerpt": "You'd like to set up a small hidden computer here so you can use it to get back into the network later. However, the corporate firewall only allows communication with certain external IP addresses.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-12T18:08:04+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 2,
+                "part_two": 0
+            }
+        },
+        "21": {
+            "year": 2016,
+            "day": 21,
+            "title": "Scrambled Letters and Hash",
+            "excerpt": "The computer system you're breaking into uses a weird scrambling function to store its passwords. It shouldn't be much trouble to create your own scrambled password so you can add it to the system; you just have to implement the scrambler.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-15T15:27:19+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 1
+            }
+        },
+        "22": {
+            "year": 2016,
+            "day": 22,
+            "title": "Grid Computing",
+            "excerpt": "You gain access to a massive storage cluster arranged in a grid; each storage node is only connected to the four nodes directly adjacent to it (three if the node is on an edge, two if it's in a corner).",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-20T08:33:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 9,
+                "part_one": 90,
+                "part_two": 0
+            }
+        },
+        "23": {
+            "year": 2016,
+            "day": 23,
+            "title": "Safe Cracking",
+            "excerpt": "This is one of the top floors of the nicest tower in EBHQ. The Easter Bunny's private office is here, complete with a safe hidden behind a painting, and who wouldn't hide a star in a safe behind a painting?",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-20T10:38:02+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 70,
+                "part_two": 33
+            }
+        },
+        "24": {
+            "year": 2016,
+            "day": 24,
+            "title": "Air Duct Spelunking",
+            "excerpt": "You've finally met your match; the doors that provide access to the roof are locked tight, and all of the controls and related electronics are inaccessible. You simply can't reach them.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-08-20T14:02:01+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 19,
+                "part_one": 89,
+                "part_two": 0
+            }
+        },
+        "25": {
+            "year": 2016,
+            "day": 25,
+            "title": "Clock Signal",
+            "excerpt": "You open the door and find yourself on the roof. The city sprawls away from you for miles and miles.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2022-08-20T16:55:02+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 5155
+            }
+        }
+    },
+    "2017": {
+        "1": {
+            "year": 2017,
+            "day": 1,
+            "title": "Inverse Captcha",
+            "excerpt": "The night before Christmas, one of Santa's Elves calls you in a panic. \"The printer's broken! We can't print the Naughty or Nice List!\" By the time you make it to sub-basement 17, there are only a few minutes until midnight. \"We have a big problem,\" she says; \"there must be almost fifty bugs in this system, but nothing else can print The List. Stand in this square, quick! There's no time to explain; if you can convince them to pay you in stars, you'll be able to--\" She pulls a lever and the world goes blurry.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-13T11:24:51+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "2": {
+            "year": 2017,
+            "day": 2,
+            "title": "Corruption Checksum",
+            "excerpt": "As you walk through the door, a glowing humanoid shape yells in your direction. \"You there! Your state appears to be idle. Come help us repair the corruption in this spreadsheet - if we take another millisecond, we'll have to display an hourglass cursor!\"",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-13T11:24:51+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "3": {
+            "year": 2017,
+            "day": 3,
+            "title": "Spiral Memory",
+            "excerpt": "You come across an experimental new kind of memory stored on an infinite two-dimensional grid.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-13T11:24:51+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 1
+            }
+        },
+        "4": {
+            "year": 2017,
+            "day": 4,
+            "title": "High-Entropy Passphrases",
+            "excerpt": "A new system policy has been put in place that requires all accounts to use a passphrase instead of simply a password. A passphrase consists of a series of words (lowercase letters) separated by spaces.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-13T11:24:51+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 6,
+                "part_one": 0,
+                "part_two": 7
+            }
+        },
+        "5": {
+            "year": 2017,
+            "day": 5,
+            "title": "A Maze of Twisty Trampolines, All Alike",
+            "excerpt": "An urgent interrupt arrives from the CPU: it's trapped in a maze of jump instructions, and it would like assistance from any programs with spare cycles to help find the exit.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-13T13:35:49+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 206,
+                "part_two": 12653
+            }
+        },
+        "6": {
+            "year": 2017,
+            "day": 6,
+            "title": "Memory Reallocation",
+            "excerpt": "A debugger program here is having an issue: it is trying to repair a memory reallocation routine, but it keeps getting stuck in an infinite loop.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-14T07:48:34+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 38,
+                "part_two": 0
+            }
+        },
+        "7": {
+            "year": 2017,
+            "day": 7,
+            "title": "Recursive Circus",
+            "excerpt": "Wandering further through the circuits of the computer, you come upon a tower of programs that have gotten themselves into a bit of trouble.  A recursive algorithm has gotten out of hand, and now they're balanced precariously in a large tower.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-14T21:42:13+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 3,
+                "part_two": 1
+            }
+        },
+        "8": {
+            "year": 2017,
+            "day": 8,
+            "title": "I Heard You Like Registers",
+            "excerpt": "You receive a signal directly from the CPU. Because of your recent assistance with jump instructions, it would like you to compute the result of a series of unusual register instructions.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-16T10:34:05+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 11,
+                "part_one": 2,
+                "part_two": 0
+            }
+        },
+        "9": {
+            "year": 2017,
+            "day": 9,
+            "title": "Stream Processing",
+            "excerpt": "A large stream blocks your path. According to the locals, it's not safe to cross the stream at the moment because it's full of garbage. You look down at the stream; rather than water, you discover that it's a stream of characters.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-16T16:04:38+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2,
+                "part_two": 0
+            }
+        },
+        "10": {
+            "year": 2017,
+            "day": 10,
+            "title": "Knot Hash",
+            "excerpt": "You come across some programs that are trying to implement a software emulation of a hash based on knot-tying. The hash these programs are implementing isn't very strong, but you decide to help them anyway. You make a mental note to remind the Elves later not to invent their own cryptographic functions.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-16T17:47:49+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 56
+            }
+        },
+        "11": {
+            "year": 2017,
+            "day": 11,
+            "title": "Hex Ed",
+            "excerpt": "Crossing the bridge, you've barely reached the other side of the stream when a program comes up to you, clearly in distress.  \"It's my child process,\" she says, \"he's gotten lost in an infinite grid!\"",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-18T14:02:51+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 18,
+                "part_one": 11,
+                "part_two": 0
+            }
+        },
+        "12": {
+            "year": 2017,
+            "day": 12,
+            "title": "Digital Plumber",
+            "excerpt": "Walking along the memory banks of the stream, you find a small village that is experiencing a little confusion: some programs can't communicate with each other.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-18T19:30:07+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 0,
+                "part_two": 1
+            }
+        },
+        "13": {
+            "year": 2017,
+            "day": 13,
+            "title": "Packet Scanners",
+            "excerpt": "You need to cross a vast firewall. The firewall consists of several layers, each with a security scanner that moves back and forth across the layer. To succeed, you must not be detected by a scanner.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-20T09:42:29+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 6744
+            }
+        },
+        "14": {
+            "year": 2017,
+            "day": 14,
+            "title": "Disk Defragmentation",
+            "excerpt": "Suddenly, a scheduled job activates the system's disk defragmenter. Were the situation different, you might sit and watch it for a while, but today, you just don't have that kind of time. It's soaking up valuable system resources that are needed elsewhere, and so the only option is to help it finish its task as soon as possible.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-20T13:41:03+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 3048,
+                "part_two": 1101
+            }
+        },
+        "15": {
+            "year": 2017,
+            "day": 15,
+            "title": "Dueling Generators",
+            "excerpt": "Here, you encounter a pair of dueling generators. The generators, called generator A and generator B, are trying to agree on a sequence of numbers. However, one of them is malfunctioning, and so the sequences don't always match.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-20T16:18:49+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 26764,
+                "part_two": 16188
+            }
+        },
+        "16": {
+            "year": 2017,
+            "day": 16,
+            "title": "Permutation Promenade",
+            "excerpt": "You come upon a very unusual sight; a group of programs here appear to be dancing.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-21T14:20:37+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 108,
+                "part_one": 29,
+                "part_two": 645
+            }
+        },
+        "17": {
+            "year": 2017,
+            "day": 17,
+            "title": "Spinlock",
+            "excerpt": "Suddenly, whirling in the distance, you notice what looks like a massive, pixelated hurricane: a deadly spinlock. This spinlock isn't just consuming computing power, but memory, too; vast, digital mountains are being ripped from the ground and consumed by the vortex.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-21T17:17:30+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 8749
+            }
+        },
+        "18": {
+            "year": 2017,
+            "day": 18,
+            "title": "Duet",
+            "excerpt": "You discover a tablet containing some strange assembly code labeled simply \"Duet\". Rather than bother the sound card with it, you decide to run the code yourself. Unfortunately, you don't see any documentation, so you're left to figure out what the instructions mean on your own.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-23T10:46:46+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 4,
+                "part_two": 470
+            }
+        },
+        "19": {
+            "year": 2017,
+            "day": 19,
+            "title": "A Series of Tubes",
+            "excerpt": "Somehow, a network packet got lost and ended up here.  It's trying to follow a routing diagram (your puzzle input), but it's confused about where to go.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-23T17:15:20+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 69,
+                "part_one": 17,
+                "part_two": 0
+            }
+        },
+        "20": {
+            "year": 2017,
+            "day": 20,
+            "title": "Particle Swarm",
+            "excerpt": "Suddenly, the GPU contacts you, asking for help. Someone has asked it to simulate too many particles, and it won't be able to finish them all in time to render the next frame at this rate.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-25T17:00:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 12,
+                "part_one": 450,
+                "part_two": 588
+            }
+        },
+        "21": {
+            "year": 2017,
+            "day": 21,
+            "title": "Fractal Art",
+            "excerpt": "You find a program trying to generate some art. It uses a strange process that involves repeatedly enhancing the detail of an image through a set of rules.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-26T13:59:36+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2,
+                "part_two": 2829
+            }
+        },
+        "22": {
+            "year": 2017,
+            "day": 22,
+            "title": "Sporifica Virus",
+            "excerpt": "Diagnostics indicate that the local grid computing cluster has been contaminated with the Sporifica Virus. The grid computing cluster is a seemingly-infinite two-dimensional grid of compute nodes.  Each node is either clean or infected by the virus.\nTo prevent overloading the nodes (which would render them useless to the virus) or detection by system administrators, exactly one virus carrier moves through the network, infecting or cleaning nodes as it moves. The virus carrier is always located on a single node in the network (the current node) and keeps track of the direction it is facing.\nTo avoid detection, the virus carrier works in bursts; in each burst, it wakes up, does some work, and goes back to sleep. The following steps are all executed in order one time each burst:\n\nIf the current node is infected, it turns to its right.  Otherwise, it turns to its left. (Turning is done in-place; the current node does not change.)\nIf the current node is clean, it becomes infected.  Otherwise, it becomes cleaned. (This is done after the node is considered for the purposes of changing direction.)\nThe virus carrier moves forward one node in the direction it is facing.\n\nDiagnostics have also provided a map of the node infection status (your puzzle input).  Clean nodes are shown as .; infected nodes are shown as #.  This map only shows the center of the grid; there are many more nodes beyond those shown, but none of them are currently infected.\nThe virus carrier begins in the middle of the map facing up.\nFor example, suppose you are given a map like this:\n..#\n#..\n...\n\nThen, the middle of the infinite grid looks like this, with the virus carrier's position marked with [ ]:\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . # . . .\n. . . #[.]. . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n\nThe virus carrier is on a clean node, so it turns left, infects the node, and moves left:\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . # . . .\n. . .[#]# . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n\nThe virus carrier is on an infected node, so it turns right, cleans the node, and moves up:\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . .[.]. # . . .\n. . . . # . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n\nFour times in a row, the virus carrier finds a clean, infects it, turns left, and moves forward, ending in the same place and still facing up:\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . #[#]. # . . .\n. . # # # . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n\nNow on the same node as before, it sees an infection, which causes it to turn right, clean the node, and move forward:\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . # .[.]# . . .\n. . # # # . . . .\n. . . . . . . . .\n. . . . . . . . .\n. . . . . . . . .\n\nAfter the above actions, a total of 7 bursts of activity had taken place. Of them, 5 bursts of activity caused an infection.\nAfter a total of 70, the grid looks like this, with the virus carrier facing up:\n. . . . . # # . .\n. . . . # . . # .\n. . . # . . . . #\n. . # . #[.]. . #\n. . # . # . . # .\n. . . . . # # . .\n. . . . . . . . .\n. . . . . . . . .\n\nBy this time, 41 bursts of activity caused an infection (though most of those nodes have since been cleaned).\nAfter a total of 10000 bursts of activity, 5587 bursts will have caused an infection.\nGiven your actual map, after 10000 bursts of activity, how many bursts cause a node to become infected? (Do not count nodes that begin infected.)\n",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-09-27T12:41:53+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 15,
+                "part_two": 7471
+            }
+        },
+        "23": {
+            "year": 2017,
+            "day": 23,
+            "title": "Coprocessor Conflagration",
+            "excerpt": "You decide to head directly to the CPU and fix the printer from there. As you get close, you find an experimental coprocessor doing so much work that the local programs are afraid it will halt and catch fire. This would cause serious issues for the rest of the computer, so you head in and see what you can do.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-10-04T19:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 97,
+                "part_two": 851
+            }
+        },
+        "24": {
+            "year": 2017,
+            "day": 24,
+            "title": "Electromagnetic Moat",
+            "excerpt": "The CPU itself is a large, black building surrounded by a bottomless pit. Enormous metal tubes extend outward from the side of the building at regular intervals and descend down into the void. There's no way to cross, but you need to get inside.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-10-06T12:16:21+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 7011,
+                "part_two": 0
+            }
+        },
+        "25": {
+            "year": 2017,
+            "day": 25,
+            "title": "The Halting Problem",
+            "excerpt": "Following the twisty passageways deeper and deeper into the CPU, you finally reach the core of the computer. Here, in the expansive central chamber, you find a grand apparatus that fills the entire room, suspended nanometers above your head.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2022-10-07T07:23:32+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 3688
+            }
+        }
+    },
+    "2018": {
+        "1": {
+            "year": 2018,
+            "day": 1,
+            "title": "Chronal Calibration",
+            "excerpt": "\"We've detected some temporal anomalies,\" one of Santa's Elves at the Temporal Anomaly Research and Detection Instrument Station tells you. She sounded pretty worried when she called you down here. \"At 500-year intervals into the past, someone has been changing Santa's history!\"",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-07T17:22:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 47
+            }
+        },
+        "2": {
+            "year": 2018,
+            "day": 2,
+            "title": "Inventory Management System",
+            "excerpt": "You stop falling through time, catch your breath, and check the screen on the device. \"Destination reached. Current Year: 1518. Current Location: North Pole Utility Closet 83N10.\" You made it! Now, to find those anomalies.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-07T17:22:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 8,
+                "part_two": 215
+            }
+        },
+        "3": {
+            "year": 2018,
+            "day": 3,
+            "title": "No Matter How You Slice It",
+            "excerpt": "The Elves managed to locate the chimney-squeeze prototype fabric for Santa's suit (thanks to someone who helpfully wrote its box IDs on the wall of the warehouse in the middle of the night).  Unfortunately, anomalies are still affecting them - nobody can even agree on how to cut the fabric.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-07T17:22:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 267,
+                "part_two": 26
+            }
+        },
+        "4": {
+            "year": 2018,
+            "day": 4,
+            "title": "Repose Record",
+            "excerpt": "You've sneaked into another supply closet - this time, it's across from the prototype suit manufacturing lab. You need to sneak inside and fix the issues with the suit, but there's a guard stationed outside the lab, so this is as close as you can safely get.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-08T18:07:13+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 4,
+                "part_two": 0
+            }
+        },
+        "5": {
+            "year": 2018,
+            "day": 5,
+            "title": "Alchemical Reduction",
+            "excerpt": "You've managed to sneak in to the prototype suit manufacturing lab.  The Elves are making decent progress, but are still struggling with the suit's size reduction capabilities.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-12T08:52:07+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 256,
+                "part_two": 6031
+            }
+        },
+        "6": {
+            "year": 2018,
+            "day": 6,
+            "title": "Chronal Coordinates",
+            "excerpt": "The device on your wrist beeps several times, and once again you feel like you're falling.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-12T08:52:07+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1709,
+                "part_two": 1244
+            }
+        },
+        "7": {
+            "year": 2018,
+            "day": 7,
+            "title": "The Sum of Its Parts",
+            "excerpt": "You find yourself standing on a snow-covered coastline; apparently, you landed a little off course.  The region is too hilly to see the North Pole from here, but you do spot some Elves that seem to be trying to unpack something that washed ashore. It's quite cold out, so you decide to risk creating a paradox by asking them for directions.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-12T18:31:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 14
+            }
+        },
+        "8": {
+            "year": 2018,
+            "day": 8,
+            "title": "Memory Maneuver",
+            "excerpt": "The sleigh is much easier to pull than you'd expect for something its weight. Unfortunately, neither you nor the Elves know which way the North Pole is from here.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-12T18:31:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 50,
+                "part_one": 9,
+                "part_two": 1
+            }
+        },
+        "9": {
+            "year": 2018,
+            "day": 9,
+            "title": "Marble Mania",
+            "excerpt": "You talk to the Elves while you wait for your navigation system to initialize. To pass the time, they introduce you to their favorite marble game.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-14T14:32:57+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 27,
+                "part_two": 1737
+            }
+        },
+        "10": {
+            "year": 2018,
+            "day": 10,
+            "title": "The Stars Align",
+            "excerpt": "It's no use; your navigation system simply isn't capable of providing walking directions in the arctic circle, and certainly not in 1018.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-15T12:14:30+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 1930,
+                "part_two": 0
+            }
+        },
+        "11": {
+            "year": 2018,
+            "day": 11,
+            "title": "Chronal Charge",
+            "excerpt": "You watch the Elves and their sleigh fade into the distance as they head toward the North Pole.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-16T14:39:25+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 510,
+                "part_two": 89689
+            }
+        },
+        "12": {
+            "year": 2018,
+            "day": 12,
+            "title": "Subterranean Sustainability",
+            "excerpt": "The year 518 is significantly more underground than your history books implied.  Either that, or you've arrived in a vast cavern network under the North Pole.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-18T09:21:09+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 379
+            }
+        },
+        "13": {
+            "year": 2018,
+            "day": 13,
+            "title": "Mine Cart Madness",
+            "excerpt": "A crop of this size requires significant logistics to transport produce, soil, fertilizer, and so on. The Elves are very busy pushing things around in carts on some kind of rudimentary system of tracks they've come up with.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-21T13:27:51+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 85,
+                "part_two": 87
+            }
+        },
+        "14": {
+            "year": 2018,
+            "day": 14,
+            "title": "Chocolate Charts",
+            "excerpt": "You finally have a chance to look at all of the produce moving around. Chocolate, cinnamon, mint, chili peppers, nutmeg, vanilla... the Elves must be growing these plants to make hot chocolate! As you realize this, you hear a conversation in the distance. When you go to investigate, you discover two Elves in what appears to be a makeshift underground kitchen/laboratory.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-23T07:50:22+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 216,
+                "part_two": 19831
+            }
+        },
+        "15": {
+            "year": 2018,
+            "day": 15,
+            "title": "Beverage Bandits",
+            "excerpt": "Having perfected their hot chocolate, the Elves have a new problem: the Goblins that live in these caves will do anything to steal it. Looks like they're here for a fight.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-26T20:03:24+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 440,
+                "part_two": 3355
+            }
+        },
+        "16": {
+            "year": 2018,
+            "day": 16,
+            "title": "Chronal Classification",
+            "excerpt": "As you see the Elves defend their hot chocolate successfully, you go back to falling through time. This is going to become a problem.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-28T11:09:02+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 62,
+                "part_one": 14,
+                "part_two": 0
+            }
+        },
+        "17": {
+            "year": 2018,
+            "day": 17,
+            "title": "Reservoir Research",
+            "excerpt": "You arrive in the year 18. If it weren't for the coat you got in 1018, you would be very cold: the North Pole base hasn't even been constructed.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-28T20:02:29+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 28,
+                "part_one": 597,
+                "part_two": 0
+            }
+        },
+        "18": {
+            "year": 2018,
+            "day": 18,
+            "title": "Settlers of The North Pole",
+            "excerpt": "On the outskirts of the North Pole base construction project, many Elves are collecting lumber.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-11-30T15:47:04+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 83,
+                "part_two": 6185
+            }
+        },
+        "19": {
+            "year": 2018,
+            "day": 19,
+            "title": "Go With The Flow",
+            "excerpt": "With the Elves well on their way constructing the North Pole base, you turn your attention back to understanding the inner workings of programming the device.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-03T17:18:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 5042,
+                "part_two": 95
+            }
+        },
+        "20": {
+            "year": 2018,
+            "day": 20,
+            "title": "A Regular Map",
+            "excerpt": "While you were learning about instruction pointers, the Elves made considerable progress. When you look up, you discover that the North Pole base construction project has completely surrounded you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-05T13:41:57+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 20,
+                "part_two": 1
+            }
+        },
+        "21": {
+            "year": 2018,
+            "day": 21,
+            "title": "Chronal Conversion",
+            "excerpt": "You should have been watching where you were going, because as you wander the new North Pole base, you trip and fall into a very deep hole!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-06T20:09:04+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 1040
+            }
+        },
+        "22": {
+            "year": 2018,
+            "day": 22,
+            "title": "Mode Maze",
+            "excerpt": "This is it, your final stop: the year -483. It's snowing and dark outside; the only light you can see is coming from a small cottage in the distance. You make your way there and knock on the door.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-12T19:49:06+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 145,
+                "part_two": 1921
+            }
+        },
+        "23": {
+            "year": 2018,
+            "day": 23,
+            "title": "Experimental Emergency Teleportation",
+            "excerpt": "Using your torch to search the darkness of the rocky cavern, you finally locate the man's friend: a small reindeer.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-29T20:10:41+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 0,
+                "part_two": 415
+            }
+        },
+        "24": {
+            "year": 2018,
+            "day": 24,
+            "title": "Immune System Simulator 20XX",
+            "excerpt": "After a weird buzzing noise, you appear back at the man's cottage. He seems relieved to see his friend, but quickly notices that the little reindeer caught some kind of cold while out exploring.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-01T14:32:59+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 73,
+                "part_two": 4047
+            }
+        },
+        "25": {
+            "year": 2018,
+            "day": 25,
+            "title": "Four-Dimensional Adventure",
+            "excerpt": "The reindeer's symptoms are getting worse, and neither you nor the white-bearded man have a solution. At least the reindeer has a warm place to rest: a small bed near where you're sitting.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2023-02-02T09:58:53+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 946
+            }
+        }
+    },
+    "2019": {
+        "1": {
+            "year": 2019,
+            "day": 1,
+            "title": "The Tyranny of the Rocket Equation",
+            "excerpt": "Santa has become stranded at the edge of the Solar System while delivering presents to other planets! To accurately calculate his position in space, safely align his warp drive, and return to Earth in time to save Christmas, he needs you to bring him measurements from fifty stars.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "2": {
+            "year": 2019,
+            "day": 2,
+            "title": "1202 Program Alarm",
+            "excerpt": "On the way to your gravity assist around the Moon, your ship computer beeps angrily about a \"1202 program alarm\". On the radio, an Elf is already explaining how to handle the situation: \"Don't worry, that's perfectly norma--\" The ship computer bursts into flames.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 945
+            }
+        },
+        "3": {
+            "year": 2019,
+            "day": 3,
+            "title": "Crossed Wires",
+            "excerpt": "The gravity assist was successful, and you're well on your way to the Venus refuelling station.  During the rush back on Earth, the fuel management system wasn't completely installed, so that's next on the priority list.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 130,
+                "part_two": 61
+            }
+        },
+        "4": {
+            "year": 2019,
+            "day": 4,
+            "title": "Secure Container",
+            "excerpt": "You arrive at the Venus fuel depot only to discover it's protected by a password.  The Elves had written the password on a sticky note, but someone threw it out.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 713,
+                "part_two": 4
+            }
+        },
+        "5": {
+            "year": 2019,
+            "day": 5,
+            "title": "Sunny with a Chance of Asteroids",
+            "excerpt": "You're starting to sweat as the ship makes its way toward Mercury.  The Elves suggest that you get the air conditioner working by upgrading your ship computer to support the Thermal Environment Supervision Terminal.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "6": {
+            "year": 2019,
+            "day": 6,
+            "title": "Universal Orbit Map",
+            "excerpt": "You've landed at the Universal Orbit Map facility on Mercury.  Because navigation in space often involves transferring between orbits, the orbit maps here are useful for finding efficient routes between, for example, you and Santa. You download a map of the local orbits (your puzzle input).",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-28T20:07:21+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 7,
+                "part_two": 1
+            }
+        },
+        "7": {
+            "year": 2019,
+            "day": 7,
+            "title": "Amplification Circuit",
+            "excerpt": "Based on the navigational maps, you're going to need to send more power to your ship's thrusters to reach Santa in time. To do this, you'll need to configure a series of amplifiers already installed on the ship.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-10T17:52:43+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 5,
+                "part_one": 45,
+                "part_two": 102
+            }
+        },
+        "8": {
+            "year": 2019,
+            "day": 8,
+            "title": "Space Image Format",
+            "excerpt": "The Elves' spirits are lifted when they realize you have an opportunity to reboot one of their Mars rovers, and so they are curious if you would spend a brief sojourn on Mars. You land your ship near the rover.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-10T17:52:43+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 16,
+                "part_one": 5,
+                "part_two": 4
+            }
+        },
+        "9": {
+            "year": 2019,
+            "day": 9,
+            "title": "Sensor Boost",
+            "excerpt": "You've just said goodbye to the rebooted rover and left Mars when you receive a faint distress signal coming from the asteroid belt.  It must be the Ceres monitoring station!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-13T09:39:00+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 3,
+                "part_two": 1318
+            }
+        },
+        "10": {
+            "year": 2019,
+            "day": 10,
+            "title": "Monitoring Station",
+            "excerpt": "You fly into the asteroid belt and reach the Ceres monitoring station.  The Elves here have an emergency: they're having trouble tracking all of the asteroids and can't be sure they're safe.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-13T21:47:36+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 80,
+                "part_two": 1
+            }
+        },
+        "11": {
+            "year": 2019,
+            "day": 11,
+            "title": "Space Police",
+            "excerpt": "On the way to Jupiter, you're pulled over by the Space Police.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-15T19:06:40+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 325,
+                "part_two": 34
+            }
+        },
+        "12": {
+            "year": 2019,
+            "day": 12,
+            "title": "The N-Body Problem",
+            "excerpt": "The space near Jupiter is not a very safe place; you need to be careful of a big distracting red spot, extreme radiation, and a whole lot of moons swirling around.  You decide to start by tracking the four largest moons: Io, Europa, Ganymede, and Callisto.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-17T18:05:31+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 18,
+                "part_two": 2779
+            }
+        },
+        "13": {
+            "year": 2019,
+            "day": 13,
+            "title": "Care Package",
+            "excerpt": "As you ponder the solitude of space and the ever-increasing three-hour roundtrip for messages between you and Earth, you notice that the Space Mail Indicator Light is blinking.  To help keep you sane, the Elves have sent you a care package.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-02-22T07:55:17+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 5,
+                "part_one": 66,
+                "part_two": 1599
+            }
+        },
+        "14": {
+            "year": 2019,
+            "day": 14,
+            "title": "Space Stoichiometry",
+            "excerpt": "As you approach the rings of Saturn, your ship's low fuel indicator turns on.  There isn't any fuel here, but the rings have plenty of raw material.  Perhaps your ship's Inter-Stellar Refinery Union brand nanofactory can turn these raw materials into fuel.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-03-04T16:53:24+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 1,
+                "part_two": 2
+            }
+        },
+        "15": {
+            "year": 2019,
+            "day": 15,
+            "title": "Oxygen System",
+            "excerpt": "Out here in deep space, many things can go wrong. Fortunately, many of those things have indicator lights. Unfortunately, one of those lights is lit: the oxygen system for part of the ship has failed!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-03-05T17:11:57+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 2914,
+                "part_two": 2
+            }
+        },
+        "16": {
+            "year": 2019,
+            "day": 16,
+            "title": "Flawed Frequency Transmission",
+            "excerpt": "You're 3/4ths of the way through the gas giants. Not only do roundtrip signals to Earth take five hours, but the signal quality is quite bad as well.  You can clean up the signal with the Flawed Frequency Transmission algorithm, or FFT.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-03-06T13:07:58+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 4576,
+                "part_two": 5000
+            }
+        },
+        "17": {
+            "year": 2019,
+            "day": 17,
+            "title": "Set and Forget",
+            "excerpt": "An early warning system detects an incoming solar flare and automatically activates the ship's electromagnetic shield. Unfortunately, this has cut off the Wi-Fi for many small robots that, unaware of the impending danger, are now trapped on exterior scaffolding on the unsafe side of the shield. To rescue them, you'll have to act quickly!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-03-11T14:14:43+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 295,
+                "part_two": 558
+            }
+        },
+        "18": {
+            "year": 2019,
+            "day": 18,
+            "title": "Many-Worlds Interpretation",
+            "excerpt": "As you approach Neptune, a planetary security system detects you and activates a giant tractor beam on Triton!  You have no choice but to land.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-16T12:45:47+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 216,
+                "part_two": 2892
+            }
+        },
+        "19": {
+            "year": 2019,
+            "day": 19,
+            "title": "Tractor Beam",
+            "excerpt": "Unsure of the state of Santa's ship, you borrowed the tractor beam technology from Triton. Time to test it out.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-16T12:45:47+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 322,
+                "part_two": 3037
+            }
+        },
+        "20": {
+            "year": 2019,
+            "day": 20,
+            "title": "Donut Maze",
+            "excerpt": "You notice a strange pattern on the surface of Pluto and land nearby to get a closer look. Upon closer inspection, you realize you've come across one of the famous space-warping mazes of the long-lost Pluto civilization!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-16T12:45:47+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 23,
+                "part_one": 65,
+                "part_two": 14
+            }
+        },
+        "21": {
+            "year": 2019,
+            "day": 21,
+            "title": "Springdroid Adventure",
+            "excerpt": "You lift off from Pluto and start flying in the direction of Santa.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-24T16:53:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 98,
+                "part_two": 1557
+            }
+        },
+        "22": {
+            "year": 2019,
+            "day": 22,
+            "title": "Slam Shuffle",
+            "excerpt": "There isn't much to do while you wait for the droids to repair your ship.  At least you're drifting in the right direction.  You decide to practice a new card shuffle you've been working on.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-24T16:53:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "23": {
+            "year": 2019,
+            "day": 23,
+            "title": "Category Six",
+            "excerpt": "The droids have finished repairing as much of the ship as they can.  Their report indicates that this was a Category 6 disaster - not because it was that bad, but because it destroyed the stockpile of Category 6 network cables as well as most of the ship's network infrastructure.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-24T16:53:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 158,
+                "part_one": 39,
+                "part_two": 552
+            }
+        },
+        "24": {
+            "year": 2019,
+            "day": 24,
+            "title": "Planet of Discord",
+            "excerpt": "You land on Eris, your last stop before reaching Santa.  As soon as you do, your sensors start picking up strange life forms moving around: Eris is infested with bugs! With an over 24-hour roundtrip for messages between you and Earth, you'll have to deal with this problem on your own.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-24T16:53:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 8,
+                "part_two": 882
+            }
+        },
+        "25": {
+            "year": 2019,
+            "day": 25,
+            "title": "Cryostasis",
+            "excerpt": "As you approach Santa's ship, your sensors report two important details:",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2023-05-24T16:53:45+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 5047
+            }
+        }
+    },
+    "2020": {
+        "1": {
+            "year": 2020,
+            "day": 1,
+            "title": "Report Repair",
+            "excerpt": "After saving Christmas five years in a row, you've decided to take a vacation at a nice resort on a tropical island. Surely, Christmas will go on without you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2,
+                "part_two": 268
+            }
+        },
+        "2": {
+            "year": 2020,
+            "day": 2,
+            "title": "Password Philosophy",
+            "excerpt": "Your flight departs in a few days from the coastal airport; the easiest way down to the coast from here is via toboggan.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "3": {
+            "year": 2020,
+            "day": 3,
+            "title": "Toboggan Trajectory",
+            "excerpt": "With the toboggan login problems resolved, you set off toward the airport. While travel by toboggan might be easy, it's certainly not safe: there's very minimal steering and the area is covered in trees. You'll need to see which angles will take you near the fewest trees.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 16,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "4": {
+            "year": 2020,
+            "day": 4,
+            "title": "Passport Processing",
+            "excerpt": "You arrive at the airport only to realize that you grabbed your North Pole Credentials instead of your passport. While these documents are extremely similar, North Pole Credentials aren't issued by a country and therefore aren't actually valid documentation for travel in most of the world.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 10,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "5": {
+            "year": 2020,
+            "day": 5,
+            "title": "Binary Boarding",
+            "excerpt": "You board your plane only to discover a new problem: you dropped your boarding pass! You aren't sure which seat is yours, and all of the flight attendants are busy with the flood of people that suddenly made it through passport control.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 3,
+                "part_two": 0
+            }
+        },
+        "6": {
+            "year": 2020,
+            "day": 6,
+            "title": "Custom Customs",
+            "excerpt": "As your flight approaches the regional airport where you'll switch to a much larger plane, customs declaration forms are distributed to the passengers.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 9,
+                "part_one": 1,
+                "part_two": 1
+            }
+        },
+        "7": {
+            "year": 2020,
+            "day": 7,
+            "title": "Handy Haversacks",
+            "excerpt": "You land at the regional airport in time for your next flight. In fact, it looks like you'll even have time to grab some food: all flights are currently delayed due to issues in luggage processing.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 3,
+                "part_two": 0
+            }
+        },
+        "8": {
+            "year": 2020,
+            "day": 8,
+            "title": "Handheld Halting",
+            "excerpt": "Your flight to the major airline hub reaches cruising altitude without incident.  While you consider checking the in-flight menu for one of those drinks that come with a little umbrella, you are interrupted by the kid sitting next to you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 0,
+                "part_two": 9
+            }
+        },
+        "9": {
+            "year": 2020,
+            "day": 9,
+            "title": "Encoding Error",
+            "excerpt": "With your neighbor happily enjoying their video game, you turn your attention to an open data port on the little screen in the seat in front of you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 20,
+                "part_two": 5
+            }
+        },
+        "10": {
+            "year": 2020,
+            "day": 10,
+            "title": "Adapter Array",
+            "excerpt": "Patched into the aircraft's data port, you discover weather forecasts of a massive tropical storm. Before you can figure out whether it will impact your vacation plans, however, your device suddenly turns off!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "11": {
+            "year": 2020,
+            "day": 11,
+            "title": "Seating System",
+            "excerpt": "Your plane lands with plenty of time to spare. The final leg of your journey is a ferry that goes directly to the tropical island where you can finally start your vacation. As you reach the waiting area to board the ferry, you realize you're so early, nobody else has even arrived yet!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 10,
+                "part_one": 2338,
+                "part_two": 3827
+            }
+        },
+        "12": {
+            "year": 2020,
+            "day": 12,
+            "title": "Rain Risk",
+            "excerpt": "Your ferry made decent progress toward the island, but the storm came in faster than anyone expected. The ferry needs to take evasive actions!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "13": {
+            "year": 2020,
+            "day": 13,
+            "title": "Shuttle Search",
+            "excerpt": "Your ferry can make it safely to a nearby port, but it won't get much further. When you call to book another ship, you discover that no ships embark from that port to your vacation island. You'll need to get from the port to the nearest airport.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "14": {
+            "year": 2020,
+            "day": 14,
+            "title": "Docking Data",
+            "excerpt": "As your ferry approaches the sea port, the captain asks for your help again. The computer system that runs this port isn't compatible with the docking program on the ferry, so the docking parameters aren't being correctly initialized in the docking program's memory.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-06T11:41:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 3,
+                "part_two": 220
+            }
+        },
+        "15": {
+            "year": 2020,
+            "day": 15,
+            "title": "Rambunctious Recitation",
+            "excerpt": "You catch the airport shuttle and try to book a new flight to your vacation island. Due to the storm, all direct flights have been cancelled, but a route is available to get around the storm. You take it.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-08T09:58:34+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 8651
+            }
+        },
+        "16": {
+            "year": 2020,
+            "day": 16,
+            "title": "Ticket Translation",
+            "excerpt": "As you're walking to yet another connecting flight, you realize that one of the legs of your re-routed trip coming up is on a high-speed train. However, the train ticket you were given is in a language you don't understand. You should probably figure out what it says before you get to the train station after the next flight.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-09T08:32:16+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 12,
+                "part_one": 3,
+                "part_two": 9
+            }
+        },
+        "17": {
+            "year": 2020,
+            "day": 17,
+            "title": "Conway Cubes",
+            "excerpt": "As your flight slowly drifts through the sky, the Elves at the Mythical Information Bureau at the North Pole contact you. They'd like some help debugging a malfunctioning experimental energy source aboard one of their super-secret imaging satellites.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-10T16:57:20+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 160,
+                "part_two": 3481
+            }
+        },
+        "18": {
+            "year": 2020,
+            "day": 18,
+            "title": "Operation Order",
+            "excerpt": "As you look out the window and notice a heavily-forested continent slowly appear over the horizon, you are interrupted by the child sitting next to you. They're curious if you could help them with their math homework.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-10T16:57:20+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 10,
+                "part_two": 13
+            }
+        },
+        "19": {
+            "year": 2020,
+            "day": 19,
+            "title": "Monster Messages",
+            "excerpt": "You land in an airport surrounded by dense forest. As you walk to your high-speed train, the Elves at the Mythical Information Bureau contact you again. They think their satellite has collected an image of a sea monster! Unfortunately, the connection to the satellite is having problems, and many of the messages sent back from the satellite have been corrupted.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-11T17:51:34+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 15,
+                "part_two": 412
+            }
+        },
+        "20": {
+            "year": 2020,
+            "day": 20,
+            "title": "Jurassic Jigsaw",
+            "excerpt": "The high-speed train leaves the forest and quickly carries you south. You can even see a desert in the distance! Since you have some spare time, you might as well see if there was anything interesting in the image the Mythical Information Bureau satellite captured.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-14T10:16:57+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 16,
+                "part_one": 529,
+                "part_two": 60
+            }
+        },
+        "21": {
+            "year": 2020,
+            "day": 21,
+            "title": "Allergen Assessment",
+            "excerpt": "You reach the train's last stop and the closest you can get to your vacation island without getting wet. There aren't even any boats here, but nothing can stop you now: you build a raft. You just need a few days' worth of food for your journey.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-14T17:01:43+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "22": {
+            "year": 2020,
+            "day": 22,
+            "title": "Crab Combat",
+            "excerpt": "It only takes a few hours of sailing the ocean on a raft for boredom to sink in. Fortunately, you brought a small deck of space cards! You'd like to play a game of Combat, and there's even an opponent available: a small crab that climbed aboard your raft before you left.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-15T10:23:03+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 1413
+            }
+        },
+        "23": {
+            "year": 2020,
+            "day": 23,
+            "title": "Crab Cups",
+            "excerpt": "The small crab challenges you to a game! The crab is going to mix up some cups, and you have to predict where they'll end up.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-17T09:26:59+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 6731
+            }
+        },
+        "24": {
+            "year": 2020,
+            "day": 24,
+            "title": "Lobby Layout",
+            "excerpt": "Your raft makes it to the tropical island; it turns out that the small crab was an excellent navigator. You make your way to the resort.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-17T09:26:59+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 12,
+                "part_one": 6,
+                "part_two": 840
+            }
+        },
+        "25": {
+            "year": 2020,
+            "day": 25,
+            "title": "Combo Breaker",
+            "excerpt": "You finally reach the check-in desk. Unfortunately, their registration systems are currently offline, and they cannot check you in. Noticing the look on your face, they quickly add that tech support is already on the way! They even created all the room keys this morning; you can take yours now and give them your room deposit once the registration system comes back online.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2023-04-17T09:26:59+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 274
+            }
+        }
+    },
+    "2021": {
+        "1": {
+            "year": 2021,
+            "day": 1,
+            "title": "Sonar Sweep",
+            "excerpt": "You're minding your own business on a ship at sea when the overboard alarm goes off! You rush to see if you can help. Apparently, one of the Elves tripped and accidentally sent the sleigh keys flying into the ocean!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 1,
+                "part_two": 1
+            }
+        },
+        "2": {
+            "year": 2021,
+            "day": 2,
+            "title": "Dive!",
+            "excerpt": "Now, you need to figure out how to pilot this thing.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 1,
+                "part_two": 0
+            }
+        },
+        "3": {
+            "year": 2021,
+            "day": 3,
+            "title": "Binary Diagnostic",
+            "excerpt": "The submarine has been making some odd creaking noises, so you ask it to produce a diagnostic report just in case.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 2,
+                "part_two": 3
+            }
+        },
+        "4": {
+            "year": 2021,
+            "day": 4,
+            "title": "Giant Squid",
+            "excerpt": "You're already almost 1.5km (almost a mile) below the surface of the ocean, already so deep that you can't see any sunlight. What you can see, however, is a giant squid that has attached itself to the outside of your submarine.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 14,
+                "part_two": 0
+            }
+        },
+        "5": {
+            "year": 2021,
+            "day": 5,
+            "title": "Hydrothermal Venture",
+            "excerpt": "You come across a field of hydrothermal vents on the ocean floor! These vents constantly produce large, opaque clouds, so it would be best to avoid them if possible.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 70,
+                "part_two": 87
+            }
+        },
+        "6": {
+            "year": 2021,
+            "day": 6,
+            "title": "Lanternfish",
+            "excerpt": "The sea floor is getting steeper. Maybe the sleigh keys got carried this way?",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 5,
+                "part_two": 4
+            }
+        },
+        "7": {
+            "year": 2021,
+            "day": 7,
+            "title": "The Treachery of Whales",
+            "excerpt": "A giant whale has decided your submarine is its next meal, and it's much faster than you are. There's nowhere to run!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 13,
+                "part_two": 43
+            }
+        },
+        "8": {
+            "year": 2021,
+            "day": 8,
+            "title": "Seven Segment Search",
+            "excerpt": "You barely reach the safety of the cave when the whale smashes into the cave mouth, collapsing it. Sensors indicate another exit to this cave at a much greater depth, so you have no choice but to press on.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-18T15:45:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 6,
+                "part_one": 0,
+                "part_two": 3
+            }
+        },
+        "9": {
+            "year": 2021,
+            "day": 9,
+            "title": "Smoke Basin",
+            "excerpt": "These caves seem to be lava tubes. Parts are even still volcanically active; small hydrothermal vents release smoke into the caves that slowly settles like rain.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 10,
+                "part_one": 2,
+                "part_two": 41
+            }
+        },
+        "10": {
+            "year": 2021,
+            "day": 10,
+            "title": "Syntax Scoring",
+            "excerpt": "You ask the submarine to determine the best route out of the deep-sea cave, but it only replies:",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 1
+            }
+        },
+        "11": {
+            "year": 2021,
+            "day": 11,
+            "title": "Dumbo Octopus",
+            "excerpt": "You enter a large cavern full of rare bioluminescent dumbo octopuses! They seem to not like the Christmas lights on your submarine, so you turn them off for now.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 44,
+                "part_two": 59
+            }
+        },
+        "12": {
+            "year": 2021,
+            "day": 12,
+            "title": "Passage Pathing",
+            "excerpt": "With your submarine's subterranean subsystems subsisting suboptimally, the only way you're getting out of this cave anytime soon is by finding a path yourself. Not just a path - the only way to know if you've found the best path is to find all of them.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 69,
+                "part_two": 2878
+            }
+        },
+        "13": {
+            "year": 2021,
+            "day": 13,
+            "title": "Transparent Origami",
+            "excerpt": "You reach another volcanically active part of the cave. It would be nice if you could do some kind of thermal imaging so you could tell ahead of time which caves are too hot to safely enter.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 2,
+                "part_two": 23
+            }
+        },
+        "14": {
+            "year": 2021,
+            "day": 14,
+            "title": "Extended Polymerization",
+            "excerpt": "The incredible pressures at this depth are starting to put a strain on your submarine. The submarine has polymerization equipment that would produce suitable materials to reinforce the submarine, and the nearby volcanically-active caves should even have the necessary input elements in sufficient quantities.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 5,
+                "part_two": 33
+            }
+        },
+        "15": {
+            "year": 2021,
+            "day": 15,
+            "title": "Chiton",
+            "excerpt": "You've almost reached the exit of the cave, but the walls are getting closer together. Your submarine can barely still fit, though; the main problem is that the walls of the cave are covered in chitons, and it would be best not to bump any of them.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 14,
+                "part_one": 83,
+                "part_two": 2400
+            }
+        },
+        "16": {
+            "year": 2021,
+            "day": 16,
+            "title": "Packet Decoder",
+            "excerpt": "As you leave the cave and reach open waters, you receive a transmission from the Elves back on the ship.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 13,
+                "part_two": 0
+            }
+        },
+        "17": {
+            "year": 2021,
+            "day": 17,
+            "title": "Trick Shot",
+            "excerpt": "You finally decode the Elves' message. HI, the message says. You continue searching for the sleigh keys.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-24T12:14:22+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 149,
+                "part_two": 0
+            }
+        },
+        "18": {
+            "year": 2021,
+            "day": 18,
+            "title": "Snailfish",
+            "excerpt": "You descend into the ocean trench and encounter some snailfish. They say they saw the sleigh keys! They'll even tell you which direction the keys went if you help one of the smaller snailfish with his math homework.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-29T14:35:14+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 94,
+                "part_two": 2121
+            }
+        },
+        "19": {
+            "year": 2021,
+            "day": 19,
+            "title": "Beacon Scanner",
+            "excerpt": "As your probe drifted down through this area, it released an assortment of beacons and scanners into the water. It's difficult to navigate in the pitch black open waters of the ocean trench, but if you can build a map of the trench using data from the scanners, you should be able to safely reach the bottom.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-29T14:35:14+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 191,
+                "part_two": 1
+            }
+        },
+        "20": {
+            "year": 2021,
+            "day": 20,
+            "title": "Trench Map",
+            "excerpt": "With the scanners fully deployed, you turn their attention to mapping the floor of the ocean trench.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-29T14:35:14+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 16,
+                "part_one": 77,
+                "part_two": 3743
+            }
+        },
+        "21": {
+            "year": 2021,
+            "day": 21,
+            "title": "Dirac Dice",
+            "excerpt": "There's not much to do as you slowly descend to the bottom of the ocean. The submarine computer challenges you to a nice game of Dirac Dice.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-04-29T14:35:14+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 173
+            }
+        },
+        "22": {
+            "year": 2021,
+            "day": 22,
+            "title": "Reactor Reboot",
+            "excerpt": "Operating at these extreme ocean depths has overloaded the submarine's reactor; it needs to be rebooted.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-11T20:06:31+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 63,
+                "part_two": 6682
+            }
+        },
+        "23": {
+            "year": 2021,
+            "day": 23,
+            "title": "Amphipod",
+            "excerpt": "A group of amphipods notice your fancy submarine and flag you down. \"With such an impressive shell,\" one amphipod says, \"surely you can help us with a question that has stumped our best scientists.\"",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-11T20:06:31+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 688,
+                "part_two": 2389
+            }
+        },
+        "24": {
+            "year": 2021,
+            "day": 24,
+            "title": "Arithmetic Logic Unit",
+            "excerpt": "Magic smoke starts leaking from the submarine's arithmetic logic unit (ALU). Without the ability to perform basic arithmetic and logic functions, the submarine can't produce cool patterns with its Christmas lights!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-05-11T20:06:31+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "25": {
+            "year": 2021,
+            "day": 25,
+            "title": "Sea Cucumber",
+            "excerpt": "This is it: the bottom of the ocean trench, the last place the sleigh keys could be. Your submarine's experimental antenna still isn't boosted enough to detect the keys, but they must be here. All you need to do is reach the seafloor and find them.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2023-05-11T20:06:31+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 21,
+                "part_one": 1540
+            }
+        }
+    },
+    "2022": {
+        "1": {
+            "year": 2022,
+            "day": 1,
+            "title": "Calorie Counting",
+            "excerpt": "Santa's reindeer typically eat regular reindeer food, but they need a lot of magical energy to deliver presents on Christmas. For that, their favorite snack is a special type of star fruit that only grows deep in the jungle. The Elves have brought you on their annual expedition to the grove where the fruit grows.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-01T09:42:48+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 13,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "2": {
+            "year": 2022,
+            "day": 2,
+            "title": "Rock Paper Scissors",
+            "excerpt": "The Elves begin to set up camp on the beach. To decide whose tent gets to be closest to the snack storage, a giant Rock Paper Scissors tournament is already in progress.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-03T10:15:18+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 4,
+                "part_two": 5
+            }
+        },
+        "3": {
+            "year": 2022,
+            "day": 3,
+            "title": "Rucksack Reorganization",
+            "excerpt": "One Elf has the important job of loading all of the rucksacks with supplies for the jungle journey. Unfortunately, that Elf didn't quite follow the packing instructions, and so a few items now need to be rearranged.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-03T10:15:18+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 2,
+                "part_two": 0
+            }
+        },
+        "4": {
+            "year": 2022,
+            "day": 4,
+            "title": "Camp Cleanup",
+            "excerpt": "Space needs to be cleared before the last supplies can be unloaded from the ships, and so several Elves have been assigned the job of cleaning up sections of the camp. Every section has a unique ID number, and each Elf is assigned a range of section IDs.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-04T10:55:49+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 4,
+                "part_two": 6
+            }
+        },
+        "5": {
+            "year": 2022,
+            "day": 5,
+            "title": "Supply Stacks",
+            "excerpt": "The expedition can depart as soon as the final supplies have been unloaded from the ships. Supplies are stored in stacks of marked crates, but because the needed supplies are buried under many other crates, the crates need to be rearranged.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-05T11:05:51+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 1,
+                "part_two": 0
+            }
+        },
+        "6": {
+            "year": 2022,
+            "day": 6,
+            "title": "Tuning Trouble",
+            "excerpt": "The preparations are finally complete; you and the Elves leave camp on foot and begin to make your way toward the star fruit grove.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-06T13:17:45+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 1
+            }
+        },
+        "7": {
+            "year": 2022,
+            "day": 7,
+            "title": "No Space Left On Device",
+            "excerpt": "You can hear birds chirping and raindrops hitting leaves as the expedition proceeds. Occasionally, you can even hear much louder sounds in the distance; how big do the animals get out here, anyway?",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-07T20:41:29+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "8": {
+            "year": 2022,
+            "day": 8,
+            "title": "Treetop Tree House",
+            "excerpt": "The expedition comes across a peculiar patch of tall trees all planted carefully in a grid. The Elves explain that a previous expedition planted these trees as a reforestation effort. Now, they're curious if this would be a good location for a tree house.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-08T13:26:57+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 13,
+                "part_one": 210,
+                "part_two": 182
+            }
+        },
+        "9": {
+            "year": 2022,
+            "day": 9,
+            "title": "Rope Bridge",
+            "excerpt": "This rope bridge creaks as you walk along it. You aren't sure how old it is, or whether it can even support your weight.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-11T13:43:31+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 10,
+                "part_one": 35,
+                "part_two": 84
+            }
+        },
+        "10": {
+            "year": 2022,
+            "day": 10,
+            "title": "Cathode-Ray Tube",
+            "excerpt": "You avoid the ropes, plunge into the river, and swim to shore.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-11T13:43:31+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "11": {
+            "year": 2022,
+            "day": 11,
+            "title": "Monkey in the Middle",
+            "excerpt": "As you finally start making your way upriver, you realize your pack is much lighter than you remember. Just then, one of the items from your pack goes flying overhead. Monkeys are playing Keep Away with your missing things!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-11T20:00:41+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 607
+            }
+        },
+        "12": {
+            "year": 2022,
+            "day": 12,
+            "title": "Hill Climbing Algorithm",
+            "excerpt": "You try contacting the Elves using your handheld device, but the river you're following must be too low to get a decent signal.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-12T10:26:09+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 8,
+                "part_one": 25,
+                "part_two": 2681
+            }
+        },
+        "13": {
+            "year": 2022,
+            "day": 13,
+            "title": "Distress Signal",
+            "excerpt": "You climb the hill and again try contacting the Elves. However, you instead receive a signal you weren't expecting: a distress signal.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-15T11:56:01+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 0,
+                "part_two": 11
+            }
+        },
+        "14": {
+            "year": 2022,
+            "day": 14,
+            "title": "Regolith Reservoir",
+            "excerpt": "The distress signal leads you to a giant waterfall! Actually, hang on - the signal seems like it's coming from the waterfall itself, and that doesn't make any sense. However, you do notice a little path that leads behind the waterfall.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-15T11:56:01+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 12,
+                "part_one": 31,
+                "part_two": 32
+            }
+        },
+        "15": {
+            "year": 2022,
+            "day": 15,
+            "title": "Beacon Exclusion Zone",
+            "excerpt": "You feel the ground rumble again as the distress signal leads you to a large network of subterranean tunnels. You don't have time to search them all, but you don't need to: your pack contains a set of deployable sensors that you imagine were originally built to locate lost Elves.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-20T17:10:02+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 0,
+                "part_two": 37432
+            }
+        },
+        "16": {
+            "year": 2022,
+            "day": 16,
+            "title": "Proboscidea Volcanium",
+            "excerpt": "The sensors have led you to the origin of the distress signal: yet another handheld device, just like the one the Elves gave you. However, you don't see any Elves around; instead, the device is surrounded by elephants! They must have gotten lost in these tunnels, and one of the elephants apparently figured out how to turn on the distress signal.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-30T19:48:50+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 747,
+                "part_two": 3407
+            }
+        },
+        "17": {
+            "year": 2022,
+            "day": 17,
+            "title": "Pyroclastic Flow",
+            "excerpt": "Your handheld device has located an alternative exit from the cave for you and the elephants.  The ground is rumbling almost continuously now, but the strange valves bought you some time. It's definitely getting warmer in here, though.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-20T17:10:02+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 13,
+                "part_one": 2189,
+                "part_two": 7989
+            }
+        },
+        "18": {
+            "year": 2022,
+            "day": 18,
+            "title": "Boiling Boulders",
+            "excerpt": "You and the elephants finally reach fresh air. You've emerged near the base of a large volcano that seems to be actively erupting! Fortunately, the lava seems to be flowing away from you and toward the ocean.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2022-12-21T20:36:40+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 11,
+                "part_one": 6,
+                "part_two": 23
+            }
+        },
+        "19": {
+            "year": 2022,
+            "day": 19,
+            "title": "Not Enough Minerals",
+            "excerpt": "Your scans show that the lava did indeed form obsidian!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-01T22:00:24+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 7344,
+                "part_two": 36739
+            }
+        },
+        "20": {
+            "year": 2022,
+            "day": 20,
+            "title": "Grove Positioning System",
+            "excerpt": "It's finally time to meet back up with the Elves. When you try to contact them, however, you get no reply. Perhaps you're out of range?",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-03T10:40:57+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 240,
+                "part_two": 1666
+            }
+        },
+        "21": {
+            "year": 2022,
+            "day": 21,
+            "title": "Monkey Math",
+            "excerpt": "The monkeys are back! You're worried they're going to try to steal your stuff again, but it seems like they're just holding their ground and making various monkey noises at you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-04T16:18:36+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 1,
+                "part_two": 27
+            }
+        },
+        "22": {
+            "year": 2022,
+            "day": 22,
+            "title": "Monkey Map",
+            "excerpt": "The monkeys take you on a surprisingly easy trail through the jungle. They're even going in roughly the right direction according to your handheld device's Grove Positioning System.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-07-04T11:39:09+01:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 36,
+                "part_one": 32,
+                "part_two": 48
+            }
+        },
+        "23": {
+            "year": 2022,
+            "day": 23,
+            "title": "Unstable Diffusion",
+            "excerpt": "You enter a large crater of gray dirt where the grove is supposed to be. All around you, plants you imagine were expected to be full of fruit are instead withered and broken. A large group of Elves has formed in the middle of the grove.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-18T17:10:40+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 5,
+                "part_one": 256,
+                "part_two": 7538
+            }
+        },
+        "24": {
+            "year": 2022,
+            "day": 24,
+            "title": "Blizzard Basin",
+            "excerpt": "With everything replanted for next year (and with elephants and monkeys to tend the grove), you and the Elves leave for the extraction point.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-01-23T12:03:07+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 720,
+                "part_two": 2156
+            }
+        },
+        "25": {
+            "year": 2022,
+            "day": 25,
+            "title": "Full of Hot Air",
+            "excerpt": "As the expedition finally reaches the extraction point, several large hot air balloons drift down to meet you. Crews quickly start unloading the equipment the balloons brought: many hot air balloon kits, some fuel tanks, and a fuel heating machine.",
+            "has_part_one": true,
+            "has_part_two": false,
+            "part_one_solved": true,
+            "part_two_solved": false,
+            "completion_date": "2023-01-24T14:15:44+00:00",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0
+            }
+        }
+    }
+}

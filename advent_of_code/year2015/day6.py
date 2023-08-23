@@ -9,7 +9,6 @@ from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import List
 
 import numpy as np
 
@@ -18,6 +17,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -44,11 +44,11 @@ class Solver(SolverInterface):
     DAY = 6
     TITLE = "Probably a Fire Hazard"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         ops = "|".join(x.value for x in _Operation)
         self.input = parse_lines(
@@ -61,6 +61,7 @@ class Solver(SolverInterface):
             ),
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -85,6 +86,7 @@ class Solver(SolverInterface):
 
         return int(np.count_nonzero(lights))
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 

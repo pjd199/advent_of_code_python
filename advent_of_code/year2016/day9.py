@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/10
 from pathlib import Path
 from re import compile
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 9
     TITLE = "Explosives in Cyberspace"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(
             puzzle_input, r"([A-Z]|\(\d+x\d+\))+", str_processor

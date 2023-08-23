@@ -9,7 +9,6 @@ from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,13 +26,13 @@ class _Point:
     y: int
     z: int
 
-    def __init__(self, text: str):
+    def __init__(self, text: str) -> None:
         """Initialise the Point from a string.
 
         Args:
             text (str): the comma delimiter string
         """
-        self.x, self.y, self.z = [int(a) for a in text.split(",")]
+        self.x, self.y, self.z = (int(a) for a in text.split(","))
 
     def dist(self) -> int:
         """Calculates 3D Manhattan distance from (0,0,0).
@@ -47,7 +46,7 @@ class _Point:
         """Add a Point to this Point.
 
         Args:
-            other (Point): the other point
+            other ("_Point"): the other point
         """
         self.x += other.x
         self.y += other.y
@@ -74,11 +73,11 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "Particle Swarm"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,

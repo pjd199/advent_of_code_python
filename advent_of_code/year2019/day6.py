@@ -8,7 +8,6 @@ https://adventofcode.com/2019/day/6
 from collections import deque
 from pathlib import Path
 from sys import path
-from typing import Deque, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 6
     TITLE = "Universal Orbit Map"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input, (r"([A-Z0-9]+)\)([A-Z0-9]+)", str_tuple_processor)
@@ -45,7 +44,7 @@ class Solver(SolverInterface):
         self._prepare_to_solve()
 
         # perform a breadth first search to find the result
-        queue: Deque[Tuple[str, int]] = deque([("COM", 0)])
+        queue: deque[tuple[str, int]] = deque([("COM", 0)])
         result = 0
         while queue:
             item, orbits = queue.popleft()
@@ -63,7 +62,7 @@ class Solver(SolverInterface):
         self._prepare_to_solve()
 
         # perform a breadth first search to find the result
-        queue: Deque[Tuple[str, int]] = deque([("YOU", 0)])
+        queue: deque[tuple[str, int]] = deque([("YOU", 0)])
         visited = set("YOU")
         result = 0
         while queue:
@@ -91,7 +90,7 @@ class Solver(SolverInterface):
     def _prepare_to_solve(self) -> None:
         """Convert the input into dictionaries for ease of lookup."""
         if not self.ready:
-            self.orbited_by: Dict[str, List[str]] = {a: [] for a, _ in self.input}
+            self.orbited_by: dict[str, list[str]] = {a: [] for a, _ in self.input}
             for a, b in self.input:
                 self.orbited_by[a].append(b)
 

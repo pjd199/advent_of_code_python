@@ -5,9 +5,10 @@ Combo Breaker
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/25
 """
+from collections.abc import Generator
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 25
     TITLE = "Combo Breaker"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"\d+", int_processor))
 
@@ -39,7 +40,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def transform(subject_number: int) -> Iterator[int]:
+        def transform(subject_number: int) -> Generator[int, None, None]:
             value = subject_number
             while True:
                 value *= subject_number
@@ -52,21 +53,16 @@ class Solver(SolverInterface):
         key = next(k for k in self.input if k != value)
         return next((v for i, v in enumerate(transform(key)) if i >= loop_size - 1))
 
-    def solve_part_two(self) -> int:
+    def solve_part_two(self) -> NoReturn:
         """Solve part two of the puzzle.
+
+        Returns:
+            NoReturn: This will never return normally
 
         Raises:
             NotImplementedError: always!
         """
-        raise NotImplementedError("No part two on Christmas Day!!!")
-
-    def solve_all(self) -> List[int]:
-        """Solve the one and only part to this puzzle.
-
-        Returns:
-            List[int]: the result
-        """
-        return [self.solve_part_one()]
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -5,10 +5,10 @@ Hex Ed
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/11
 """
+from collections.abc import Callable
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -39,11 +39,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Hex Ed"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(
             puzzle_input,
@@ -75,7 +75,7 @@ class Solver(SolverInterface):
 
     def _solve(self) -> None:
         # move using the "double co-ordinate" or interlaced system
-        move: Dict[_Direction, Callable[[int, int], Tuple[int, int]]] = {
+        move: dict[_Direction, Callable[[int, int], tuple[int, int]]] = {
             _Direction.N: lambda x, y: (x, y - 2),
             _Direction.NE: lambda x, y: (x + 1, y - 1),
             _Direction.SE: lambda x, y: (x + 1, y + 1),

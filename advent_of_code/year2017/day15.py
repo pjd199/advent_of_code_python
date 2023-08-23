@@ -5,9 +5,9 @@ Dueling Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/15
 """
+from collections.abc import Generator
 from pathlib import Path
 from sys import path
-from typing import Iterator, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 15
     TITLE = "Dueling Generators"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.seed_a, self.seed_b = parse_lines(
             puzzle_input, (r"Generator [AB] starts with (\d+)", int_processor_group(1))
@@ -62,7 +62,9 @@ class Solver(SolverInterface):
             if (next(iter_a) & 65535) == (next(iter_b) & 65535)
         )
 
-    def _generator(self, seed: int, factor: int, modulo: int = 1) -> Iterator[int]:
+    def _generator(
+        self, seed: int, factor: int, modulo: int = 1
+    ) -> Generator[int, None, None]:
         """Simulate the Generator in the puzzle.
 
         Args:
@@ -71,7 +73,7 @@ class Solver(SolverInterface):
             modulo (int): Only return results multiples of modulo. Defaults to 1.
 
         Yields:
-            Iterator[int]: the next number in the sequence
+            Generator[int, None, None]: the next number in the sequence
         """
         value = seed
         if modulo == 1:

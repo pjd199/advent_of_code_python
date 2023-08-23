@@ -5,11 +5,11 @@ Dirac Dice
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/21
 """
-from functools import lru_cache
+from collections.abc import Generator
+from functools import cache
 from itertools import cycle, product
 from pathlib import Path
 from sys import path
-from typing import Iterator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -44,7 +44,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def dice_iter() -> Iterator[int]:
+        def dice_iter() -> Generator[int, None, None]:
             dice = 1
             while True:
                 yield dice
@@ -73,7 +73,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        @lru_cache(maxsize=None)
+        @cache
         def play(
             position1: int, score1: int, position2: int, score2: int
         ) -> tuple[int, int]:

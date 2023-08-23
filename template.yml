@@ -7,14 +7,17 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: .
-      Handler: advent_of_code.app.lambda_handler
-      Runtime: python3.10
+      PackageType: Image
       Timeout: 300
       MemorySize: 2048
       Architectures:
       - arm64
       FunctionUrlConfig:
         AuthType: NONE
+    Metadata:
+      DockerTag: AdventOfCodeFunction
+      Dockerfile: Dockerfile
+      DockerContext: .
 
 Outputs:
   HelloWorldFunction:

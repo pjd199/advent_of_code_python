@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/10
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -18,6 +17,14 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@unique
+class _Direction(Enum):
+    UP = "U"
+    DOWN = "D"
+    LEFT = "L"
+    RIGHT = "R"
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
@@ -25,22 +32,15 @@ class Solver(SolverInterface):
     DAY = 2
     TITLE = "Bathroom Security"
 
-    @unique
-    class _Direction(Enum):
-        UP = "U"
-        DOWN = "D"
-        LEFT = "L"
-        RIGHT = "R"
-
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(
             puzzle_input,
-            (enum_re(Solver._Direction), enum_processor(Solver._Direction)),
+            (enum_re(_Direction), enum_processor(_Direction)),
         )
 
     def solve_part_one(self) -> str:
@@ -87,11 +87,11 @@ class Solver(SolverInterface):
             }
         )
 
-    def _find_code(self, grid: Dict[Tuple[int, int], str]) -> str:
+    def _find_code(self, grid: dict[tuple[int, int], str]) -> str:
         """Find the code, starting at "5".
 
         Args:
-            grid (Dict[Tuple[int, int], str]): keypad mapping (x, y),
+            grid (dict[tuple[int, int], str]): keypad mapping (x, y),
                 where (0, 0) is top left
 
         Returns:
@@ -105,13 +105,13 @@ class Solver(SolverInterface):
         code = []
         for line in self.input:
             for direction in line:
-                if direction == Solver._Direction.UP and (x, y - 1) in grid:
+                if direction == _Direction.UP and (x, y - 1) in grid:
                     y -= 1
-                elif direction == Solver._Direction.DOWN and (x, y + 1) in grid:
+                elif direction == _Direction.DOWN and (x, y + 1) in grid:
                     y += 1
-                elif direction == Solver._Direction.LEFT and (x - 1, y) in grid:
+                elif direction == _Direction.LEFT and (x - 1, y) in grid:
                     x -= 1
-                elif direction == Solver._Direction.RIGHT and (x + 1, y) in grid:
+                elif direction == _Direction.RIGHT and (x + 1, y) in grid:
                     x += 1
             code.append(grid[(x, y)])
 

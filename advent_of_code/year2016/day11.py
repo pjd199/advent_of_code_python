@@ -5,13 +5,15 @@ Radioisotope Thermoelectric Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/11
 """
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
+from collections.abc import Generator
 from itertools import combinations
 from pathlib import Path
 from re import findall
 from sys import path
-from typing import DefaultDict, Deque, Iterable, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -33,25 +35,25 @@ class Item(ABC):
         self.material = material
 
     @abstractmethod
-    def safe(self, others: List["Item"]) -> bool:
+    def safe(self, others: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
         Args:
-            others (List[Item]): The other items
+            others (list[Item]): The other items
 
         Returns:
             bool: True if safe, otherwise False
         """
 
 
-class Generator(Item):
+class GeneratorItem(Item):
     """The generator item."""
 
-    def safe(self, others: List[Item]) -> bool:
+    def safe(self, _: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
         Args:
-            others (List[Item]): The other items
+            _ (list[Item]): The other items
 
         Returns:
             bool: True if safe, otherwise False
@@ -70,18 +72,18 @@ class Generator(Item):
 class Microchip(Item):
     """A Microchip item."""
 
-    def safe(self, others: List[Item]) -> bool:
+    def safe(self, others: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
         Args:
-            others (List[Item]): The other items
+            others (list[Item]): The other items
 
         Returns:
             bool: True if safe, otherwise False
         """
         return any(
-            [isinstance(x, Generator) and self.material == x.material for x in others]
-        ) or all([isinstance(x, Microchip) for x in others])
+            isinstance(x, GeneratorItem) and self.material == x.material for x in others
+        ) or all(isinstance(x, Microchip) for x in others)
 
     def __repr__(self) -> str:
         """The string representation of this object.
@@ -92,26 +94,26 @@ class Microchip(Item):
         return f"{self.material}-compatible microchip"  # pragma: no cover
 
 
-class State(ABC):
+class State:
     """Represents a complete state in the simulation."""
 
-    def __init__(self, elevator: int, floors: List[List[Item]], step: int) -> None:
+    def __init__(self, elevator: int, floors: list[list[Item]], step: int) -> None:
         """Initialise the state.
 
         Args:
             elevator (int): the location of the elevator
-            floors (List[List[Item]]): the floors in the state
+            floors (list[list[Item]]): the floors in the state
             step (int): the number of steps away from the start
         """
         self.elevator = elevator
         self.floors = floors
         self.step = step
 
-    def next_state(self) -> Iterable["State"]:
+    def next_state(self) -> Generator[State, None, None]:
         """Iterator for all the safe moves from here.
 
         Yields:
-            Iterable[State]: the next safe state
+            Generator[State, None, None]: the next safe state
         """
         for items_in_elevator in [2, 1]:
             for items in combinations(self.floors[self.elevator], items_in_elevator):
@@ -132,13 +134,13 @@ class State(ABC):
                         ):
                             yield State(new_elevator, new_floors, self.step + 1)
 
-    def equivalence(self) -> Tuple[int, Tuple[Tuple[int, ...], ...]]:
+    def equivalence(self) -> tuple[int, tuple[tuple[int, ...], ...]]:
         """Create a comparator of states, focusing on pairs rather than names.
 
         Returns:
-            Tuple[int, Tuple[Tuple[int, int]]]: the formatted output
+            tuple[int, tuple[tuple[int, ...], ...]]: the formatted output
         """
-        mapper: DefaultDict[str, List[int]] = defaultdict(lambda: [0, 0])
+        mapper: defaultdict[str, list[int]] = defaultdict(lambda: [0, 0])
         for i, floor in enumerate(self.floors):
             for item in floor:
                 if isinstance(item, Microchip):
@@ -156,13 +158,13 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Radioisotope Thermoelectric Generators"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
-        item_initializers = {"generator": Generator, "microchip": Microchip}
+        item_initializers = {"generator": GeneratorItem, "microchip": Microchip}
         floors = parse_lines(
             puzzle_input,
             (
@@ -199,9 +201,9 @@ class Solver(SolverInterface):
         """
         floors = self.start_state.floors
         floors[0] += [
-            Generator("elerium"),
+            GeneratorItem("elerium"),
             Microchip("elerium"),
-            Generator("dilithium"),
+            GeneratorItem("dilithium"),
             Microchip("dilithium"),
         ]
 
@@ -217,7 +219,7 @@ class Solver(SolverInterface):
             int: the number of steps required to move all items.
         """
         # setup the queue and the visited set
-        queue: Deque[State] = deque()
+        queue: deque[State] = deque()
         queue.append(initial_state)
         visited = {initial_state.equivalence()}
 

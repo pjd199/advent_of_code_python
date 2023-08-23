@@ -9,7 +9,6 @@ from collections import deque
 from itertools import islice
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 22
     TITLE = "Crab Combat"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         sections = split_sections(puzzle_input, expected_sections=2)
         self.input = [
@@ -67,17 +66,17 @@ class Solver(SolverInterface):
         winner = self._game(players, recursive_combat)
         return sum((i + 1) * card for i, card in enumerate(reversed(players[winner])))
 
-    def _game(self, players: List[Deque[int]], recursive_combat: bool) -> int:
+    def _game(self, players: list[deque[int]], recursive_combat: bool) -> int:
         """Play the game.
 
         Args:
-            players (List[Deque[int]]): the player's hands
+            players (list[deque[int]]): the player's hands
             recursive_combat (bool): if True, enable recursive game play
 
         Returns:
             int: the winner (0 for player 1, 1 for player 2)
         """
-        history: Set[Tuple[Tuple[int, ...], Tuple[int, ...]]] = set()
+        history: set[tuple[tuple[int, ...], tuple[int, ...]]] = set()
         game_winner = -1
 
         # keep playing rounds until a player wins the game

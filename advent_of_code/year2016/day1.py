@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/1
 from dataclasses import dataclass
 from pathlib import Path
 from sys import maxsize, path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -18,6 +17,14 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass
+class _Instruction:
+    """Data class for the instructions."""
+
+    turn: str
+    distance: int
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
@@ -25,24 +32,17 @@ class Solver(SolverInterface):
     DAY = 1
     TITLE = "No Time for a Taxicab"
 
-    @dataclass
-    class _Instruction:
-        """Data class for the instructions."""
-
-        turn: str
-        distance: int
-
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(
             puzzle_input,
             (
                 r"(?P<turn>[L|R])(?P<distance>[0-9]+)",
-                dataclass_processor(Solver._Instruction),
+                dataclass_processor(_Instruction),
             ),
             delimiter=", ",
         )
@@ -105,8 +105,7 @@ class Solver(SolverInterface):
                 if (x, y) in breadcrumbs:
                     i = maxsize
                     break
-                else:
-                    breadcrumbs.add((x, y))
+                breadcrumbs.add((x, y))
 
             i += 1
 

@@ -5,10 +5,10 @@ How About a Nice Game of Chess?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+from collections.abc import Generator
 from hashlib import md5
 from pathlib import Path
 from sys import path
-from typing import Dict, Iterable, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,17 +25,17 @@ class Solver(SolverInterface):
     DAY = 5
     TITLE = "How About a Nice Game of Chess?"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"(?P<id>[a-z]+)", str_processor)
 
         # setup the empty cache to help shortcut solving part two if called
         # after part one
-        self.cache: Dict[int, str] = {}
+        self.cache: dict[int, str] = {}
 
     def solve_part_one(self) -> str:
         """Solve part one of the puzzle.
@@ -67,11 +67,11 @@ class Solver(SolverInterface):
 
         return "".join(password)
 
-    def _digests(self) -> Iterable[str]:
+    def _digests(self) -> Generator[str, None, None]:
         """An iterator for MD5 digests.
 
         Yields:
-            Iterator[Iterable[str]]: The next digest in the stream
+            Generator[str, None, None]: The next digest in the stream
         """
         i = 0
 
@@ -85,7 +85,9 @@ class Solver(SolverInterface):
             # python 3.9 introduced usedforsecurity=False for MD5 function,
             # which raises a security issue for bandit - # nosec is used
             # to ignore this, as there are no security issues here
-            digest = md5((self.input + str(i)).encode()).hexdigest()  # nosec
+            digest = md5(
+                (self.input + str(i)).encode(), usedforsecurity=False
+            ).hexdigest()
 
             if digest.startswith("00000"):
                 self.cache[i] = digest

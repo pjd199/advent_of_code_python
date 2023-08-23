@@ -3,7 +3,6 @@ from re import compile
 from time import sleep
 
 import pytest
-
 from advent_of_code.utils.display_timer import DisplayTimer
 
 
@@ -16,16 +15,14 @@ def test_display_timer(
     """Unit test for the DisplayTimer class.
 
     Args:
-        capfd: the stdout / stderr capture fixture
+        capfd (pytest.CaptureFixture[str]): the stdout / stderr capture fixture
         interval(float): the parametrized interval
         duration(int): the number of seconds to run the timer for
     """
     # execute display timer
     message = "TEST "
-    dt = DisplayTimer(message, interval)
-    dt.start()
-    sleep(duration)
-    dt.cancel()
+    with DisplayTimer(message, interval):
+        sleep(duration)
     captured = capfd.readouterr().out
 
     # check capture is as expected

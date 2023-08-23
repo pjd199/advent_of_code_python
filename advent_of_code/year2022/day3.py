@@ -7,7 +7,6 @@ https://adventofcode.com/2022/day/3
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +23,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "Rucksack Reorganization"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(puzzle_input, (r"[a-zA-Z]+", str_processor))
 
@@ -40,7 +39,7 @@ class Solver(SolverInterface):
         """
         return self._priorities(
             [
-                list(set(x[: len(x) // 2]).intersection(set(x[len(x) // 2 :])))[0]
+                next(iter(set(x[: len(x) // 2]).intersection(set(x[len(x) // 2 :]))))
                 for x in self.input
             ]
         )
@@ -53,16 +52,18 @@ class Solver(SolverInterface):
         """
         return self._priorities(
             [
-                list(
-                    set(self.input[i])
-                    .intersection(set(self.input[i + 1]))
-                    .intersection(self.input[i + 2])
-                )[0]
+                next(
+                    iter(
+                        set(self.input[i])
+                        .intersection(set(self.input[i + 1]))
+                        .intersection(self.input[i + 2])
+                    )
+                )
                 for i in range(0, len(self.input), 3)
             ]
         )
 
-    def _priorities(self, values: List[str]) -> int:
+    def _priorities(self, values: list[str]) -> int:
         return sum(
             (ord(x) - ord("A")) + 27 if x.isupper() else (ord(x) - ord("a")) + 1
             for x in values

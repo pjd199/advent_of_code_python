@@ -7,10 +7,8 @@ https://adventofcode.com/2018/day/11
 """
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 import numpy as np
-from lambda_multiprocessing import Pool  # type: ignore
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Chronal Charge"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"\d+", int_processor)
         self.ready = False
@@ -58,10 +56,9 @@ class Solver(SolverInterface):
         if not self.ready:
             self._calc_power_levels()
 
-        with Pool() as pool:
-            results = pool.map(self._find_largest, range(1, 300))
-
-        _, largest_x, largest_y, largest_size = max(results)
+        _, largest_x, largest_y, largest_size = max(
+            self._find_largest(i) for i in range(1, 300)
+        )
 
         return f"{largest_x},{largest_y},{largest_size}"
 
@@ -78,14 +75,14 @@ class Solver(SolverInterface):
         )
         self.ready = True
 
-    def _find_largest(self, size: int) -> Tuple[int, int, int, int]:
+    def _find_largest(self, size: int) -> tuple[int, int, int, int]:
         """Find the largest power for the given sized square.
 
         Args:
             size (int): the size of the square
 
         Returns:
-            Tuple[int, int, int]: a tuple of (power, x, y, size)
+            tuple[int, int, int, int]: a tuple of (power, x, y, size)
         """
         largest, largest_x, largest_y = max(
             [

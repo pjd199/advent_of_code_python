@@ -6,11 +6,11 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/24
 """
 from collections import Counter
+from collections.abc import Callable
 from enum import Enum, unique
 from pathlib import Path
 from re import findall
 from sys import path
-from typing import Callable, Dict, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -37,11 +37,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Lobby Layout"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -54,7 +54,7 @@ class Solver(SolverInterface):
         )
 
         # move using the "double co-ordinate" or interlaced system
-        self.move: Dict[_Direction, Callable[[int, int], Tuple[int, int]]] = {
+        self.move: dict[_Direction, Callable[[int, int], tuple[int, int]]] = {
             _Direction.E: lambda x, y: (x + 2, y),
             _Direction.SE: lambda x, y: (x + 1, y + 1),
             _Direction.SW: lambda x, y: (x - 1, y + 1),
@@ -62,7 +62,7 @@ class Solver(SolverInterface):
             _Direction.NW: lambda x, y: (x - 1, y - 1),
             _Direction.NE: lambda x, y: (x + 1, y - 1),
         }
-        self.black_tiles: Set[Tuple[int, int]] = set()
+        self.black_tiles: set[tuple[int, int]] = set()
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

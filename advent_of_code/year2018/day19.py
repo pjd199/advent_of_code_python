@@ -5,11 +5,11 @@ Go With The Flow
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/19
 """
+from collections.abc import Callable
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
 from sys import maxsize, path
-from typing import Callable, Dict, List, Tuple
 
 import numpy as np
 
@@ -43,11 +43,11 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Go With The Flow"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the program
         self.input = parse_lines(
@@ -95,10 +95,10 @@ class Solver(SolverInterface):
         factors = np.add(factors_with_offset, 1)  # remove offset
         return int(np.sum(factors))
 
-    def _solve(self, registers: List[int], break_at_line: int = maxsize) -> None:
+    def _solve(self, registers: list[int], break_at_line: int = maxsize) -> None:
         program = deepcopy(self.input)
 
-        self.actions: Dict[str, Callable[[Tuple[int, ...], Instruction], int]] = {
+        self.actions: dict[str, Callable[[tuple[int, ...], Instruction], int]] = {
             "addr": lambda r, i: r[i.a] + r[i.b],
             "addi": lambda r, i: r[i.a] + i.b,
             "mulr": lambda r, i: r[i.a] * r[i.b],
@@ -108,7 +108,7 @@ class Solver(SolverInterface):
             "borr": lambda r, i: r[i.a] | r[i.b],
             "bori": lambda r, i: r[i.a] | i.b,
             "setr": lambda r, i: r[i.a],
-            "seti": lambda r, i: i.a,
+            "seti": lambda _, i: i.a,
             "gtir": lambda r, i: 1 if i.a > r[i.b] else 0,
             "gtri": lambda r, i: 1 if r[i.a] > i.b else 0,
             "gtrr": lambda r, i: 1 if r[i.a] > r[i.b] else 0,

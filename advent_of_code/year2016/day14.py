@@ -6,14 +6,12 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/14
 """
 from collections import defaultdict
+from collections.abc import Generator
 from hashlib import md5
 from itertools import count
 from pathlib import Path
 from re import compile
 from sys import path
-from typing import Iterator, List
-
-from lambda_multiprocessing import Pool  # type: ignore
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -33,7 +31,7 @@ def stretch_digest(x: str) -> str:  # pragma: no cover
         str: the stretch digest
     """
     for _ in range(2017):
-        x = md5(x.encode()).hexdigest()  # nosec
+        x = md5(x.encode(), usedforsecurity=False).hexdigest()  # nosec
     return x
 
 
@@ -44,11 +42,11 @@ class Solver(SolverInterface):
     DAY = 14
     TITLE = "One-Time Pad"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"\w+", str_processor)
 
@@ -59,7 +57,8 @@ class Solver(SolverInterface):
             int: the answer
         """
         return self._find(
-            (md5(f"{self.input}{j}".encode()).hexdigest() for j in count()),  # nosec
+            md5(f"{self.input}{j}".encode(), usedforsecurity=False).hexdigest()
+            for j in count()
         )
 
     def solve_part_two(self) -> int:
@@ -68,18 +67,15 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        with Pool() as pool:
-            return self._find(
-                iter(
-                    pool.map(stretch_digest, (f"{self.input}{j}" for j in range(25000)))
-                )
-            )
+        return self._find(
+            iter(stretch_digest(f"{self.input}{j}") for j in range(25000))
+        )
 
-    def _find(self, iterator: Iterator[str]) -> int:
+    def _find(self, iterator: Generator[str, None, None]) -> int:
         """Search for the answers.
 
         Args:
-            iterator (Iterator[str]): the iterator for the MD5 hash stream
+            iterator (Generator[str, None, None]): the iterator for the MD5 hash stream
 
         Returns:
             int: the index after 64 successful 5* hashes

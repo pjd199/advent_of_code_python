@@ -1,12 +1,12 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
 from argparse import ArgumentParser
-from datetime import date
+from datetime import date, datetime, timezone
 from importlib import import_module
 from json import dump, load
 from pathlib import Path
 from re import match
 from sys import path
-from typing import Any, Dict, List, Optional, Union
+from typing import Any
 from webbrowser import open as webbrowser_open
 
 import pytest
@@ -17,6 +17,8 @@ from requests import get
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
+from advent_of_code.utils.function_timer import function_timer
+from advent_of_code.utils.input_loader import load_puzzle_input_file
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_status import puzzle_date_generator
 
@@ -25,14 +27,14 @@ REPOSITORY = "https://github.com/pjd199/advent_of_code_python"
 CACHE_PATH = "./.aoc_website_cache"
 
 
-def sorted_with_numeric_key(d: Dict[str, Any]) -> Dict[str, Any]:
+def sorted_with_numeric_key(d: dict[str, Any]) -> dict[str, Any]:
     """Sort the dictionary using numeric string key.
 
     Args:
-        d (Dict[str, Any]): the input dictionary
+        d (dict[str, Any]): the input dictionary
 
     Returns:
-        Dict[str, Any]: a new, sorted dictionary
+        dict[str, Any]: a new, sorted dictionary
     """
     return dict(sorted(d.items(), key=lambda x: int(x[0])))
 
@@ -44,24 +46,26 @@ class DailyHelper:
         self,
         year: int,
         day: int,
-        session: Optional[str] = None,
+        session: str | None = None,
         flush: bool = False,
         verbose: bool = False,
         test: bool = False,
         open_webpage: bool = False,
         run_puzzle_cli: bool = False,
-    ):
+        timing: bool = False,
+    ) -> None:
         """Initialise the helper for a specific day.
 
         Args:
             year (int): the year for the puzzle
             day (int): the day for the puzzle
-            session (Optional[str]): the session cookie for the Advent of Code website
+            session (str | None): the session cookie for the Advent of Code website
             flush (bool): if True, ignores cached files. Default False
             verbose (bool): if True, enables logging. Default False
             test (bool): if True, enables testing. Default False
             open_webpage (bool): if True, open the url in a browser. Default False
             run_puzzle_cli (bool): if True, run the puzzle CLI. Default False
+            timing (bool): if True, store the timings. Default False
         """
         self.year = year
         self.day = day
@@ -71,15 +75,17 @@ class DailyHelper:
         self.test = test
         self.open_webpage = open_webpage
         self.run_puzzle_cli = run_puzzle_cli
+        self.timing = timing
 
         self.title = ""
-        self.answers: List[str] = []
+        self.answers: list[str] = []
 
         self.html_path = Path(f"{CACHE_PATH}/year{year}/day{day}/index.html")
         self.part_one_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_one.md")
         self.part_two_path = Path(f"{CACHE_PATH}/year{year}/day{day}/part_two.md")
         self.response_path = Path(f"{CACHE_PATH}/year{year}/day{day}/response.json")
         self.expected_path = Path("./tests/expected.json")
+        self.puzzle_metadata_path = Path("./advent_of_code/puzzle_metadata.json")
         self.puzzle_input_path = Path(f"./puzzle_input/year{year}/day{day}.txt")
         self.solver_module_path = Path(f"./advent_of_code/year{year}/day{day}.py")
         self.solver_init_path = Path(f"./advent_of_code/year{year}/__init__.py")
@@ -106,7 +112,7 @@ class DailyHelper:
         self._download(page_url, self.html_path, ok_if_exists=True)
 
         # parse the html file
-        with open(self.html_path) as file:
+        with Path(self.html_path).open() as file:
             soup = BeautifulSoup(file, "html.parser")
 
         # find and save the part descriptions
@@ -132,10 +138,13 @@ class DailyHelper:
 
         # find and save the answers, if solved
         para = soup.find_all("p")
-        for x in para:
-            if x.text.startswith("Your puzzle answer was"):
-                self.answers.append(x.code.string)
+        self.answers = [
+            x.code.string for x in para if x.text.startswith("Your puzzle answer was")
+        ]
         self._save_response()
+
+        # extract the excerpt
+        self.excerpt = parts[0].find_all("p")[0].text
 
         # save the expected responses
         self._save_expected()
@@ -145,7 +154,7 @@ class DailyHelper:
         for d in desc:
             d.h2.extract()
 
-        with open(self.template_text_path) as file:
+        with Path(self.template_text_path).open() as file:
             template = "".join(file.readlines())
 
         self._save(
@@ -171,19 +180,22 @@ class DailyHelper:
                 import_module(f"advent_of_code.year{self.year}.day{self.day}").Solver
             )
 
+        # save the puzzle metadata
+        self._save_metadata()
+
         # run the testing
         self._testing()
 
         return 0
 
-    def _log(self, data: Any) -> None:
+    def _log(self, line: str) -> None:
         """Print line if in verbose mode.
 
         Args:
-            data (Any): the line to print
+            line (str): the line to print
         """
         if self.verbose:
-            print(str(data))
+            print(line)
 
     def _flush(self) -> None:
         """Flush cached files."""
@@ -202,7 +214,7 @@ class DailyHelper:
     def _save(
         self,
         path: Path,
-        data: Union[str, Dict[str, Any]],
+        data: str | dict[str, Any],
         force: bool = False,
         ok_if_exists: bool = False,
     ) -> None:
@@ -210,7 +222,7 @@ class DailyHelper:
 
         Args:
             path (Path): the save path
-            data (Union[str, Dict[str, Any]]): the data to save
+            data (str | dict[str, Any]): the data to save
             force (bool): If True, overwrites existing file. Defaults to False.
             ok_if_exists (bool): If False, warn if already exists. Defaults to False.
         """
@@ -219,7 +231,7 @@ class DailyHelper:
                 self._log(f"File {path} already exists")
         else:
             path.parent.mkdir(parents=True, exist_ok=True)
-            with open(path, "w") as file:
+            with Path(path).open("w") as file:
                 if isinstance(data, str):
                     file.write(data)
                 else:
@@ -240,7 +252,7 @@ class DailyHelper:
                 data["part_two"] = self.answers[1]
 
         # open expected existing file
-        with open(self.expected_path) as file:
+        with Path(self.expected_path).open() as file:
             expected = load(file)
 
         if str(self.year) not in expected:
@@ -278,6 +290,88 @@ class DailyHelper:
         # save the answers
         self._save(Path(self.response_path), response)
 
+    def _save_metadata(self) -> None:
+        """Save metadata.json."""
+        # open existing metadata file
+        file_updated = False
+        with Path(self.puzzle_metadata_path).open() as file:
+            metadata = load(file)
+
+        if str(self.year) not in metadata:
+            metadata[str(self.year)] = {}
+
+        if str(self.day) not in metadata[str(self.year)]:
+            self._log(f"Creating entry in {self.puzzle_metadata_path}")
+            # first save of metadata
+            metadata[str(self.year)][str(self.day)] = {
+                "year": self.year,
+                "day": self.day,
+                "title": self.title,
+                "excerpt": self.excerpt,
+                "has_part_one": True,
+                "has_part_two": self.day != 25,
+                "part_one_solved": len(self.answers) >= 1,
+                "part_two_solved": len(self.answers) == 2,
+            }
+            file_updated = True
+        elif metadata[str(self.year)][str(self.day)]["part_one_solved"] != (
+            len(self.answers) >= 1
+        ) or metadata[str(self.year)][str(self.day)]["part_two_solved"] != (
+            len(self.answers) == 2
+        ):
+            self._log(f"Updating status in {self.puzzle_metadata_path}")
+            metadata[str(self.year)][str(self.day)]["part_one_solved"] = (
+                len(self.answers) >= 1
+            )
+            metadata[str(self.year)][str(self.day)]["part_two_solved"] = (
+                len(self.answers) == 2
+            )
+            file_updated = True
+
+        if (
+            len(self.answers) == 2 or (len(self.answers) == 1 and self.day == 25)
+        ) and "completion_date" not in metadata[str(self.year)][str(self.day)]:
+            self._log(f"Updating completion date {self.puzzle_metadata_path}")
+            metadata[str(self.year)][str(self.day)]["completion_date"] = datetime.now(
+                tz=timezone.utc
+            ).strftime("%Y-%m-%dT%H:%M:%S%zZ")
+            file_updated = True
+
+        if self.timing:
+            self._log(f"Updating timings {self.puzzle_metadata_path}")
+
+            metadata[str(self.year)][str(self.day)]["timings"] = {}
+            metadata[str(self.year)][str(self.day)]["timings"]["unit"] = "ms"
+
+            self._log("Timing parse")
+            mod = import_module(f"advent_of_code.year{self.year}.day{self.day}")
+            puzzle_input = load_puzzle_input_file(self.year, self.day)
+            solver, time = function_timer(mod.Solver, puzzle_input)
+            metadata[str(self.year)][str(self.day)]["timings"]["parse"] = time
+
+            self._log("Timing part one")
+            _, time = function_timer(solver.solve_part_one)
+            metadata[str(self.year)][str(self.day)]["timings"]["part_one"] = time
+
+            if self.day != 25:
+                print("Timing for part two")
+                _, time = function_timer(solver.solve_part_two)
+                metadata[str(self.year)][str(self.day)]["timings"]["part_two"] = time
+            file_updated = True
+        elif "timings" not in metadata[str(self.year)][str(self.day)]:
+            print("No timings in metadata - run daily_helper with -T to time function.")
+
+        if file_updated:
+            self._save(
+                self.puzzle_metadata_path,
+                sorted_with_numeric_key(
+                    {k: sorted_with_numeric_key(v) for k, v in metadata.items()}
+                ),
+                force=True,
+            )
+        else:
+            self._log(f"Data already stored in {self.puzzle_metadata_path}")
+
     def _download(self, url: str, path: Path, ok_if_exists: bool) -> None:
         """Download file from URL.
 
@@ -303,7 +397,7 @@ class DailyHelper:
             if response.status_code == 200:
                 self._save(path, response.text)
             else:
-                raise RuntimeError(
+                raise RuntimeError(  # noqa: TRY003
                     f"Unable to download file: "
                     f"server status code {response.status_code}"
                 )
@@ -370,9 +464,13 @@ def main() -> int:
         help="open puzzle on the Advent of Code website",
         action="store_true",
     )
+    parser.add_argument(
+        "--timing", "-T", help="update timing in metadata", action="store_true"
+    )
     parser.add_argument("--verbose", "-v", help="verbose mode", action="store_true")
     parser.add_argument("--run", "-r", help="run the puzzle file", action="store_true")
     parser.add_argument("--test", "-t", help="run unit tests", action="store_true")
+
     args = parser.parse_args()
 
     # handle the session cookie loading and saving
@@ -381,10 +479,10 @@ def main() -> int:
         session = args.session
     elif args.save_session:
         session = args.save_session
-        with open(session_path, "w") as file:
+        with Path(session_path).open("w") as file:
             file.write(session)
     elif session_path.is_file():
-        with open(session_path) as file:
+        with Path(session_path).open() as file:
             session = file.readline()
     else:
         session = None
@@ -399,11 +497,11 @@ def main() -> int:
             args.test,
             args.open,
             args.run,
+            args.timing,
         ).run()
 
-    else:
-        print(f"Invalid date: year={args.year}, day={args.day}")
-        return 1
+    print(f"Invalid date: year={args.year}, day={args.day}")
+    return 1
 
 
 if __name__ == "__main__":

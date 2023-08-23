@@ -8,7 +8,7 @@ https://adventofcode.com/2016/day/25
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import List
+from typing import NoReturn
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 25
     TITLE = "Clock Signal"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.program = load(puzzle_input)
 
@@ -49,21 +49,16 @@ class Solver(SolverInterface):
 
         return result
 
-    def solve_part_two(self) -> int:
-        """There is no part two on Christmas Day.
-
-        Raises:
-            NotImplementedError: Always.
-        """
-        raise NotImplementedError("No part two on Christmas Day!!!")
-
-    def solve_all(self) -> List[int]:
-        """Solve the one and only part to this puzzle.
+    def solve_part_two(self) -> NoReturn:
+        """Solve part two of the puzzle.
 
         Returns:
-            List[int]: the result
+            NoReturn: This will never return normally
+
+        Raises:
+            NotImplementedError: always!
         """
-        return [self.solve_part_one()]
+        raise NotImplementedError
 
 
 if __name__ == "__main__":  # pragma: no cover

@@ -1,8 +1,7 @@
 """A simple thread for displaying a message and a stopwatch."""
 from threading import Event, Thread
 from time import perf_counter_ns
-
-NANO_IN_SEC = 1000000000
+from types import TracebackType
 
 
 class DisplayTimer(Thread):
@@ -26,14 +25,31 @@ class DisplayTimer(Thread):
         while True:
             print(
                 f"\r{self.message}"
-                f"({(perf_counter_ns() - start) / NANO_IN_SEC:.2f}s)",
+                f"({(perf_counter_ns() - start) / 1000000000:.2f}s)",
                 end="",
             )
             cancelled = self.event.wait(self.interval)
             if cancelled:
                 break
 
-    def cancel(self) -> None:
-        """Cancel the timer."""
+    def __enter__(
+        self,
+    ) -> None:
+        """Enter method called when entering a context."""
+        self.start()
+
+    def __exit__(
+        self,
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
+    ) -> None:
+        """Exit method called when leaving a context.
+
+        Args:
+            exc_type (type[BaseException] | None): optional exception
+            exc_val (BaseException | None): optional exception value
+            exc_tb (TracebackType | None): optional exception traceback
+        """
         self.event.set()
         self.join()

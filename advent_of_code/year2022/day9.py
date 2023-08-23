@@ -5,11 +5,11 @@ Rope Bridge
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/9
 """
+from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -78,11 +78,11 @@ class Solver(SolverInterface):
     DAY = 9
     TITLE = "Rope Bridge"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
@@ -121,7 +121,7 @@ class Solver(SolverInterface):
         visited = {ropes[-1].freeze()}
 
         # movements for the head of the rope
-        moves: Dict[Direction, Callable[[Point], None]] = {
+        moves: dict[Direction, Callable[[Point], None]] = {
             Direction.UP: lambda p: p.move(0, -1),
             Direction.DOWN: lambda p: p.move(0, 1),
             Direction.LEFT: lambda p: p.move(-1, 0),
@@ -129,7 +129,7 @@ class Solver(SolverInterface):
         }
 
         # movement as the rope pulls along each knot in the rope
-        pull: Dict[Tuple[int, int], Callable[[Point], None]] = {
+        pull: dict[tuple[int, int], Callable[[Point], None]] = {
             (-1, -2): lambda p: p.move(-1, -1),
             (0, -2): lambda p: p.move(0, -1),
             (1, -2): lambda p: p.move(1, -1),
@@ -146,15 +146,15 @@ class Solver(SolverInterface):
             (-1, 2): lambda p: p.move(-1, 1),
             (0, 2): lambda p: p.move(0, 1),
             (1, 2): lambda p: p.move(1, 1),
-            (-1, -1): lambda p: None,
-            (0, -1): lambda p: None,
-            (1, -1): lambda p: None,
-            (-1, 0): lambda p: None,
-            (0, 0): lambda p: None,
-            (1, 0): lambda p: None,
-            (-1, 1): lambda p: None,
-            (0, 1): lambda p: None,
-            (1, 1): lambda p: None,
+            (-1, -1): lambda _: None,
+            (0, -1): lambda _: None,
+            (1, -1): lambda _: None,
+            (-1, 0): lambda _: None,
+            (0, 0): lambda _: None,
+            (1, 0): lambda _: None,
+            (-1, 1): lambda _: None,
+            (0, 1): lambda _: None,
+            (1, 1): lambda _: None,
         }
 
         for move in self.input:

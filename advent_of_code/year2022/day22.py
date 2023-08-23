@@ -37,7 +37,7 @@ class Solver(SolverInterface):
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         map_section, directions_section = split_sections(
             puzzle_input, expected_sections=2

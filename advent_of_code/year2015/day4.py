@@ -8,13 +8,13 @@ https://adventofcode.com/2015/day/4
 from hashlib import md5
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import parse_single_line, str_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -25,14 +25,15 @@ class Solver(SolverInterface):
     DAY = 4
     TITLE = "The Ideal Stocking Stuffer"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.secret = parse_single_line(puzzle_input, r"[a-z]+", str_processor)
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -41,6 +42,7 @@ class Solver(SolverInterface):
         """
         return self._find(self.secret, "00000")
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -69,7 +71,7 @@ class Solver(SolverInterface):
                 # python 3.9 introduced usedforsecurity=False for MD5 function,
                 # which raises a security issue for bandit - # nosec is used
                 # to ignore this, as there are no security issues here
-                md5((secret + str(i)).encode())  # nosec
+                md5((secret + str(i)).encode(), usedforsecurity=False)
                 .hexdigest()
                 .startswith(prefix)
             ):

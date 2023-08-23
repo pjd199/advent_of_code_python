@@ -1,0 +1,60 @@
+name: Update Timings
+
+on:
+  workflow_dispatch:
+  
+  workflow_call:
+    
+concurrency: 
+  group: timings${{github.ref}}
+  cancel-in-progress: true
+
+jobs:
+  generate:
+    name: Updating Timing in metadata
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out Respository
+        uses: actions/checkout@v3
+        with:
+          ref: dev
+      
+      - name: Setup up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+          cache: "pip"
+
+      - uses: actions/cache@v3
+        name: Load dependancy cache
+        id: requirements-dev-cache
+        with:
+          path: ${{ env.pythonLocation }}
+          key:
+            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+
+      - name: Install dependencies
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install -r requirements_dev.txt
+
+      - name: Install editable package
+        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .
+
+      - name: Update timings
+        run: |
+          for year in {2015..2022}
+          do
+              for day in {1..25}
+              do
+                  echo === $year $day ===
+                  python advent_of_code/daily_helper.py $year $day -T
+              done
+          done
+
+      - name: Commit updated file to respository      
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Updated timings in metadata
+          branch: dev

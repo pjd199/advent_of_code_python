@@ -7,13 +7,19 @@ https://adventofcode.com/2015/day/19
 """
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, str_tuple_processor
+from advent_of_code.utils.parser import (
+    parse_lines,
+    parse_single_line,
+    split_sections,
+    str_processor,
+    str_tuple_processor,
+)
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -24,27 +30,24 @@ class Solver(SolverInterface):
     DAY = 19
     TITLE = "Medicine for Rudolph"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
-
-        Raises:
-            RuntimeError: Raised if the input cannot be parsed
+            puzzle_input (list[str]): The lines of the input file
         """
-        if puzzle_input is None or len(puzzle_input) < 3:
-            raise RuntimeError("Puzzle input len too short")
+        sections = split_sections(puzzle_input, expected_sections=2)
 
         self.replacements = [
             (a, b)
             for a, b in parse_lines(
-                puzzle_input[:-2],
+                sections[0],
                 (r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)", str_tuple_processor),
             )
         ]
-        self.medication = puzzle_input[-1]
+        self.medication = parse_single_line(sections[1], r"[A-Za-z]+", str_processor)
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -53,6 +56,7 @@ class Solver(SolverInterface):
         """
         return len(self._replace(self.medication, self.replacements))
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -75,19 +79,19 @@ class Solver(SolverInterface):
     def _replace(
         self,
         molecule: str,
-        replacement_list: List[Tuple[str, str]],
+        replacement_list: list[tuple[str, str]],
         reverse: bool = False,
-    ) -> List[str]:
+    ) -> list[str]:
         """Create a list of all the possible new molecules.
 
         Args:
             molecule (str): the input molecule
-            replacement_list (List[Tuple[str, ...]]): list of replacements
+            replacement_list (list[tuple[str, str]]): list of replacements
             reverse (bool): if True, reverses the replacement_list.
                 Defaults to False.
 
         Returns:
-            List[str]: a list of all the possible replacements
+            list[str]: a list of all the possible replacements
         """
         results = set()
         for a, b in replacement_list:

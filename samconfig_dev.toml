@@ -2,9 +2,9 @@ version = 0.1
 [default]
 [default.deploy]
 [default.deploy.parameters]
-stack_name = "advent-of-code-python-dev"
+stack_name = "advent-of-code-python-dev2"
 s3_bucket = "aws-sam-cli-managed-default-samclisourcebucket-1wh6zbny2z2lr"
-s3_prefix = "advent-of-code-python-dev"
+s3_prefix = "advent-of-code-python-dev2"
 region = "eu-west-2"
 capabilities = "CAPABILITY_IAM"
-image_repositories = []
+image_repositories = ["AdventOfCodeFunction=012346180589.dkr.ecr.eu-west-2.amazonaws.com/advent-of-code-function-dev"]

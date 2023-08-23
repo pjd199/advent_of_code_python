@@ -10,7 +10,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from string import ascii_uppercase
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -41,11 +40,11 @@ class Solver(SolverInterface):
     DAY = 5
     TITLE = "Supply Stacks"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # divide the input into the two sections
         stack_section, moves_section = split_sections(puzzle_input, "", 2)
@@ -83,8 +82,7 @@ class Solver(SolverInterface):
         stacks = deepcopy(self.stacks)
 
         for x in self.moves:
-            for _ in range(x.count):
-                stacks[x.move_to].append(stacks[x.move_from].pop())
+            stacks[x.move_to].extend(stacks[x.move_from].pop() for _ in range(x.count))
 
         return "".join([x[-1] for x in stacks.values()])
 

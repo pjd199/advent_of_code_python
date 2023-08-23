@@ -6,9 +6,10 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/24
 """
 from collections import deque
+from collections.abc import Generator
+from itertools import pairwise
 from pathlib import Path
 from sys import path
-from typing import FrozenSet, Iterator, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 24
     TITLE = "Blizzard Basin"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(puzzle_input, (r"[#^>v<.]", str_processor))
         self.start = (self.input[0].index("."), 0)
@@ -51,11 +52,11 @@ class Solver(SolverInterface):
         """
         return self._solve([self.start, self.finish, self.start, self.finish])
 
-    def _safe_places(self) -> Iterator[FrozenSet[Tuple[int, int]]]:
-        """Iterator of the safe places in the map for each minute that passes.
+    def _safe_places(self) -> Generator[frozenset[tuple[int, int]], None, None]:
+        """Iterate over the safe places in the map for each minute that passes.
 
         Yields:
-            Iterator[FrozenSet[Tuple[int, int]]]: set of co-ordinates
+            Generator[frozenset[tuple[int, int]], None, None]: set of co-ordinates
         """
         # calculate the extent of the grid bounded by the valley walls
         min_x, min_y = (1, 1)
@@ -81,20 +82,20 @@ class Solver(SolverInterface):
             down = {(x, y + 1 if y < max_y else min_y) for x, y in down}
             left = {(x - 1 if x > min_x else max_x, y) for x, y in left}
 
-    def _solve(self, route: List[Tuple[int, int]]) -> int:
+    def _solve(self, route: list[tuple[int, int]]) -> int:
         """Solve the puzzle.
 
         Args:
-            route (List[Tuple[int, int]]): a list of points to visit
+            route (list[tuple[int, int]]): a list of points to visit
 
         Returns:
             int: the total elapsed time
         """
         safe_iter = self._safe_places()
-        states: List[FrozenSet[Tuple[int, int]]] = []
+        states: list[frozenset[tuple[int, int]]] = []
 
         result = 0
-        for (x1, y1), (x2, y2) in zip(route, route[1:]):
+        for (x1, y1), (x2, y2) in pairwise(route):
             # perform a breadth first search from between the two points
             queue = deque([(x1, y1, result)])
             visited = set(queue)

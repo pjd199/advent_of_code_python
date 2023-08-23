@@ -7,7 +7,6 @@ https://adventofcode.com/2016/day/18
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +23,11 @@ class Solver(SolverInterface):
     DAY = 18
     TITLE = "Like a Rogue"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_single_line(puzzle_input, r"[\.\^]+", str_processor)
 
@@ -64,7 +63,7 @@ class Solver(SolverInterface):
         for _ in range(rows):
             traps += row.count(True)
             row = [
-                left != right for left, right in zip([False] + row, row[1:] + [False])
+                left != right for left, right in zip([False, *row], row[1:] + [False])
             ]
         return (len(row) * rows) - traps
 

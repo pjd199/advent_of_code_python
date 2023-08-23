@@ -8,7 +8,6 @@ https://adventofcode.com/2016/day/20
 from dataclasses import astuple, dataclass
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -18,6 +17,12 @@ from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
+@dataclass(order=True)
+class _RangeData:
+    lower: int
+    upper: int
+
+
 class Solver(SolverInterface):
     """Solves the puzzle."""
 
@@ -25,22 +30,17 @@ class Solver(SolverInterface):
     DAY = 20
     TITLE = "Firewall Rules"
 
-    @dataclass(order=True)
-    class _RangeData:
-        lower: int
-        upper: int
-
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input,
-            (r"(?P<lower>\d+)-(?P<upper>\d+)", dataclass_processor(Solver._RangeData)),
+            (r"(?P<lower>\d+)-(?P<upper>\d+)", dataclass_processor(_RangeData)),
         )
-        self.blacklist: List[Tuple[int, int]] = []
+        self.blacklist: list[tuple[int, int]] = []
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.

@@ -9,7 +9,6 @@ from itertools import chain
 from pathlib import Path
 from re import fullmatch
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -17,7 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 from advent_of_code.utils.parser import (
     parse_tokens,
     split_sections,
-    str_tuple_processor,
+    str_pair_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -30,24 +29,23 @@ class Solver(SolverInterface):
     DAY = 4
     TITLE = "Passport Processing"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
-        self.input = [
-            {
-                k: v
-                for k, v in chain.from_iterable(
+        self.input: list[dict[str, str]] = [
+            dict(
+                chain.from_iterable(
                     parse_tokens(
                         section,
-                        (r"(\w{3}):([#\d\w]+)", str_tuple_processor),
+                        (r"(\w{3}):([#\d\w]+)", str_pair_processor),
                         delimiter=" ",
                         require_delimiter=False,
                     )
                 )
-            }
+            )
             for section in split_sections(puzzle_input)
         ]
 

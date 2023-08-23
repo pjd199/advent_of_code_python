@@ -7,7 +7,6 @@ https://adventofcode.com/2019/day/11
 """
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 11
     TITLE = "Space Police"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.computer = IntcodeComputer(puzzle_input)
 
@@ -51,18 +50,19 @@ class Solver(SolverInterface):
             {(x, y) for (x, y), value in self._paint(1).items() if value == 1}
         )
 
-    def _paint(self, initial: int) -> Dict[Tuple[int, int], int]:
+    def _paint(self, initial: int) -> dict[tuple[int, int], int]:
         """Run the computer for the painting robot.
 
         Args:
             initial (int): The color of the inital square
 
         Returns:
-            pixels (Dict[Tuple[int, int], int]): the pixels, which are painted in situ
+            dict[tuple[int, int], int]: the pixels, which are painted in situ
         """
         self.computer.reset()
 
-        x, y = (0, 0)
+        x: int = 0
+        y: int = 0
         pixels = {(x, y): initial}
         direction = 0  # 0 is north, 1 is east, 2 is south, 3 is west
         while not self.computer.terminated:

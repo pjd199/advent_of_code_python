@@ -5,9 +5,9 @@ Crossed Wires
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/3
 """
+from collections.abc import Callable
 from pathlib import Path
 from sys import path
-from typing import Callable, Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 3
     TITLE = "Crossed Wires"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens(
             puzzle_input, (r"[URDL]\d+", str_processor), delimiter=","
@@ -64,27 +64,27 @@ class Solver(SolverInterface):
     def _map_wires(self) -> None:
         """Prepare the wires."""
         if not self.wires_mapped:
-            self.wire_a, self.wire_b = [self._draw_wire(x) for x in self.input]
+            self.wire_a, self.wire_b = (self._draw_wire(x) for x in self.input)
             self.intersections = set(self.wire_a) & set(self.wire_b) - {(0, 0)}
             self.wires_mapped = True
 
-    def _draw_wire(self, path: List[str]) -> List[Tuple[int, int]]:
+    def _draw_wire(self, path: list[str]) -> list[tuple[int, int]]:
         """Draw the wires, point by point.
 
         Args:
-            path (List[str]): the path to follow
+            path (list[str]): the path to follow
 
         Returns:
-            List[Tuple[int, int]]: the result
+            list[tuple[int, int]]: the result
         """
-        draw_line: Dict[str, Callable[[int, int, int], List[Tuple[int, int]]]] = {
+        draw_line: dict[str, Callable[[int, int, int], list[tuple[int, int]]]] = {
             "U": lambda x, y, d: [(x, y - delta) for delta in range(1, d + 1)],
             "R": lambda x, y, d: [(x + delta, y) for delta in range(1, d + 1)],
             "D": lambda x, y, d: [(x, y + delta) for delta in range(1, d + 1)],
             "L": lambda x, y, d: [(x - delta, y) for delta in range(1, d + 1)],
         }
 
-        result: List[Tuple[int, int]] = [(0, 0)]
+        result: list[tuple[int, int]] = [(0, 0)]
         for point in path:
             direction = point[0]
             distance = int(point[1:])

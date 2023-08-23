@@ -1,21 +1,32 @@
 """Flask Application for Advent of Code Solver RESTful API."""
+from datetime import datetime, timezone
+from functools import cache
 from importlib import import_module
-from os import environ
+from importlib.resources import files
+from json import dumps, loads
 from pathlib import Path
+from platform import (
+    architecture,
+    machine,
+    platform,
+    python_implementation,
+    python_version,
+)
 from sys import path
-from threading import Thread
-from time import perf_counter_ns, sleep
-from typing import Any, Dict, Optional, Tuple
+from typing import Any
 
 from apig_wsgi import make_lambda_handler
-from flask import Flask, abort, request
-from requests import get
+from flask import Flask, Response, make_response, request
+from requests import RequestException, get
 from werkzeug.exceptions import HTTPException
 
 if __name__ == "__main__":
     path.append(str(Path(__file__).parent.parent))  # pragma: no cover
 
-from advent_of_code.utils.input_loader import load_file, load_multi_line_string
+from advent_of_code import __version__
+from advent_of_code.utils.function_timer import function_timer
+from advent_of_code.utils.input_loader import load_multi_line_string
+from advent_of_code.utils.parser import ParseError
 from advent_of_code.utils.solver_status import (
     implementation_status,
     is_solver_implemented,
@@ -25,184 +36,352 @@ from advent_of_code.utils.solver_status import (
 app = Flask(__name__)
 lambda_handler = make_lambda_handler(app)
 
-cache_max_age = 3600  # one hour
+Json = int | float | str | bool | dict[str, Any] | list[Any] | None
+
+Metadata = dict[str, dict[str, dict[str, int | str | bool | dict[str, int | str]]]]
+
+
+@cache
+def load_metadata_from_file() -> Metadata:
+    """Load JSON metadata from a file, caching the result.
+
+    Returns:
+        Metadata: the JSON
+    """
+    result: Metadata = loads(
+        files("advent_of_code").joinpath("puzzle_metadata.json").read_text()
+    )
+    return result
+
+
+def standard_response(
+    description: str,
+    status: int = 200,
+    results: Json = None,
+    links: Json = None,
+) -> Response:
+    """Generate the standard body.
+
+    Args:
+        description (str): the descriptionn for this function
+        status (int) : the HTTP status code, defaults to 200 (OK)
+        results (Json): the results of the api call
+        links (Json): the links associated with this api call
+
+    Returns:
+        Response: a response object
+    """
+    return make_response(
+        dumps(
+            {
+                "timestamp": datetime.now(tz=timezone.utc).strftime(
+                    "%Y-%m-%dT%H:%M:%SZ"
+                ),
+                "self": request.base_url.strip("/"),
+                "api_version": __version__,
+                "description": description,
+                "results": results if results else [],
+                "links": links if links else [],
+            },
+            sort_keys=False,
+            indent=4,
+        ),
+        status,
+        {
+            "Cache-Control": "public, max-age=3600" if status == 200 else "no-cache",
+            "Strict-Transport-Security": "max-age=3600; includeSubDomains; preload",
+            "Content-Type": "application/json",
+        },
+    )
 
 
 @app.route("/", methods=["GET"])
-def handle_root_path() -> Tuple[Dict[str, Any], int, Dict[str, str]]:
-    """Handles the root path - / .
+def handle_root_path() -> Response:
+    """Handle the root path - / .
 
     Returns:
-        tuple[Json, int]: a JSON response and a HTTP status number
+        Response: the response object
     """
-    dates = [date for date, status in implementation_status().items() if status]
-    return (
+    results = ["calendars", "puzzles", "answers"]
+    links = [
         {
-            "years": [
-                {"year": year, "days": [x.day for x in dates if x.year == year]}
-                for year in sorted({x.year for x in dates})
-            ]
+            "rel": "calendars",
+            "href": f"{request.host_url.strip('/')}/calendars",
+            "description": "Discover available puzzles and answers, "
+            "filtered using /calendars/{year}.",
+            "action": "GET",
         },
-        200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+        {
+            "rel": "puzzles",
+            "href": f"{request.host_url.strip('/')}/puzzles",
+            "description": "Discover detailed puzzle information, "
+            "filtered using /puzzles/{year}/{day}.",
+            "action": "GET",
+        },
+        {
+            "rel": "answers",
+            "href": f"{request.host_url.strip('/')}/answers",
+            "description": "Find answer for given input by calling "
+            "/answers/{year}/{day} with puzzle input as POST body "
+            "or URL provided as input paramerater.",
+            "action": "GET",
+            "parameters": ["input"],
+        },
+        {
+            "rel": "answers",
+            "href": f"{request.host_url.strip('/')}/answers",
+            "description": "Find answer for given input by calling "
+            "/answers/{year}/{day} with puzzle input as POST body "
+            "or URL provided as input paramerater.",
+            "action": "POST",
+        },
+    ]
+
+    return standard_response(
+        "Discover resourses available through this API.", 200, results, links
     )
 
 
-@app.route("/<int:year>/", methods=["GET"])
-@app.route("/<int:year>", methods=["GET"])
-def handle_year_path(year: int) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
-    """Handles the year path - eg /2015 .
+@app.route("/calendars", methods=["GET"])
+@app.route("/calendars/", methods=["GET"])
+@app.route("/calendars/<int:year_filter>", methods=["GET"])
+@app.route("/calendars/<int:year_filter>/", methods=["GET"])
+def handle_calendars_path(
+    year_filter: int | None = None,
+) -> Response:
+    """Handle the root path - /calendars .
 
     Args:
-        year (int): the year from the path
+        year_filter (int | None): The year_filter element from the URL
 
     Returns:
-        tuple[Json, int]: a JSON response
+        Response: the response object
     """
-    dates = [date for date, status in implementation_status().items() if status]
-    days = [x.day for x in dates if x.year == year]
-    if not days:
-        abort(404)
+    results = [
+        {
+            "year": year,
+            "days": [
+                x.day
+                for x, status in implementation_status().items()
+                if status and x.year == year
+            ],
+            "links": [
+                {
+                    "rel": "puzzles",
+                    "href": f"{request.host_url.strip('/')}/puzzles/{year}",
+                    "description": f"Discover detailed puzzle information "
+                    f"for {year}.",
+                    "action": "GET",
+                },
+            ],
+        }
+        for year in sorted({date.year for date in implementation_status()})
+        if year_filter is None or year_filter == year
+    ]
 
-    return (
-        {"year": year, "days": days},
+    return standard_response(
+        "List of available puzzles, filtered using /calendars/{year}",
         200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+        results,
     )
 
 
-@app.route("/<int:year>/<int:day>/", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>/<string:part>/", methods=["GET", "POST"])
-@app.route("/<int:year>/<int:day>/<string:part>", methods=["GET", "POST"])
-def handle_solve_path_with_part(
-    year: int, day: int, part: Optional[str] = None
-) -> Tuple[Dict[str, Any], int, Dict[str, str]]:
-    """Handles the solve all parts path - eg /2015/1.
+@app.route("/puzzles", methods=["GET"])
+@app.route("/puzzles/", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/<int:day_filter>", methods=["GET"])
+@app.route("/puzzles/<int:year_filter>/<int:day_filter>/", methods=["GET"])
+def handle_puzzles_path(
+    year_filter: (int | None) = None, day_filter: (int | None) = None
+) -> Response:
+    """Handle the root path - /puzzles .
+
+    Args:
+        year_filter (int | None): The year_filter element from the URL
+        day_filter (int | None): The day_filter element from the URL
+
+    Returns:
+        Response: the response object
+    """
+    metadata = load_metadata_from_file()
+
+    results = [
+        {
+            "year": year,
+            "day": day,
+            "title": metadata[str(year)][str(day)]["title"],
+            "excerpt": metadata[str(year)][str(day)]["excerpt"],
+            "has_part_one": metadata[str(year)][str(day)]["has_part_one"],
+            "has_part_two": metadata[str(year)][str(day)]["has_part_two"],
+            "part_one_solved": metadata[str(year)][str(day)]["part_one_solved"],
+            "part_two_solved": metadata[str(year)][str(day)]["part_two_solved"],
+            "completion_date": metadata[str(year)][str(day)]["completion_date"],
+            "timings": metadata[str(year)][str(day)]["timings"],
+            "official_url": f"https://adventofcode.com/{year}/day/{day}",
+            "repository_url": "https://github.com/pjd199/advent_of_code_python"
+            f"/blob/main/advent_of_code/year{year}/day{day}.py",
+            "code_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
+            f"/main/advent_of_code/year{year}/day{day}.py",
+            "links": [
+                {
+                    "rel": "answers",
+                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
+                    "description": f"Get the answer for {year} day {day}.",
+                    "action": "GET",
+                    "parameters": ["input"],
+                },
+                {
+                    "rel": "answers",
+                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
+                    "description": f"Get the answer for {year} day {day}.",
+                    "action": "POST",
+                },
+            ],
+        }
+        for year, day in sorted(
+            {
+                (date.year, date.day)
+                for date, status in implementation_status().items()
+                if status
+            }
+        )
+        if (year_filter is None or year_filter == year)
+        and (day_filter is None or day_filter == day)
+    ]
+
+    return standard_response(
+        "Detailed puzzle information, filtered using /puzzles/{year}/{day}",
+        200,
+        results,
+    )
+
+
+@app.route("/answers/<int:year>/<int:day>", methods=["GET", "POST"])
+@app.route("/answers/<int:year>/<int:day>/", methods=["GET", "POST"])
+def handle_answers_path(year: int, day: int) -> Response:
+    """Handle the solve all parts path - eg /2015/1.
 
     Args:
         year (int): the year from the path
         day (int): the  day from the path
-        part (Optional[str]): the part from the path
 
     Returns:
-        tuple[Json, int]: a JSON response
+        Response: the standard response object
     """
-    if (
-        not is_solver_implemented(year, day)
-        or part not in [None, "part_one", "part_two"]
-        or (request.method == "POST" and request.args.get("input"))
-        or (day == 25 and part == "part_two")
-    ):
-        abort(404)
+
+    def error_response(text: str) -> Response:
+        return standard_response(
+            "Get the answer to the puzzle, with input file provide as POST, "
+            "or URL provided as input paramerater.",
+            400,
+            text,
+        )
+
+    if not is_solver_implemented(year, day):
+        return error_response(
+            f"year {year} day {day} is invalid. "
+            f"Please call {request.host_url.strip('/')}/calendars for valid values.",
+        )
 
     # load the input data
-    query_input = request.args.get("input")
-    if request.method == "POST":
-        puzzle_input = load_multi_line_string(request.get_data(as_text=True))
-    elif query_input is not None:
-        puzzle_input = load_multi_line_string(get(query_input, timeout=60).text)
+    text = ""
+    if (
+        request.method == "POST"
+        and request.content_type == "text/plain"
+        and request.content_length
+        and 0 < request.content_length < 1048576
+    ):
+        text = request.get_data(as_text=True)
+    elif "input" in request.args:
+        try:
+            text = get(request.args["input"], timeout=60).text
+        except RequestException:
+            return error_response(
+                f"Unable to GET puzzle input from {request.args['input']}.",
+            )
     else:
-        puzzle_input = load_file(f"./puzzle_input/year{year}/day{day}.txt")
+        return error_response(
+            "Unable to load the input data. Send fine as a text/plain POST, "
+            "or URL provided with the URL input paramerater.",
+        )
 
-    # find the solver
+    puzzle_input = load_multi_line_string(text)
+    results: dict[str, Any] = {"year": year, "day": day}
+    timing: dict[str, str | int] = {"units": "ms"}
+
+    # load the solver and parse
     mod = import_module(f"advent_of_code.year{year}.day{day}")
-    solver = mod.Solver(puzzle_input)
+    try:
+        solver, timing["parse"] = function_timer(mod.Solver, puzzle_input)
+    except ParseError as e:
+        return error_response(f"{e}")
 
-    # solve puzzle
-    if part == "part_one" or day == 25:
-        part_one, part_two = solver.solve_part_one(), None
-    elif part == "part_two":
-        part_one, part_two = None, str(solver.solve_part_two())
-    else:
-        part_one, part_two = solver.solve_all()
+    # run the sovler to find the answers
+    results["part_one"], timing["part_one"] = function_timer(
+        lambda: str(solver.solve_part_one())
+    )
 
-    # construct the body
-    body: Dict[str, Any] = {"title": solver.TITLE, "year": year, "day": day}
-    if part_one:
-        body["part_one"] = str(part_one)
-    if part_two:
-        body["part_two"] = str(part_two)
+    if day != 25:
+        results["part_two"], timing["part_two"] = function_timer(
+            lambda: str(solver.solve_part_two())
+        )
 
-    return (
-        body,
+    results["timings"] = timing
+
+    links = [
+        {
+            "rel": "puzzles",
+            "href": f"{request.host_url.strip('/')}/puzzles/{year}/{day}",
+            "description": f"Get the puzzle information for {year} day {day}.",
+            "action": "GET",
+        }
+    ]
+
+    return standard_response(
+        "Get the answer to the puzzle, with input file provide as POST, "
+        "or URL provided as input paramerater.",
         200,
-        {"Cache-Control": f"public, max-age={cache_max_age}"},
+        results,
+        links,
     )
 
 
+@app.route("/system", methods=["GET"])
+@app.route("/system/", methods=["GET"])
+def handle_system_path() -> Response:  # pragma: no cover
+    """Handle the system path - /system/ .
+
+    Returns:
+        Response: return system information
+    """
+    results = {
+        "url": request.url,
+        "host": request.host,
+        "platform": platform(),
+        "machine": machine(),
+        "architecture": architecture()[0],
+        "compiler": f"{python_implementation()} {python_version()}",
+        "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
+        "/main/license.md",
+        "license": "MIT",
+    }
+
+    return standard_response("System information.", 200, results)
+
+
 @app.errorhandler(HTTPException)
-def handle_exception(e: HTTPException) -> Tuple[Dict[str, Any], int]:
+def handle_exception(e: HTTPException) -> Response:
     """Return JSON instead of HTML for HTTP errors.
 
     Args:
         e (HTTPException): the expection
 
     Returns:
-        Dict[str, Any]: the response
+        Response: the response
     """
-    return {
-        "code": e.code,
-        "name": e.name,
-        "description": e.description,
-    }, e.code if e.code is not None else 500
-
-
-def main() -> None:  # pragma: no cover
-    """Called when run from the command line."""
-    # start the development server on the localhost
-    host = "127.0.0.1"
-    port = 5000
-    environ["FLASK_ENV"] = "development"
-    print(f"Starting development server on {host} at {port}")
-    flask_thread = Thread(
-        target=lambda: app.run(host=host, port=port, use_reloader=False)
+    return standard_response(
+        f"{e.description}",
+        e.code if e.code is not None else 500,
+        f"{e.name}",
     )
-    flask_thread.daemon = True
-    flask_thread.start()
-
-    # allow the server time to start
-    sleep(1)
-
-    # print basic instructions
-    print("---")
-    print("Type 'exit' to shutdown server and exit")
-    print("---")
-    print("Available routes:")
-    print(" - /")
-    print(" - /{year}")
-    print(" - /{year}/{day}")
-    print(" - /{year}/{day}?input={url_for_puzzle_input_file}")
-    print(" - /{year}/{day}/part_one")
-    print(" - /{year}/{day}/part_two")
-    print("eg - /2015/25")
-    print("---")
-
-    # loop until Ctrl-C exits the loop
-    while True:
-        print()
-        url = input("Enter route path: ")
-        if url in ["exit", "quit", "exit()"]:
-            break
-
-        try:
-            # time the call to the development server
-            start_time = perf_counter_ns()
-            response = get(f"http://{host}:{port}{url}", timeout=300)
-            end_time = perf_counter_ns()
-            elapsed_time = end_time - start_time
-            # print the time, then the response body in JSON
-            if elapsed_time <= 1000000:
-                print("Time: <1ms")
-            elif elapsed_time >= 1000000000:
-                print(f"Time: {elapsed_time / 1000000000:.2f}s")
-            else:
-                print(f"Time: {(elapsed_time) // 1000000}ms")
-            print(response.json())
-        except Exception as e:
-            print(e)
-
-
-if __name__ == "__main__":
-    # run if file executed from the command line
-    main()  # pragma: no cover

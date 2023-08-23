@@ -8,13 +8,13 @@ https://adventofcode.com/2015/day/23
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -33,11 +33,11 @@ class Solver(SolverInterface):
         register: str = ""
         offset: int = 0
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the solver.
 
         Args:
-            puzzle_input (List[str]): the puzzle input
+            puzzle_input (list[str]): the puzzle input
         """
         self.program = parse_lines(
             puzzle_input,
@@ -49,6 +49,7 @@ class Solver(SolverInterface):
             ),
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one.
 
@@ -57,6 +58,7 @@ class Solver(SolverInterface):
         """
         return self._run(a=0, b=0)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part one.
 

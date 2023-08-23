@@ -9,13 +9,13 @@ from dataclasses import dataclass
 from itertools import cycle
 from pathlib import Path
 from sys import path
-from typing import List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import dataclass_processor, parse_lines
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -36,11 +36,11 @@ class Solver(SolverInterface):
     DAY = 14
     TITLE = "Reindeer Olympics"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
 
         """
         self.herd = parse_lines(
@@ -54,6 +54,7 @@ class Solver(SolverInterface):
             ),
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -63,6 +64,7 @@ class Solver(SolverInterface):
         positions, _ = self._race()
         return max(positions)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -72,16 +74,8 @@ class Solver(SolverInterface):
         _, points = self._race()
         return max(points)
 
-    def solve_all(self) -> List[int]:
-        """Solve both parts of the puzzle.
-
-        Returns:
-            List[int]: the answer
-        """
-        positions, points = self._race()
-        return [max(positions), max(points)]
-
-    def _race(self) -> Tuple[List[int], List[int]]:
+    @cache_result
+    def _race(self) -> tuple[list[int], list[int]]:
         # positions will hold the current position of each reindeer
         # points will hold the current points of each reindeer
         # iterators will hold a iterator, which returns the current speed

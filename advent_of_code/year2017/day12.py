@@ -8,7 +8,6 @@ https://adventofcode.com/2017/day/12
 from collections import deque
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Set
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -25,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 12
     TITLE = "Digital Plumber"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = dict(
             parse_lines(
@@ -69,25 +68,23 @@ class Solver(SolverInterface):
 
         return len(groups)
 
-    def _find_group(self, number: int) -> Set[int]:
+    def _find_group(self, number: int) -> set[int]:
         """Find all the members of the group with the number in.
 
         Args:
             number (int): the id number
 
         Returns:
-            Set[int]: the group
+            set[int]: the group
         """
         group = set()
-        queue: Deque[int] = deque()
+        queue: deque[int] = deque()
         queue.append(int(number))
 
         while queue:
             next_number = queue.popleft()
             group.add(next_number)
-            for x in self.input[next_number]:
-                if x not in group:
-                    queue.append(x)
+            queue.extend(x for x in self.input[next_number] if x not in group)
 
         return group
 

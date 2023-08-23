@@ -8,7 +8,6 @@ https://adventofcode.com/2022/day/2
 from enum import Enum, unique
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -42,11 +41,11 @@ class Solver(SolverInterface):
     DAY = 2
     TITLE = "Rock Paper Scissors"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
             puzzle_input, (r"([ABC]) ([XYZ])", str_tuple_processor)
@@ -75,19 +74,19 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        shapes: Dict[str, Shape] = {
+        shapes: dict[str, Shape] = {
             "A": Shape.Rock,
             "B": Shape.Paper,
             "C": Shape.Scissors,
         }
 
-        outcomes: Dict[str, Outcome] = {
+        outcomes: dict[str, Outcome] = {
             "X": Outcome.Lose,
             "Y": Outcome.Draw,
             "Z": Outcome.Win,
         }
 
-        decode: Dict[Tuple[Shape, Outcome], Shape] = {
+        decode: dict[tuple[Shape, Outcome], Shape] = {
             (Shape.Rock, Outcome.Lose): Shape.Scissors,
             (Shape.Rock, Outcome.Draw): Shape.Rock,
             (Shape.Rock, Outcome.Win): Shape.Paper,
@@ -103,21 +102,21 @@ class Solver(SolverInterface):
             [(shapes[a], decode[shapes[a], outcomes[b]]) for a, b in self.input]
         )
 
-    def _play(self, rounds: List[Tuple[Shape, Shape]]) -> int:
+    def _play(self, rounds: list[tuple[Shape, Shape]]) -> int:
         """Play a game of Rock, Paper, Scissors.
 
         Args:
-            rounds (List[Tuple[str, str]]): the input
+            rounds (list[tuple[Shape, Shape]]): the input
 
         Returns:
             int: the results
         """
-        shape_score: Dict[Shape, int] = {
+        shape_score: dict[Shape, int] = {
             Shape.Rock: 1,
             Shape.Paper: 2,
             Shape.Scissors: 3,
         }
-        round_score: Dict[Tuple[Shape, Shape], int] = {
+        round_score: dict[tuple[Shape, Shape], int] = {
             (Shape.Rock, Shape.Rock): 3,
             (Shape.Rock, Shape.Paper): 6,
             (Shape.Rock, Shape.Scissors): 0,

@@ -7,7 +7,6 @@ https://adventofcode.com/2020/day/23
 """
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +23,11 @@ class Solver(SolverInterface):
     DAY = 23
     TITLE = "Crab Cups"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(puzzle_input, (r"\d", int_processor))
 
@@ -50,7 +49,7 @@ class Solver(SolverInterface):
         result = self._solve(number_of_cups=1000000, cycles=10000000)
         return result[0] * result[1]
 
-    def _solve(self, number_of_cups: int, cycles: int) -> List[int]:
+    def _solve(self, number_of_cups: int, cycles: int) -> list[int]:
         """Solve the puzzle.
 
         Args:
@@ -58,7 +57,7 @@ class Solver(SolverInterface):
             cycles (int): number of cycles to play
 
         Returns:
-            List[int]: the final order, after cup 1
+            list[int]: the final order, after cup 1
         """
         # create a list of cups in play
         cups = list(self.input)
@@ -93,7 +92,7 @@ class Solver(SolverInterface):
             current_cup = next_cup
 
         # put the linked list into readable order, following cup 1
-        result: List[int] = []
+        result: list[int] = []
         x = linked_list[1]
         while x != 1:
             result.append(x)

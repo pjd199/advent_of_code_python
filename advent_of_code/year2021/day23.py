@@ -5,10 +5,10 @@ Amphipod
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/23
 """
+from collections.abc import Generator
 from heapq import heapify, heappop, heappush
 from pathlib import Path
 from sys import path
-from typing import Iterator
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,10 +27,6 @@ class Solver(SolverInterface):
     DAY = 23
     TITLE = "Amphipod"
 
-    room_map = {"A": 2, "B": 4, "C": 6, "D": 8}
-    room_indices = set(room_map.values())
-    move_costs = {"A": 1, "B": 10, "C": 100, "D": 1000}
-
     def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
@@ -43,6 +39,9 @@ class Solver(SolverInterface):
             r"[#. ABCD]",
             str_processor,
         )
+        self.room_map = {"A": 2, "B": 4, "C": 6, "D": 8}
+        self.room_indices = set(self.room_map.values())
+        self.move_costs = {"A": 1, "B": 10, "C": 100, "D": 1000}
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -101,7 +100,9 @@ class Solver(SolverInterface):
             if i not in self.room_indices
         )
 
-    def reachable_in_coridoor(self, state: State, start: int) -> Iterator[int]:
+    def reachable_in_coridoor(
+        self, state: State, start: int
+    ) -> Generator[int, None, None]:
         """Iterate all the reachable spaces in the coridoor.
 
         Args:
@@ -109,7 +110,7 @@ class Solver(SolverInterface):
             start (int): the starting index
 
         Yields:
-            Iterator[int]: Iterator of reachable spaces
+            Generator[int, None, None]: Iterator of reachable spaces
         """
         for i in range(start, -1, -1):
             if i not in self.room_indices:
@@ -124,17 +125,10 @@ class Solver(SolverInterface):
                 else:
                     break
 
-    def _next_state(self, state: State) -> Iterator[tuple[State, int]]:
-        """Iterate over possible next spaces.
-
-        Args:
-            state (State): the initial state
-
-        Yields:
-            Iterator[tuple[State, int]]: Iterator of states
-        """
+    def _room_to_room(self, state: State) -> list[tuple[State, int]]:
         # If we can move an item straight from one room to another,
         # this is the best possible next move
+        result = []
         for src_room, src_index in self.room_map.items():
             if self.amphipods_can_leave(state, src_room):
                 item = state[src_index][0]
@@ -152,11 +146,13 @@ class Solver(SolverInterface):
                     next_state = list(state)
                     next_state[src_index] = state[src_index][1:]
                     next_state[dest_index] = item + state[dest_index]
-                    yield tuple(next_state), cost
-                    return
+                    result.append((tuple(next_state), cost))
+        return result
 
+    def _coridoor_to_room(self, state: State) -> list[tuple[State, int]]:
         # If we can move an from the coridoor into a room, then this
         # is the second best possible next move.
+        result = []
         for src_index, item in enumerate(state):
             if src_index not in self.room_indices and item in "ABCD":
                 dest_index = self.room_map[item]
@@ -171,11 +167,13 @@ class Solver(SolverInterface):
                     next_state = list(state)
                     next_state[src_index] = "."
                     next_state[dest_index] = item + state[dest_index]
-                    yield tuple(next_state), cost
-                    return
+                    result.append((tuple(next_state), cost))
+        return result
 
+    def _other_moves(self, state: State) -> list[tuple[State, int]]:
         # If no other better move, yield the possible moves of items into
         # each different positions in the coridoor
+        result = []
         for src_room, src_index in self.room_map.items():
             if self.amphipods_can_leave(state, src_room):
                 item = state[src_index][0]
@@ -187,10 +185,28 @@ class Solver(SolverInterface):
                     next_state = list(state)
                     next_state[src_index] = state[src_index][1:]
                     next_state[dest_index] = item
-                    yield tuple(next_state), cost
+                    result.append((tuple(next_state), cost))
+
+        return result
+
+    def _next_state(self, state: State) -> list[tuple[State, int]]:
+        """Iterate over possible next spaces.
+
+        Args:
+            state (State): the initial state
+
+        Returns:
+            list[tuple[State, int]]: Iterator of states
+        """
+        if result := self._room_to_room(state):
+            return result
+
+        if result := self._coridoor_to_room(state):
+            return result
+
+        return self._other_moves(state)
 
     def _solve(self, input_grid: dict[tuple[int, int], str]) -> int:
-
         # create the inital state
         max_y = max(y for _, y in input_grid)
         state: State = (

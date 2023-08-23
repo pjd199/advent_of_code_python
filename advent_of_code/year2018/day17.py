@@ -9,7 +9,6 @@ from collections import defaultdict, deque
 from copy import deepcopy
 from pathlib import Path
 from sys import path
-from typing import Deque, Dict, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -26,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 17
     TITLE = "Reservoir Research"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         parsed = parse_lines(
             puzzle_input,
@@ -39,7 +38,7 @@ class Solver(SolverInterface):
                 lambda m: (m[1], int(m[2]), int(m[3]), int(m[4])),
             ),
         )
-        self.input: Dict[Tuple[int, int], str] = defaultdict(lambda: ".")
+        self.input: dict[tuple[int, int], str] = defaultdict(lambda: ".")
 
         for x_or_y, a, b, c in parsed:
             if x_or_y == "x":
@@ -52,8 +51,8 @@ class Solver(SolverInterface):
                 for y in range(min_y, max_y + 1):
                     self.input[(x, y)] = "#"
 
-        self.flowing: Set[Tuple[int, int]] = set()
-        self.standing: Set[Tuple[int, int]] = set()
+        self.flowing: set[tuple[int, int]] = set()
+        self.standing: set[tuple[int, int]] = set()
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
@@ -83,11 +82,11 @@ class Solver(SolverInterface):
         grid = deepcopy(self.input)
         grid[spring] = "+"
 
-        min_y = min(y for x, y in grid.keys() if grid[(x, y)] == "#")
-        max_y = max(y for x, y in grid.keys() if grid[(x, y)] == "#")
+        min_y = min(y for x, y in grid if grid[(x, y)] == "#")
+        max_y = max(y for x, y in grid if grid[(x, y)] == "#")
 
         # expand the flow of water, breadth first search style
-        flows: Deque[Tuple[int, int]] = deque()
+        flows: deque[tuple[int, int]] = deque()
         flows.append(spring)
         while flows:
             x, y = flows.popleft()

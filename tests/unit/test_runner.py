@@ -1,9 +1,9 @@
 """Unit test for advent_of_code.utils.runner."""
 from json import load
+from pathlib import Path
 from re import match
 
 import pytest
-
 from advent_of_code.utils.runner import runner
 from advent_of_code.year2015.day1 import Solver
 
@@ -15,7 +15,7 @@ def test_runner(capfd: pytest.CaptureFixture[str]) -> None:
         capfd (pytest.CaptureFixture[str]): fixture to capture stdout
     """
     # load the details for day under test
-    with open("./tests/expected.json") as file:
+    with Path("./tests/expected.json").open() as file:
         expected = load(file)["2015"]["1"]
 
     # execute runner and check for the expected output

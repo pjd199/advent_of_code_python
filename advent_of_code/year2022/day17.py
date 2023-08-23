@@ -5,9 +5,9 @@ Pyroclastic Flow
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/17
 """
+from collections.abc import Callable
 from pathlib import Path
 from sys import path
-from typing import Callable, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -24,11 +24,11 @@ class Solver(SolverInterface):
     DAY = 17
     TITLE = "Pyroclastic Flow"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(
             puzzle_input,
@@ -68,18 +68,18 @@ class Solver(SolverInterface):
             values[-1][3] - added_height - abs(cycle[cycle_index][3] - cycle[0][3])
         )
 
-    def _solve(self, rock_count: int) -> List[Tuple[int, int, int, int]]:
+    def _solve(self, rock_count: int) -> list[tuple[int, int, int, int]]:
         """Solve  the puzzle.
 
         Args:
             rock_count (int): the number of falling rocks to count
 
         Returns:
-            List[Tuple[int, int, int, int]]: the state for each rock
+            list[tuple[int, int, int, int]]: the state for each rock
         """
         # define each shape - positive co-ordinates are left/down,
         # so height from floor is measured as a negative
-        shape_functions: List[Callable[[int], Set[Tuple[int, int]]]] = [
+        shape_functions: list[Callable[[int], set[tuple[int, int]]]] = [
             # "-" shape
             lambda y: {(2, y), (3, y), (4, y), (5, y)},
             # "+" shape
@@ -105,7 +105,7 @@ class Solver(SolverInterface):
         ]
 
         # define location of the floor in the set of solid rock
-        solid = {(x, 0) for x in range(7)}
+        solid: set[tuple[int, int]] = {(x, 0) for x in range(7)}
 
         shape_index = 0
         wind_index = 0
@@ -135,10 +135,9 @@ class Solver(SolverInterface):
                     top = min(y for _, y in solid)
                     row = sum(1 << x for x in range(7) if (x, top) in solid)
                     values.append((shape_index, wind_index, row, top))
-
                     break
-                else:
-                    rock = moved_rock
+
+                rock = moved_rock
 
         return values
 

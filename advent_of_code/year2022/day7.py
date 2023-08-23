@@ -9,7 +9,6 @@ from dataclasses import dataclass, field
 from itertools import chain
 from pathlib import Path
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -23,8 +22,8 @@ from advent_of_code.utils.solver_interface import SolverInterface
 class Dir:
     """A file system directory structure."""
 
-    dirs: Dict[str, "Dir"] = field(default_factory=dict)
-    files: Dict[str, int] = field(default_factory=dict)
+    dirs: dict[str, "Dir"] = field(default_factory=dict)
+    files: dict[str, int] = field(default_factory=dict)
     _size: int = -1
 
     def size(self) -> int:
@@ -39,11 +38,11 @@ class Dir:
             )
         return self._size
 
-    def subdirectories(self) -> List["Dir"]:
+    def subdirectories(self) -> list["Dir"]:
         """A list of the all the subdirectories in this directory.
 
         Returns:
-            List["Dir"]: A
+            list["Dir"]: A
         """
         return list(self.dirs.values()) + list(
             chain.from_iterable(x.subdirectories() for x in self.dirs.values())
@@ -57,21 +56,21 @@ class Solver(SolverInterface):
     DAY = 7
     TITLE = "No Space Left On Device"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the input into a tree structure using Dir
         self.root = Dir()
         stack = [self.root]
         parse_lines(
             puzzle_input,
-            (r"\$ cd /", lambda m: None),
+            (r"\$ cd /", lambda _: None),
             (r"\$ cd ([a-z]+)", lambda m: stack.append(stack[-1].dirs[m[1]])),
-            (r"\$ cd \.\.", lambda m: stack.pop()),
-            (r"\$ ls", lambda m: None),
+            (r"\$ cd \.\.", lambda _: stack.pop()),
+            (r"\$ ls", lambda _: None),
             (r"dir ([a-z]+)", lambda m: stack[-1].dirs.update({m[1]: Dir()})),
             (r"(\d+) ([a-z\.]+)", lambda m: stack[-1].files.update({m[2]: int(m[1])})),
         )
@@ -84,7 +83,7 @@ class Solver(SolverInterface):
         """
         return sum(
             x.size()
-            for x in [self.root] + self.root.subdirectories()
+            for x in [self.root, *self.root.subdirectories()]
             if x.size() <= 100000
         )
 
@@ -99,7 +98,7 @@ class Solver(SolverInterface):
         return next(
             x.size()
             for x in sorted(
-                [self.root] + self.root.subdirectories(), key=lambda x: x.size()
+                [self.root, *self.root.subdirectories()], key=lambda x: x.size()
             )
             if x.size() > target
         )

@@ -9,7 +9,6 @@ from abc import abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
-from typing import List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -21,11 +20,11 @@ from advent_of_code.utils.solver_interface import SolverInterface
 
 class _Move:
     @abstractmethod
-    def step(self, dancers: List[str]) -> None:
+    def step(self, dancers: list[str]) -> None:
         """Perform a step in the dance, modifing the dancers list.
 
         Args:
-            dancers (List[str]): the list of dancers
+            dancers (list[str]): the list of dancers
         """
 
 
@@ -33,11 +32,11 @@ class _Move:
 class _Spin(_Move):
     length: int
 
-    def step(self, dancers: List[str]) -> None:
+    def step(self, dancers: list[str]) -> None:
         """Perform a step in the dance, modifing the dancers list.
 
         Args:
-            dancers (List[str]): the list of dancers
+            dancers (list[str]): the list of dancers
         """
         dancers[:] = dancers[-self.length :] + dancers[: -self.length]
 
@@ -47,11 +46,11 @@ class _Exchange(_Move):
     a: int
     b: int
 
-    def step(self, dancers: List[str]) -> None:
+    def step(self, dancers: list[str]) -> None:
         """Perform a step in the dance, modifing the dancers list.
 
         Args:
-            dancers (List[str]): the list of dancers
+            dancers (list[str]): the list of dancers
         """
         dancers[self.a], dancers[self.b] = dancers[self.b], dancers[self.a]
 
@@ -61,11 +60,11 @@ class _Partner(_Move):
     a: str
     b: str
 
-    def step(self, dancers: List[str]) -> None:
+    def step(self, dancers: list[str]) -> None:
         """Perform a step in the dance, modifing the dancers list.
 
         Args:
-            dancers (List[str]): the list of dancers
+            dancers (list[str]): the list of dancers
         """
         index_a = dancers.index(self.a)
         index_b = dancers.index(self.b)
@@ -79,11 +78,11 @@ class Solver(SolverInterface):
     DAY = 16
     TITLE = "Permutation Promenade"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_tokens_single_line(
             puzzle_input,

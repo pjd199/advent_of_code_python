@@ -3,17 +3,25 @@
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 
 """
-from typing import Sequence, Set, Tuple, Union
+from collections.abc import Sequence
 
 import numpy as np
 from numpy.typing import ArrayLike
 
 
-def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
+class OcrError(Exception):
+    """Error."""
+
+    ROW = "Incorrect number of rows (expected 6 or 10)"
+    COL = "All rows should have the same number of columns"
+    INVALID = "Unable to OCR input"
+
+
+def ocr_coordinates(coordinates: set[tuple[int, int]]) -> str:
     """Convert a set of co-ordinates into letters.
 
     Args:
-        coordinates (Set[Tuple[int, int]]): the (x,y) pixels of the text
+        coordinates (set[tuple[int, int]]): the (x,y) pixels of the text
 
     Returns:
         str: the OCR'd word
@@ -36,15 +44,15 @@ def ocr_coordinates(coordinates: Set[Tuple[int, int]]) -> str:
 
 def ocr_numpy(
     array: ArrayLike,
-    fill_pixel: Union[str, int, bool] = "#",
-    empty_pixel: Union[str, int, bool] = ".",
+    fill_pixel: str | int | bool = "#",
+    empty_pixel: str | int | bool = ".",
 ) -> str:
     """Convert an array of pixels into letters.
 
     Args:
         array (ArrayLike): the input array
-        fill_pixel (Union[str, int, bool], optional): the filled pixel. Defaults to "#".
-        empty_pixel (Union[str, int, bool], optional): the empty pixel. Defaults to ".".
+        fill_pixel (str | int | bool): the filled pixel. Defaults to "#".
+        empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
     Returns:
         str: the result
@@ -53,16 +61,16 @@ def ocr_numpy(
 
 
 def ocr_sequence(
-    array: Sequence[Sequence[Union[str, int, bool]]],
-    fill_pixel: Union[str, int, bool] = "#",
-    empty_pixel: Union[str, int, bool] = ".",
+    array: Sequence[Sequence[str | int | bool]],
+    fill_pixel: str | int | bool = "#",
+    empty_pixel: str | int | bool = ".",
 ) -> str:
     """Convert an array of pixels into letters.
 
     Args:
-        array (Sequence[Sequence[Union[str, int, bool]]]): the input array
-        fill_pixel (Union[str, int, bool], optional): the filled pixel. Defaults to "#".
-        empty_pixel (Union[str, int, bool], optional): the empty pixel. Defaults to ".".
+        array (Sequence[Sequence[str | int | bool]]): the input array
+        fill_pixel (str | int | bool): the filled pixel. Defaults to "#".
+        empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
     Raises:
         ValueError: Raised if the wrong number of rows are found
@@ -79,33 +87,35 @@ def ocr_sequence(
         for line in array
     ]
 
-    # validate input
-    rows = len(prepared_array)
-
-    if rows not in [6, 10]:
-        raise ValueError("incorrect number of rows (expected 6 or 10)")
-
-    cols = len(prepared_array[0])
-
-    if any(len(row) != cols for row in prepared_array):
-        raise ValueError("all rows should have the same number of columns")
-
     # prepare the settings for 6 or 10 rows
+    rows = len(prepared_array)
     if rows == 6:
         alphabet = ALPHABET_6
         width = 4
         padding = 1
-    else:
+    elif rows == 10:
         alphabet = ALPHABET_10
         width = 6
         padding = 2
+    else:
+        raise OcrError(OcrError.ROW)
+
+    cols = len(prepared_array[0])
+
+    if any(len(row) != cols for row in prepared_array):
+        raise OcrError(OcrError.COL)
 
     # Convert each letter
-    indices = [slice(start, start + width) for start in range(0, cols, width + padding)]
-    result = [
-        alphabet["\n".join("".join(row[index]) for row in prepared_array)]
-        for index in indices
-    ]
+    try:
+        indices = [
+            slice(start, start + width) for start in range(0, cols, width + padding)
+        ]
+        result = [
+            alphabet["\n".join("".join(row[index]) for row in prepared_array)]
+            for index in indices
+        ]
+    except KeyError as e:
+        raise OcrError(OcrError.INVALID) from e
 
     return "".join(result)
 

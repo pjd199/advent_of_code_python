@@ -7,7 +7,6 @@ https://adventofcode.com/2020/day/21
 """
 from pathlib import Path
 from sys import path
-from typing import Dict, List
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -29,11 +28,11 @@ class Solver(SolverInterface):
     DAY = 21
     TITLE = "Allergen Assessment"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         parsed = parse_lines(
             puzzle_input, (r"([a-z ]+)\(contains ([a-z, ]+)\)", str_tuple_processor)
@@ -95,7 +94,7 @@ class Solver(SolverInterface):
             for a in self.all_allergens
         }
 
-        results: Dict[str, str] = {}
+        results: dict[str, str] = {}
         while options:
             for k in list(options.keys()):
                 if len(options[k]) == 1:

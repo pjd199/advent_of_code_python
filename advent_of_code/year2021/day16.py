@@ -5,12 +5,12 @@ Packet Decoder
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/16
 """
+from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import chain
 from math import prod
 from pathlib import Path
 from sys import path
-from typing import Callable
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -70,17 +70,17 @@ class Solver(SolverInterface):
         def calc(packet: Packet) -> int:
             if packet.type_id == 4:
                 return packet.value
-            else:
-                operator: dict[int, Callable[[list[int]], int]] = {
-                    0: sum,
-                    1: prod,
-                    2: min,
-                    3: max,
-                    5: lambda x: 1 if x[0] > x[1] else 0,
-                    6: lambda x: 1 if x[0] < x[1] else 0,
-                    7: lambda x: 1 if x[0] == x[1] else 0,
-                }
-                return operator[packet.type_id]([calc(c) for c in packet.children])
+
+            operator: dict[int, Callable[[list[int]], int]] = {
+                0: sum,
+                1: prod,
+                2: min,
+                3: max,
+                5: lambda x: 1 if x[0] > x[1] else 0,
+                6: lambda x: 1 if x[0] < x[1] else 0,
+                7: lambda x: 1 if x[0] == x[1] else 0,
+            }
+            return operator[packet.type_id]([calc(c) for c in packet.children])
 
         return calc(self.root_packet)
 
@@ -103,23 +103,23 @@ class Solver(SolverInterface):
                     )
                     content += value
                 return Packet(version, type_id, int("".join(content), 2), []), data
-            else:
-                length_type_id, data = int(data[0], 2), data[1:]
-                if length_type_id == 0:
-                    length, data = int("".join(data[:15]), 2), data[15:]
-                    children = []
-                    end_length = len(data) - length
-                    while len(data) > end_length:
-                        child, data = decode(data)
-                        children.append(child)
-                    return Packet(version, type_id, 0, children), data
-                else:
-                    count, data = int("".join(data[:11]), 2), data[11:]
-                    children = []
-                    for _ in range(count):
-                        child, data = decode(data)
-                        children.append(child)
-                    return Packet(version, type_id, 0, children), data
+
+            length_type_id, data = int(data[0], 2), data[1:]
+            if length_type_id == 0:
+                length, data = int("".join(data[:15]), 2), data[15:]
+                children = []
+                end_length = len(data) - length
+                while len(data) > end_length:
+                    child, data = decode(data)
+                    children.append(child)
+                return Packet(version, type_id, 0, children), data
+
+            count, data = int("".join(data[:11]), 2), data[11:]
+            children = []
+            for _ in range(count):
+                child, data = decode(data)
+                children.append(child)
+            return Packet(version, type_id, 0, children), data
 
         self.root_packet, _ = decode(
             list(chain.from_iterable(f"{int(x,16):04b}" for x in self.input))

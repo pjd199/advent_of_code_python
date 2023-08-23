@@ -3,4 +3,3 @@ Flask==2.3.2
 apig-wsgi==2.18.0
 numpy==1.25.1
 requests==2.31.0
-lambda-multiprocessing==0.3

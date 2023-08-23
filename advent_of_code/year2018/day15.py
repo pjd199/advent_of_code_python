@@ -10,7 +10,6 @@ from copy import deepcopy
 from itertools import count
 from pathlib import Path
 from sys import path
-from typing import Deque, List, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
@@ -27,11 +26,11 @@ class Solver(SolverInterface):
     DAY = 15
     TITLE = "Beverage Bandits"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         # parse the rules
         self.input = parse_tokens(puzzle_input, (r"[#.EG]", str_processor))
@@ -62,14 +61,14 @@ class Solver(SolverInterface):
 
         return result
 
-    def _solve(self, elf_power: int) -> Tuple[int, str, int]:
+    def _solve(self, elf_power: int) -> tuple[int, str, int]:
         """Solve the battle by simulating a battle.
 
         Args:
             elf_power (int): the attack power for the elf
 
         Returns:
-            Tuple[int, str, int]: (outcome score, winner, survivor count)
+            tuple[int, str, int]: (outcome score, winner, survivor count)
         """
         self.grid = deepcopy(self.input)
         self.elf_power = elf_power
@@ -81,7 +80,7 @@ class Solver(SolverInterface):
         }
 
         # simulate the battle
-        self.units_in_this_round: Deque[Tuple[int, int]] = deque()
+        self.units_in_this_round: deque[tuple[int, int]] = deque()
         completed_rounds = -1
         while True:
             # check for end of round
@@ -93,7 +92,7 @@ class Solver(SolverInterface):
                 )
 
             # check for end of battle condition
-            if len({self.grid[y][x] for x, y in self.units.keys()}) == 1:
+            if len({self.grid[y][x] for x, y in self.units}) == 1:
                 break
 
             # select next unit
@@ -106,14 +105,14 @@ class Solver(SolverInterface):
             self._attack(x, y)
 
         # battle complete, return the vital stats
-        survivors = [self.grid[y][x] for x, y in self.units.keys()]
+        survivors = [self.grid[y][x] for x, y in self.units]
         return (
             completed_rounds * sum(self.units.values()),
             survivors[0],
             len(survivors),
         )
 
-    def _move(self, unit_x: int, unit_y: int) -> Tuple[int, int]:
+    def _move(self, unit_x: int, unit_y: int) -> tuple[int, int]:
         """Move the unit at the given co-ordinates, and return the new co-ordinates.
 
         Args:
@@ -121,19 +120,19 @@ class Solver(SolverInterface):
             unit_y (int): y co-ordinate
 
         Returns:
-            Tuple[int, int]: the new x,y co-ordinates
+            tuple[int, int]: the new x,y co-ordinates
         """
         enemy_type = "G" if self.grid[unit_y][unit_x] == "E" else "E"
         if not _adjacent_values(unit_x, unit_y, enemy_type, self.grid):
             # perform a breadth first search to find the shortest paths
             # to the square in range of attack
-            queue: Deque[Tuple[int, int, List[Tuple[int, int]]]] = deque([])
+            queue: deque[tuple[int, int, list[tuple[int, int]]]] = deque([])
             queue.append((unit_x, unit_y, []))
             visited = {(unit_x, unit_y)}
             paths = []
             squares_in_range = {
                 (adj_x, adj_y)
-                for x, y in self.units.keys()
+                for x, y in self.units
                 for adj_x, adj_y in _adjacent_values(x, y, ".", self.grid)
                 if self.grid[y][x] == enemy_type
             }
@@ -142,9 +141,9 @@ class Solver(SolverInterface):
                 for move_x, move_y in _adjacent_values(x, y, ".", self.grid):
                     if (move_x, move_y) not in visited:
                         visited.add((move_x, move_y))
-                        queue.append((move_x, move_y, path + [(move_x, move_y)]))
+                        queue.append((move_x, move_y, [*path, (move_x, move_y)]))
                         if (move_x, move_y) in squares_in_range:
-                            paths.append(path + [(move_x, move_y)])
+                            paths.append([*path, (move_x, move_y)])
                 if len(paths) > 2 and len(paths[0]) != len(paths[-1]):
                     # found shortest path with no tie break, so stop search early
                     break
@@ -184,8 +183,8 @@ class Solver(SolverInterface):
 
 
 def _adjacent_values(
-    x: int, y: int, value: str, grid: List[List[str]]
-) -> List[Tuple[int, int]]:
+    x: int, y: int, value: str, grid: list[list[str]]
+) -> list[tuple[int, int]]:
     return [
         (a, b)
         for a, b in [(x, y - 1), (x - 1, y), (x + 1, y), (x, y + 1)]

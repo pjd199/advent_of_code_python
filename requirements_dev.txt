@@ -5,7 +5,12 @@
 boto3==1.28.5
 freezegun==1.2.2
 pytest==7.4.0
-toml==0.10.2
+pyopenssl==23.2.0
+coverage==7.2.7
+pytest-cov==4.1.0
+pytest-custom_exit_code==0.3.0
+pytest-split==0.8.1
+pytest-xdist==3.3.1
 
 # Daily Helper
 beautifulsoup4==4.12.2
@@ -13,3 +18,6 @@ markdownify==0.11.6
 
 # Status Graphic
 pillow==10.0.0
+
+# Pre Commit
+pre-commit==3.3.3

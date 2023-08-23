@@ -5,16 +5,16 @@ Knights of the Dinner Table
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/13
 """
-from itertools import chain, permutations
+from itertools import chain, pairwise, permutations
 from pathlib import Path
 from sys import path
-from typing import Dict, List, Set, Tuple
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import parse_lines, str_tuple_processor
 from advent_of_code.utils.runner import runner
+from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
 
 
@@ -25,11 +25,11 @@ class Solver(SolverInterface):
     DAY = 13
     TITLE = "Knights of the Dinner Table"
 
-    def __init__(self, puzzle_input: List[str]) -> None:
+    def __init__(self, puzzle_input: list[str]) -> None:
         """Initialise the puzzle and parse the input.
 
         Args:
-            puzzle_input (List[str]): The lines of the input file
+            puzzle_input (list[str]): The lines of the input file
         """
         tuples = parse_lines(
             puzzle_input,
@@ -50,6 +50,7 @@ class Solver(SolverInterface):
             {(a, b): -int(value) for a, sign, value, b in tuples if sign == "lose"}
         )
 
+    @cache_result
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
 
@@ -58,6 +59,7 @@ class Solver(SolverInterface):
         """
         return self._find_optimal(self.names, self.values)
 
+    @cache_result
     def solve_part_two(self) -> int:
         """Solve part two of the puzzle.
 
@@ -73,15 +75,15 @@ class Solver(SolverInterface):
         # solve the puzzle
         return self._find_optimal(names_with_me, values_with_me)
 
-    def _find_optimal(self, names: Set[str], values: Dict[Tuple[str, str], int]) -> int:
+    def _find_optimal(self, names: set[str], values: dict[tuple[str, str], int]) -> int:
         """Find the optimal searing arrangement for these guests.
 
         Args:
-            names (Set[str]): The names of the guest
-            values (Dict[tuple[str, str], int]): the happiness values
+            names (set[str]): The names of the guest
+            values (dict[tuple[str, str], int]): the happiness values
 
         Returns:
-            int : the result
+            int: the result
         """
         # create a dictionary of the values of each pairing of guests
         # seated next to one another
@@ -98,7 +100,7 @@ class Solver(SolverInterface):
                 sum(
                     chain(
                         [pair_values[(perm[0], perm[-1])]],
-                        [pair_values[(x, y)] for x, y in zip(perm, perm[1:])],
+                        [pair_values[(x, y)] for x, y in pairwise(perm)],
                     )
                 )
                 for perm in permutations(names)
