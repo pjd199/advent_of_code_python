@@ -54,6 +54,17 @@ def load_metadata_from_file() -> Metadata:
     return result
 
 
+def host_url() -> str:
+    """Return the base URL of the request."""
+    return str(
+        request.environ["apig_wsgi.full_event"]["headers"]["cdn-host"].strip("/")
+        if "apig_wsgi.full_event" in request.environ
+        and "headers" in request.environ["apig_wsgi.full_event"]
+        and "cdn-host" in request.environ["apig_wsgi.full_event"]["headers"]
+        else request.host_url.strip("/")
+    )
+
+
 def standard_response(
     description: str,
     status: int = 200,
@@ -77,11 +88,7 @@ def standard_response(
                 "timestamp": datetime.now(tz=timezone.utc).strftime(
                     "%Y-%m-%dT%H:%M:%SZ"
                 ),
-                "self": (
-                    request.headers["cdn-base-url"].strip("/")
-                    if "cdn-base-url" in request.headers
-                    else request.base_url.strip("/")
-                ),
+                "self": f"{host_url()}{request.path}".strip("/"),
                 "api_version": __version__,
                 "description": description,
                 "results": results if results else [],
@@ -110,21 +117,21 @@ def handle_root_path() -> Response:
     links = [
         {
             "rel": "calendars",
-            "href": f"{request.host_url.strip('/')}/calendars",
+            "href": f"{host_url()}/calendars",
             "description": "Discover available puzzles and answers, "
             "filtered using /calendars/{year}.",
             "action": "GET",
         },
         {
             "rel": "puzzles",
-            "href": f"{request.host_url.strip('/')}/puzzles",
+            "href": f"{host_url()}/puzzles",
             "description": "Discover detailed puzzle information, "
             "filtered using /puzzles/{year}/{day}.",
             "action": "GET",
         },
         {
             "rel": "answers",
-            "href": f"{request.host_url.strip('/')}/answers",
+            "href": f"{host_url()}/answers",
             "description": "Find answer for given input by calling "
             "/answers/{year}/{day} with puzzle input as POST body "
             "or URL provided as input paramerater.",
@@ -133,7 +140,7 @@ def handle_root_path() -> Response:
         },
         {
             "rel": "answers",
-            "href": f"{request.host_url.strip('/')}/answers",
+            "href": f"{host_url()}/answers",
             "description": "Find answer for given input by calling "
             "/answers/{year}/{day} with puzzle input as POST body "
             "or URL provided as input paramerater.",
@@ -142,7 +149,10 @@ def handle_root_path() -> Response:
     ]
 
     return standard_response(
-        "Discover resourses available through this API.", 200, results, links
+        "Discover resourses available through this API.",
+        200,
+        results,
+        links,
     )
 
 
@@ -172,7 +182,7 @@ def handle_calendars_path(
             "links": [
                 {
                     "rel": "puzzles",
-                    "href": f"{request.host_url.strip('/')}/puzzles/{year}",
+                    "href": f"{host_url()}/puzzles/{year}",
                     "description": f"Discover detailed puzzle information "
                     f"for {year}.",
                     "action": "GET",
@@ -230,14 +240,14 @@ def handle_puzzles_path(
             "links": [
                 {
                     "rel": "answers",
-                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
+                    "href": f"{host_url()}/answers/{year}/{day}",
                     "description": f"Get the answer for {year} day {day}.",
                     "action": "GET",
                     "parameters": ["input"],
                 },
                 {
                     "rel": "answers",
-                    "href": f"{request.host_url.strip('/')}/answers/{year}/{day}",
+                    "href": f"{host_url()}/answers/{year}/{day}",
                     "description": f"Get the answer for {year} day {day}.",
                     "action": "POST",
                 },
@@ -285,7 +295,7 @@ def handle_answers_path(year: int, day: int) -> Response:
     if not is_solver_implemented(year, day):
         return error_response(
             f"year {year} day {day} is invalid. "
-            f"Please call {request.host_url.strip('/')}/calendars for valid values.",
+            f"Please call {host_url()}/calendars for valid values.",
         )
 
     # load the input data
@@ -336,7 +346,7 @@ def handle_answers_path(year: int, day: int) -> Response:
     links = [
         {
             "rel": "puzzles",
-            "href": f"{request.host_url.strip('/')}/puzzles/{year}/{day}",
+            "href": f"{host_url()}/puzzles/{year}/{day}",
             "description": f"Get the puzzle information for {year} day {day}.",
             "action": "GET",
         }
@@ -369,12 +379,13 @@ def handle_system_path() -> Response:  # pragma: no cover
         "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python"
         "/main/license.md",
         "license": "MIT",
-        "event": request.environ["apig_wsgi.full_event"]
-        if "apig_wsgi.full_event" in request.environ
-        else {},
     }
 
-    return standard_response("System information.", 200, results)
+    return standard_response(
+        "System information.",
+        200,
+        results,
+    )
 
 
 @app.errorhandler(HTTPException)
