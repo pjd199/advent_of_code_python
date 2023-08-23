@@ -103,10 +103,10 @@ def cdn_url(sam_main_url: str) -> str:
     dists = cf_client.list_distributions()
 
     for d in dists["DistributionList"]["Items"]:
-        for o in d["Origins"]:
-            if sam_main_url in o["Items"]["DomainName"]:
-                for alias in d["Aliases"]:
-                    url = alias
+        for o in d["Origins"]["Items"]:
+            if sam_main_url == f"https://{o['DomainName']}":
+                for alias in d["Aliases"]["Items"]:
+                    url = f"https://{alias}"
                     break
 
     return url
@@ -241,6 +241,6 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
         pytest.check_json(  # type: ignore[operator]
             response.json(),
             test_case_data["response"]["body"],
-            ["timings", "timestamp", "version"],
+            ["timings", "timestamp", "version", "event"],
             [("{base_url}", base_url), ("{version}", __version__)],
         )
