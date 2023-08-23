@@ -333,7 +333,7 @@ def handle_answers_path(year: int, day: int) -> Response:
         {
             "rel": "puzzles",
             "href": f"{request.host_url.strip('/')}/puzzles/{year}/{day}",
-            "description": f"Get the answer for {year} day {day}.",
+            "description": f"Get the puzzle information for {year} day {day}.",
             "action": "GET",
         }
     ]

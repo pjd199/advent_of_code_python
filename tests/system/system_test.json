@@ -960,7 +960,7 @@
           "links": [
             {
               "action": "GET",
-              "description": "Get the answer for 2015 day 1.",
+              "description": "Get the puzzle information for 2015 day 1.",
               "href": "{base_url}/puzzles/2015/1",
               "rel": "puzzles"
             }
@@ -997,7 +997,7 @@
           "links": [
             {
               "action": "GET",
-              "description": "Get the answer for 2015 day 2.",
+              "description": "Get the puzzle information for 2015 day 2.",
               "href": "{base_url}/puzzles/2015/2",
               "rel": "puzzles"
             }

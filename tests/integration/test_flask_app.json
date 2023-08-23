@@ -198,7 +198,7 @@
           "links": [
             {
               "action": "GET",
-              "description": "Get the answer for 2015 day 1.",
+              "description": "Get the puzzle information for 2015 day 1.",
               "href": "http://localhost:5000/puzzles/2015/1",
               "rel": "puzzles"
             }
@@ -323,7 +323,7 @@
             {
               "rel": "puzzles",
               "href": "http://localhost:5000/puzzles/2015/2",
-              "description": "Get the answer for 2015 day 2.",
+              "description": "Get the puzzle information for 2015 day 2.",
               "action": "GET"
             }
           ]
