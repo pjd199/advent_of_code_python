@@ -19,7 +19,8 @@
 				"ms-python.black-formatter",
 				"charliermarsh.ruff",
 				"tamasfe.even-better-toml",
-				"njpwerner.autodocstring"
+				"njpwerner.autodocstring",
+				"redhat.vscode-yaml"
 			]
 		}
 	}
