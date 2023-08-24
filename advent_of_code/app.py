@@ -370,8 +370,8 @@ def handle_system_path() -> Response:  # pragma: no cover
         Response: return system information
     """
     results = {
-        "url": request.url,
-        "host": request.host,
+        "base_url": host_url(),
+        "host": host_url()[host_url().index("//") + 2 :],
         "platform": platform(),
         "machine": machine(),
         "architecture": architecture()[0],
