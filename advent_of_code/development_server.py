@@ -48,8 +48,6 @@ def main() -> None:  # pragma: no cover
     print(" - /puzzles/{year}/{day}")
     print(" - /answers/{year}/{day}?input={url_for_puzzle_input_file}")
     print(" - /system")
-    print(" - /license")
-    print("eg - /answers/2015/25")
     print("---")
 
     # loop until Ctrl-C exits the loop

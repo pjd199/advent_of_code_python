@@ -90,7 +90,7 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
     # dynamically create the expected results on the system path
     if test_case["request"]["path"] == "/system":
         test_case["response"]["body"]["results"] = {
-            "url": f"{base_url}/system",
+            "base_url": base_url,
             "host": host,
             "platform": platform(),
             "machine": machine(),

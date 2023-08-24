@@ -317,6 +317,30 @@ curl -X POST -H "Content-Type: text/plain" -d "@day2.txt"  https://api.adventofc
 }
 ```
 
+#### /system
+
+The system resource, displaying useful system information.
+
+```JSON
+{
+    "timestamp": "2023-08-24T13:18:34Z",
+    "self": "https://api.adventofcode.dibdin.me/system",
+    "api_version": "2.0.0",
+    "description": "System information.",
+    "results": {
+        "url": "https://api.adventofcode.dibdin.me/system",
+        "host": "api.adventofcode.dibdin.me",
+        "platform": "Linux-4.14.255-311-248.529.amzn2.aarch64-aarch64-with-glibc2.36",
+        "machine": "aarch64",
+        "architecture": "64bit",
+        "compiler": "CPython 3.11.4",
+        "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/license.md",
+        "license": "MIT"
+    },
+    "links": []
+}
+```
+
 ### Daily Helper utility
 
 This project includes a helper script for downloading the puzzle and input
