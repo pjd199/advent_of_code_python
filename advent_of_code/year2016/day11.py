@@ -9,7 +9,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
-from collections.abc import Generator
+from collections.abc import Iterator
 from itertools import combinations
 from pathlib import Path
 from re import findall
@@ -109,11 +109,11 @@ class State:
         self.floors = floors
         self.step = step
 
-    def next_state(self) -> Generator[State, None, None]:
+    def next_state(self) -> Iterator[State]:
         """Iterator for all the safe moves from here.
 
         Yields:
-            Generator[State, None, None]: the next safe state
+            State: the next safe state
         """
         for items_in_elevator in [2, 1]:
             for items in combinations(self.floors[self.elevator], items_in_elevator):

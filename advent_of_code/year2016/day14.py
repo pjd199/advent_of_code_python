@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/14
 """
 from collections import defaultdict
-from collections.abc import Generator
+from collections.abc import Iterator
 from hashlib import md5
 from itertools import count
 from pathlib import Path
@@ -71,11 +71,11 @@ class Solver(SolverInterface):
             iter(stretch_digest(f"{self.input}{j}") for j in range(25000))
         )
 
-    def _find(self, iterator: Generator[str, None, None]) -> int:
+    def _find(self, iterator: Iterator[str]) -> int:
         """Search for the answers.
 
         Args:
-            iterator (Generator[str, None, None]): the iterator for the MD5 hash stream
+            iterator (Iterator[str]): the iterator for the MD5 hash stream
 
         Returns:
             int: the index after 64 successful 5* hashes

@@ -5,7 +5,7 @@ Cathode-Ray Tube
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/10
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path
@@ -96,7 +96,7 @@ class Solver(SolverInterface):
     def _solve(self) -> None:
         """Calculate the register value for each time cycle."""
 
-        def cycle_sequence() -> Generator[int, None, None]:
+        def cycle_sequence() -> Iterator[int]:
             yield 1  # initialises register with value 1
             for x in self.input:
                 if x.op == Operator.ADDX:

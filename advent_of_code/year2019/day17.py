@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/17
 """
 from collections import deque
-from collections.abc import Callable, Generator
+from collections.abc import Callable, Iterator
 from itertools import islice
 from pathlib import Path
 from sys import path
@@ -144,14 +144,14 @@ class Solver(SolverInterface):
 
         return ",".join(route)
 
-    def subs(self, route: str) -> Generator[str, None, None]:
+    def subs(self, route: str) -> Iterator[str]:
         """Helper function, to find possible substrings.
 
         Args:
             route (str): the starting route
 
         Yields:
-            Generator[str, None, None]: the substrings
+            str: the substrings
         """
         comma_locations = (i for i, v in enumerate(route[:20]) if v == ",")
         yield from (route[: i + 1] for i in islice(comma_locations, 1, None, 2))

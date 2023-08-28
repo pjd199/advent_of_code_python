@@ -5,7 +5,7 @@ Dumbo Octopus
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/11
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from pathlib import Path
 from sys import path
 
@@ -55,7 +55,7 @@ class Solver(SolverInterface):
             i + 1 for i, flashes in enumerate(self._solve()) if flashes == target
         )
 
-    def _solve(self) -> Generator[int, None, None]:
+    def _solve(self) -> Iterator[int]:
         # using caching to improve speed
         if self.cache:
             yield from self.cache

@@ -5,7 +5,7 @@ Dueling Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/15
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from pathlib import Path
 from sys import path
 
@@ -62,9 +62,7 @@ class Solver(SolverInterface):
             if (next(iter_a) & 65535) == (next(iter_b) & 65535)
         )
 
-    def _generator(
-        self, seed: int, factor: int, modulo: int = 1
-    ) -> Generator[int, None, None]:
+    def _generator(self, seed: int, factor: int, modulo: int = 1) -> Iterator[int]:
         """Simulate the Generator in the puzzle.
 
         Args:
@@ -73,7 +71,7 @@ class Solver(SolverInterface):
             modulo (int): Only return results multiples of modulo. Defaults to 1.
 
         Yields:
-            Generator[int, None, None]: the next number in the sequence
+            int: the next number in the sequence
         """
         value = seed
         if modulo == 1:

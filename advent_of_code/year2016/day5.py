@@ -5,7 +5,7 @@ How About a Nice Game of Chess?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from hashlib import md5
 from pathlib import Path
 from sys import path
@@ -67,11 +67,11 @@ class Solver(SolverInterface):
 
         return "".join(password)
 
-    def _digests(self) -> Generator[str, None, None]:
+    def _digests(self) -> Iterator[str]:
         """An iterator for MD5 digests.
 
         Yields:
-            Generator[str, None, None]: The next digest in the stream
+            str: The next digest in the stream
         """
         i = 0
 
