@@ -1,5 +1,6 @@
 # Production dependancies
 Flask==2.3.2
+Flask-Cors==4.0.0
 apig-wsgi==2.18.0
 numpy==1.25.1
 requests==2.31.0

@@ -17,6 +17,7 @@ from typing import Any
 
 from apig_wsgi import make_lambda_handler
 from flask import Flask, Response, make_response, request
+from flask_cors import CORS
 from requests import RequestException, get
 from werkzeug.exceptions import HTTPException
 
@@ -34,6 +35,7 @@ from advent_of_code.utils.solver_status import (
 
 # initialise the flask app
 app = Flask(__name__)
+CORS(app)
 lambda_handler = make_lambda_handler(app)
 
 Json = int | float | str | bool | dict[str, Any] | list[Any] | None
