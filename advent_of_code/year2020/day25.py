@@ -5,7 +5,7 @@ Combo Breaker
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/25
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from pathlib import Path
 from sys import path
 from typing import NoReturn
@@ -40,7 +40,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def transform(subject_number: int) -> Generator[int, None, None]:
+        def transform(subject_number: int) -> Iterator[int]:
             value = subject_number
             while True:
                 value *= subject_number

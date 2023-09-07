@@ -1,6 +1,6 @@
 """Simualte an IntCode Computer, as part of Advent of Code 2019."""
 from collections import defaultdict, deque
-from collections.abc import Callable, Generator
+from collections.abc import Callable, Iterator
 from enum import Enum, unique
 
 from advent_of_code.utils.parser import int_processor, parse_tokens_single_line
@@ -60,11 +60,11 @@ class IntcodeComputer:
         """
         return self._output_buffer.popleft()
 
-    def iterate_output(self) -> Generator[int, None, None]:
+    def iterate_output(self) -> Iterator[int]:
         """Iterate over the output.
 
         Yields:
-            Generator[int, None, None]: the next value in the output buffer
+            int: the next value in the output buffer
         """
         while self._output_buffer:
             yield self._output_buffer.popleft()

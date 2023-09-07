@@ -1,5 +1,5 @@
 """Functions based on the implementation status of solvers."""
-from collections.abc import Generator
+from collections.abc import Iterator
 from datetime import date, datetime, timezone
 from importlib.util import find_spec
 
@@ -26,11 +26,11 @@ def last_puzzle_date() -> date:
     return date(today.year, 12, min(today.day, 25))
 
 
-def puzzle_date_generator() -> Generator[date, None, None]:
+def puzzle_date_generator() -> Iterator[date]:
     """Generate a list of all puzzles on the AoC website.
 
     Yields:
-        Generator[date, None, None]: All the puzzle dates
+        Iterator[date]: All the puzzle dates
     """
     today = datetime.now(timezone.utc).date()
 

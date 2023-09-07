@@ -1,5 +1,5 @@
 """assembunny definitions and functions required for days 12, 23 & 25."""
-from collections.abc import Generator
+from collections.abc import Iterator
 from copy import deepcopy
 from dataclasses import dataclass
 from enum import Enum, unique
@@ -86,7 +86,7 @@ def run_iter(
     b: int = 0,
     c: int = 0,
     d: int = 0,
-) -> Generator[int, None, None]:
+) -> Iterator[int]:
     """Run the simulation.
 
     Args:
@@ -97,7 +97,7 @@ def run_iter(
         d (int): initial value for register d. Default 0.
 
     Yields:
-        Generator[int, None, None]: the output from the out instruction
+        int: the output from the out instruction
     """
     # create a copy to preserve the original
     program = deepcopy(program)

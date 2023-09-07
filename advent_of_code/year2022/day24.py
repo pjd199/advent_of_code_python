@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/24
 """
 from collections import deque
-from collections.abc import Generator
+from collections.abc import Iterator
 from itertools import pairwise
 from pathlib import Path
 from sys import path
@@ -52,11 +52,11 @@ class Solver(SolverInterface):
         """
         return self._solve([self.start, self.finish, self.start, self.finish])
 
-    def _safe_places(self) -> Generator[frozenset[tuple[int, int]], None, None]:
+    def _safe_places(self) -> Iterator[frozenset[tuple[int, int]]]:
         """Iterate over the safe places in the map for each minute that passes.
 
         Yields:
-            Generator[frozenset[tuple[int, int]], None, None]: set of co-ordinates
+            frozenset[tuple[int, int]]: set of co-ordinates
         """
         # calculate the extent of the grid bounded by the valley walls
         min_x, min_y = (1, 1)

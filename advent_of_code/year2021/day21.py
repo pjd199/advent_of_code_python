@@ -5,7 +5,7 @@ Dirac Dice
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/21
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from functools import cache
 from itertools import cycle, product
 from pathlib import Path
@@ -44,7 +44,7 @@ class Solver(SolverInterface):
             int: the answer
         """
 
-        def dice_iter() -> Generator[int, None, None]:
+        def dice_iter() -> Iterator[int]:
             dice = 1
             while True:
                 yield dice

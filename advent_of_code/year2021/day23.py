@@ -5,7 +5,7 @@ Amphipod
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/23
 """
-from collections.abc import Generator
+from collections.abc import Iterator
 from heapq import heapify, heappop, heappush
 from pathlib import Path
 from sys import path
@@ -100,9 +100,7 @@ class Solver(SolverInterface):
             if i not in self.room_indices
         )
 
-    def reachable_in_coridoor(
-        self, state: State, start: int
-    ) -> Generator[int, None, None]:
+    def reachable_in_coridoor(self, state: State, start: int) -> Iterator[int]:
         """Iterate all the reachable spaces in the coridoor.
 
         Args:
@@ -110,7 +108,7 @@ class Solver(SolverInterface):
             start (int): the starting index
 
         Yields:
-            Generator[int, None, None]: Iterator of reachable spaces
+            int: Iterator of reachable spaces
         """
         for i in range(start, -1, -1):
             if i not in self.room_indices:

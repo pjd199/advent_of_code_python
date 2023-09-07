@@ -17,6 +17,7 @@ from typing import Any
 
 from apig_wsgi import make_lambda_handler
 from flask import Flask, Response, make_response, request
+from flask_cors import cross_origin
 from requests import RequestException, get
 from werkzeug.exceptions import HTTPException
 
@@ -107,6 +108,7 @@ def standard_response(
 
 
 @app.route("/", methods=["GET"])
+@cross_origin()
 def handle_root_path() -> Response:
     """Handle the root path - / .
 
@@ -160,6 +162,7 @@ def handle_root_path() -> Response:
 @app.route("/calendars/", methods=["GET"])
 @app.route("/calendars/<int:year_filter>", methods=["GET"])
 @app.route("/calendars/<int:year_filter>/", methods=["GET"])
+@cross_origin()
 def handle_calendars_path(
     year_filter: int | None = None,
 ) -> Response:
@@ -206,6 +209,7 @@ def handle_calendars_path(
 @app.route("/puzzles/<int:year_filter>/", methods=["GET"])
 @app.route("/puzzles/<int:year_filter>/<int:day_filter>", methods=["GET"])
 @app.route("/puzzles/<int:year_filter>/<int:day_filter>/", methods=["GET"])
+@cross_origin()
 def handle_puzzles_path(
     year_filter: (int | None) = None, day_filter: (int | None) = None
 ) -> Response:
@@ -273,6 +277,7 @@ def handle_puzzles_path(
 
 @app.route("/answers/<int:year>/<int:day>", methods=["GET", "POST"])
 @app.route("/answers/<int:year>/<int:day>/", methods=["GET", "POST"])
+@cross_origin()
 def handle_answers_path(year: int, day: int) -> Response:
     """Handle the solve all parts path - eg /2015/1.
 
@@ -363,6 +368,7 @@ def handle_answers_path(year: int, day: int) -> Response:
 
 @app.route("/system", methods=["GET"])
 @app.route("/system/", methods=["GET"])
+@cross_origin()
 def handle_system_path() -> Response:  # pragma: no cover
     """Handle the system path - /system/ .
 
