@@ -8,7 +8,7 @@
 	},
 	"postCreateCommand": {
 		"install package": "pip install -e .[dev]",
-		"pre-commit": "pre-commit install"
+		"pre-commit": "pre-commit install --install-hooks"
 	},
 	"customizations": {
 		"vscode": {
