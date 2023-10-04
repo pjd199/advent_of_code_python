@@ -5,7 +5,7 @@ from typing import TypeVar
 from advent_of_code.utils.solver_interface import SolverInterface
 
 S = TypeVar("S", bound=SolverInterface)
-T = TypeVar("T", bound=int | str)
+T = TypeVar("T")
 
 
 def cache_result(func: Callable[[S], T]) -> Callable[[S], T]:
