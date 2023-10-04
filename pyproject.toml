@@ -34,7 +34,7 @@ dependencies = [
     "Flask==2.3.2",
     "Flask-Cors==4.0.0",
     "apig-wsgi==2.18.0",
-    "numpy==1.25.0",
+    "numpy==1.26.0",
     "requests==2.31.0",
 ]
 
