@@ -4,7 +4,7 @@ ARG FUNCTION_DIR="/var/task/"
 #
 # Create the build image 
 #
-FROM --platform=linux/arm64 python:3.11.4-bookworm as build-image
+FROM --platform=linux/arm64 python:3.12.0-bookworm as build-image
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR
@@ -26,7 +26,7 @@ RUN pip install --target ${FUNCTION_DIR} awslambdaric ${BUILD_PACKAGE}
 #
 # Create the runtime image from the build image
 #
-FROM --platform=linux/arm64 python:3.11.4-slim-bookworm
+FROM --platform=linux/arm64 python:3.12.0-slim-bookworm
 
 # Include global arg in this stage of the build
 ARG FUNCTION_DIR

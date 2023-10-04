@@ -22,6 +22,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
     "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
     "License :: OSI Approved :: MIT License",
@@ -33,7 +34,7 @@ dependencies = [
     "Flask==2.3.2",
     "Flask-Cors==4.0.0",
     "apig-wsgi==2.18.0",
-    "numpy==1.25.1",
+    "numpy==1.25.0",
     "requests==2.31.0",
 ]
 
@@ -56,7 +57,7 @@ dev = [
     "pytest-xdist==3.3.1",
     "beautifulsoup4==4.12.2",
     "markdownify==0.11.6",
-    "pillow==10.0.0",
+    "pillow==10.0.1",
     "pre-commit==3.3.3",
 ]
 

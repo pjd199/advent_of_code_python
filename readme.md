@@ -1,6 +1,6 @@
 # Advent of Code Solver RESTful API
 
-[![python versions](https://img.shields.io/badge/python-3.10%20%7C%203.11-blue)](https://www.python.org/)
+[![python versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
 ![os platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 ![cloud platform](https://img.shields.io/badge/cloud-AWS%20Lambda-blue)
 
@@ -44,7 +44,7 @@ puzzle by yourself!!!
 
 ### Prerequisites
 
-- [Python 3.10-3.11](https://www.python.org/)
+- [Python 3.10-3.12](https://www.python.org/)
 - [AWS SAM CLI and AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 - [AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html) -
   locally or as secrets for Github Action
@@ -333,7 +333,7 @@ The system resource, displaying useful system information.
         "platform": "Linux-4.14.255-311-248.529.amzn2.aarch64-aarch64-with-glibc2.36",
         "machine": "aarch64",
         "architecture": "64bit",
-        "compiler": "CPython 3.11.4",
+        "compiler": "CPython 3.12.0",
         "license_url": "https://raw.githubusercontent.com/pjd199/advent_of_code_python/main/license.md",
         "license": "MIT"
     },
