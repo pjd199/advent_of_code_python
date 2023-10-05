@@ -14,7 +14,7 @@ class SolverInterface(ABC):
         """Initialise the object, parse and validate the input.
 
         Args:
-            puzzle_input (list[str]): _description_
+            puzzle_input (list[str]): the puzzle input
         """
 
     @abstractmethod

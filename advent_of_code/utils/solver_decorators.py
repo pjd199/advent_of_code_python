@@ -1,29 +1,30 @@
-"""Decorators to help subclasses of the SolverInterface."""
+"""Decorators for the SolverInterface."""
 from collections.abc import Callable
-from typing import ParamSpec, TypeVar
+from typing import TypeVar
 
+from advent_of_code.utils.solver_interface import SolverInterface
+
+S = TypeVar("S", bound=SolverInterface)
 T = TypeVar("T")
-P = ParamSpec("P")
 
 
-def cache_result(func: Callable[P, T]) -> Callable[P, T]:
-    """Cache the first call to given function.
+def cache_result(func: Callable[[S], T]) -> Callable[[S], T]:
+    """Method decorator to cache results.
 
     Args:
-        func (Callable[P, T]): _description_
+        func (Callable[[S], T]): the method
 
     Returns:
-        Callable[P, T]: _description_
+        Callable[[S], T]: decorated method
     """
-    has_run = False
-    value: T
 
-    def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
-        nonlocal has_run
-        nonlocal value
-        if not has_run:
-            value = func(*args, **kwargs)
-            has_run = True
-        return value
+    def wrapper(instance: S) -> T:
+        cache = instance.__dict__.setdefault("__result_cache__", {})
+
+        if func not in cache:
+            cache[func] = func(instance)
+
+        result: T = cache[func]
+        return result
 
     return wrapper
