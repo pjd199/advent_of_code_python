@@ -354,7 +354,7 @@ class DailyHelper:
             metadata[str(self.year)][str(self.day)]["timings"]["part_one"] = time
 
             if self.day != 25:
-                print("Timing for part two")
+                self._log("Timing for part two")
                 _, time = function_timer(solver.solve_part_two)
                 metadata[str(self.year)][str(self.day)]["timings"]["part_two"] = time
             file_updated = True
