@@ -49,7 +49,7 @@ jobs:
               for day in {1..25}
               do
                   echo === $year $day ===
-                  python advent_of_code/daily_helper.py $year $day -T
+                  python advent_of_code/daily_helper.py $year $day -Tv
               done
           done
 
