@@ -1,7 +1,6 @@
 # Advent of Code Solver RESTful API
 
 ![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fpjd199%2Fadvent_of_code_python%2Fmain%2Fpyproject.toml&logo=python&logoColor=yellow)
-
 ![os platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 ![cloud platform](https://img.shields.io/badge/cloud-AWS%20Lambda-blue)
 
