@@ -1,6 +1,7 @@
 # Advent of Code Solver RESTful API
 
-[![python versions](https://img.shields.io/badge/python-3.10%20%7C%203.11%20%7C%203.12-blue)](https://www.python.org/)
+![Python Version from PEP 621 TOML](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fpjd199%2Fadvent_of_code_python%2Fmain%2Fpyproject.toml&logo=python&logoColor=yellow)
+
 ![os platforms](https://img.shields.io/badge/platform-linux%20%7C%20windows%20%7C%20macos-blue)
 ![cloud platform](https://img.shields.io/badge/cloud-AWS%20Lambda-blue)
 
@@ -49,7 +50,7 @@ puzzle by yourself!!!
 - [AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html) -
   locally or as secrets for Github Action
 
-### Installation in a prodcution environment
+### Installation in a production environment
 
 ```sh
 pip install advent_of_code_solver@git+https://github.com/pjd199/advent_of_code_python
@@ -66,7 +67,7 @@ pip install --editable .[dev]
 
 Deployment requires [AWS Lambda](https://aws.amazon.com/lambda) and
 [Amazon Simple Storage Service (Amazon S3)](https://aws.amazon.com/s3), both of
-which included in the [AWS Free Tier](https://aws.amazon.com/free). Usage
+which are included in the [AWS Free Tier](https://aws.amazon.com/free). Usage
 outside the free tier may be charged.
 
 1. Build the app with SAM
@@ -88,7 +89,7 @@ tutorial has a good troubleshooting section.
 
 ### Clean up
 
-If AWS stack is no longer required, run:
+If the AWS stack is no longer required, run:
 
 ```
 sam delete
@@ -98,8 +99,8 @@ sam delete
 
 ### Using the RESTful API
 
-An deployment of the RESTful API for this project is available at
-[https://api.adventofcode.dibdin.me/](https://api.adventofcode.dibdin.me/). If
+A deployment of the RESTful API for this project is available at
+[https://api.adventofcode.dibdin.me](https://api.adventofcode.dibdin.me). If
 installed and deployed by another user, use the URL provided at the end of the
 SAM deploy process.
 
@@ -109,7 +110,7 @@ The resource endpoints for this API are:
 
 - / - the root resource, listing of all resources available on this API
 - /calendars - the calendar resource, listing valid puzzle years and days
-- /puzzles - the puzzles resouce, detailing of all the puzzles
+- /puzzles - the puzzles resources, detailing of all the puzzles
 - /answers - the answers resource, to find the answer to a specific puzzle
 - /system - the system resource, providing information about the API system
 
@@ -117,7 +118,7 @@ The body of the response is in JSON format, with the HTTP header containing one
 of the following standard status codes:
 
 - 200 - success
-- 404 - no solver for requested date or path does not exist
+- 404 - no solver for the requested date or path does not exist
 - 500 - server error, including errors in the puzzle input file
 
 #### /
@@ -131,7 +132,7 @@ curl http://api.adventofcode.dibdin.me
 ```JSON
 {
   "api_version": "2.0.0",
-  "description": "Discover resourses available through this API.",
+  "description": "Discover resources available through this API.",
   "links": [
     {
       "action": "GET",
@@ -367,7 +368,7 @@ store the session cookie:
 
 1. Open a web browser (Chrome, Edge or Mozilla)
 2. Log into the Advent of Code website
-3. Right click on the page, and select inspect
+3. Right-click on the page, and select Inspect
 4. On the application tab, select cookies
 5. Copy the value of the session cookie
 6. Store the session cookie using the following command
@@ -378,7 +379,7 @@ daily_helper --save_session <<<PASTE VALUE HERE>>
 
 ### Testing
 
-This project has unit tests, integration tests and system tests (which can only
+This project has unit tests, integration tests, and system tests (which can only
 be run after the deployment phase).
 
 ```sh
@@ -389,8 +390,8 @@ pytest /tests/system
 
 ## Roadmap
 
+- [ ] Solve Advent of Code 2023!!!
 - [ ] Test against multiple sets of puzzle input files
-- [ ] Wait for Advent of Code to start on 1st December 2023!!!
 
 ## Licence
 
