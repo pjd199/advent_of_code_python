@@ -479,6 +479,7 @@ def main() -> int:
         session = args.session
     elif args.save_session:
         session = args.save_session
+        session_path.parent.mkdir(exist_ok=True, parents=True)
         with Path(session_path).open("w") as file:
             file.write(session)
     elif session_path.is_file():
