@@ -65,7 +65,7 @@ class Solver(SolverInterface):
                 next(
                     (
                         self.input[i : i + size]
-                        for i in range(0, len(chunk) - size)
+                        for i in range(len(chunk) - size)
                         if sum(chunk[i : i + size]) == self.invalid
                     ),
                     None,

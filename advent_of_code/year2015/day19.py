@@ -15,8 +15,8 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_single_line,
     split_sections,
+    str_pair_processor,
     str_processor,
-    str_tuple_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_decorators import cache_result
@@ -38,13 +38,10 @@ class Solver(SolverInterface):
         """
         sections = split_sections(puzzle_input, expected_sections=2)
 
-        self.replacements = [
-            (a, b)
-            for a, b in parse_lines(
-                sections[0],
-                (r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)", str_tuple_processor),
-            )
-        ]
+        self.replacements = parse_lines(
+            sections[0],
+            (r"(?P<a>[a-zA-Z]+) => (?P<b>[a-zA-Z]+)", str_pair_processor),
+        )
         self.medication = parse_single_line(sections[1], r"[A-Za-z]+", str_processor)
 
     @cache_result

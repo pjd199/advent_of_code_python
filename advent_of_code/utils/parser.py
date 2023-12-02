@@ -1,7 +1,7 @@
 """Parser utilities for the puzzle input."""
 from builtins import type
 from collections.abc import Callable
-from dataclasses import fields, is_dataclass
+from dataclasses import fields
 from enum import Enum
 from re import Match, escape, fullmatch, search, split
 from sys import maxsize
@@ -159,14 +159,8 @@ def dataclass_processor(
 
     Returns:
         Callable[[Match[str]], T]: the match processor
-
-    Raises:
-        TypeError: if cls is not a DataClass (needed due to mypy typing bug)
     """
-    if not is_dataclass(cls):
-        raise TypeError  # pragma: no cover
-
-    fields_dict = {f.name: f for f in fields(cls) if f.init}
+    fields_dict = {f.name: f for f in fields(cls) if f.init}  # type: ignore
     return lambda m: cls(
         **{
             k: fields_dict[k].type(v)

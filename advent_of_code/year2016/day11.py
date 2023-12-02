@@ -52,9 +52,6 @@ class GeneratorItem(Item):
     def safe(self, _: list[Item]) -> bool:
         """Determines if this is safe to store with other Items.
 
-        Args:
-            _ (list[Item]): The other items
-
         Returns:
             bool: True if safe, otherwise False
         """

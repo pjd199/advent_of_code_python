@@ -91,8 +91,8 @@ class Solver(SolverInterface):
                     x + 1,
                     y + 1,
                 )
-                for y in range(0, 300 - (size - 1))
-                for x in range(0, 300 - (size - 1))
+                for y in range(300 - (size - 1))
+                for x in range(300 - (size - 1))
             ]
         )
 
