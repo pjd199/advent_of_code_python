@@ -3424,6 +3424,23 @@
                 "part_one": 2,
                 "part_two": 3
             }
+        },
+        "2": {
+            "year": 2023,
+            "day": 2,
+            "title": "Cube Conundrum",
+            "excerpt": "You're launched high into the atmosphere! The apex of your trajectory just barely reaches the surface of a large island floating in the sky. You gently land in a fluffy pile of leaves. It's quite cold, but you don't see much snow. An Elf runs over to greet you.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-02T13:41:56+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 0,
+                "part_two": 0
+            }
         }
     }
 }

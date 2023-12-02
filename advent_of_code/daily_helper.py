@@ -413,6 +413,7 @@ class DailyHelper:
                 "--no-cov-on-fail",
                 "--cov-fail-under=100",
                 "--cov-reset",
+                "-W ignore::DeprecationWarning",
             ]
             if self.verbose:
                 options += ["-v", "--cov-report", "term-missing"]
