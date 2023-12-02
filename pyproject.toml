@@ -1,6 +1,6 @@
 [project]
 name = "advent_of_code_solver"
-version = "2.0.4"
+version = "2.0.5"
 authors = [{ name = "Pete Dibdin" }]
 description = "Advent of Code Solver RESTful API"
 keywords = [
@@ -31,11 +31,11 @@ classifiers = [
     "Natural Language :: English",
 ]
 dependencies = [
-    "Flask==2.3.2",
-    "Flask-Cors==4.0.0",
-    "apig-wsgi==2.18.0",
-    "numpy==1.26.0",
-    "requests==2.31.0",
+    "Flask>=3",
+    "Flask-Cors>=4",
+    "apig-wsgi>=2",
+    "numpy>=1.26",
+    "requests==2.31",
 ]
 
 [project.scripts]
@@ -47,18 +47,19 @@ development_server = "advent_of_code.development_server:main"
 
 [project.optional-dependencies]
 dev = [
-    "boto3==1.28.5",
-    "freezegun==1.2.2",
-    "pytest==7.4.0",
-    "coverage==7.2.7",
-    "pytest-cov==4.1.0",
-    "pytest-custom_exit_code==0.3.0",
-    "pytest-split==0.8.1",
-    "pytest-xdist==3.3.1",
-    "beautifulsoup4==4.12.2",
-    "markdownify==0.11.6",
-    "pillow==10.0.1",
-    "pre-commit==3.3.3",
+    "boto3>=1.33",
+    "freezegun>=1.2",
+    "pytest>=7.4",
+    "pyopenssl>=23.2",
+    "coverage>=7.3",
+    "pytest-cov>=4.1",
+    "pytest-custom_exit_code>=0.3",
+    "pytest-split>=0.8",
+    "pytest-xdist>=3.5",
+    "beautifulsoup4>=4.12",
+    "markdownify>=0.11",
+    "pillow>=10.1",
+    "pre-commit>=3.5",
 ]
 
 [build-system]
