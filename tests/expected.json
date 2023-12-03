@@ -1421,6 +1421,13 @@
             "day": 2,
             "part_one": "2632",
             "part_two": "69629"
+        },
+        "3": {
+            "title": "Gear Ratios",
+            "year": 2023,
+            "day": 3,
+            "part_one": "553825",
+            "part_two": "93994191"
         }
     }
 }

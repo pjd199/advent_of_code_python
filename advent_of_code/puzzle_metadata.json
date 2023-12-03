@@ -3441,6 +3441,23 @@
                 "part_one": 0,
                 "part_two": 0
             }
+        },
+        "3": {
+            "year": 2023,
+            "day": 3,
+            "title": "Gear Ratios",
+            "excerpt": "You and the Elf eventually reach a gondola lift station; he says the gondola lift will take you up to the water source, but this is as far as he can bring you. You go inside.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "timings": {
+                "unit": "ms",
+                "parse": 19,
+                "part_one": 9,
+                "part_two": 7
+            },
+            "completion_date": "2023-12-03T17:55:31+0000Z"
         }
     }
 }
