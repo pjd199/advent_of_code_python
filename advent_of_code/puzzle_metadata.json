@@ -3458,6 +3458,23 @@
                 "part_two": 7
             },
             "completion_date": "2023-12-03T17:55:31+0000Z"
+        },
+        "4": {
+            "year": 2023,
+            "day": 4,
+            "title": "Scratchcards",
+            "excerpt": "The gondola takes you up. Strangely, though, the ground doesn't seem to be coming with you; you're not climbing a mountain. As the circle of Snow Island recedes below you, an entire new landmass suddenly appears above you! The gondola carries you to the surface of the new island and lurches into the station.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-04T15:36:25+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 0,
+                "part_two": 0
+            }
         }
     }
 }

@@ -1428,6 +1428,13 @@
             "day": 3,
             "part_one": "553825",
             "part_two": "93994191"
+        },
+        "4": {
+            "title": "Scratchcards",
+            "year": 2023,
+            "day": 4,
+            "part_one": "15205",
+            "part_two": "6189740"
         }
     }
 }
