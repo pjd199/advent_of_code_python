@@ -88,10 +88,7 @@ class Solver(SolverInterface):
             cards, _ = hand
             values = "J23456789TQKA"
             return (
-                max(
-                    self.type_order(cards.replace("J", joker))
-                    for joker in "23456789TQKA"
-                ),
+                max(self.type_order(cards.replace("J", joker)) for joker in set(cards)),
                 *(values.index(x) for x in cards),
             )
 
