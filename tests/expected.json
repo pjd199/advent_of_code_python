@@ -1435,6 +1435,25 @@
             "day": 4,
             "part_one": "15205",
             "part_two": "6189740"
+        },
+        "5": {
+            "title": "If You Give A Seed A Fertilizer",
+            "year": 2023,
+            "day": 5
+        },
+        "6": {
+            "title": "Wait For It",
+            "year": 2023,
+            "day": 6,
+            "part_one": "1195150",
+            "part_two": "42550411"
+        },
+        "7": {
+            "title": "Camel Cards",
+            "year": 2023,
+            "day": 7,
+            "part_one": "246424613",
+            "part_two": "248256639"
         }
     }
 }

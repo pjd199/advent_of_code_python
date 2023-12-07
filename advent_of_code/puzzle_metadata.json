@@ -3475,6 +3475,44 @@
                 "part_one": 0,
                 "part_two": 0
             }
+        },
+        "5": {
+            "year": 2023,
+            "day": 5,
+            "title": "If You Give A Seed A Fertilizer",
+            "excerpt": "You take the boat and find the gardener right where you were told he would be: managing a giant \"garden\" that looks more to you like a farm.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": false,
+            "part_two_solved": false
+        },
+        "6": {
+            "year": 2023,
+            "day": 6,
+            "title": "Wait For It",
+            "excerpt": "The ferry quickly brings you across Island Island. After asking around, you discover that there is indeed normally a large pile of sand somewhere near here, but you don't see anything besides lots of water and the small island where the ferry has docked.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-06T17:04:37+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 0,
+                "part_two": 0
+            }
+        },
+        "7": {
+            "year": 2023,
+            "day": 7,
+            "title": "Camel Cards",
+            "excerpt": "Your all-expenses-paid trip turns out to be a one-way, five-minute ride in an airship. (At least it's a cool airship!) It drops you off at the edge of a vast desert and descends back to Island Island.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-07T17:20:05+0000Z"
         }
     }
 }
