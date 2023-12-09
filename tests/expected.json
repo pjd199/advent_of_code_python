@@ -1439,7 +1439,9 @@
         "5": {
             "title": "If You Give A Seed A Fertilizer",
             "year": 2023,
-            "day": 5
+            "day": 5,
+            "part_one": "251346198",
+            "part_two": "72263011"
         },
         "6": {
             "title": "Wait For It",
