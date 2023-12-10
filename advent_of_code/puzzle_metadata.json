@@ -3520,6 +3520,17 @@
             "part_one_solved": true,
             "part_two_solved": true,
             "completion_date": "2023-12-07T17:20:05+0000Z"
+        },
+        "8": {
+            "year": 2023,
+            "day": 8,
+            "title": "Haunted Wasteland",
+            "excerpt": "You're still riding a camel across Desert Island when you spot a sandstorm quickly approaching. When you turn to warn the Elf, she disappears before your eyes! To be fair, she had just finished warning you about ghosts a few minutes ago.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-10T21:28:46+0000Z"
         }
     }
 }

@@ -1456,6 +1456,13 @@
             "day": 7,
             "part_one": "246424613",
             "part_two": "248256639"
+        },
+        "8": {
+            "title": "Haunted Wasteland",
+            "year": 2023,
+            "day": 8,
+            "part_one": "19783",
+            "part_two": "9177460370549"
         }
     }
 }
