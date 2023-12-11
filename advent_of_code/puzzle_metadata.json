@@ -3531,6 +3531,23 @@
             "part_one_solved": true,
             "part_two_solved": true,
             "completion_date": "2023-12-10T21:28:46+0000Z"
+        },
+        "9": {
+            "year": 2023,
+            "day": 9,
+            "title": "Mirage Maintenance",
+            "excerpt": "You ride the camel through the sandstorm and stop where the ghost's maps told you to stop. The sandstorm subsequently subsides, somehow seeing you standing at an oasis!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-11T16:50:18+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 6,
+                "part_one": 5,
+                "part_two": 5
+            }
         }
     }
 }

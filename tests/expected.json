@@ -1463,6 +1463,13 @@
             "day": 8,
             "part_one": "19783",
             "part_two": "9177460370549"
+        },
+        "9": {
+            "title": "Mirage Maintenance",
+            "year": 2023,
+            "day": 9,
+            "part_one": "1708206096",
+            "part_two": "1050"
         }
     }
 }
