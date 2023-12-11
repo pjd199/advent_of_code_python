@@ -9,6 +9,9 @@
 		"install package": "pip install -e .[dev]",
 		"pre-commit": "pre-commit install --install-hooks"
 	},
+	"postAttachCommand": {
+		"git pull": "git pull"
+	},
 	"customizations": {
 		"vscode": {
 			"extensions": [
