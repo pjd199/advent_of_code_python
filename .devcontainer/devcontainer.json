@@ -16,7 +16,6 @@
 		"vscode": {
 			"extensions": [
 				"charliermarsh.ruff",
-				"tamasfe.even-better-toml",
 				"njpwerner.autodocstring",
 				"redhat.vscode-yaml"
 			]
