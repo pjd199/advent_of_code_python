@@ -3548,6 +3548,23 @@
                 "part_one": 5,
                 "part_two": 5
             }
+        },
+        "10": {
+            "year": 2023,
+            "day": 10,
+            "title": "Pipe Maze",
+            "excerpt": "You use the hang glider to ride the hot air from Desert Island all the way up to the floating metal island. This island is surprisingly cold and there definitely aren't any thermals to glide on, so you leave your hang glider behind.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-15T07:22:40+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 20,
+                "part_one": 30,
+                "part_two": 478
+            }
         }
     }
 }

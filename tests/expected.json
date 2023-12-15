@@ -1470,6 +1470,13 @@
             "day": 9,
             "part_one": "1708206096",
             "part_two": "1050"
+        },
+        "10": {
+            "title": "Pipe Maze",
+            "year": 2023,
+            "day": 10,
+            "part_one": "6733",
+            "part_two": "435"
         }
     }
 }
