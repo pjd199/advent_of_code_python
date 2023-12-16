@@ -1477,6 +1477,13 @@
             "day": 10,
             "part_one": "6733",
             "part_two": "435"
+        },
+        "11": {
+            "title": "Cosmic Expansion",
+            "year": 2023,
+            "day": 11,
+            "part_one": "10289334",
+            "part_two": "649862989626"
         }
     }
 }

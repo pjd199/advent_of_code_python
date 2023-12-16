@@ -3565,6 +3565,23 @@
                 "part_one": 30,
                 "part_two": 478
             }
+        },
+        "11": {
+            "year": 2023,
+            "day": 11,
+            "title": "Cosmic Expansion",
+            "excerpt": "You continue following signs for \"Hot Springs\" and eventually come across an observatory. The Elf within turns out to be a researcher studying cosmic expansion using the giant telescope here.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-16T15:29:06+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 19,
+                "part_one": 238,
+                "part_two": 241
+            }
         }
     }
 }
