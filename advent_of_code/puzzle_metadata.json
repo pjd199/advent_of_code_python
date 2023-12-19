@@ -3582,6 +3582,23 @@
                 "part_one": 238,
                 "part_two": 241
             }
+        },
+        "12": {
+            "year": 2023,
+            "day": 12,
+            "title": "Hot Springs",
+            "excerpt": "You finally reach the hot springs! You can see steam rising from secluded areas attached to the primary, ornate building.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-19T17:48:11+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 9,
+                "part_one": 45,
+                "part_two": 877
+            }
         }
     }
 }
