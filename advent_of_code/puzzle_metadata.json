@@ -3599,6 +3599,23 @@
                 "part_one": 45,
                 "part_two": 877
             }
+        },
+        "13": {
+            "year": 2023,
+            "day": 13,
+            "title": "Point of Incidence",
+            "excerpt": "With your help, the hot springs team locates an appropriate spring which launches you neatly and precisely up to the edge of Lava Island.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-21T15:33:02+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 62,
+                "part_one": 24,
+                "part_two": 4
+            }
         }
     }
 }
