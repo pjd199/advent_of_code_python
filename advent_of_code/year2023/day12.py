@@ -89,24 +89,21 @@ class Solver(SolverInterface):
             if not groups:
                 return 0 if "#" in template else 1
 
-            if template[0] == ".":
-                return find(template[1:], groups)
-
-            if template[0] == "#":
-                if (
+            match template[0]:
+                case "?":
+                    return find(f"#{template[1:]}", groups) + find(
+                        f".{template[1:]}", groups
+                    )
+                case ".":
+                    return find(template[1:], groups)
+                case "#" if (
                     len(template) >= groups[0]
                     and all(x in "#?" for x in template[: groups[0]])
                     and (len(template) == groups[0] or template[groups[0]] in ".?")
                 ):
                     return find(template[groups[0] + 1 :], groups[1:])
-                return 0
-
-            if template[0] == "?":
-                return find(f"#{template[1:]}", groups) + find(
-                    f".{template[1:]}", groups
-                )
-
-            return 0
+                case _:
+                    return 0
 
         return find(template, groups)
 
