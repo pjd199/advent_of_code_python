@@ -1498,6 +1498,13 @@
             "day": 13,
             "part_one": "35232",
             "part_two": "37982"
+        },
+        "14": {
+            "title": "Parabolic Reflector Dish",
+            "year": 2023,
+            "day": 14,
+            "part_one": "106517",
+            "part_two": "79723"
         }
     }
 }
