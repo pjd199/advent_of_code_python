@@ -3633,6 +3633,23 @@
                 "part_one": 6,
                 "part_two": 7827
             }
+        },
+        "15": {
+            "year": 2023,
+            "day": 15,
+            "title": "Lens Library",
+            "excerpt": "The newly-focused parabolic reflector dish is sending all of the collected light to a point on the side of yet another mountain - the largest mountain on Lava Island. As you approach the mountain, you find that the light is being collected by the wall of a large facility embedded in the mountainside.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2023-12-26T13:26:36+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 4,
+                "part_one": 7,
+                "part_two": 10
+            }
         }
     }
 }

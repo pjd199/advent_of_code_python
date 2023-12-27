@@ -1505,6 +1505,13 @@
             "day": 14,
             "part_one": "106517",
             "part_two": "79723"
+        },
+        "15": {
+            "title": "Lens Library",
+            "year": 2023,
+            "day": 15,
+            "part_one": "521341",
+            "part_two": "252782"
         }
     }
 }
