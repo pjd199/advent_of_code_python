@@ -58,7 +58,7 @@ dev = [
     "pytest-xdist>=3.5",
     "beautifulsoup4>=4.12",
     "markdownify>=0.11",
-    "pillow>=10.1",
+    "pillow>=10.2",
     "pre-commit>=3.5",
 ]
 
