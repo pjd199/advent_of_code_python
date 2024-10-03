@@ -140,7 +140,7 @@ jobs:
 
   build-and-deploy:
     name: Deploy to AWS Lambda
-    needs: [unit-test, check]
+    needs: [unit-test, check, coverage]
     runs-on: ubuntu-latest
     steps:
       - name: Check out respository
