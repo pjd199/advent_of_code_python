@@ -5,6 +5,8 @@ Trebuchet?!
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/1
 """
+
+from collections.abc import Iterator
 from pathlib import Path
 from re import findall
 from sys import path
@@ -32,17 +34,33 @@ class Solver(SolverInterface):
         """
         self.input = parse_lines(puzzle_input, (r"[a-z0-9]+", str_processor))
 
-    def solve(self, allow_words: bool) -> int:
-        """Solve the puzzle.
-
-        Args:
-            allow_words (bool): if true, allow word numbers
+    def solve_part_one(self) -> int:
+        """Solve part one of the puzzle.
 
         Returns:
-            int: the sum of the first and last digits
+            int: the answer
+        """
+        return sum(self.extact_values(numbers_as_words=False))
+
+    def solve_part_two(self) -> int:
+        """Solve part two of the puzzle.
+
+        Returns:
+            int: the answer
+        """
+        return sum(self.extact_values(numbers_as_words=True))
+
+    def extact_values(self, numbers_as_words: bool) -> Iterator[int]:
+        """Extract the digits from the input.
+
+        Args:
+            numbers_as_words (bool): Treat number words as digits
+
+        Yields:
+            int: the extacted digits
         """
         lookup = {str(i): i for i in range(10)}
-        if allow_words:
+        if numbers_as_words:
             lookup |= {
                 "zero": 0,
                 "one": 1,
@@ -55,27 +73,9 @@ class Solver(SolverInterface):
                 "eight": 8,
                 "nine": 9,
             }
-        result = 0
         for line in self.input:
-            digits = findall(rf"(?=(\d|{'|'.join(lookup.keys())}))", line)
-            result += lookup[digits[0]] * 10 + lookup[digits[-1]]
-        return result
-
-    def solve_part_one(self) -> int:
-        """Solve part one of the puzzle.
-
-        Returns:
-            int: the answer
-        """
-        return self.solve(allow_words=False)
-
-    def solve_part_two(self) -> int:
-        """Solve part two of the puzzle.
-
-        Returns:
-            int: the answer
-        """
-        return self.solve(allow_words=True)
+            digits = findall(rf"(?=({" | ".join(lookup)}))", line)
+            yield lookup[digits[0]] * 10 + lookup[digits[-1]]
 
 
 if __name__ == "__main__":  # pragma: no cover
