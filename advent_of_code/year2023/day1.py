@@ -75,7 +75,8 @@ class Solver(SolverInterface):
             }
         for line in self.input:
             digits = findall(rf"(?=({" | ".join(lookup)}))", line)
-            yield lookup[digits[0]] * 10 + lookup[digits[-1]]
+            if digits:
+                yield lookup[digits[0]] * 10 + lookup[digits[-1]]
 
 
 if __name__ == "__main__":  # pragma: no cover
