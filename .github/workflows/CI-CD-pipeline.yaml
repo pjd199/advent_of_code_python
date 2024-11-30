@@ -32,14 +32,13 @@ jobs:
         with:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
-      
+
       - uses: actions/cache@v3
         name: Load dependancy cache
         id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
-          key:
-            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
         if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
@@ -48,13 +47,12 @@ jobs:
       - name: Install editable package
         if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
         run: pip install --editable .
-        
+
       - uses: actions/cache@v3
         name: Load dependancy cache
         with:
           path: ~/.cache/pre-commit
-          key:
-            pre-commit-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('.pre-commit-config.yaml') }}
+          key: pre-commit-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('.pre-commit-config.yaml') }}
 
       - name: Run pre-commit on all files
         run: pre-commit run --all-files
@@ -81,8 +79,7 @@ jobs:
         id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
-          key:
-            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
         if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
@@ -93,16 +90,12 @@ jobs:
         run: pip install --editable .
 
       - name: Run pytest
-        run:
-          pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{
-          matrix.group }} -n auto --suppress-no-test-exit-code
-          --splitting-algorithm=least_duration
+        run: pytest ./tests/unit ./tests/integration --cov --cov-report=xml --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
 
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v3
         with:
-          name: coverage${{ matrix.group }}
-          path: .coverage
+          name: coverage${{ matrix.group }}.xml
 
   coverage:
     name: Coverage Check
@@ -125,7 +118,7 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Combine coverage files
-        run: coverage combine coverage*/.coverage*
+        run: coverage combine coverage*.xml
 
       - name: Generate XML report
         run: coverage xml --omit="*/test*"
@@ -186,13 +179,12 @@ jobs:
         name: Wait for testing to complete
         with:
           gh-token: ${{ secrets.GITHUB_TOKEN }}
-          jobs: 'Testing (1),Testing (2),Testing (3),Testing (4),Testing (5),Testing (6),Testing (7),Testing (8),Testing (9),Testing (10),'
-          ttl: '10'
-          interval: '5000'
+          jobs: "Testing (1),Testing (2),Testing (3),Testing (4),Testing (5),Testing (6),Testing (7),Testing (8),Testing (9),Testing (10),"
+          ttl: "10"
+          interval: "5000"
 
       - name: SAM Deploy to AWS Lambda
-        run:
-          sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
+        run: sam deploy --no-confirm-changeset --no-fail-on-empty-changeset
           --config-file ${{ env.SAM_CONFIG_FILE }}
 
   system-test:
@@ -221,15 +213,14 @@ jobs:
         id: requirements-dev-cache
         with:
           path: ${{ env.pythonLocation }}
-          key:
-            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
 
       - name: Install dependancies
         run: pip install -r requirements_dev.txt
 
       - name: Install editable package
         run: pip install --editable .
-        
+
       - name: Run pytest on main lambda function
         if: github.ref == 'refs/heads/main'
         run: pytest ./tests/system -k _main -n auto
