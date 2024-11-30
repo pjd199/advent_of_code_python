@@ -6,6 +6,7 @@
 		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {}
 	},
 	"postCreateCommand": {
+		"update_pip": "pip install --upgrade pip",
 		"install package": "pip install -e .[dev]",
 		"pre-commit": "pre-commit install --install-hooks"
 	},
