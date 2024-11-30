@@ -96,6 +96,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: coverage${{ matrix.group }}.xml
+          path: .
 
   coverage:
     name: Coverage Check
