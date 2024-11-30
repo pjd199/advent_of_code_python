@@ -44,7 +44,7 @@ puzzle by yourself!!!
 
 ### Prerequisites
 
-- [Python 3.10-3.12](https://www.python.org/)
+- [Python >=3.10](https://www.python.org/)
 - [AWS SAM CLI and AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 - [AWS Credentials](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-getting-started-set-up-credentials.html) -
   locally or as secrets for Github Action
@@ -389,7 +389,10 @@ pytest /tests/system
 
 ## Roadmap
 
-- [ ] Solve Advent of Code 2023!!!
+- [ ] Complete Advent of Code 2023
+- [ ] Solve Advent of Code 2024
+- [ ] Move daily_helper tool to seperate repository
+- [ ] Remove input files from public repository
 - [ ] Test against multiple sets of puzzle input files
 
 ## Licence
