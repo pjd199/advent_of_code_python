@@ -92,6 +92,9 @@ jobs:
       - name: Run pytest
         run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
 
+      - name: directory list
+        run: ls -l
+
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v4
         with:
