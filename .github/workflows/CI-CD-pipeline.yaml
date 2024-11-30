@@ -90,13 +90,13 @@ jobs:
         run: pip install --editable .
 
       - name: Run pytest
-        run: pytest ./tests/unit ./tests/integration --cov --cov-report=xml --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
+        run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
 
       - name: Uploading coverage file artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: coverage${{ matrix.group }}.xml
-          path: .
+          name: coverage${{ matrix.group }}
+          path: .coverage
 
   coverage:
     name: Coverage Check
@@ -116,10 +116,10 @@ jobs:
         run: pip install coverage
 
       - name: Download coverage artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
 
       - name: Combine coverage files
-        run: coverage combine coverage*.xml
+        run: coverage combine coverage*/.coverage*
 
       - name: Generate XML report
         run: coverage xml --omit="*/test*"
