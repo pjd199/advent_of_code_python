@@ -33,23 +33,19 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - uses: actions/cache@v3
-        name: Load dependancy cache
-        id: requirements-dev-cache
+      - uses: actions/cache@v4
+        name: Load package cache
+        id: package-cache
         with:
           path: ${{ env.pythonLocation }}
-          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: pyproject.toml-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('pyproject.toml') }}
 
-      - name: Install dependancies
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install -r requirements_dev.txt
+      - name: Install package
+        if: steps.package-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .[dev]
 
-      - name: Install editable package
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install --editable .
-
-      - uses: actions/cache@v3
-        name: Load dependancy cache
+      - uses: actions/cache@v4
+        name: Load pre-commit cache
         with:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('.pre-commit-config.yaml') }}
@@ -74,20 +70,16 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - uses: actions/cache@v3
-        name: Load dependancy cache
-        id: requirements-dev-cache
+      - uses: actions/cache@v4
+        name: Load package cache
+        id: package-cache
         with:
           path: ${{ env.pythonLocation }}
-          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: pyproject.toml-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('pyproject.toml') }}
 
-      - name: Install dependancies
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install -r requirements_dev.txt
-
-      - name: Install editable package
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install --editable .
+      - name: Install package
+        if: steps.package-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .[dev]
 
       - name: Run pytest
         run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
@@ -115,7 +107,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
           cache: "pip"
 
-      - name: Install dependancies
+      - name: Install coverage
         run: pip install coverage
 
       - name: Download coverage artifacts
@@ -212,18 +204,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
 
-      - uses: actions/cache@v3
-        name: Load dependancy cache
-        id: requirements-dev-cache
+      - uses: actions/cache@v4
+        name: Load package cache
+        id: package-cache
         with:
           path: ${{ env.pythonLocation }}
-          key: requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: pyproject.toml-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('pyproject.toml') }}
 
-      - name: Install dependancies
-        run: pip install -r requirements_dev.txt
-
-      - name: Install editable package
-        run: pip install --editable .
+      - name: Install  package
+        if: steps.package-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .[dev]
 
       - name: Run pytest on main lambda function
         if: github.ref == 'refs/heads/main'
