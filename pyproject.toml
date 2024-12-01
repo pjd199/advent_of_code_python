@@ -73,6 +73,9 @@ include = ["advent_of_code*"]
 addopts = ["--import-mode=importlib"]
 
 [tool.ruff]
+src = ["advent_of_code", "tests"]
+
+[tool.ruff.lint]
 select = [
     "E",   # pycodestyle error
     "F",   # pyflakes
@@ -114,7 +117,6 @@ ignore = [
     "ANN101", # Missing type annotation for `self` in method
 ]
 fixable = ["ALL"]
-src = ["advent_of_code", "tests"]
 
 [tool.ruff.per-file-ignores]
 "tests/*" = [
@@ -134,7 +136,7 @@ src = ["advent_of_code", "tests"]
     "T201", # print found
 ]
 
-[tool.ruff.pydocstyle]
+[tool.ruff.lint.pydocstyle]
 convention = "google"
 
 [tool.pydoclint]
