@@ -54,7 +54,7 @@ class Solver(SolverInterface):
         """
         rotation = [1, 0, -1, -2][direction]
         return np.rot90(
-            np.row_stack(
+            np.vstack(
                 [
                     np.concatenate(
                         [
