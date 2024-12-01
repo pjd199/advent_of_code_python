@@ -1513,5 +1513,14 @@
             "part_one": "521341",
             "part_two": "252782"
         }
+    },
+    "2024": {
+        "1": {
+            "title": "Historian Hysteria",
+            "year": 2024,
+            "day": 1,
+            "part_one": "1222801",
+            "part_two": "22545250"
+        }
     }
 }

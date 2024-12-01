@@ -3651,5 +3651,24 @@
                 "part_two": 10
             }
         }
+    },
+    "2024": {
+        "1": {
+            "year": 2024,
+            "day": 1,
+            "title": "Historian Hysteria",
+            "excerpt": "The Chief Historian is always present for the big Christmas sleigh launch, but nobody has seen him in months! Last anyone heard, he was visiting locations that are historically significant to the North Pole; a group of Senior Historians has asked you to accompany them as they check the places they think he was most likely to visit.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 0,
+                "part_two": 13
+            },
+            "completion_date": "2024-12-01T15:55:42+0000Z"
+        }
     }
 }
