@@ -5,7 +5,7 @@ from dataclasses import fields
 from enum import Enum
 from re import Match, escape, fullmatch, search, split
 from sys import maxsize
-from typing import TypeVar
+from typing import Any, TypeVar, cast
 
 T = TypeVar("T")
 
@@ -162,7 +162,11 @@ def dataclass_processor(
     """
     fields_dict = {f.name: f for f in fields(cls) if f.init}  # type: ignore
     return lambda m: cls(
-        **{k: v for k, v in m.groupdict().items() if k in fields_dict and v is not None}
+        **{
+            k: cast(Any, fields_dict[k]).type(v)
+            for k, v in m.groupdict().items()
+            if k in fields_dict and v is not None
+        }
     )
 
 
