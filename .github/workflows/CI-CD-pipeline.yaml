@@ -84,9 +84,6 @@ jobs:
       - name: Run pytest
         run: pytest ./tests/unit ./tests/integration --cov --splits 10 --group ${{matrix.group }} -n auto --suppress-no-test-exit-code --splitting-algorithm=least_duration
 
-      - name: directory list
-        run: ls -la
-
       - name: Uploading coverage file artifact
         uses: actions/upload-artifact@v4
         with:
@@ -212,7 +209,7 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: pyproject.toml-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('pyproject.toml') }}
 
-      - name: Install  package
+      - name: Install package
         if: steps.package-cache.outputs.cache-hit != 'true'
         run: pip install --editable .[dev]
 
