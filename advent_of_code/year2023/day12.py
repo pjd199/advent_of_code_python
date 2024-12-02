@@ -5,6 +5,7 @@ Hot Springs
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/12
 """
+
 from functools import cache
 from pathlib import Path
 from sys import path

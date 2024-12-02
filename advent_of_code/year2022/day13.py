@@ -5,6 +5,7 @@ Distress Signal
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/13
 """
+
 from functools import cmp_to_key
 from itertools import chain
 from json import loads

@@ -1,5 +1,5 @@
 """Parser utilities for the puzzle input."""
-from builtins import type
+
 from collections.abc import Callable
 from dataclasses import fields
 from enum import Enum
@@ -162,11 +162,7 @@ def dataclass_processor(
     """
     fields_dict = {f.name: f for f in fields(cls) if f.init}  # type: ignore
     return lambda m: cls(
-        **{
-            k: fields_dict[k].type(v)
-            for k, v in m.groupdict().items()
-            if k in fields_dict and v is not None
-        }
+        **{k: v for k, v in m.groupdict().items() if k in fields_dict and v is not None}
     )
 
 
@@ -179,7 +175,7 @@ def enum_processor(
         enum (type[T]): the enum to initialise
 
     Raises:
-        ValueError: if T is not a subclass of Enum
+        TypeError: if T is not a subclass of Enum
 
     Returns:
         Callable[[Match[str]], T]: the match processor
@@ -218,7 +214,8 @@ def _validate_input_and_header(
         header (tuple[str, ...], optional): header to validate. Default ()
 
     Raises:
-        ParseError: raised on invalid puzzle_input
+        HeaderError: raised on invalid puzzle_input
+        LengthError: raised on invalid puzzle_input
 
     Returns:
         int: the start line of the data, after the header
@@ -255,7 +252,7 @@ def parse_lines(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseError: if the puzzle_input has the wrong length
+        NoMatchFoundError: raised if pattern not found
 
     Returns:
         list[T]: the parsed output
@@ -279,7 +276,7 @@ def parse_lines(
 def parse_single_line(
     puzzle_input: list[str],
     pattern: str,
-    match_processor: (Callable[[Match[str]], T]),
+    match_processor: Callable[[Match[str]], T],
 ) -> T:
     """Load lines from the parsed patterns.
 
@@ -320,7 +317,8 @@ def parse_tokens(
         header (tuple[str, ...]): header to validate. Defaults to ().
 
     Raises:
-        ParseError: if the input has an invalid pattern and delimiter combination
+        MissingDelimiterError: raised is the delimeter cannot be found
+        NoMatchFoundError: raised if no matching pattern
 
     Returns:
         list[list[T]]: the parsed output
@@ -403,7 +401,7 @@ def parse_grid(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseError: if the puzzle_input has the wrong length
+        NoMatchFoundError: if the pattern cannont be found in the input
 
     Returns:
         dict[tuple[int, int], T]: the parsed output
@@ -442,7 +440,7 @@ def split_sections(
         header (tuple[str, ...]): header to validate. Default ()
 
     Raises:
-        ParseError: if the puzzle_input has incorrect length or number of sections
+        SectionError: if the puzzle_input has incorrect length or number of sections
 
     Returns:
         list[list[str]]: the parsed output

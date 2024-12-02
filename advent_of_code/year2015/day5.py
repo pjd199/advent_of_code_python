@@ -5,6 +5,7 @@ Doesn't He Have Intern-Elves For This?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/5
 """
+
 from itertools import pairwise
 from pathlib import Path
 from sys import path

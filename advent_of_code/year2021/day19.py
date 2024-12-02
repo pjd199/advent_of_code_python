@@ -5,6 +5,7 @@ Beacon Scanner
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/19
 """
+
 from collections.abc import Iterator
 from itertools import permutations, product
 from pathlib import Path

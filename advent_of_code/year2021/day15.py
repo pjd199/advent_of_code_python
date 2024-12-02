@@ -5,6 +5,7 @@ Chiton
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/15
 """
+
 from copy import deepcopy
 from heapq import heapify, heappop, heappush
 from pathlib import Path

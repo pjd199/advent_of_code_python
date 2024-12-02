@@ -5,6 +5,7 @@ Probably a Fire Hazard
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/6
 """
+
 from dataclasses import dataclass
 from enum import Enum, unique
 from pathlib import Path

@@ -5,6 +5,7 @@ Bathroom Security
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from enum import Enum, unique
 from pathlib import Path
 from sys import path

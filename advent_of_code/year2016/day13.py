@@ -4,6 +4,7 @@ A Maze of Twisty Little Cubicles
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/13
 """
+
 from collections import deque
 from collections.abc import Callable
 from pathlib import Path

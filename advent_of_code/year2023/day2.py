@@ -5,6 +5,7 @@ Cube Conundrum
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/2
 """
+
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path

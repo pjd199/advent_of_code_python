@@ -5,6 +5,7 @@ Binary Diagnostic
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/3
 """
+
 from collections import Counter
 from operator import itemgetter
 from pathlib import Path

@@ -5,6 +5,7 @@ Chocolate Charts
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/14
 """
+
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path

@@ -5,6 +5,7 @@ The Tyranny of the Rocket Equation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/1
 """
+
 from pathlib import Path
 from sys import path
 

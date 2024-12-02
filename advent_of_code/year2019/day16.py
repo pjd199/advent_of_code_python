@@ -5,6 +5,7 @@ Flawed Frequency Transmission
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/16
 """
+
 from itertools import accumulate, cycle, islice
 from pathlib import Path
 from sys import path

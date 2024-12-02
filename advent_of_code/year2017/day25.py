@@ -5,6 +5,7 @@ The Halting Problem
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/25
 """
+
 from collections import defaultdict
 from dataclasses import dataclass, field
 from pathlib import Path

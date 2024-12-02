@@ -5,6 +5,7 @@ Dueling Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/15
 """
+
 from collections.abc import Iterator
 from pathlib import Path
 from sys import path

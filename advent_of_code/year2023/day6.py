@@ -5,6 +5,7 @@ Wait For It
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/6
 """
+
 from math import prod, sqrt
 from pathlib import Path
 from sys import path

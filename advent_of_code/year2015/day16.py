@@ -5,6 +5,7 @@ Aunt Sue
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/16
 """
+
 from pathlib import Path
 from sys import path
 

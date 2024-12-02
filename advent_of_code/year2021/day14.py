@@ -5,6 +5,7 @@ Extended Polymerization
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/14
 """
+
 from collections import Counter
 from functools import lru_cache
 from pathlib import Path

@@ -5,6 +5,7 @@ Rock Paper Scissors
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/2
 """
+
 from enum import Enum, unique
 from pathlib import Path
 from sys import path

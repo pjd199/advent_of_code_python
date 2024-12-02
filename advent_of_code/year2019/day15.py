@@ -5,6 +5,7 @@ Oxygen System
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/15
 """
+
 from collections import deque
 from copy import deepcopy
 from enum import Enum, unique

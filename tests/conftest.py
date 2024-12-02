@@ -1,4 +1,5 @@
 """Fixtures shared accross the test suite."""
+
 from typing import Any
 
 import pytest
@@ -47,4 +48,4 @@ def check_json(
 
 
 # export check_json into the pytest namespace
-pytest.check_json = check_json
+pytest.check_json = check_json  # type: ignore

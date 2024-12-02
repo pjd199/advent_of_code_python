@@ -5,6 +5,7 @@ An Elephant Named Joseph
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/19
 """
+
 from pathlib import Path
 from sys import path
 

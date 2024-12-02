@@ -5,6 +5,7 @@ Beverage Bandits
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/15
 """
+
 from collections import deque
 from copy import deepcopy
 from itertools import count

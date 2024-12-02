@@ -5,6 +5,7 @@ Springdroid Adventure
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/21
 """
+
 from pathlib import Path
 from sys import path
 

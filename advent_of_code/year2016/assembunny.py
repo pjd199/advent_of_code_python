@@ -1,4 +1,5 @@
 """assembunny definitions and functions required for days 12, 23 & 25."""
+
 from collections.abc import Iterator
 from copy import deepcopy
 from dataclasses import dataclass

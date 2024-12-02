@@ -1,4 +1,5 @@
 """Unit tests for advent_of_code.utils.solver_status."""
+
 from datetime import date
 
 from advent_of_code.utils.solver_status import (

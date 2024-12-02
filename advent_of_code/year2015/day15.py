@@ -5,6 +5,7 @@ Science for Hungry People
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/15
 """
+
 from itertools import combinations_with_replacement, groupby
 from math import prod
 from pathlib import Path

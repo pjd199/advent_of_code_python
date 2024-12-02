@@ -5,6 +5,7 @@ Tractor Beam
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/19
 """
+
 from collections.abc import Iterator
 from itertools import count
 from pathlib import Path

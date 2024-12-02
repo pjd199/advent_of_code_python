@@ -5,6 +5,7 @@ Sonar Sweep
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/1
 """
+
 from itertools import pairwise
 from pathlib import Path
 from sys import path

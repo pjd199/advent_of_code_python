@@ -5,6 +5,7 @@ Digital Plumber
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/12
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

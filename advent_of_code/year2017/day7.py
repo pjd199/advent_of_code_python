@@ -5,6 +5,7 @@ Recursive Circus
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/7
 """
+
 from dataclasses import dataclass, field
 from itertools import pairwise
 from pathlib import Path

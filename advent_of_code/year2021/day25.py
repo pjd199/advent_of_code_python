@@ -5,6 +5,7 @@ Sea Cucumber
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/25
 """
+
 from copy import deepcopy
 from pathlib import Path
 from sys import path

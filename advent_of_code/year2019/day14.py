@@ -5,6 +5,7 @@ Space Stoichiometry
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/14
 """
+
 from collections import defaultdict
 from math import ceil
 from pathlib import Path

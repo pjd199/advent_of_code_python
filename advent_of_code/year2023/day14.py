@@ -5,6 +5,7 @@ Parabolic Reflector Dish
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/14
 """
+
 from pathlib import Path
 from sys import path
 

@@ -5,6 +5,7 @@ No Space Left On Device
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/7
 """
+
 from dataclasses import dataclass, field
 from itertools import chain
 from pathlib import Path

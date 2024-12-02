@@ -5,6 +5,7 @@ Lobby Layout
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/24
 """
+
 from collections import Counter
 from collections.abc import Callable
 from enum import Enum, unique

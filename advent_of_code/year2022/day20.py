@@ -5,6 +5,7 @@ Grove Positioning System
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/20
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

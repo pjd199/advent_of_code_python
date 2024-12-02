@@ -5,6 +5,7 @@ Not Enough Minerals
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/19
 """
+
 from dataclasses import dataclass
 from math import ceil, prod
 from pathlib import Path

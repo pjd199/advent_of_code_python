@@ -5,6 +5,7 @@ Knights of the Dinner Table
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/13
 """
+
 from itertools import chain, pairwise, permutations
 from pathlib import Path
 from sys import path

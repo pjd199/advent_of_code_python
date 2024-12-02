@@ -5,6 +5,7 @@ Mirage Maintenance
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/9
 """
+
 from enum import Enum, unique
 from itertools import pairwise
 from pathlib import Path

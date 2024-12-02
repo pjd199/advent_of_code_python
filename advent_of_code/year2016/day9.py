@@ -5,8 +5,9 @@ Explosives in Cyberspace
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from pathlib import Path
-from re import compile
+from re import match
 from sys import path
 
 if __name__ == "__main__":  # pragma: no cover
@@ -65,9 +66,8 @@ class Solver(SolverInterface):
         """
         length = 0
         i = 0
-        pattern = compile(r"\((?P<len>\d+)x(?P<repeat>\d+)\)")
         while i < len(data):
-            if m := pattern.match(data[i:]):
+            if m := match(r"\((?P<len>\d+)x(?P<repeat>\d+)\)", data[i:]):
                 if version == 1:
                     length += int(m["len"]) * int(m["repeat"])
                 else:

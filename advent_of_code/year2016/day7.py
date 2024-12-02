@@ -5,8 +5,9 @@ Internet Protocol Version 7
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from pathlib import Path
-from re import compile
+from re import findall
 from sys import path
 
 if __name__ == "__main__":  # pragma: no cover
@@ -38,20 +39,18 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        supernet_pattern = compile(r"(\w+)(?:\[|$)")
-        hypernet_pattern = compile(r"\[(\w+)\]")
         return len(
             [
                 line
                 for line in self.input
                 if any(
                     a1 == a2 and b1 == b2 and a1 != b1
-                    for token in supernet_pattern.findall(line)
+                    for token in findall(r"(\w+)(?:\[|$)", line)
                     for a1, b1, b2, a2 in zip(token, token[1:], token[2:], token[3:])
                 )
                 and not any(
                     a1 == a2 and b1 == b2 and a1 != b1
-                    for token in hypernet_pattern.findall(line)
+                    for token in findall(r"\[(\w+)\]", line)
                     for a1, b1, b2, a2 in zip(token, token[1:], token[2:], token[3:])
                 )
             ]
@@ -63,8 +62,6 @@ class Solver(SolverInterface):
         Returns:
             int: the answer
         """
-        supernet_pattern = compile(r"(\w+)(?:\[|$)")
-        hypernet_pattern = compile(r"\[(\w+)\]")
         return len(
             [
                 line
@@ -72,13 +69,13 @@ class Solver(SolverInterface):
                 if (
                     {
                         f"{a1}{b}"
-                        for token in supernet_pattern.findall(line)
+                        for token in findall(r"(\w+)(?:\[|$)", line)
                         for a1, b, a2 in zip(token, token[1:], token[2:])
                         if a1 == a2 and a1 != b
                     }
                     & {
                         f"{a}{b2}"
-                        for token in hypernet_pattern.findall(line)
+                        for token in findall(r"\[(\w+)\]", line)
                         for b1, a, b2 in zip(token, token[1:], token[2:])
                         if b1 == b2 and a != b1
                     }

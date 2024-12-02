@@ -5,6 +5,7 @@ Two Steps Forward
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/17
 """
+
 from collections import deque
 from collections.abc import Callable
 from hashlib import md5

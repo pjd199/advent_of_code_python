@@ -5,6 +5,7 @@ Chronal Conversion
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/21
 """
+
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path

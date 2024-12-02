@@ -5,6 +5,7 @@ The Sum of Its Parts
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/7
 """
+
 from collections import defaultdict
 from itertools import chain
 from pathlib import Path

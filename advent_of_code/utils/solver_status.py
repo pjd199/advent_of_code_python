@@ -1,4 +1,5 @@
 """Functions based on the implementation status of solvers."""
+
 from collections.abc import Iterator
 from datetime import date, datetime, timezone
 from importlib.util import find_spec

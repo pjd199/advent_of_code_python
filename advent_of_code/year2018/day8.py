@@ -5,6 +5,7 @@ Memory Maneuver
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/8
 """
+
 from collections.abc import Iterator
 from dataclasses import dataclass, field
 from pathlib import Path

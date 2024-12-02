@@ -5,6 +5,7 @@ Radioisotope Thermoelectric Generators
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/11
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

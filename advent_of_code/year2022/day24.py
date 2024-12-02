@@ -5,6 +5,7 @@ Blizzard Basin
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/24
 """
+
 from collections import deque
 from collections.abc import Iterator
 from itertools import pairwise

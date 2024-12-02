@@ -5,6 +5,7 @@ Monkey in the Middle
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/11
 """
+
 from collections.abc import Callable
 from copy import deepcopy
 from dataclasses import dataclass, field

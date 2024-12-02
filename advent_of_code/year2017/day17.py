@@ -5,6 +5,7 @@ Spinlock
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/17
 """
+
 from pathlib import Path
 from sys import path
 

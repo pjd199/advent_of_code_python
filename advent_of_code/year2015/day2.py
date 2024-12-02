@@ -5,6 +5,7 @@ I Was Told There Would Be No Math
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/2
 """
+
 from pathlib import Path
 from sys import path
 

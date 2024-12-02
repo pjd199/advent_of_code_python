@@ -5,6 +5,7 @@ Handy Haversacks
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/7
 """
+
 from functools import lru_cache
 from pathlib import Path
 from sys import path
@@ -35,17 +36,19 @@ class Solver(SolverInterface):
             puzzle_input (list[str]): The lines of the input file
         """
         self.input = {
-            k: {
-                k: v
-                for v, k in parse_tokens_single_line(
-                    [v],
-                    (r"(\d+) (\w+ \w+) bags?", str_tuple_processor),
-                    delimiter=", ",
-                    require_delimiter=False,
-                )
-            }
-            if v != "no other bags"
-            else {}
+            k: (
+                {
+                    k: v
+                    for v, k in parse_tokens_single_line(
+                        [v],
+                        (r"(\d+) (\w+ \w+) bags?", str_tuple_processor),
+                        delimiter=", ",
+                        require_delimiter=False,
+                    )
+                }
+                if v != "no other bags"
+                else {}
+            )
             for k, v in parse_lines(
                 puzzle_input,
                 (r"(\w+ \w+) bags contain ([\d\w, ]+).", str_tuple_processor),

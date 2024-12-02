@@ -5,6 +5,7 @@ I Heard You Like Registers
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/8
 """
+
 from collections import defaultdict
 from collections.abc import Callable
 from dataclasses import dataclass

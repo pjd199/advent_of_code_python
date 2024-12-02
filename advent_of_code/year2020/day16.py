@@ -5,6 +5,7 @@ Ticket Translation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/16
 """
+
 from dataclasses import dataclass, field
 from itertools import chain
 from math import prod

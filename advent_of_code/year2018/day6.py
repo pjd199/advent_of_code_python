@@ -5,6 +5,7 @@ Chronal Coordinates
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/6
 """
+
 from collections import Counter
 from pathlib import Path
 from sys import path

@@ -5,6 +5,7 @@ No Such Thing as Too Much
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/17
 """
+
 from itertools import combinations, groupby
 from pathlib import Path
 from sys import path

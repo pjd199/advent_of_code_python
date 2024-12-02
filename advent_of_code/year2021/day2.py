@@ -5,6 +5,7 @@ Dive!
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/2
 """
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique

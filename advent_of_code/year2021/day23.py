@@ -5,6 +5,7 @@ Amphipod
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/23
 """
+
 from collections.abc import Iterator
 from heapq import heapify, heappop, heappush
 from pathlib import Path

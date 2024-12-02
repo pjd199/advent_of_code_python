@@ -5,6 +5,7 @@ Signals and Noise
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from collections import defaultdict
 from pathlib import Path
 from sys import path

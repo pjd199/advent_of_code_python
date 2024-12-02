@@ -5,6 +5,7 @@ Adapter Array
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/10
 """
+
 from collections import Counter
 from functools import lru_cache
 from itertools import pairwise

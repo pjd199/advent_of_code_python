@@ -5,6 +5,7 @@ The Ideal Stocking Stuffer
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/4
 """
+
 from hashlib import md5
 from pathlib import Path
 from sys import path

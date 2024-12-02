@@ -5,6 +5,7 @@ Syntax Scoring
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/10
 """
+
 from collections import Counter, deque
 from functools import reduce
 from pathlib import Path

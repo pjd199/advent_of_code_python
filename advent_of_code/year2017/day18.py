@@ -5,6 +5,7 @@ Duet
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/18
 """
+
 from collections import deque
 from dataclasses import dataclass
 from enum import Enum, unique

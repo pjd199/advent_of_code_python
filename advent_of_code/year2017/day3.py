@@ -5,6 +5,7 @@ Spiral Memory
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/3
 """
+
 from itertools import count
 from pathlib import Path
 from sys import path

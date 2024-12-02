@@ -5,6 +5,7 @@ Cryostasis
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/25
 """
+
 from collections import deque
 from copy import deepcopy
 from itertools import combinations

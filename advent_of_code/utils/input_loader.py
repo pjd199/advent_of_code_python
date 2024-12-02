@@ -1,4 +1,5 @@
 """Load puzzle input form a file and strip the whitespace."""
+
 from pathlib import Path
 
 

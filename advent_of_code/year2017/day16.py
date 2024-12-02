@@ -5,6 +5,7 @@ Permutation Promenade
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/16
 """
+
 from abc import abstractmethod
 from dataclasses import dataclass
 from pathlib import Path

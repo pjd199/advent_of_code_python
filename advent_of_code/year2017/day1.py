@@ -5,6 +5,7 @@ Inverse Captcha
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/1
 """
+
 from pathlib import Path
 from sys import path
 

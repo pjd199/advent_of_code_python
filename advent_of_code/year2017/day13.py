@@ -5,6 +5,7 @@ Packet Scanners
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/13
 """
+
 from itertools import count
 from pathlib import Path
 from sys import path

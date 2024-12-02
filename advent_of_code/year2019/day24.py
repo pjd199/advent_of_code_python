@@ -5,6 +5,7 @@ Planet of Discord
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/24
 """
+
 from collections import Counter
 from itertools import chain, product
 from pathlib import Path

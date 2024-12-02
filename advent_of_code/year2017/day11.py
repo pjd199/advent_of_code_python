@@ -5,6 +5,7 @@ Hex Ed
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/11
 """
+
 from collections.abc import Callable
 from enum import Enum, unique
 from pathlib import Path

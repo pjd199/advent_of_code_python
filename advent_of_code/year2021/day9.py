@@ -5,6 +5,7 @@ Smoke Basin
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/9
 """
+
 from math import prod
 from pathlib import Path
 from sys import path

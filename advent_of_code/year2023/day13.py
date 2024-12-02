@@ -5,6 +5,7 @@ Point of Incidence
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/13
 """
+
 from pathlib import Path
 from sys import path
 

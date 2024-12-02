@@ -5,6 +5,7 @@ No Matter How You Slice It
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/3
 """
+
 from collections import Counter
 from dataclasses import dataclass
 from pathlib import Path

@@ -1,4 +1,5 @@
 """A simple thread for displaying a message and a stopwatch."""
+
 from threading import Event, Thread
 from time import perf_counter_ns
 from types import TracebackType

@@ -5,6 +5,7 @@ Repose Record
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/4
 """
+
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from enum import Enum, unique

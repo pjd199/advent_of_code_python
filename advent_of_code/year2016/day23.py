@@ -5,6 +5,7 @@ Safe Cracking
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/23
 """
+
 from pathlib import Path
 from sys import path
 

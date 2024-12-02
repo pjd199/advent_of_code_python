@@ -5,6 +5,7 @@ Pyroclastic Flow
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/17
 """
+
 from collections.abc import Callable
 from pathlib import Path
 from sys import path

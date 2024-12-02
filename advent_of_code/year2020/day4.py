@@ -5,6 +5,7 @@ Passport Processing
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/4
 """
+
 from itertools import chain
 from pathlib import Path
 from re import fullmatch

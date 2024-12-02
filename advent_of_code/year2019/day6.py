@@ -5,6 +5,7 @@ Universal Orbit Map
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/6
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

@@ -5,6 +5,7 @@ Camp Cleanup
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/4
 """
+
 from pathlib import Path
 from sys import path
 

@@ -5,6 +5,7 @@ Immune System Simulator 20XX
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/24
 """
+
 from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import Enum, unique

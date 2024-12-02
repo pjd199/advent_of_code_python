@@ -5,6 +5,7 @@ Rucksack Reorganization
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/3
 """
+
 from pathlib import Path
 from sys import path
 

@@ -5,6 +5,7 @@ Seating System
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/11
 """
+
 from itertools import count
 from pathlib import Path
 from sys import path

@@ -5,6 +5,7 @@ Unstable Diffusion
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/23
 """
+
 from collections import Counter, deque
 from collections.abc import Callable
 from pathlib import Path

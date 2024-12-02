@@ -5,6 +5,7 @@ Firewall Rules
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/20
 """
+
 from dataclasses import astuple, dataclass
 from pathlib import Path
 from sys import path

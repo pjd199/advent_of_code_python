@@ -5,6 +5,7 @@ Timing is Everything
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/15
 """
+
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path

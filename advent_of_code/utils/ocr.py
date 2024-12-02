@@ -3,6 +3,7 @@
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 
 """
+
 from collections.abc import Sequence
 
 import numpy as np
@@ -73,8 +74,7 @@ def ocr_sequence(
         empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
     Raises:
-        ValueError: Raised if the wrong number of rows are found
-        ValueError: Raised if the columns are not all equal length
+        OcrError: Raised if the wrong number of rows or different column lengths
 
     Returns:
         str: the result

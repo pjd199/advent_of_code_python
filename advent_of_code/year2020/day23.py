@@ -5,6 +5,7 @@ Crab Cups
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/23
 """
+
 from pathlib import Path
 from sys import path
 

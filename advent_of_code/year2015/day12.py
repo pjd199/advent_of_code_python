@@ -5,6 +5,7 @@ JSAbacusFramework.io
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/12
 """
+
 from json import loads
 from pathlib import Path
 from sys import path

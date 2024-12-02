@@ -5,6 +5,7 @@ Camel Cards
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/7
 """
+
 from collections import Counter
 from pathlib import Path
 from sys import path

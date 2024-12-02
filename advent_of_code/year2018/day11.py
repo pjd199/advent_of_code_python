@@ -5,6 +5,7 @@ Chronal Charge
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/11
 """
+
 from pathlib import Path
 from sys import path
 

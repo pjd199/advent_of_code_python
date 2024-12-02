@@ -5,6 +5,7 @@ Let It Snow
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/25
 """
+
 from pathlib import Path
 from sys import path
 from typing import NoReturn

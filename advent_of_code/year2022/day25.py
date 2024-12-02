@@ -5,6 +5,7 @@ Full of Hot Air
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/25
 """
+
 from itertools import count
 from pathlib import Path
 from sys import path

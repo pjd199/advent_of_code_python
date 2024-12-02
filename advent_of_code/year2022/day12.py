@@ -5,6 +5,7 @@ Hill Climbing Algorithm
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/12
 """
+
 from collections import deque
 from copy import deepcopy
 from pathlib import Path

@@ -5,6 +5,7 @@ Pipe Maze
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/10
 """
+
 from collections import deque
 from collections.abc import Iterator
 from enum import Enum, auto, unique

@@ -5,6 +5,7 @@ High-Entropy Passphrases
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/4
 """
+
 from pathlib import Path
 from sys import path
 

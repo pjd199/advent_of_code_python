@@ -5,6 +5,7 @@ Space Image Format
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/8
 """
+
 from pathlib import Path
 from sys import path
 

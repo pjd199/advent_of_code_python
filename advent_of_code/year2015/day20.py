@@ -5,6 +5,7 @@ Infinite Elves and Infinite Houses
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/20
 """
+
 from pathlib import Path
 from sys import path
 

@@ -5,6 +5,7 @@ Reindeer Olympics
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/14
 """
+
 from dataclasses import dataclass
 from itertools import cycle
 from pathlib import Path

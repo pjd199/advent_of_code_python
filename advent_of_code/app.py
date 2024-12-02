@@ -1,4 +1,5 @@
 """Flask Application for Advent of Code Solver RESTful API."""
+
 from datetime import datetime, timezone
 from functools import cache
 from importlib import import_module
@@ -211,7 +212,7 @@ def handle_calendars_path(
 @app.route("/puzzles/<int:year_filter>/<int:day_filter>/", methods=["GET"])
 @cross_origin()
 def handle_puzzles_path(
-    year_filter: (int | None) = None, day_filter: (int | None) = None
+    year_filter: int | None = None, day_filter: int | None = None
 ) -> Response:
     """Handle the root path - /puzzles .
 

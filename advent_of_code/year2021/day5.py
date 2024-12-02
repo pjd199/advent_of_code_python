@@ -5,6 +5,7 @@ Hydrothermal Venture
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/5
 """
+
 from collections import Counter
 from pathlib import Path
 from sys import path

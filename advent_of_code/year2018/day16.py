@@ -5,6 +5,7 @@ Chronal Classification
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/16
 """
+
 from collections import defaultdict
 from collections.abc import Callable
 from dataclasses import dataclass

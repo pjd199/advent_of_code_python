@@ -5,6 +5,7 @@ Tuning Trouble
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/6
 """
+
 from pathlib import Path
 from sys import path
 

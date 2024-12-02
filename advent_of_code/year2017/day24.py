@@ -5,6 +5,7 @@ Electromagnetic Moat
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/24
 """
+
 from collections import defaultdict
 from pathlib import Path
 from sys import path

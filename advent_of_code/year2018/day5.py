@@ -5,6 +5,7 @@ Alchemical Reduction
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/5
 """
+
 from pathlib import Path
 from string import ascii_lowercase, ascii_uppercase
 from sys import maxsize, path

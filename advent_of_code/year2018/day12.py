@@ -5,6 +5,7 @@ Subterranean Sustainability
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/12
 """
+
 from pathlib import Path
 from sys import path
 

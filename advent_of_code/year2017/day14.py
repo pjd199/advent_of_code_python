@@ -5,6 +5,7 @@ Disk Defragmentation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/14
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

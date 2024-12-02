@@ -1,4 +1,5 @@
 """The top level interface for all the daily Solver classes."""
+
 from abc import ABC, abstractmethod
 
 

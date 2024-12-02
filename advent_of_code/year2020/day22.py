@@ -5,6 +5,7 @@ Crab Combat
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/22
 """
+
 from collections import deque
 from itertools import islice
 from pathlib import Path

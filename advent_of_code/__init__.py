@@ -1,4 +1,5 @@
 """Nothing to initialise for this package."""
+
 from importlib.metadata import PackageNotFoundError, version
 
 try:

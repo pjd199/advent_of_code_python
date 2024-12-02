@@ -5,6 +5,7 @@ Handheld Halting
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/8
 """
+
 from copy import deepcopy
 from pathlib import Path
 from sys import path

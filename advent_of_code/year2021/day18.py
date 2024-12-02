@@ -5,6 +5,7 @@ Snailfish
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/18
 """
+
 from itertools import permutations
 from pathlib import Path
 from sys import path

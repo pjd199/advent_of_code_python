@@ -5,6 +5,7 @@ Cathode-Ray Tube
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/10
 """
+
 from collections.abc import Iterator
 from dataclasses import dataclass
 from enum import Enum, unique
@@ -83,10 +84,12 @@ class Solver(SolverInterface):
         return ocr_sequence(
             [
                 [
-                    "#"
-                    if self.cycles[(y * 40) + x] - 1 <= x
-                    and x <= self.cycles[(y * 40) + x] + 1
-                    else "."
+                    (
+                        "#"
+                        if self.cycles[(y * 40) + x] - 1 <= x
+                        and x <= self.cycles[(y * 40) + x] + 1
+                        else "."
+                    )
                     for x in range(40)
                 ]
                 for y in range(6)

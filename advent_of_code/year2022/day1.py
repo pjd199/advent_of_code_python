@@ -5,6 +5,7 @@ Calorie Counting
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/1
 """
+
 from pathlib import Path
 from sys import path
 

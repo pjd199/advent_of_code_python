@@ -1,4 +1,5 @@
 """Run the Flask app from the commandline."""
+
 from json import JSONDecodeError, dumps
 from os import environ
 from pathlib import Path

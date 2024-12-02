@@ -5,6 +5,7 @@ Monkey Map
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/22
 """
+
 from collections import deque
 from math import sqrt
 from pathlib import Path

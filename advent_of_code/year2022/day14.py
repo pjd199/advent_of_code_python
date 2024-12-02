@@ -5,6 +5,7 @@ Regolith Reservoir
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/14
 """
+
 from itertools import pairwise
 from pathlib import Path
 from sys import path

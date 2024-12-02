@@ -5,6 +5,7 @@ A Maze of Twisty Trampolines, All Alike
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/5
 """
+
 from copy import deepcopy
 from pathlib import Path
 from sys import path

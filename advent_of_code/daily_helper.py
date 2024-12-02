@@ -1,4 +1,5 @@
 """A helper script for downloading puzzle webpages and puzzle input."""
+
 from argparse import ArgumentParser
 from datetime import date, datetime, timezone
 from importlib import import_module

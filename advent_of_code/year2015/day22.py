@@ -5,6 +5,7 @@ Wizard Simulator 20XX
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/22
 """
+
 from enum import Enum, auto, unique
 from pathlib import Path
 from sys import maxsize, path

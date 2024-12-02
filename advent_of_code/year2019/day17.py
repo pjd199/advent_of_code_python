@@ -5,6 +5,7 @@ Set and Forget
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/17
 """
+
 from collections import deque
 from collections.abc import Callable, Iterator
 from itertools import islice

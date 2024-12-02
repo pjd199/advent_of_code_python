@@ -5,6 +5,7 @@ Settlers of The North Pole
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/18
 """
+
 from copy import deepcopy
 from itertools import chain
 from pathlib import Path

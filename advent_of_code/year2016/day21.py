@@ -5,6 +5,7 @@ Scrambled Letters and Hash
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/21
 """
+
 from abc import abstractmethod
 from dataclasses import dataclass
 from enum import Enum, unique

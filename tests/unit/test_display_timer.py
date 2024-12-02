@@ -1,5 +1,6 @@
 """Unit test for advent_of_code.utils.display_timer."""
-from re import compile
+
+from re import finditer, fullmatch
 from time import sleep
 
 import pytest
@@ -26,14 +27,12 @@ def test_display_timer(
     captured = capfd.readouterr().out
 
     # check capture is as expected
-    pattern = compile(r"(\r.*\(\d+.\d\ds\))*")
-    assert pattern.fullmatch(captured)
+    assert fullmatch(r"(\r.*\(\d+.\d\ds\))*", captured)
 
     # check each line in the capture for ascending time in
     # increaments, with a tolerance of 1s
-    line_pattern = compile(rf"\r{message}\((?P<time>\d+.\d\d)s\)")
     total_time = 0.0
-    for m in line_pattern.finditer(captured):
+    for m in finditer(rf"\r{message}\((?P<time>\d+.\d\d)s\)", captured):
         assert m is not None
         time = float(m["time"])
         assert (time == 0.0) or (time > total_time)

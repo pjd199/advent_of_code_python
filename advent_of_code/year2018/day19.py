@@ -5,6 +5,7 @@ Go With The Flow
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/19
 """
+
 from collections.abc import Callable
 from copy import deepcopy
 from dataclasses import dataclass

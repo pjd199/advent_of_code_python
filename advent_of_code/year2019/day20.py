@@ -5,6 +5,7 @@ Donut Maze
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/20
 """
+
 from collections import deque
 from heapq import heapify, heappop, heappush
 from pathlib import Path

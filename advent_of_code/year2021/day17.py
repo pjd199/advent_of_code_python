@@ -5,6 +5,7 @@ Trick Shot
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/17
 """
+
 from pathlib import Path
 from sys import maxsize, path
 

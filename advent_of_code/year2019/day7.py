@@ -5,6 +5,7 @@ Amplification Circuit
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/7
 """
+
 from itertools import permutations
 from pathlib import Path
 from sys import path

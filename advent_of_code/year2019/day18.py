@@ -5,6 +5,7 @@ Many-Worlds Interpretation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/18
 """
+
 from collections import deque
 from heapq import heapify, heappop, heappush
 from itertools import chain

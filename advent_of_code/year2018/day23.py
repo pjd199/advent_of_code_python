@@ -5,6 +5,7 @@ Experimental Emergency Teleportation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/23
 """
+
 from math import ceil, log2
 from operator import itemgetter
 from pathlib import Path

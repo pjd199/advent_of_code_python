@@ -5,12 +5,13 @@ One-Time Pad
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/14
 """
+
 from collections import defaultdict
 from collections.abc import Iterator
 from hashlib import md5
 from itertools import count
 from pathlib import Path
-from re import compile
+from re import search
 from sys import path
 
 if __name__ == "__main__":  # pragma: no cover
@@ -81,8 +82,6 @@ class Solver(SolverInterface):
             int: the index after 64 successful 5* hashes
         """
         list_of_threes = defaultdict(list)
-        pattern_three = compile(r"(.)\1\1")
-        pattern_five = compile(r"(.)\1\1\1\1")
 
         found = 0
         result = -1
@@ -93,11 +92,11 @@ class Solver(SolverInterface):
             digest = next(iterator)
 
             # check for three repeated characters
-            if m := pattern_three.search(digest):
+            if m := search(r"(.)\1\1", digest):
                 list_of_threes[m[1]].append(i)
 
             # check for five repeated characters
-            if m := pattern_five.search(digest):
+            if m := search(r"(.)\1\1\1\1", digest):
                 threes = [x for x in list_of_threes[m[1]] if (i - 1000) < x < i]
                 for j in threes:
                     found += 1

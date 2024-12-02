@@ -1,4 +1,5 @@
 """Decorators for the SolverInterface."""
+
 from collections.abc import Callable
 from typing import TypeVar
 

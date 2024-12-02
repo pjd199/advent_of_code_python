@@ -5,6 +5,7 @@ Memory Reallocation
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/6
 """
+
 from copy import deepcopy
 from itertools import count
 from pathlib import Path

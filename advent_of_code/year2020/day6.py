@@ -5,6 +5,7 @@ Custom Customs
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/6
 """
+
 from functools import reduce
 from pathlib import Path
 from sys import path

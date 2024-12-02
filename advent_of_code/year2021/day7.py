@@ -5,6 +5,7 @@ The Treachery of Whales
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/7
 """
+
 from pathlib import Path
 from sys import path
 

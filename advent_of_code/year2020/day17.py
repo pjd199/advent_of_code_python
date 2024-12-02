@@ -5,6 +5,7 @@ Conway Cubes
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/17
 """
+
 from itertools import product
 from pathlib import Path
 from sys import path
@@ -92,7 +93,7 @@ class Solver(SolverInterface):
                     and (x, y, z, w) != (x1, y1, z1, w1)
                 )
                 # determine the status of the square in the next grid
-                if (x, y, z, w) in grid and grid[(x, y, z, w)]:
+                if grid.get((x, y, z, w)):
                     next_grid[(x, y, z, w)] = count == 2 or count == 3
                 else:
                     next_grid[(x, y, z, w)] = count == 3

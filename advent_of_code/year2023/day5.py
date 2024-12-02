@@ -5,6 +5,7 @@ If You Give A Seed A Fertilizer
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/5
 """
+
 from pathlib import Path
 from sys import path
 

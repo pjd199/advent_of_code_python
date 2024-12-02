@@ -5,6 +5,7 @@ Monitoring Station
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/10
 """
+
 from itertools import chain, groupby, zip_longest
 from math import atan2, pi
 from operator import itemgetter

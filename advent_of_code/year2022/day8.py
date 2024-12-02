@@ -5,6 +5,7 @@ Treetop Tree House
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/8
 """
+
 from itertools import takewhile
 from math import prod
 from pathlib import Path

@@ -5,6 +5,7 @@ Operation Order
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/18
 """
+
 from operator import add, mul
 from pathlib import Path
 from sys import path

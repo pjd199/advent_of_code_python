@@ -5,6 +5,7 @@ Secure Container
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/4
 """
+
 from pathlib import Path
 from re import finditer, search
 from sys import path

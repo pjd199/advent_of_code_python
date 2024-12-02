@@ -5,6 +5,7 @@ All in a Single Night
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/9
 """
+
 from itertools import permutations
 from pathlib import Path
 from sys import path

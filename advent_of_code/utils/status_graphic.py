@@ -1,4 +1,5 @@
 """Create and save the status graphic to track progress of Advent of Code."""
+
 from pathlib import Path
 from sys import path
 

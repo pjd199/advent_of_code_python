@@ -5,6 +5,7 @@ How About a Nice Game of Chess?
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from collections.abc import Iterator
 from hashlib import md5
 from pathlib import Path

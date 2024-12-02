@@ -5,6 +5,7 @@ Two-Factor Authentication
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from collections import defaultdict
 from dataclasses import dataclass
 from pathlib import Path

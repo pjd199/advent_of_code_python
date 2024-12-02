@@ -5,6 +5,7 @@ Particle Swarm
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/20
 """
+
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path

@@ -5,6 +5,7 @@ Trench Map
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/20
 """
+
 from pathlib import Path
 from sys import path
 

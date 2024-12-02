@@ -5,6 +5,7 @@ Air Duct Spelunking
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/24
 """
+
 from collections import deque
 from collections.abc import Callable
 from itertools import pairwise, permutations

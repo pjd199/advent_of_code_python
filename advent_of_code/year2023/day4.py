@@ -5,6 +5,7 @@ Scratchcards
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/4
 """
+
 from pathlib import Path
 from sys import path
 

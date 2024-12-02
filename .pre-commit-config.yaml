@@ -22,29 +22,10 @@ repos:
       - id: pydoclint
         args: [--config=pyproject.toml, -q]
 
-  - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.7.1
+  - repo: local
     hooks:
       - id: mypy
-        args: [--strict]
-        files: .*py$
-        additional_dependencies:
-          [
-            Flask==3.1,
-            Flask-Cors==5.0,
-            apig-wsgi==2.19,
-            numpy==2.1,
-            requests==2.32,
-            types-beautifulsoup4==4.12.0.20241020,
-            types-requests==2.32.0.20241016,
-            types-Pillow==10.2.0.20240822,
-            types-boto3===1.35.71,
-            types-Flask-Cors==5.0.0.20240902,
-            boto3==1.35.71,
-            freezegun==1.5,
-            pytest==8.3,
-            pyopenssl==24.3,
-            beautifulsoup4==4.12,
-            markdownify==0.14,
-            pillow==11.0.0,
-          ]
+        name: mypy
+        entry: mypy --strict
+        language: system
+        types: [python]

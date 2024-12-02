@@ -5,6 +5,7 @@ Supply Stacks
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/5
 """
+
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path

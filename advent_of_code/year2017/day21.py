@@ -5,6 +5,7 @@ Fractal Art
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/21
 """
+
 from itertools import chain
 from pathlib import Path
 from sys import path

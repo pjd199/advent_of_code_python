@@ -5,6 +5,7 @@ Boiling Boulders
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/18
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

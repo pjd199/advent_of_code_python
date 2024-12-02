@@ -1,9 +1,10 @@
 """Runs the unit tests for each day, using input from test_cases.json."""
+
 from importlib import import_module
 from importlib.util import find_spec
 from json import load
 from pathlib import Path
-from re import compile
+from re import fullmatch
 from secrets import choice, randbelow
 from string import printable
 from subprocess import run
@@ -181,17 +182,10 @@ def test_cli(year: int, day: int, expected: dict[str, int | str]) -> None:
     assert len(result.stderr) == 0
     lines = [x for x in result.stdout.splitlines() if x]
 
-    # define regex patterns
-    title_pattern = compile(
-        r"Solving '(?P<title>.*)' \[(?P<year>\d{4})-(?P<day>\d{1,2})\]"
-    )
-    timer_pattern = compile(r"Solving part (?P<part>one|two): \((?P<time>\d+.\d\d)s\)")
-    result_pattern = compile(
-        r"Solved part (?P<part>one|two): (?P<result>.+) in \d+.\d\ds"
-    )
-
     # match the title line
-    m = title_pattern.fullmatch(lines[0])
+    m = fullmatch(
+        r"Solving '(?P<title>.*)' \[(?P<year>\d{4})-(?P<day>\d{1,2})\]", lines[0]
+    )
     assert m is not None
     assert m["title"] == expected["title"]
     assert int(m["year"]) == expected["year"]
@@ -201,13 +195,17 @@ def test_cli(year: int, day: int, expected: dict[str, int | str]) -> None:
     total_time = 0.0
     part = "one"
     for line in lines[1:]:
-        if m := timer_pattern.fullmatch(line):
+        if m := fullmatch(
+            r"Solving part (?P<part>one|two): \((?P<time>\d+.\d\d)s\)", line
+        ):
             assert m["part"] == part
             time = float(m["time"])
             assert (time == 0.0) or (time > total_time)
             total_time = time
         else:
-            m = result_pattern.fullmatch(line)
+            m = fullmatch(
+                r"Solved part (?P<part>one|two): (?P<result>.+) in \d+.\d\ds", line
+            )
             assert m is not None
             assert m["part"] == part
             assert m["result"] == expected[f"part_{part}"]

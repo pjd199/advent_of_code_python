@@ -5,7 +5,7 @@ Docking Data
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/14
 """
-from math import pow
+
 from pathlib import Path
 from sys import path
 

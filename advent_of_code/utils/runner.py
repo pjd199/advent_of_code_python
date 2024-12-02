@@ -1,5 +1,4 @@
 """Simple runner function for printing solver results with timings."""
-from builtins import type
 
 from advent_of_code.utils.display_timer import DisplayTimer
 from advent_of_code.utils.function_timer import function_timer

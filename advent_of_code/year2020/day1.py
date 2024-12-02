@@ -5,6 +5,7 @@ Report Repair
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/1
 """
+
 from itertools import combinations
 from math import prod
 from pathlib import Path

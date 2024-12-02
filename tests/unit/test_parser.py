@@ -1,4 +1,5 @@
 """Unit tests for advent_of_code.utils.parser."""
+
 from dataclasses import dataclass
 from enum import Enum
 from re import fullmatch

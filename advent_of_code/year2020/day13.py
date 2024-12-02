@@ -5,6 +5,7 @@ Shuttle Search
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/13
 """
+
 from itertools import count
 from math import prod
 from operator import itemgetter

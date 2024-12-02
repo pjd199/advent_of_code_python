@@ -5,6 +5,7 @@ Squares With Three Sides
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from itertools import chain
 from pathlib import Path
 from sys import path

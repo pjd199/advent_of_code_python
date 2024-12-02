@@ -5,6 +5,7 @@ A Regular Map
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/20
 """
+
 from collections.abc import Callable
 from pathlib import Path
 from sys import maxsize, path

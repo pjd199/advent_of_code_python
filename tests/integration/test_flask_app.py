@@ -1,4 +1,5 @@
 """Unit tests for the lambda_handler function."""
+
 from json import load
 from pathlib import Path
 from platform import (
@@ -103,7 +104,7 @@ def test_other_routes(test_case: dict[str, Any]) -> None:
 
     if "body" in test_case["response"]:
         # check the body, ignoring the timing value
-        pytest.check_json(  # type: ignore[operator]
+        pytest.check_json(  # type: ignore
             response.get_json(),
             test_case["response"]["body"],
             ["timings", "version", "event"],

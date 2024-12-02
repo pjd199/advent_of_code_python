@@ -5,6 +5,7 @@ Category Six
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/23
 """
+
 from collections import deque
 from copy import deepcopy
 from pathlib import Path

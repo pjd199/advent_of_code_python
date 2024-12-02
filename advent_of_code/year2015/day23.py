@@ -5,6 +5,7 @@ Opening the Turing Lock
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/23
 """
+
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path

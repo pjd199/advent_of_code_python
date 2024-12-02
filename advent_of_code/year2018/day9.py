@@ -5,6 +5,7 @@ Marble Mania
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/9
 """
+
 from collections import defaultdict, deque
 from pathlib import Path
 from sys import path

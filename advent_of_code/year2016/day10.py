@@ -5,6 +5,7 @@ Balance Bots
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/10
 """
+
 from collections.abc import Callable
 from math import prod
 from pathlib import Path

@@ -5,6 +5,7 @@ Sporifica Virus
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/22
 """
+
 from collections.abc import Callable
 from copy import deepcopy
 from pathlib import Path

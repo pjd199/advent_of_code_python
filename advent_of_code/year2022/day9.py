@@ -5,6 +5,7 @@ Rope Bridge
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/9
 """
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from enum import Enum, unique

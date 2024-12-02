@@ -5,6 +5,7 @@ Like a Rogue
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/18
 """
+
 from pathlib import Path
 from sys import path
 

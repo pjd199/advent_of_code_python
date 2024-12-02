@@ -1,4 +1,5 @@
 """Unit test for advent_of_code.utils.runner."""
+
 from json import load
 from pathlib import Path
 from re import match

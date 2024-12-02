@@ -5,6 +5,7 @@ Lens Library
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/15
 """
+
 from functools import reduce
 from pathlib import Path
 from sys import path

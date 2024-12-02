@@ -5,6 +5,7 @@ Corporate Policy
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/11
 """
+
 from collections import deque
 from pathlib import Path
 from re import findall, search

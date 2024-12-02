@@ -5,6 +5,7 @@ Mode Maze
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/22
 """
+
 from collections import deque
 from enum import Enum, unique
 from pathlib import Path

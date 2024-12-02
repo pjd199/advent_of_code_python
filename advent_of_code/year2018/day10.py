@@ -5,6 +5,7 @@ The Stars Align
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/10
 """
+
 from dataclasses import dataclass
 from itertools import count
 from pathlib import Path

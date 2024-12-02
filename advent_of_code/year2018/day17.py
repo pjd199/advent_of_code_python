@@ -5,6 +5,7 @@ Reservoir Research
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/17
 """
+
 from collections import defaultdict, deque
 from copy import deepcopy
 from pathlib import Path

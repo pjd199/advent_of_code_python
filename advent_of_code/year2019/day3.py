@@ -5,6 +5,7 @@ Crossed Wires
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/3
 """
+
 from collections.abc import Callable
 from pathlib import Path
 from sys import path

@@ -5,6 +5,7 @@ Seven Segment Search
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/8
 """
+
 from pathlib import Path
 from sys import path
 

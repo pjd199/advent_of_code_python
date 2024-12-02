@@ -1,4 +1,5 @@
 """System Tests."""
+
 from json import load as load_json
 from os import environ
 from pathlib import Path
@@ -229,7 +230,7 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
             "results": results,
             "self": f"{base_url}/calendars",
         }
-        pytest.check_json(  # type: ignore[operator]
+        pytest.check_json(  # type: ignore
             response.json(),
             body,
             ["timestamp", "version"],
@@ -238,7 +239,7 @@ def call_lambda_function(base_url: str, test_case_data: dict[str, Any]) -> None:
 
     elif "body" in test_case_data["response"]:
         # check body is identical, ignoring timestamp and timings
-        pytest.check_json(  # type: ignore[operator]
+        pytest.check_json(  # type: ignore
             response.json(),
             test_case_data["response"]["body"],
             ["timings", "timestamp", "version", "event"],

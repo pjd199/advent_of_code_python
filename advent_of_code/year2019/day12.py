@@ -5,6 +5,7 @@ The N-Body Problem
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/12
 """
+
 from copy import deepcopy
 from dataclasses import dataclass, field
 from itertools import permutations

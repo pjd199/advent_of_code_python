@@ -5,6 +5,7 @@ Clock Signal
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/25
 """
+
 from itertools import count
 from pathlib import Path
 from sys import path

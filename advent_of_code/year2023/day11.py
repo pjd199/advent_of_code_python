@@ -5,6 +5,7 @@ Cosmic Expansion
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/11
 """
+
 from itertools import combinations
 from pathlib import Path
 from sys import path
@@ -59,9 +60,11 @@ class Solver(SolverInterface):
         """
         y_factors = [1 if "#" in row else expansion for row in self.input]
         x_factors = [
-            1
-            if "#" in (self.input[x][i] for x in range(len(self.input)))
-            else expansion
+            (
+                1
+                if "#" in (self.input[x][i] for x in range(len(self.input)))
+                else expansion
+            )
             for i in range(len(self.input[0]))
         ]
         galaxies = [

@@ -5,6 +5,7 @@ Space Police
 For puzzle specification and desciption, visit
 https://adventofcode.com/2019/day/11
 """
+
 from pathlib import Path
 from sys import path
 

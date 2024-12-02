@@ -5,6 +5,7 @@ Rain Risk
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/12
 """
+
 from collections.abc import Callable
 from pathlib import Path
 from sys import path

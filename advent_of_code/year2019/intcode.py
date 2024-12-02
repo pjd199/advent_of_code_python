@@ -1,4 +1,5 @@
 """Simualte an IntCode Computer, as part of Advent of Code 2019."""
+
 from collections import defaultdict, deque
 from collections.abc import Callable, Iterator
 from enum import Enum, unique
@@ -127,14 +128,16 @@ class IntcodeComputer:
                 for x in range(2, 2 + length)
             ]
             params = [
-                self._memory[self._memory[self._pointer + j + 1]]
-                if modes[j] == 0
-                else (
-                    self._memory[self._pointer + j + 1]
-                    if modes[j] == 1
-                    else self._memory[
-                        self._memory[self._pointer + j + 1] + self._relative_base
-                    ]
+                (
+                    self._memory[self._memory[self._pointer + j + 1]]
+                    if modes[j] == 0
+                    else (
+                        self._memory[self._pointer + j + 1]
+                        if modes[j] == 1
+                        else self._memory[
+                            self._memory[self._pointer + j + 1] + self._relative_base
+                        ]
+                    )
                 )
                 for j in range(length)
             ]

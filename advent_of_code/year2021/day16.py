@@ -5,6 +5,7 @@ Packet Decoder
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/16
 """
+
 from collections.abc import Callable
 from dataclasses import dataclass
 from itertools import chain

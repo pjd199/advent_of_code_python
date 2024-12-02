@@ -5,6 +5,7 @@ Mine Cart Madness
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/13
 """
+
 from collections import deque
 from collections.abc import Callable
 from dataclasses import dataclass

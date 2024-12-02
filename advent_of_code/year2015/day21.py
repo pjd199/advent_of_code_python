@@ -5,6 +5,7 @@ RPG Simulator 20XX
 For puzzle specification and desciption, visit
 https://adventofcode.com/2015/day/21
 """
+
 from collections import namedtuple
 from itertools import combinations
 from pathlib import Path

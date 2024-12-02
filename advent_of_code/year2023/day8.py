@@ -5,6 +5,7 @@ Haunted Wasteland
 For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/8
 """
+
 from collections.abc import Iterator
 from itertools import cycle
 from math import lcm

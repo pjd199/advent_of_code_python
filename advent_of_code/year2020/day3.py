@@ -5,6 +5,7 @@ Toboggan Trajectory
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/3
 """
+
 from itertools import count
 from math import prod
 from pathlib import Path

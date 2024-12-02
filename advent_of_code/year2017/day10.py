@@ -5,6 +5,7 @@ Knot Hash
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/10
 """
+
 from pathlib import Path
 from sys import path
 

@@ -2,6 +2,7 @@
 
 Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT License.
 """
+
 from itertools import chain
 from re import escape
 

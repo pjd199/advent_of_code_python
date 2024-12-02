@@ -5,6 +5,7 @@ A Series of Tubes
 For puzzle specification and desciption, visit
 https://adventofcode.com/2017/day/19
 """
+
 from collections.abc import Callable
 from pathlib import Path
 from string import ascii_uppercase

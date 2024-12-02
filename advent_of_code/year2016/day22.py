@@ -5,6 +5,7 @@ Grid Computing
 For puzzle specification and desciption, visit
 https://adventofcode.com/2016/day/22
 """
+
 from dataclasses import dataclass
 from itertools import permutations
 from pathlib import Path

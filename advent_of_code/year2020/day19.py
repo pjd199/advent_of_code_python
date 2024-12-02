@@ -5,6 +5,7 @@ Monster Messages
 For puzzle specification and desciption, visit
 https://adventofcode.com/2020/day/19
 """
+
 from functools import lru_cache
 from pathlib import Path
 from re import fullmatch

@@ -5,6 +5,7 @@ Arithmetic Logic Unit
 For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/24
 """
+
 from itertools import chain
 from pathlib import Path
 from sys import path

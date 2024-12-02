@@ -5,6 +5,7 @@ Four-Dimensional Adventure
 For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/25
 """
+
 from collections import deque
 from pathlib import Path
 from sys import path

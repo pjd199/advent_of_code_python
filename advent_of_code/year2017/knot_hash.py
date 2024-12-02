@@ -1,4 +1,5 @@
 """Knot Hash function."""
+
 from functools import reduce
 from itertools import chain
 from operator import xor

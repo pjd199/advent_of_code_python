@@ -5,6 +5,7 @@ Beacon Exclusion Zone
 For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/15
 """
+
 from pathlib import Path
 from sys import path
 
