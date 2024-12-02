@@ -1521,6 +1521,13 @@
             "day": 1,
             "part_one": "1222801",
             "part_two": "22545250"
+        },
+        "2": {
+            "title": "Red-Nosed Reports",
+            "year": 2024,
+            "day": 2,
+            "part_one": "585",
+            "part_two": "626"
         }
     }
 }
