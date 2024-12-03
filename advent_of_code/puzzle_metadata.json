@@ -3686,6 +3686,23 @@
                 "part_two": 9
             },
             "completion_date": "2024-12-02T08:01:37+0000Z"
+        },
+        "3": {
+            "year": 2024,
+            "day": 3,
+            "title": "Mull It Over",
+            "excerpt": "\"Our computers are having issues, so I have no idea if we have any Chief Historians in stock! You're welcome to check the warehouse, though,\" says the mildly flustered shopkeeper at the North Pole Toboggan Rental Shop. The Historians head out to take a look.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-03T21:44:26+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 1,
+                "part_two": 0
+            }
         }
     }
 }

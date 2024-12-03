@@ -1528,6 +1528,13 @@
             "day": 2,
             "part_one": "585",
             "part_two": "626"
+        },
+        "3": {
+            "title": "Mull It Over",
+            "year": 2024,
+            "day": 3,
+            "part_one": "189600467",
+            "part_two": "107069718"
         }
     }
 }
