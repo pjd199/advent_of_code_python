@@ -13,7 +13,7 @@ if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import (
-    int_tuple_processor,
+    int_sequence_processor,
     parse_lines,
     str_processor_group,
 )
@@ -37,7 +37,7 @@ class Solver(SolverInterface):
         parsed = parse_lines(
             puzzle_input,
             (r"mask = ([X10]+)", str_processor_group(1)),
-            (r"mem\[(\d+)\] = (\d+)", int_tuple_processor),
+            (r"mem\[(\d+)\] = (\d+)", int_sequence_processor),
         )
         mask = ""
         self.input: list[tuple[str, int, int]] = []

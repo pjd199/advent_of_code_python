@@ -6,6 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/19
 """
 
+from collections.abc import Sequence
 from dataclasses import dataclass
 from math import ceil, prod
 from pathlib import Path
@@ -14,7 +15,7 @@ from sys import maxsize, path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_lines
+from advent_of_code.utils.parser import int_sequence_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -59,7 +60,7 @@ class Solver(SolverInterface):
                 r"Each clay robot costs (\d+) ore. "
                 r"Each obsidian robot costs (\d+) ore and (\d+) clay. "
                 r"Each geode robot costs (\d+) ore and (\d+) obsidian.",
-                int_tuple_processor,
+                int_sequence_processor,
             ),
         )
         self.input = [
@@ -103,8 +104,8 @@ class Solver(SolverInterface):
     def _solve(
         self,
         blueprint: _Blueprint,
-        materials: tuple[int, ...],
-        robots: tuple[int, ...],
+        materials: Sequence[int],
+        robots: Sequence[int],
         time: int,
         best: dict[int, int],
     ) -> int:
@@ -112,8 +113,8 @@ class Solver(SolverInterface):
 
         Args:
             blueprint (_Blueprint): the blueprint to solve
-            materials (tuple[int, ...]): the current materials
-            robots (tuple[int, ...]): the current robots
+            materials (Sequence[int]): the current materials
+            robots (Sequence[int]): the current robots
             time (int): the remaining time
             best (dict[int, int]): mapping of seconds remaining to best geode produced
 

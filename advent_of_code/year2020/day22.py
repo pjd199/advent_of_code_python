@@ -7,6 +7,7 @@ https://adventofcode.com/2020/day/22
 """
 
 from collections import deque
+from collections.abc import Sequence
 from itertools import islice
 from pathlib import Path
 from sys import path
@@ -77,7 +78,7 @@ class Solver(SolverInterface):
         Returns:
             int: the winner (0 for player 1, 1 for player 2)
         """
-        history: set[tuple[tuple[int, ...], tuple[int, ...]]] = set()
+        history: set[tuple[Sequence[int], Sequence[int]]] = set()
         game_winner = -1
 
         # keep playing rounds until a player wins the game

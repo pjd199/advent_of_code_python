@@ -6,7 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2018/day/19
 """
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
@@ -99,7 +99,7 @@ class Solver(SolverInterface):
     def _solve(self, registers: list[int], break_at_line: int = maxsize) -> None:
         program = deepcopy(self.input)
 
-        self.actions: dict[str, Callable[[tuple[int, ...], Instruction], int]] = {
+        self.actions: dict[str, Callable[[Sequence[int], Instruction], int]] = {
             "addr": lambda r, i: r[i.a] + r[i.b],
             "addi": lambda r, i: r[i.a] + i.b,
             "mulr": lambda r, i: r[i.a] * r[i.b],

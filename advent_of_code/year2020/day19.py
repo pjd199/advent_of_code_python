@@ -18,7 +18,7 @@ from advent_of_code.utils.parser import (
     parse_lines,
     split_sections,
     str_processor,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -41,7 +41,7 @@ class Solver(SolverInterface):
         self.rules = {
             k: v.strip('"')
             for k, v in parse_lines(
-                sections[0], (r"(\d+): ([0-9| ]+|\"[ab]\")", str_tuple_processor)
+                sections[0], (r"(\d+): ([0-9| ]+|\"[ab]\")", str_sequence_processor)
             )
         }
         self.messages = parse_lines(sections[1], (r"[ab]+", str_processor))

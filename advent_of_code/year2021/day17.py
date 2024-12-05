@@ -12,7 +12,7 @@ from sys import maxsize, path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
+from advent_of_code.utils.parser import int_sequence_processor, parse_single_line
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -33,7 +33,7 @@ class Solver(SolverInterface):
         self.min_x, self.max_x, self.min_y, self.max_y = parse_single_line(
             puzzle_input,
             r"target area: x=(-?\d+)..(-?\d+), y=(-?\d+)..(-?\d+)",
-            int_tuple_processor,
+            int_sequence_processor,
         )
         self.hits: dict[tuple[int, int], int] = {}
 

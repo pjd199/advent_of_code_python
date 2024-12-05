@@ -14,7 +14,7 @@ from sys import path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_lines
+from advent_of_code.utils.parser import int_sequence_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -43,8 +43,8 @@ class Solver(SolverInterface):
         """
         parsed = parse_lines(
             puzzle_input,
-            (r"depth: (\d+)", int_tuple_processor),
-            (r"target: (\d+),(\d+)", int_tuple_processor),
+            (r"depth: (\d+)", int_sequence_processor),
+            (r"target: (\d+),(\d+)", int_sequence_processor),
         )
         self.depth = parsed[0][0]
         self.target_x, self.target_y = parsed[1]

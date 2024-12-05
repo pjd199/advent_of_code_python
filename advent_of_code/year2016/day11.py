@@ -10,7 +10,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from collections import defaultdict, deque
-from collections.abc import Iterator
+from collections.abc import Iterator, Sequence
 from itertools import combinations
 from pathlib import Path
 from re import findall
@@ -132,11 +132,11 @@ class State:
                         ):
                             yield State(new_elevator, new_floors, self.step + 1)
 
-    def equivalence(self) -> tuple[int, tuple[tuple[int, ...], ...]]:
+    def equivalence(self) -> tuple[int, Sequence[Sequence[int]]]:
         """Create a comparator of states, focusing on pairs rather than names.
 
         Returns:
-            tuple[int, tuple[tuple[int, ...], ...]]: the formatted output
+            tuple[int, Sequence[Sequence[int]]]: the formatted output
         """
         mapper: defaultdict[str, list[int]] = defaultdict(lambda: [0, 0])
         for i, floor in enumerate(self.floors):

@@ -16,7 +16,7 @@ from advent_of_code.utils.parser import (
     parse_lines,
     parse_tokens_single_line,
     str_processor,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -36,7 +36,7 @@ class Solver(SolverInterface):
             puzzle_input (list[str]): The lines of the input file
         """
         parsed = parse_lines(
-            puzzle_input, (r"([a-z ]+)\(contains ([a-z, ]+)\)", str_tuple_processor)
+            puzzle_input, (r"([a-z ]+)\(contains ([a-z, ]+)\)", str_sequence_processor)
         )
         self.ingredients = [
             set(

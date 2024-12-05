@@ -1,6 +1,6 @@
 """Parser utilities for the puzzle input."""
 
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import fields
 from enum import Enum
 from re import Match, escape, fullmatch, search, split
@@ -89,14 +89,14 @@ def int_processor_group(group: str | int) -> Callable[[Match[str]], int]:
     return lambda m: int(m.group(group))
 
 
-def int_tuple_processor(match: Match[str]) -> tuple[int, ...]:
-    """Process match object as an int tuple.
+def int_sequence_processor(match: Match[str]) -> Sequence[int]:
+    """Process match object as an int seqeunce.
 
     Args:
         match (Match[str]): the regular expression Match[str]
 
     Returns:
-        tuple[int, ...]: the result
+        Sequence[int]: the result
     """
     return tuple(int(x) for x in match.groups())
 
@@ -125,14 +125,14 @@ def str_processor_group(group: str | int) -> Callable[[Match[str]], str]:
     return lambda m: m.group(group)
 
 
-def str_tuple_processor(match: Match[str]) -> tuple[str, ...]:
-    """Process match object as a str tuple.
+def str_sequence_processor(match: Match[str]) -> Sequence[str]:
+    """Process match object as a str sequence.
 
     Args:
         match (Match[str]): the regular expression Match
 
     Returns:
-        tuple[str, ...]: the result
+        Sequence[str]: the result
     """
     return match.groups()
 
@@ -207,7 +207,7 @@ def _validate_input_and_header(
     puzzle_input: list[str],
     min_length: int,
     max_length: int,
-    header: tuple[str, ...],
+    header: Sequence[str],
 ) -> int:
     """Validates the input.
 
@@ -215,7 +215,7 @@ def _validate_input_and_header(
         puzzle_input (list[str]): the puzzle input
         min_length (int): the minimum allowable length
         max_length (int): the maximum allowable length
-        header (tuple[str, ...], optional): header to validate. Default ()
+        header (Sequence[str], optional): header to validate. Default ()
 
     Raises:
         HeaderError: raised on invalid puzzle_input
@@ -244,7 +244,7 @@ def parse_lines(
     *args: tuple[str, Callable[[Match[str]], T]],
     min_length: int = 1,
     max_length: int = maxsize,
-    header: tuple[str, ...] = (),
+    header: Sequence[str] = (),
 ) -> list[T]:
     """Load lines from the parsed patterns.
 
@@ -253,7 +253,7 @@ def parse_lines(
         *args (tuple[str, Callable[[Match[str]], T]]): processors called for each match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (tuple[str, ...]): header to validate. Default ()
+        header (Sequence[str]): header to validate. Default ()
 
     Raises:
         NoMatchFoundError: raised if pattern not found
@@ -307,7 +307,7 @@ def parse_tokens(
     require_delimiter: bool = True,
     min_length: int = 1,
     max_length: int = maxsize,
-    header: tuple[str, ...] = (),
+    header: Sequence[str] = (),
 ) -> list[list[T]]:
     """Load lines using the tokenised methods.
 
@@ -318,7 +318,7 @@ def parse_tokens(
         require_delimiter (bool): delimiter must be present when True. Defaults to True.
         min_length (int): the minimum number of lines expected. Defaults to 1.
         max_length (int): the maximum number of lines expected. Defaults to maxsize.
-        header (tuple[str, ...]): header to validate. Defaults to ().
+        header (Sequence[str]): header to validate. Defaults to ().
 
     Raises:
         MissingDelimiterError: raised is the delimeter cannot be found
@@ -361,7 +361,7 @@ def parse_tokens_single_line(
     *args: tuple[str, Callable[[Match[str]], T]],
     delimiter: str = "",
     require_delimiter: bool = True,
-    header: tuple[str, ...] = (),
+    header: Sequence[str] = (),
 ) -> list[T]:
     """Load lines using the tokenised methods.
 
@@ -370,7 +370,7 @@ def parse_tokens_single_line(
         *args (tuple[str, Callable[[Match[str]], T]]): processors called for each match
         delimiter (str): the delimiter expected between tokens. Defaults to "".
         require_delimiter (bool): when false, the delimiter is optional in the input
-        header (tuple[str, ...]): header to validate. Defaults to ().
+        header (Sequence[str]): header to validate. Defaults to ().
 
     Returns:
         list[T]: the parsed output
@@ -392,7 +392,7 @@ def parse_grid(
     match_processor: Callable[[Match[str]], T],
     min_length: int = 1,
     max_length: int = maxsize,
-    header: tuple[str, ...] = (),
+    header: Sequence[str] = (),
 ) -> dict[tuple[int, int], T]:
     """Load lines as an x y grid and initialise classes with the whole pattern match.
 
@@ -402,7 +402,7 @@ def parse_grid(
         match_processor (Callable[[Match[str]], T]): processor called for the match
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (tuple[str, ...]): header to validate. Default ()
+        header (Sequence[str]): header to validate. Default ()
 
     Raises:
         NoMatchFoundError: if the pattern cannont be found in the input
@@ -431,7 +431,7 @@ def split_sections(
     expected_sections: int = maxsize,
     min_length: int = 1,
     max_length: int = maxsize,
-    header: tuple[str, ...] = (),
+    header: Sequence[str] = (),
 ) -> list[list[str]]:
     """Split the input into sections where a lines matches the section_break regex.
 
@@ -441,7 +441,7 @@ def split_sections(
         expected_sections (int): the number of sections to expect.
         min_length (int): the minimum number of lines expected
         max_length (int): the maximum number of lines expected
-        header (tuple[str, ...]): header to validate. Default ()
+        header (Sequence[str]): header to validate. Default ()
 
     Raises:
         SectionError: if the puzzle_input has incorrect length or number of sections

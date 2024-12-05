@@ -13,7 +13,7 @@ from sys import path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
+from advent_of_code.utils.parser import int_sequence_processor, parse_single_line
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -34,7 +34,7 @@ class Solver(SolverInterface):
         self.players, self.last = parse_single_line(
             puzzle_input,
             r"(\d+) players; last marble is worth (\d+) points",
-            int_tuple_processor,
+            int_sequence_processor,
         )
 
     def solve_part_one(self) -> int:

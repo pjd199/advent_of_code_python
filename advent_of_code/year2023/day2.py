@@ -18,7 +18,7 @@ from advent_of_code.utils.parser import (
     parse_tokens,
     parse_tokens_single_line,
     str_processor,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -59,7 +59,7 @@ class Solver(SolverInterface):
                 )
             ]
             for game, data in parse_lines(
-                puzzle_input, (r"Game (\d+): (.*)", str_tuple_processor)
+                puzzle_input, (r"Game (\d+): (.*)", str_sequence_processor)
             )
         }
 

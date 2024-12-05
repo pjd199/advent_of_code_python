@@ -16,7 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 from advent_of_code.utils.parser import (
     parse_lines,
     parse_tokens_single_line,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -41,7 +41,7 @@ class Solver(SolverInterface):
                     k: v
                     for v, k in parse_tokens_single_line(
                         [v],
-                        (r"(\d+) (\w+ \w+) bags?", str_tuple_processor),
+                        (r"(\d+) (\w+ \w+) bags?", str_sequence_processor),
                         delimiter=", ",
                         require_delimiter=False,
                     )
@@ -51,7 +51,7 @@ class Solver(SolverInterface):
             )
             for k, v in parse_lines(
                 puzzle_input,
-                (r"(\w+ \w+) bags contain ([\d\w, ]+).", str_tuple_processor),
+                (r"(\w+ \w+) bags contain ([\d\w, ]+).", str_sequence_processor),
             )
         }
 

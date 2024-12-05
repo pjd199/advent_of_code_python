@@ -13,7 +13,7 @@ from typing import NoReturn
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_single_line
+from advent_of_code.utils.parser import int_sequence_processor, parse_single_line
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -37,7 +37,7 @@ class Solver(SolverInterface):
             r"To continue, please consult the code grid in the manual.  "
             r"Enter the code at row (?P<row>[0-9]+), "
             r"column (?P<col>[0-9]+).",
-            int_tuple_processor,
+            int_sequence_processor,
         )
 
     @cache_result

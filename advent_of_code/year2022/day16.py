@@ -6,6 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2022/day/16
 """
 
+from collections.abc import Sequence
 from operator import itemgetter
 from pathlib import Path
 from sys import maxsize, path
@@ -13,7 +14,7 @@ from sys import maxsize, path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, str_tuple_processor
+from advent_of_code.utils.parser import parse_lines, str_sequence_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -36,7 +37,7 @@ class Solver(SolverInterface):
             (
                 r"Valve ([A-Z][A-Z]) has flow rate=(\d+); "
                 r"tunnels? leads? to valves? ([A-Z, ]+)",
-                str_tuple_processor,
+                str_sequence_processor,
             ),
         )
         self.rates = {value: int(rate) for value, rate, _ in lines}
@@ -100,7 +101,7 @@ class Solver(SolverInterface):
             for node in self.nodes
         }
 
-        self.paths: dict[tuple[str, ...], int] = {}
+        self.paths: dict[Sequence[str], int] = {}
 
     def _dykstra_single_source_all_distances(self, initial: str) -> dict[str, int]:
         """Use Dykstra's Algorithm to find distances between source and all other nodes.

@@ -17,7 +17,7 @@ from advent_of_code.utils.parser import (
     enum_processor,
     int_processor,
     int_processor_group,
-    int_tuple_processor,
+    int_sequence_processor,
     parse_grid,
     parse_lines,
     parse_single_line,
@@ -25,7 +25,7 @@ from advent_of_code.utils.parser import (
     split_sections,
     str_processor,
     str_processor_group,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 
 
@@ -72,18 +72,18 @@ def test_int_processor_group() -> None:
         int_processor_group(0)(m)
 
 
-def test_int_tuple_processor() -> None:
-    """Unit test for int_tuple_processor."""
+def test_int_sequence_processor() -> None:
+    """Unit test for int_sequence_processor."""
     m = fullmatch(r"(.*) (.*) (.*)", "1 -2 3")
     assert m is not None
-    assert int_tuple_processor(m) == (1, -2, 3)
+    assert int_sequence_processor(m) == (1, -2, 3)
 
     m = fullmatch(r"(.*) (.*) (.*)", "1 -2 c")
     assert m is not None
     with pytest.raises(
         ValueError, match=r"invalid literal for int\(\) with base 10: 'c'"
     ):
-        int_tuple_processor(m)
+        int_sequence_processor(m)
 
 
 def test_str_processor() -> None:
@@ -107,11 +107,11 @@ def test_str_processor_group() -> None:
         int_processor_group("location")(m)
 
 
-def test_str_tuple_processor() -> None:
-    """Unit test for str_tuple_processor."""
+def test_str_sequence_processor() -> None:
+    """Unit test for str_sequence_processor."""
     m = fullmatch(r"(.*) (.*) (.*)", "hello world again")
     assert m is not None
-    assert str_tuple_processor(m) == ("hello", "world", "again")
+    assert str_sequence_processor(m) == ("hello", "world", "again")
 
 
 def test_dataclass_processor() -> None:

@@ -14,13 +14,13 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import (
     int_processor,
-    int_tuple_processor,
+    int_sequence_processor,
     parse_lines,
     parse_single_line,
     parse_tokens_single_line,
     split_sections,
     str_processor_group,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -54,11 +54,11 @@ class Solver(SolverInterface):
         self.maps = {}
         for section in sections[1:]:
             source, destination = parse_single_line(
-                section[:1], r"([a-z]+)-to-([a-z]+) map:", str_tuple_processor
+                section[:1], r"([a-z]+)-to-([a-z]+) map:", str_sequence_processor
             )
             self.categories[source] = destination
             self.maps[source] = parse_lines(
-                section[1:], (r"(\d+) (\d+) (\d+)", int_tuple_processor)
+                section[1:], (r"(\d+) (\d+) (\d+)", int_sequence_processor)
             )
 
     def solve_part_one(self) -> int:

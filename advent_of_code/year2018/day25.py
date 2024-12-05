@@ -7,6 +7,7 @@ https://adventofcode.com/2018/day/25
 """
 
 from collections import deque
+from collections.abc import Sequence
 from pathlib import Path
 from sys import path
 from typing import NoReturn
@@ -14,7 +15,7 @@ from typing import NoReturn
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_lines
+from advent_of_code.utils.parser import int_sequence_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -33,7 +34,7 @@ class Solver(SolverInterface):
             puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
-            puzzle_input, (r"(-?\d+),(-?\d+),(-?\d+),(-?\d+)", int_tuple_processor)
+            puzzle_input, (r"(-?\d+),(-?\d+),(-?\d+),(-?\d+)", int_sequence_processor)
         )
 
     def solve_part_one(self) -> int:
@@ -44,11 +45,11 @@ class Solver(SolverInterface):
         """
         # use a breadth first search to group the closest points together
         available = set(self.input)
-        constellations: list[set[tuple[int, ...]]] = []
-        queue: deque[tuple[int, ...]] = deque([])
+        constellations: list[set[Sequence[int]]] = []
+        queue: deque[Sequence[int]] = deque([])
 
         while available:
-            constellation: set[tuple[int, ...]] = set()
+            constellation: set[Sequence[int]] = set()
             constellations.append(constellation)
             queue.append(available.pop())
             while queue:

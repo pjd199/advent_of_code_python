@@ -7,6 +7,7 @@ https://adventofcode.com/2019/day/15
 """
 
 from collections import deque
+from collections.abc import Sequence
 from copy import deepcopy
 from enum import Enum, unique
 from pathlib import Path
@@ -92,7 +93,7 @@ class Solver(SolverInterface):
             (x, y) for (x, y), v in self.grid.items() if v == GridValue.oxygen
         )
 
-    def next_moves(self, x: int, y: int) -> tuple[tuple[int, int, int], ...]:
+    def next_moves(self, x: int, y: int) -> Sequence[tuple[int, int, int]]:
         """Return an iterator for the moves from (x,y).
 
         Args:
@@ -100,7 +101,7 @@ class Solver(SolverInterface):
             y (int): y co-ordinate
 
         Returns:
-            tuple[tuple[int, int, int], ...]: the moves
+            Sequence[tuple[int, int, int]]: the moves
         """
         return (
             (x, y - 1, 1),

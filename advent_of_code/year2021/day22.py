@@ -6,13 +6,14 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2021/day/22
 """
 
+from collections.abc import Sequence
 from pathlib import Path
 from sys import path
 
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, str_tuple_processor
+from advent_of_code.utils.parser import parse_lines, str_sequence_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -30,7 +31,7 @@ class Solver(SolverInterface):
         Args:
             puzzle_input (list[str]): The lines of the input file
         """
-        self.input: list[tuple[int, ...]] = [
+        self.input: list[Sequence[int]] = [
             (
                 1 if toggle == "on" else -1,
                 int(min_x),
@@ -47,7 +48,7 @@ class Solver(SolverInterface):
                     r"x=(-?\d+)\.\.(-?\d+),"
                     r"y=(-?\d+)\.\.(-?\d+),"
                     r"z=(-?\d+)\.\.(-?\d+)",
-                    str_tuple_processor,
+                    str_sequence_processor,
                 ),
             )
         ]
@@ -86,7 +87,7 @@ class Solver(SolverInterface):
 
         # repeatedly add the steps to the reactor, everytime checking for any
         # intersections to add or remove
-        reactor: list[tuple[int, ...]] = []
+        reactor: list[Sequence[int]] = []
         for step in steps:
             updates = [step] if step[0] == 1 else []
             for cuboid in reactor:

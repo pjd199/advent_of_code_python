@@ -21,7 +21,7 @@ from advent_of_code.utils.parser import (
     parse_single_line,
     split_sections,
     str_processor,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -48,7 +48,7 @@ class Solver(SolverInterface):
                 sections[1],
                 (
                     r"([A-Z0-9]{3}) = \(([A-Z0-9]{3}), ([A-Z0-9]{3})\)",
-                    str_tuple_processor,
+                    str_sequence_processor,
                 ),
             )
         }

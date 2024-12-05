@@ -7,7 +7,7 @@ https://adventofcode.com/2018/day/16
 """
 
 from collections import defaultdict
-from collections.abc import Callable
+from collections.abc import Callable, Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from sys import path
@@ -17,7 +17,7 @@ if __name__ == "__main__":  # pragma: no cover
 
 from advent_of_code.utils.parser import (
     dataclass_processor,
-    int_tuple_processor,
+    int_sequence_processor,
     parse_lines,
     split_sections,
 )
@@ -39,9 +39,9 @@ class Instruction:
 class Sample:
     """A sample read from the input."""
 
-    before: tuple[int, ...]
+    before: Sequence[int]
     instruction: Instruction
-    after: tuple[int, ...]
+    after: Sequence[int]
 
 
 class Solver(SolverInterface):
@@ -68,9 +68,9 @@ class Solver(SolverInterface):
             for before, instruction, after in (
                 parse_lines(
                     section,
-                    (r"Before: \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
-                    (r"(\d+) (\d+) (\d+) (\d+)", int_tuple_processor),
-                    (r"After:  \[(\d+), (\d+), (\d+), (\d+)\]", int_tuple_processor),
+                    (r"Before: \[(\d+), (\d+), (\d+), (\d+)\]", int_sequence_processor),
+                    (r"(\d+) (\d+) (\d+) (\d+)", int_sequence_processor),
+                    (r"After:  \[(\d+), (\d+), (\d+), (\d+)\]", int_sequence_processor),
                     min_length=3,
                     max_length=3,
                 )
@@ -87,7 +87,7 @@ class Solver(SolverInterface):
         )
 
         # define the actions
-        self.actions: dict[str, Callable[[tuple[int, ...], Instruction], int]] = {
+        self.actions: dict[str, Callable[[Sequence[int], Instruction], int]] = {
             "addr": lambda r, i: r[i.a] + r[i.b],
             "addi": lambda r, i: r[i.a] + i.b,
             "mulr": lambda r, i: r[i.a] * r[i.b],

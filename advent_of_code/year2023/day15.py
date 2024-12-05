@@ -16,7 +16,7 @@ if __name__ == "__main__":  # pragma: no cover
 from advent_of_code.utils.parser import (
     parse_tokens_single_line,
     str_processor,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -42,7 +42,7 @@ class Solver(SolverInterface):
         )
         self.input_parsed = parse_tokens_single_line(
             puzzle_input,
-            (r"([a-z]+)([-=])([0-9])?", str_tuple_processor),
+            (r"([a-z]+)([-=])([0-9])?", str_sequence_processor),
             delimiter=",",
         )
 

@@ -13,7 +13,7 @@ from sys import path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import parse_lines, str_tuple_processor
+from advent_of_code.utils.parser import parse_lines, str_sequence_processor
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
@@ -39,7 +39,7 @@ class Solver(SolverInterface):
         self.input = [
             (x, int(y))
             for x, y in parse_lines(
-                puzzle_input, (r"([NESWLRF])(\d+)", str_tuple_processor)
+                puzzle_input, (r"([NESWLRF])(\d+)", str_sequence_processor)
             )
         ]
 

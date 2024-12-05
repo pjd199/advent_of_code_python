@@ -12,7 +12,7 @@ from sys import path
 if __name__ == "__main__":  # pragma: no cover
     path.append(str(Path(__file__).parent.parent.parent))
 
-from advent_of_code.utils.parser import int_tuple_processor, parse_lines
+from advent_of_code.utils.parser import int_sequence_processor, parse_lines
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_decorators import cache_result
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -32,7 +32,7 @@ class Solver(SolverInterface):
             puzzle_input (list[str]): The lines of the input file
         """
         self.input = parse_lines(
-            puzzle_input, (r"([0-9]+)x([0-9]+)x([0-9]+)", int_tuple_processor)
+            puzzle_input, (r"([0-9]+)x([0-9]+)x([0-9]+)", int_sequence_processor)
         )
 
     @cache_result

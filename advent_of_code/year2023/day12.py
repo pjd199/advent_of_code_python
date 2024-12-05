@@ -6,6 +6,7 @@ For puzzle specification and desciption, visit
 https://adventofcode.com/2023/day/12
 """
 
+from collections.abc import Sequence
 from functools import cache
 from pathlib import Path
 from sys import path
@@ -17,7 +18,7 @@ from advent_of_code.utils.parser import (
     int_processor,
     parse_lines,
     parse_tokens_single_line,
-    str_tuple_processor,
+    str_sequence_processor,
 )
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
@@ -46,7 +47,7 @@ class Solver(SolverInterface):
                 ),
             )
             for springs, groups in parse_lines(
-                puzzle_input, (r"([.?#]+) ([\d,]+)", str_tuple_processor)
+                puzzle_input, (r"([.?#]+) ([\d,]+)", str_sequence_processor)
             )
         ]
 
@@ -71,19 +72,19 @@ class Solver(SolverInterface):
             for springs, groups in self.input
         )
 
-    def count_solutions(self, template: str, groups: tuple[int, ...]) -> int:
+    def count_solutions(self, template: str, groups: Sequence[int]) -> int:
         """Count the number of solution.
 
         Args:
             template (str): the spring template_
-            groups (tuple[int, ...]): the spring groups
+            groups (Sequence[int]): the spring groups
 
         Returns:
             int: the result
         """
 
         @cache
-        def find(template: str, groups: tuple[int, ...]) -> int:
+        def find(template: str, groups: Sequence[int]) -> int:
             if not template:
                 return 0 if groups else 1
 
