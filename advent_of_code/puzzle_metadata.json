@@ -3703,6 +3703,23 @@
                 "part_one": 1,
                 "part_two": 0
             }
+        },
+        "4": {
+            "year": 2024,
+            "day": 4,
+            "title": "Ceres Search",
+            "excerpt": "\"Looks like the Chief's not here. Next!\" One of The Historians pulls out a device and pushes the only button on it. After a brief flash, you recognize the interior of the Ceres monitoring station!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-05T09:55:44+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 23,
+                "part_one": 43,
+                "part_two": 15
+            }
         }
     }
 }
