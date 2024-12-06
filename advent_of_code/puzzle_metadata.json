@@ -3726,6 +3726,23 @@
                 "part_one": 43,
                 "part_two": 15
             }
+        },
+        "5": {
+            "year": 2024,
+            "day": 5,
+            "title": "Print Queue",
+            "excerpt": "Satisfied with their search on Ceres, the squadron of scholars suggests subsequently scanning the stationery stacks of sub-basement 17.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-06T14:56:09+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 1,
+                "part_two": 1
+            }
         }
     }
 }

@@ -1542,6 +1542,13 @@
             "day": 4,
             "part_one": "2646",
             "part_two": "2000"
+        },
+        "5": {
+            "title": "Print Queue",
+            "year": 2024,
+            "day": 5,
+            "part_one": "4957",
+            "part_two": "6938"
         }
     }
 }
