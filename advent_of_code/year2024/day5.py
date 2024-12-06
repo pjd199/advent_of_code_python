@@ -46,7 +46,16 @@ class Solver(SolverInterface):
             update_section, (r"\d+", int_processor), delimiter=","
         )
 
-    def _cmp(self, a: int, b: int) -> int:
+    def _compare(self, a: int, b: int) -> int:
+        """Compare a and b using the rules.
+
+        Args:
+            a (int): first value
+            b (int): second value
+
+        Returns:
+            int: -1 if a < b, 1 if a > b, else 0
+        """
         if (a, b) in self.rules:
             return -1
         if (b, a) in self.rules:
@@ -62,7 +71,7 @@ class Solver(SolverInterface):
         return sum(
             update[len(update) // 2]
             for update in self.updates
-            if update == sorted(update, key=cmp_to_key(self._cmp))
+            if all(self._compare(a, b) <= 0 for a, b in pairwise(update))
         )
 
     def solve_part_two(self) -> int:
@@ -72,9 +81,9 @@ class Solver(SolverInterface):
             int: the answer
         """
         return sum(
-            sorted(update, key=cmp_to_key(self._cmp))[len(update) // 2]
+            sorted(update, key=cmp_to_key(self._compare))[len(update) // 2]
             for update in self.updates
-            if any(self._cmp(a, b) == 1 for a, b in pairwise(update))
+            if any(self._compare(a, b) == 1 for a, b in pairwise(update))
         )
 
 
