@@ -1556,6 +1556,13 @@
             "day": 6,
             "part_one": "5242",
             "part_two": "1424"
+        },
+        "7": {
+            "title": "Bridge Repair",
+            "year": 2024,
+            "day": 7,
+            "part_one": "538191549061",
+            "part_two": "34612812972206"
         }
     }
 }
