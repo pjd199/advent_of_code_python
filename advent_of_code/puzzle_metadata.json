@@ -3743,6 +3743,23 @@
                 "part_one": 1,
                 "part_two": 1
             }
+        },
+        "6": {
+            "year": 2024,
+            "day": 6,
+            "title": "Guard Gallivant",
+            "excerpt": "The Historians use their fancy device again, this time to whisk you all away to the North Pole prototype suit manufacturing lab... in the year 1518! It turns out that having direct access to history is very convenient for a group of historians.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-07T10:33:02+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 21,
+                "part_one": 6,
+                "part_two": 22566
+            }
         }
     }
 }

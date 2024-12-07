@@ -1549,6 +1549,13 @@
             "day": 5,
             "part_one": "4957",
             "part_two": "6938"
+        },
+        "6": {
+            "title": "Guard Gallivant",
+            "year": 2024,
+            "day": 6,
+            "part_one": "5242",
+            "part_two": "1424"
         }
     }
 }
