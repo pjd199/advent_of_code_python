@@ -26,24 +26,18 @@ jobs:
       - name: Setup up Python
         uses: actions/setup-python@v4
         with:
-          python-version: "3.12"
-          cache: "pip"
-      
-      - uses: actions/cache@v3
-        name: Load dependancy cache
-        id: requirements-dev-cache
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - uses: actions/cache@v4
+        name: Load package cache
+        id: package-cache
         with:
           path: ${{ env.pythonLocation }}
-          key:
-            requirements_dev.txt-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('requirements_dev.txt') }}
+          key: pyproject.toml-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('pyproject.toml') }}
 
-      - name: Install dependencies
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install -r requirements_dev.txt
-
-      - name: Install editable package
-        if: steps.requirements-dev-cache.outputs.cache-hit != 'true'
-        run: pip install --editable .
+      - name: Install package
+        if: steps.package-cache.outputs.cache-hit != 'true'
+        run: pip install --editable .[dev]
 
       - name: Generate status graphic
         run: python ./advent_of_code/utils/status_graphic.py
