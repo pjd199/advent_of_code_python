@@ -9,6 +9,9 @@ concurrency:
   group: timings${{github.ref}}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: 3.12
+
 jobs:
   generate:
     name: Updating Timing in metadata

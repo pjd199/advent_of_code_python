@@ -12,6 +12,9 @@ concurrency:
   group: status${{github.ref}}
   cancel-in-progress: true
 
+env:
+  PYTHON_VERSION: 3.12
+
 jobs:
   generate:
     name: Updating Status Graphic
