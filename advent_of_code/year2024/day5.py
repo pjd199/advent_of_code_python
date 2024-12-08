@@ -56,11 +56,12 @@ class Solver(SolverInterface):
         Returns:
             int: -1 if a < b, 1 if a > b, else 0
         """
+        result = 0
         if (a, b) in self.rules:
-            return -1
+            result = -1
         if (b, a) in self.rules:
-            return 1
-        return 0
+            result = 1
+        return result
 
     def solve_part_one(self) -> int:
         """Solve part one of the puzzle.
