@@ -7,11 +7,6 @@ https://adventofcode.com/2024/day/8
 """
 
 from itertools import count, permutations
-from pathlib import Path
-from sys import path
-
-if __name__ == "__main__":  # pragma: no cover
-    path.append(str(Path(__file__).parent.parent.parent))
 
 from advent_of_code.utils.parser import parse_grid, str_processor
 from advent_of_code.utils.runner import runner
