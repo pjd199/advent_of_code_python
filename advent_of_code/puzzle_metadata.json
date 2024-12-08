@@ -3777,6 +3777,23 @@
                 "part_one": 66,
                 "part_two": 15
             }
+        },
+        "8": {
+            "year": 2024,
+            "day": 8,
+            "title": "Resonant Collinearity",
+            "excerpt": "You find yourselves on the roof of a top-secret Easter Bunny installation.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-08T18:21:54+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 2,
+                "part_one": 0,
+                "part_two": 1
+            }
         }
     }
 }

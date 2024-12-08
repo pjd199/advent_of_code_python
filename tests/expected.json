@@ -1563,6 +1563,13 @@
             "day": 7,
             "part_one": "538191549061",
             "part_two": "34612812972206"
+        },
+        "8": {
+            "title": "Resonant Collinearity",
+            "year": 2024,
+            "day": 8,
+            "part_one": "341",
+            "part_two": "1134"
         }
     }
 }
