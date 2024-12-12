@@ -1570,6 +1570,13 @@
             "day": 8,
             "part_one": "341",
             "part_two": "1134"
+        },
+        "9": {
+            "title": "Disk Fragmenter",
+            "year": 2024,
+            "day": 9,
+            "part_one": "6340197768906",
+            "part_two": "6363913128533"
         }
     }
 }

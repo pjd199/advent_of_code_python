@@ -3794,6 +3794,17 @@
                 "part_one": 0,
                 "part_two": 1
             }
+        },
+        "9": {
+            "year": 2024,
+            "day": 9,
+            "title": "Disk Fragmenter",
+            "excerpt": "Another push of the button leaves you in the familiar hallways of some friendly amphipods! Good thing you each somehow got your own personal mini submarine. The Historians jet away in search of the Chief, mostly by driving directly into walls.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-12T10:31:55+0000Z"
         }
     }
 }
