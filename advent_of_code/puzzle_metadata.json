@@ -3804,7 +3804,30 @@
             "has_part_two": true,
             "part_one_solved": true,
             "part_two_solved": true,
-            "completion_date": "2024-12-12T10:31:55+0000Z"
+            "completion_date": "2024-12-12T10:31:55+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 29,
+                "part_one": 188,
+                "part_two": 1223
+            }
+        },
+        "10": {
+            "year": 2024,
+            "day": 10,
+            "title": "Hoof It",
+            "excerpt": "You all arrive at a Lava Production Facility on a floating island in the sky. As the others begin to search the massive industrial complex, you feel a small nose boop your leg and look down to discover a reindeer wearing a hard hat.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "timings": {
+                "unit": "ms",
+                "parse": 3,
+                "part_one": 10,
+                "part_two": 9
+            },
+            "completion_date": "2024-12-12T11:37:49+0000Z"
         }
     }
 }
