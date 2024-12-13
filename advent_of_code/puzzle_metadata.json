@@ -3828,6 +3828,23 @@
                 "part_two": 9
             },
             "completion_date": "2024-12-12T11:37:49+0000Z"
+        },
+        "11": {
+            "year": 2024,
+            "day": 11,
+            "title": "Plutonian Pebbles",
+            "excerpt": "The ancient civilization on Pluto was known for its ability to manipulate spacetime, and while The Historians explore their infinite corridors, you've noticed a strange set of physics-defying stones.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-13T21:12:57+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 0,
+                "part_one": 3,
+                "part_two": 101
+            }
         }
     }
 }
