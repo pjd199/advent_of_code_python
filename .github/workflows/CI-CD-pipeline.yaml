@@ -49,6 +49,9 @@ jobs:
 #          path: ~/.cache/pre-commit
 #          key: pre-commit-${{ env.pythonLocation }}-${{ env.PYTHON_VERSION }}-${{hashFiles('.pre-commit-config.yaml') }}
 
+      - name: run mypy
+        run: mypy --strict -p advent_of_code
+
       - name: Run pre-commit on all files
         run: pre-commit run --all-files
 
