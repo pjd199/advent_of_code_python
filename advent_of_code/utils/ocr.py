@@ -5,9 +5,9 @@ Forked from https://github.com/bsoyka/advent-of-code-ocr 0.2.0, under MIT Licens
 """
 
 from collections.abc import Sequence
+from typing import Any
 
 import numpy as np
-from numpy.typing import ArrayLike
 
 
 class OcrError(Exception):
@@ -44,14 +44,14 @@ def ocr_coordinates(coordinates: set[tuple[int, int]]) -> str:
 
 
 def ocr_numpy(
-    array: ArrayLike,
+    array: np.ndarray[Any, np.dtype[np.str_ | np.int_ | np.bool_]],
     fill_pixel: str | int | bool = "#",
     empty_pixel: str | int | bool = ".",
 ) -> str:
     """Convert an array of pixels into letters.
 
     Args:
-        array (ArrayLike): the input array
+        array (np.ndarray[Any, np.dtype[np.str_ | np.int_ | np.bool_]]): the input array
         fill_pixel (str | int | bool): the filled pixel. Defaults to "#".
         empty_pixel (str | int | bool): the empty pixel. Defaults to ".".
 
