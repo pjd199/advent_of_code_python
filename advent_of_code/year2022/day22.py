@@ -26,6 +26,8 @@ from advent_of_code.utils.parser import (
 from advent_of_code.utils.runner import runner
 from advent_of_code.utils.solver_interface import SolverInterface
 
+MultiDimIntArray = np.ndarray[tuple[int, ...], np.dtype[np.int_]]
+
 
 class Solver(SolverInterface):
     """Solves the puzzle."""
@@ -106,16 +108,16 @@ class Solver(SolverInterface):
 
         # cube is array which holds the spaces/walls (just ignore the empty middle)
         # each face will have a boarder of -1 around, to assist with cube rotations
-        cube = np.full((side + 2, side + 2, side + 2), -1, dtype=np.int_)
+        cube: MultiDimIntArray = np.full((side + 2, side + 2, side + 2), -1)
 
         # tracker holds the original (x,y) of the net, which will be rotated
         # around in sync with the cube, to make life easier at the end
-        tracker = np.zeros(
+        tracker: MultiDimIntArray = np.zeros(
             (side + 2, side + 2, side + 2), dtype=[("x", np.int_), ("y", np.int_)]
         )
 
         # compass holds the orientation of the net, rotated in sync with tracker
-        compass = np.full((5, 5, 5), -1, dtype=np.int_)
+        compass: MultiDimIntArray = np.full((5, 5, 5), -1, dtype=np.int_)
 
         # start at the top left of the net
         start_x, start_y = min((x, y) for x, y in self.map if y == 0)
