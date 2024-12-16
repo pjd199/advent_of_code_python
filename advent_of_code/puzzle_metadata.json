@@ -3845,6 +3845,23 @@
                 "part_one": 3,
                 "part_two": 101
             }
+        },
+        "12": {
+            "year": 2024,
+            "day": 12,
+            "title": "Garden Groups",
+            "excerpt": "Why not search for the Chief Historian near the gardener and his massive farm? There's plenty of food, so The Historians grab something to eat while they search.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-16T16:38:09+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 24,
+                "part_one": 30,
+                "part_two": 107
+            }
         }
     }
 }
