@@ -3862,6 +3862,23 @@
                 "part_one": 30,
                 "part_two": 107
             }
+        },
+        "13": {
+            "year": 2024,
+            "day": 13,
+            "title": "Claw Contraption",
+            "excerpt": "Next up: the lobby of a resort on a tropical island. The Historians take a moment to admire the hexagonal floor tiles before spreading out.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-17T12:47:29+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 5,
+                "part_one": 0,
+                "part_two": 0
+            }
         }
     }
 }
