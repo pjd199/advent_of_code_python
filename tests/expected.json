@@ -1605,6 +1605,13 @@
             "day": 13,
             "part_one": "31552",
             "part_two": "95273925552482"
+        },
+        "14": {
+            "title": "Restroom Redoubt",
+            "year": 2024,
+            "day": 14,
+            "part_one": "236628054",
+            "part_two": "7584"
         }
     }
 }

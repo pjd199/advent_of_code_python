@@ -3879,6 +3879,23 @@
                 "part_one": 0,
                 "part_two": 0
             }
+        },
+        "14": {
+            "year": 2024,
+            "day": 14,
+            "title": "Restroom Redoubt",
+            "excerpt": "One of The Historians needs to use the bathroom; fortunately, you know there's a bathroom near an unvisited location on their list, and so you're all quickly teleported directly to the lobby of Easter Bunny Headquarters.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-17T21:11:10+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 7,
+                "part_two": 5766
+            }
         }
     }
 }
