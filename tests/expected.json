@@ -1612,6 +1612,13 @@
             "day": 14,
             "part_one": "236628054",
             "part_two": "7584"
+        },
+        "15": {
+            "title": "Warehouse Woes",
+            "year": 2024,
+            "day": 15,
+            "part_one": "1465523",
+            "part_two": "1471049"
         }
     }
 }

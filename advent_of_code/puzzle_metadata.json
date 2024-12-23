@@ -3893,8 +3893,25 @@
             "timings": {
                 "unit": "ms",
                 "parse": 1,
-                "part_one": 7,
-                "part_two": 5766
+                "part_one": 0,
+                "part_two": 71
+            }
+        },
+        "15": {
+            "year": 2024,
+            "day": 15,
+            "title": "Warehouse Woes",
+            "excerpt": "You appear back inside your own mini submarine! Each Historian drives their mini submarine in a different direction; maybe the Chief has his own submarine down here somewhere as well?",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-23T13:52:56+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 23,
+                "part_one": 18,
+                "part_two": 32
             }
         }
     }
