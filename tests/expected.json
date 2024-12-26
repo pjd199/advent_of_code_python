@@ -1619,6 +1619,13 @@
             "day": 15,
             "part_one": "1465523",
             "part_two": "1471049"
+        },
+        "16": {
+            "title": "Reindeer Maze",
+            "year": 2024,
+            "day": 16,
+            "part_one": "83432",
+            "part_two": "467"
         }
     }
 }

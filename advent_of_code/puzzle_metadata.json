@@ -3913,6 +3913,23 @@
                 "part_one": 18,
                 "part_two": 32
             }
+        },
+        "16": {
+            "year": 2024,
+            "day": 16,
+            "title": "Reindeer Maze",
+            "excerpt": "It's time again for the Reindeer Olympics! This year, the big event is the Reindeer Maze, where the Reindeer compete for the lowest score.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-24T11:59:28+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 23,
+                "part_one": 426,
+                "part_two": 0
+            }
         }
     }
 }
