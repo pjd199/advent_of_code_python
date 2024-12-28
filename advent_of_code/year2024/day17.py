@@ -45,7 +45,7 @@ class Solver(SolverInterface):
             delimiter=r"Program: |,",
         )
 
-    def _run(self, a: int, b: int, c: int) -> Sequence[int]:
+    def _run(self, a: int, b: int, c: int) -> Sequence[int]:  # pragma: no cover
         pointer = 0
         output = []
 
