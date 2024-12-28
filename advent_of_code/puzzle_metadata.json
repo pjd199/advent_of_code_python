@@ -3951,7 +3951,30 @@
             "has_part_two": true,
             "part_one_solved": true,
             "part_two_solved": true,
-            "completion_date": "2024-12-28T17:48:22+0000Z"
+            "completion_date": "2024-12-28T17:48:22+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 7,
+                "part_one": 16,
+                "part_two": 90
+            }
+        },
+        "19": {
+            "year": 2024,
+            "day": 19,
+            "title": "Linen Layout",
+            "excerpt": "Today, The Historians take you up to the hot springs on Gear Island! Very suspiciously, absolutely nothing goes wrong as they begin their careful search of the vast field of helixes.",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-28T20:25:37+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 1,
+                "part_one": 389,
+                "part_two": 996
+            }
         }
     }
 }
