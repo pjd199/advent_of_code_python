@@ -1626,6 +1626,13 @@
             "day": 16,
             "part_one": "83432",
             "part_two": "467"
+        },
+        "17": {
+            "title": "Chronospatial Computer",
+            "year": 2024,
+            "day": 17,
+            "part_one": "2,0,4,2,7,0,1,0,3",
+            "part_two": "265601188299675"
         }
     }
 }
