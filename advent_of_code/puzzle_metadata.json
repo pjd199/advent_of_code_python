@@ -3975,6 +3975,23 @@
                 "part_one": 389,
                 "part_two": 996
             }
+        },
+        "20": {
+            "year": 2024,
+            "day": 20,
+            "title": "Race Condition",
+            "excerpt": "The Historians are quite pixelated again. This time, a massive, black building looms over you - you're right outside the CPU!",
+            "has_part_one": true,
+            "has_part_two": true,
+            "part_one_solved": true,
+            "part_two_solved": true,
+            "completion_date": "2024-12-29T21:19:41+0000Z",
+            "timings": {
+                "unit": "ms",
+                "parse": 17,
+                "part_one": 29,
+                "part_two": 2535
+            }
         }
     }
 }

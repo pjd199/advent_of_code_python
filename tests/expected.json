@@ -1647,6 +1647,13 @@
             "day": 19,
             "part_one": "278",
             "part_two": "569808947758890"
+        },
+        "20": {
+            "title": "Race Condition",
+            "year": 2024,
+            "day": 20,
+            "part_one": "1293",
+            "part_two": "977747"
         }
     }
 }
